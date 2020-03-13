@@ -31,7 +31,7 @@ class TimelineAudioChart extends Component {
     this.getOneSecondValInPixel()
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (JSON.stringify(newProps.data) !== JSON.stringify(this.props.data)) {
       this.setState({ position: 0 })
     }

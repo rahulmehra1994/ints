@@ -56,7 +56,7 @@ class Improvement extends Component {
     this.tabIndexDeactivate()
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (this.props.location.pathname !== props.location.pathname) {
       var loc = props.location.pathname
       var cat = loc.split('/')[4]
@@ -193,13 +193,13 @@ class Improvement extends Component {
 
                 {this.state.modalStatus[index] ? (
                   // <FocusTrap>
-                    <Modal
-                      item={item}
-                      index={index}
-                      modalToggler={this.modalToggler.bind(this)}
-                    />
-                  // </FocusTrap>
-                ) : null}
+                  <Modal
+                    item={item}
+                    index={index}
+                    modalToggler={this.modalToggler.bind(this)}
+                  />
+                ) : // </FocusTrap>
+                null}
               </div>
             ) : null
           })}

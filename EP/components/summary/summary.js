@@ -175,7 +175,7 @@ class Summary extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.intQuestionId !== nextProps.intQuestionId ||
       this.props.customizations !== nextProps.customizations

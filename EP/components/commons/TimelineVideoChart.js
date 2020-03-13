@@ -25,7 +25,7 @@ class TimelineChart extends Component {
     window.removeEventListener('resize', this.getOneSecondValInPixel)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       JSON.stringify(nextProps.videoChunksState) !==
       JSON.stringify(this.props.videoChunksState)

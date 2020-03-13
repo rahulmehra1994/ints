@@ -97,7 +97,7 @@ class VoiceRecognition extends Component {
     this.recognition.abort()
   }
 
-  componentWillReceiveProps({ stop }) {
+  UNSAFE_componentWillReceiveProps({ stop }) {
     if (stop) {
       this.stop()
     }

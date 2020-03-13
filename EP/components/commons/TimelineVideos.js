@@ -157,7 +157,7 @@ class TimelineVideos extends React.Component {
     this.props.setVideoChunksState(state)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.checkPlayerStateChangedForTracking(nextProps.videoChunksState)
   }
 

@@ -46,7 +46,7 @@ class InsightsAllSection extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.tabIndexDeactivate()
     }

@@ -54,7 +54,7 @@ class SummaryDetailedParent extends Component {
     this.setAppIntKey()
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     let statuses = newProps.statuses
     if (
       JSON.stringify(newProps.statuses) !== JSON.stringify(this.props.statuses)

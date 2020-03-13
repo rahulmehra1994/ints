@@ -62,7 +62,7 @@ class VideoFloating extends Component {
     document.removeEventListener('keydown', this.onKeyDown)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.videoFloatingPlaying !== this.props.videoFloatingPlaying) {
       if (nextProps.videoFloatingPlaying === false) {
         this.pause()

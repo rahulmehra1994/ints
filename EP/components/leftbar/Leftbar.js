@@ -128,7 +128,7 @@ class Leftbar extends Component {
     this.handleEnter = this.handleEnter.bind(this)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.modifyDataIfAppearanceDisabled()
     this.modifyDataIfContentDisabled()
   }

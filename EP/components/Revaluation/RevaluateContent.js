@@ -148,7 +148,7 @@ class RevaluateContent extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.reValuationStatus === 'processing' &&
       this.fetchApiCounter < 4

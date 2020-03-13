@@ -89,7 +89,7 @@ class SystemCheck extends Component {
     this.props.closePopup()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       JSON.stringify(nextProps.userInfo) !== JSON.stringify(this.props.userInfo)
     ) {

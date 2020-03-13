@@ -22,7 +22,7 @@ export default class Tabs extends React.Component {
     this.checkForNonEmptyArray(this.props)
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.tabsData.length !== newProps.tabsData.length) {
       this.checkForNonEmptyArray(newProps)
     }

@@ -80,7 +80,7 @@ class VideoSummary extends Component {
       this.refs.normalPlayer.play()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.videoFloating !== this.props.videoFloating) {
       if (nextProps.videoFloating === false && this.refs.normalPlayer) {
         this.playFromFloatingVideoState()
