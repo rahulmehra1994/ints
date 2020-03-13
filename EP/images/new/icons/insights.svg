@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="166.145" height="166.146" viewBox="0 0 166.145 166.146">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.986" y1="0.117" x2="0.009" y2="0.135" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#0075cb"/>
+      <stop offset="1" stop-color="#3856c8"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_377" data-name="Group 377" transform="translate(-2178.672 -380.539)">
+    <circle id="Ellipse_44" data-name="Ellipse 44" cx="65" cy="65" r="65" transform="translate(2191.631 394.631)" fill="#f3f8fe"/>
+    <g id="Group_378" data-name="Group 378" transform="translate(225.802 1856.387) rotate(-45)">
+      <path id="Union_4" data-name="Union 4" d="M10040.054,19343.285v-10.152h-38.81a14,14,0,1,1-16.475-19.662v-24.029a14.03,14.03,0,0,1-9.42-9.2h-54.86a4,4,0,0,1-4-4v-.2a4,4,0,0,1,4-4h54.773a14,14,0,1,1,17.7,17.291v24.236a14.013,14.013,0,0,1,9.6,11.363h37.493v-10.152a2,2,0,0,1,3.016-1.719l24.114,14.25a2,2,0,0,1,0,3.441l-24.114,14.25a1.954,1.954,0,0,1-1.01.281A2,2,0,0,1,10040.054,19343.285Z" transform="translate(-7567.856 -18848.857)" fill="url(#linear-gradient)"/>
+      <circle id="Ellipse_49" data-name="Ellipse 49" cx="8" cy="8" r="8" transform="translate(2412.84 470.056)" fill="#fff"/>
+      <circle id="Ellipse_50" data-name="Ellipse 50" cx="8" cy="8" r="8" transform="translate(2412.84 419.144)" fill="#fff"/>
+      <rect id="Rectangle_152" data-name="Rectangle 152" width="26" height="5" rx="2.5" transform="translate(2347.037 458.966)" fill="#c9d0ea"/>
+      <rect id="Rectangle_153" data-name="Rectangle 153" width="26" height="5" rx="2.5" transform="translate(2451.245 396.741)" fill="#c9d0ea"/>
+      <rect id="Rectangle_154" data-name="Rectangle 154" width="26" height="5" rx="2.5" transform="translate(2420.841 496.442)" fill="#c9d0ea"/>
+      <rect id="Rectangle_157" data-name="Rectangle 157" width="14" height="3" rx="1.5" transform="translate(2460.782 447.944)" fill="#c9d0ea"/>
+      <rect id="Rectangle_156" data-name="Rectangle 156" width="14" height="3" rx="1.5" transform="translate(2390.071 409.76)" fill="#c9d0ea"/>
+      <path id="Polygon_3" data-name="Polygon 3" d="M4.152,1.357a1,1,0,0,1,1.7,0l3.2,5.113A1,1,0,0,1,8.2,8H1.8A1,1,0,0,1,.956,6.47Z" transform="translate(2396.348 409.432) rotate(-30)" fill="#c9d0ea"/>
+      <path id="Polygon_4" data-name="Polygon 4" d="M4.152,1.357a1,1,0,0,1,1.7,0l3.2,5.113A1,1,0,0,1,8.2,8H1.8A1,1,0,0,1,.956,6.47Z" transform="translate(2467.059 447.616) rotate(-30)" fill="#c9d0ea"/>
+    </g>
+  </g>
+</svg>

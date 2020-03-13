@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="154px" height="162px" viewBox="0 0 154 162" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>47E90CE9-980E-400C-84A0-7F70B7A2B299</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-5">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-6">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="EP-calibration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="001" transform="translate(-781.000000, -363.000000)">
+            <g id="Group-8" transform="translate(781.000000, 357.000000)">
+                <circle id="Oval-Copy" fill="#F3F8FE" cx="77" cy="85" r="77"></circle>
+                <rect id="Rectangle-Copy-8" fill="#CBD3FF" x="9" y="154" width="80" height="8" rx="4"></rect>
+                <path d="M28.3578529,143 L69.337922,143 C69.8029397,143 70.253424,143.16204 70.6118946,143.45825 L82.7138054,153.45825 C83.5652906,154.161845 83.6851787,155.422487 82.9815831,156.273973 C82.601641,156.733775 82.036301,157 81.4398328,157 L16.4806967,157 C15.3761272,157 14.4806967,156.104569 14.4806967,155 C14.4806967,154.409983 14.7412177,153.850073 15.192562,153.470062 L27.0697182,143.470062 C27.4302897,143.166478 27.8864984,143 28.3578529,143 Z" id="Rectangle-Copy-9" stroke="url(#linearGradient-1)" stroke-width="2" fill="#C9D0EA"></path>
+                <circle id="Oval-Copy-2" stroke="url(#linearGradient-2)" stroke-width="2" fill="#FFFFFF" cx="49" cy="105" r="44"></circle>
+                <circle id="Oval-Copy-3" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" cx="49" cy="105" r="33"></circle>
+                <circle id="Oval-Copy-4" stroke="url(#linearGradient-2)" stroke-width="2" fill="#FFFFFF" cx="49" cy="105" r="27"></circle>
+                <circle id="Oval-Copy-5" fill="#DDDDDD" cx="49" cy="105" r="17"></circle>
+                <circle id="Oval-Copy-6" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" cx="49" cy="105" r="17"></circle>
+                <circle id="Oval-Copy-7" fill="url(#linearGradient-2)" cx="49" cy="105" r="9"></circle>
+                <circle id="Oval-Copy-8" fill="#FFFFFF" cx="46" cy="100" r="3"></circle>
+                <path d="M120.298507,48.2985075 C122.120223,46.4767921 125.073807,46.4767921 126.895522,48.2985075 L139.701493,61.1044776 C141.523208,62.926193 141.523208,65.8797772 139.701493,67.7014925 C137.879777,69.5232079 134.926193,69.5232079 133.104478,67.7014925 L120.298507,54.8955224 C118.476792,53.073807 118.476792,50.1202228 120.298507,48.2985075 Z" id="Rectangle-Copy-10" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA"></path>
+                <g id="Group-Copy" transform="translate(54.000000, 0.000000)" stroke-width="2">
+                    <path d="M20.4678778,16.261539 L57.27521,15.9483119 C66.1114461,15.8731163 73.3355888,22.9753428 73.4107844,31.8115789 C73.4115606,31.9027967 73.4115568,31.9940195 73.4107728,32.0852373 L73.3953777,33.876545 C73.3203527,42.6060954 66.2616789,49.6641732 57.5321222,49.738461 L20.72479,50.0516881 C11.8885539,50.1268837 4.66441122,43.0246572 4.58921563,34.1884211 C4.58843937,34.0972033 4.58844322,34.0059805 4.58922718,33.9147627 L4.60462233,32.123455 C4.67964726,23.3939046 11.7383211,16.3358268 20.4678778,16.261539 Z" id="Rectangle" stroke="url(#linearGradient-4)" fill="#FFFFFF" transform="translate(39.000000, 33.000000) rotate(-330.000000) translate(-39.000000, -33.000000) "></path>
+                    <path d="M20.109294,27.5146672 C21.4542065,27.5032221 22.5537516,28.584211 22.5651967,29.9291235 C22.5653148,29.9430073 22.5653143,29.9568918 22.5651949,29.9707755 L22.4881083,38.9402147 L17.5337268,38.9823761 L17.6108134,30.0129369 C17.6226299,28.6380228 18.734379,27.5263676 20.109294,27.5146672 Z" id="Rectangle" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(20.060106, 33.237981) rotate(-330.000000) translate(-20.060106, -33.237981) "></path>
+                    <path d="M30.109294,11.5146672 C31.4542065,11.5032221 32.5537516,12.584211 32.5651967,13.9291235 C32.5653148,13.9430073 32.5653143,13.9568918 32.5651949,13.9707755 L32.4881083,22.9402147 L27.5337268,22.9823761 L27.6108134,14.0129369 C27.6226299,12.6380228 28.734379,11.5263676 30.109294,11.5146672 Z" id="Rectangle-Copy-4" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(30.060106, 17.237981) scale(-1, -1) rotate(-330.000000) translate(-30.060106, -17.237981) "></path>
+                    <path d="M39.2724094,38.3621248 C40.6173219,38.3506798 41.7168669,39.4316687 41.728312,40.7765812 C41.7284302,40.7904649 41.7284296,40.8043494 41.7283103,40.8182331 L41.6512236,49.7876724 L36.6968421,49.8298337 L36.7739287,40.8603945 C36.7857452,39.4854805 37.8974943,38.3738252 39.2724094,38.3621248 Z" id="Rectangle-Copy-2" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(39.223221, 44.085439) rotate(-330.000000) translate(-39.223221, -44.085439) "></path>
+                    <path d="M49.2724094,22.3621248 C50.6173219,22.3506798 51.7168669,23.4316687 51.728312,24.7765812 C51.7284302,24.7904649 51.7284296,24.8043494 51.7283103,24.8182331 L51.6512236,33.7876724 L46.6968421,33.8298337 L46.7739287,24.8603945 C46.7857452,23.4854805 47.8974943,22.3738252 49.2724094,22.3621248 Z" id="Rectangle-Copy-5" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(49.223221, 28.085439) scale(-1, -1) rotate(-330.000000) translate(-49.223221, -28.085439) "></path>
+                    <path d="M29.6908517,32.938396 C31.0357642,32.9269509 32.1353093,34.0079399 32.1467544,35.3528524 C32.1468725,35.3667361 32.1468719,35.3806206 32.1467526,35.3945043 L32.069666,44.3639435 L27.1152844,44.4061049 L27.1923711,35.4366657 C27.2041876,34.0617517 28.3159367,32.9500964 29.6908517,32.938396 Z" id="Rectangle-Copy" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(29.641663, 38.661710) rotate(-330.000000) translate(-29.641663, -38.661710) "></path>
+                    <path d="M39.6908517,16.938396 C41.0357642,16.9269509 42.1353093,18.0079399 42.1467544,19.3528524 C42.1468725,19.3667361 42.1468719,19.3806206 42.1467526,19.3945043 L42.069666,28.3639435 L37.1152844,28.4061049 L37.1923711,19.4366657 C37.2041876,18.0617517 38.3159367,16.9500964 39.6908517,16.938396 Z" id="Rectangle-Copy-6" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(39.641663, 22.661710) scale(-1, -1) rotate(-330.000000) translate(-39.641663, -22.661710) "></path>
+                    <path d="M48.853967,43.7858537 C50.1988795,43.7744086 51.2984246,44.8553975 51.3098697,46.20031 C51.3099878,46.2141937 51.3099872,46.2280782 51.3098679,46.241962 L51.2327813,55.2114012 L46.2783998,55.2535625 L46.3554864,46.2841233 C46.3673029,44.9092093 47.479052,43.7975541 48.853967,43.7858537 Z" id="Rectangle-Copy-3" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(48.804779, 49.509168) rotate(-330.000000) translate(-48.804779, -49.509168) "></path>
+                    <path d="M58.853967,27.7858537 C60.1988795,27.7744086 61.2984246,28.8553975 61.3098697,30.20031 C61.3099878,30.2141937 61.3099872,30.2280782 61.3098679,30.241962 L61.2327813,39.2114012 L56.2783998,39.2535625 L56.3554864,30.2841233 C56.3673029,28.9092093 57.479052,27.7975541 58.853967,27.7858537 Z" id="Rectangle-Copy-7" stroke="url(#linearGradient-5)" fill="#C9D0EA" transform="translate(58.804779, 33.509168) scale(-1, -1) rotate(-330.000000) translate(-58.804779, -33.509168) "></path>
+                </g>
+                <rect id="Rectangle-Copy-11" stroke="url(#linearGradient-6)" stroke-width="2" fill="#FFFFFF" x="131" y="61" width="16" height="106" rx="8"></rect>
+                <circle id="Oval-Copy-9" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" cx="139" cy="70" r="4"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Facial Expression</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Facial-Expression" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#F3F8FE" cx="50.2259105" cy="50" r="42"></circle>
+        <path d="M16,15 L57,15 C58.1045695,15 59,15.8954305 59,17 L59,41.5 C59,53.9264069 48.9264069,64 36.5,64 C24.0735931,64 14,53.9264069 14,41.5 L14,17 C14,15.8954305 14.8954305,15 16,15 Z" id="Rectangle" stroke="url(#linearGradient-1)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+        <path d="M27,43.5 L46,43.5 L46,44 C46,49.2467051 41.7467051,53.5 36.5,53.5 C31.2532949,53.5 27,49.2467051 27,44 L27,43.5 L27,43.5 Z" id="Rectangle" stroke="url(#linearGradient-2)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round"></path>
+        <circle id="Oval" fill="url(#linearGradient-3)" cx="28" cy="30" r="4"></circle>
+        <circle id="Oval-Copy" fill="url(#linearGradient-3)" cx="45" cy="30" r="4"></circle>
+        <path d="M85,38 C86.1045695,38 87,38.8954305 87,40 L87,64.5 C87,76.9264069 76.9264069,87 64.5,87 C53.9652885,87 45.1215695,79.76 42.6731147,69.9842716 C42.9480552,69.9950105 43.2234449,70 43.5,70 C55.9264069,70 66,59.9264069 66,47.5 L66,47.5 L65.999321,38 L85,38 Z" id="Combined-Shape" stroke="url(#linearGradient-4)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+        <path d="M57,67.5 L76,67.5 L76,68 C76,73.2467051 71.7467051,77.5 66.5,77.5 C61.2532949,77.5 57,73.2467051 57,68 L57,67.5 L57,67.5 Z" id="Rectangle-Copy-3" stroke="url(#linearGradient-2)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round" transform="translate(66.500000, 72.500000) scale(1, -1) translate(-66.500000, -72.500000) "></path>
+        <circle id="Oval-Copy-2" fill="url(#linearGradient-3)" cx="75" cy="54" r="4"></circle>
+    </g>
+</svg>

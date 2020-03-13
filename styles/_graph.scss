@@ -1,0 +1,103 @@
+/*/*@charset "UTF-8";
+/* CSS Document */
+
+.pie-red {
+  position: relative;
+  width: 26px;
+  height:26px;
+  line-height: 26px;
+  border-radius: 50%;
+  background: #E8E8E8;
+  background-image:
+    linear-gradient(to right, transparent 50%, #ef4f3e 0);
+  color: transparent;
+  text-align: center;
+  
+}
+.pie-green {
+  position: relative;
+  width: 26px;
+  height:26px;
+  line-height: 26px;
+  border-radius: 50%;
+  background: #E8E8E8;
+  background-image:
+    linear-gradient(to right, transparent 50%, #46a74d 0);
+  color: transparent;
+  text-align: center;
+  
+}
+.pie-yellow {
+  position: relative;
+  width: 26px;
+  height:26px;
+  line-height: 26px;
+  border-radius: 50%;
+  background: #E8E8E8;
+  background-image:
+    linear-gradient(to right, transparent 50%, #f89d2f 0);
+  color: transparent;
+  text-align: center;
+  
+}
+
+@keyframes spin-animate {
+  to { transform: rotate(.5turn); }
+}
+@keyframes bg_red {
+  50% { background: #ef4f3e; }
+}
+@keyframes bg_green {
+  50% { background: #46a74d; }
+}
+@keyframes bg_yellow {
+  50% { background: #f89d2f; }
+}
+
+.pie-red::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 50%; height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin-animate 50s linear infinite,
+             bg_red 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+}
+.pie-green::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 50%; height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin-animate 50s linear infinite,
+             bg_green 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+}
+.pie-yellow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 50%; height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+  animation: spin-animate 50s linear infinite,
+             bg_yellow 100s step-end infinite;
+  animation-play-state: paused;
+  animation-delay: inherit;
+}
+
+.graph-box > canvas{
+  margin-top: -10px;
+}
+
+.sg-graph > canvas{
+  margin-top: -10px;
+}

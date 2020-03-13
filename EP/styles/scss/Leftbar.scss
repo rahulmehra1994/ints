@@ -1,0 +1,288 @@
+@import 'variables.scss';
+.results {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: calc(100vh - 90px);
+  margin: 0 auto;
+}
+
+.leftbar-container {
+  position: relative;
+  height: 100%;
+}
+
+#leftbar {
+  position: relative;
+  float: left;
+  height: calc(100vh - 90px);
+  width: 294px;
+  overflow: auto;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+.leftbar-detailed {
+  position: relative;
+  float: left;
+  height: calc(100vh - 90px);
+  width: 294px;
+  overflow: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 3px;
+  background: $white;
+}
+
+#divider {
+  margin: 8px 0;
+  height: 1px;
+  background-color: #757575;
+}
+
+#primary-bar {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.leftbar-component-true {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: #ecf5fe;
+  padding: 0 20px;
+  margin: 1px 0;
+}
+
+.leftbar-component-false {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background: white;
+  padding: 0 20px;
+  margin: 1px 0;
+}
+
+.contrast-leftbar-component-true {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: #f6fafe;
+  padding: 0 20px;
+  margin: 1px 0;
+}
+
+.contrast-leftbar-component-false {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background: #ffffff;
+  padding: 0 20px;
+  margin: 1px 0;
+}
+
+.leftbar-logo {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 40px;
+  padding: 8px 0px;
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: 2px;
+  font-size: 20px;
+}
+
+.leftbar-status {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 24px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  vertical-align: bottom;
+}
+
+.loader-image {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 24px;
+  margin-bottom: 18px;
+  vertical-align: bottom;
+  margin-top: 4px;
+}
+
+.loader-image-videosummary {
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+  margin-top: 13px;
+}
+
+.leftbar-text {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: #000000;
+}
+
+#leftbar .leftBarTxtHighlight {
+  color: #1565c0;
+  font-weight: 600;
+}
+
+.leftbar-arrow {
+  position: relative;
+  display: inline-block;
+  float: right;
+  top: 15px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.secondary-component-true {
+  position: relative;
+  width: 100%;
+  /* height: 72px; */
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.secondary-component-false {
+  position: relative;
+  width: 100%;
+  /* height: 72px; */
+  height: 50px;
+  background-color: #ffffff;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.secondary-component-true .cell-state {
+  position: relative;
+  display: inline-block;
+  width: 2.35%;
+  height: 100%;
+  background-color: #0075cb;
+  border: solid 1px #0075cb;
+}
+
+.secondary-component-false .cell-state {
+  position: relative;
+  display: inline-block;
+  width: 2.35%;
+  height: 100%;
+  background-color: #ffffff;
+  border-bottom: solid 1px #dadada;
+}
+
+.secondary-component-text {
+  position: relative;
+  display: inline-block;
+  padding-left: 75px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  color: black;
+}
+
+.right-arrow {
+  position: relative;
+  display: inline-block;
+  float: right;
+  top: 15px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #868686;
+  display: none;
+}
+
+.cell-content {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 97.65%;
+  /* height: 100%; */
+  /* border-bottom: 1px solid #dadada; */
+}
+
+.upper-cell {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.lower-cell {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 42px;
+}
+
+.performance {
+  position: relative;
+  display: inline-block;
+  left: 18px;
+  padding-top: 8px;
+  padding-bottom: 16px;
+  width: 74px;
+  height: 100%;
+  font-size: 12px;
+  text-align: left;
+  color: #757575;
+}
+
+.performance-result {
+  position: relative;
+  display: inline-block;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  margin-left: 25px;
+  margin-right: 10px;
+  padding-top: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 2px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+}
+
+.leftbarSelectColor {
+  background-color: rgba(0, 117, 203, 0.2);
+}
+
+.leftbarDir {
+  right: 20px;
+  top: 8px;
+}

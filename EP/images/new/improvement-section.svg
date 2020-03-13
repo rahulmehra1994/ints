@@ -1,0 +1,19 @@
+<svg id="round-notes-24px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1.131" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#0075cb"/>
+      <stop offset="1" stop-color="#4052c8"/>
+    </linearGradient>
+  </defs>
+  <path id="Path" class="cls-1" d="M0,0H24V24H0Z"/>
+  <path id="Shape" class="cls-2" d="M11,12H1a1,1,0,0,1,0-2H11a1,1,0,0,1,0,2Zm6-5H1A1,1,0,0,1,1,5H17a1,1,0,1,1,0,2Zm0-4.99H1a1,1,0,0,1-1-1V1A1,1,0,0,1,1,0H17a1,1,0,0,1,1,1v.01A1,1,0,0,1,17,2.01Z" transform="translate(3 6)"/>
+</svg>
