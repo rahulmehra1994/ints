@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import CenterLoading from './components/CenterLoading'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import _ from 'underscore'
+import * as cookie from 'js-cookie'
 import Main from './components/Main/index'
 import {
   fetchUserCustomizations,
   userCustomizationsEP,
 } from './actions/apiActions'
 import UserActivityMonitor from './components/UserActivityTracker/component'
-import _ from 'underscore'
-import * as cookie from 'js-cookie'
+import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 
 class App extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class App extends Component {
           <div className="ep-app">
             <Main />
           </div>
-
+          <CustomerSupport />
           <UserActivityMonitor />
         </React.Fragment>
       )

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import $ from 'jquery'
 import Navbar from '@vmockinc/dashboard/Navbar'
 import { connect } from 'react-redux'
-import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 import NotFound from './../containers/notFound'
 import {
   fetchImproveArticles,
@@ -237,15 +236,12 @@ class Main extends React.PureComponent {
       return (
         <Router basename={process.env.APP_BASE_URL}>
           <React.Fragment>
-            <CustomerSupport />
-
             <Route
               path="/"
               render={props => (
                 <Navbar id="nav" navUrl="/dashboard/elevator-pitch" />
               )}
             />
-
             <div className="ep-exclusive" style={{ marginTop: 40 }}>
               <PropsRoute
                 exact
