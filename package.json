@@ -9,7 +9,7 @@
     "start": "APP_ENV=local webpack --progress --watch",
     "build": "rm -rf public/dist/js && webpack -p",
     "build:dev": "APP_ENV=dev npm run build && zip -r public.zip public && scp public.zip rdev:/var/www/dev/rahulmehra/dev/elevator-pitch/",
-    "build:test": "APP_ENV=test npm run build && zip -r publicTest$(date +'%Y-%m-%d-%H-%M').zip public",
+    "build:test": "APP_ENV=test npm run build && zip -r public.zip public && scp public.zip rdev:/var/www/dev/rahulmehra/elevator-pitch/public",
     "build:demo": "APP_ENV=demo npm run build && zip -r publicDemo$(date +'%Y-%m-%d-%H-%M').zip public",
     "build:staging": "APP_ENV=staging npm run build",
     "build:live": "APP_ENV=live npm run build",
