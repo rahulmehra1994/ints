@@ -127,9 +127,16 @@ class InterviewQuestions extends Component {
         data: final,
       })
     } else {
+      let defaultCategory = data[0][data[0]['label']][0]
+      defaultCategory.isOpen = true
+      let defaultQuesArr = defaultCategory[defaultCategory.label]
+
+      log('first time', defaultCategory, defaultQuesArr)
+
       this.setState({
         data: data,
         selectedDomain: data[0][data[0]['label']],
+        selectedQuesArr: defaultQuesArr,
       })
     }
   }
@@ -307,7 +314,7 @@ class InterviewQuestions extends Component {
 
   render() {
     let { data, selectedDomain, selectedQues, selectedQuesArr } = this.state
-
+    let { customizations } = this.props
     return (
       <div className="">
         {this.state.disabler ? (
@@ -331,7 +338,7 @@ class InterviewQuestions extends Component {
                   {item.label}
 
                   {item.isSelected ? (
-                    <span className="ep-icon-right-rounded ml-6"></span>
+                    <span className="icon-right-rounded ml-6"></span>
                   ) : null}
                 </div>
               )
@@ -350,7 +357,7 @@ class InterviewQuestions extends Component {
                       )}>
                       {item.label}
                       {item.isSelected ? (
-                        <span className="ep-icon-right-rounded ml-6"></span>
+                        <span className="icon-right-rounded ml-6"></span>
                       ) : null}
                       <button
                         className="float-right"
@@ -361,9 +368,9 @@ class InterviewQuestions extends Component {
                         tabIndex="20"
                         aria-label={`question selection button`}>
                         {item.isOpen ? (
-                          <span className="ep-icon-expand-up"></span>
+                          <span className="icon-expand-up"></span>
                         ) : (
-                          <span className="ep-icon-expand-down"></span>
+                          <span className="icon-expand-down"></span>
                         )}
                       </button>
                     </label>
@@ -383,12 +390,30 @@ class InterviewQuestions extends Component {
                               }}>
                               {this.isQuesSelected(item2) ? (
                                 <span
-                                  className="ep-icon-right absolute"
+                                  className="icon-right absolute"
                                   style={{ left: 10, top: 10 }}>
                                   {' '}
                                 </span>
                               ) : null}
                               {index2 + 1}. {item2.question_content}
+                              {customizations.question_id_mapping[
+                                item2.question_id
+                              ].is_content_strength_enabled ? (
+                                <span
+                                  className="bg-white rounded-lg float-right px-3 pt-2 pb-1 cs-control text-12-demi rounded-full"
+                                  style={{
+                                    border: 'solid 1px #dddddd',
+                                    color: '#666666',
+                                  }}>
+                                  C
+                                  <div className="absolute cs-control-hover">
+                                    <div className="text-14-normal text-grey-darkest">
+                                      Feedback on content is available for this
+                                      question.
+                                    </div>
+                                  </div>
+                                </span>
+                              ) : null}
                             </button>
                           )
                         })}
@@ -409,7 +434,7 @@ class InterviewQuestions extends Component {
             tabIndex="20"
             aria-label={`confirm your options`}>
             <span
-              className="ep-icon-expand-left"
+              className="icon-expand-left"
               style={{
                 '-webkit-text-stroke': '1px',
                 'vertical-align': -2,

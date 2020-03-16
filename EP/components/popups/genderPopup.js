@@ -37,14 +37,13 @@ langList = langList.sort((a, b) => {
   return 0
 })
 
-langList.splice(0, 1, { code: DEFAULT_LANG_CODE, country: 'English (Default)' })
+langList.unshift({ code: DEFAULT_LANG_CODE, country: 'English (Default)' })
 
 const stateOptions = _.map(langList, (state, index) => ({
   key: state.code,
   text: state.country,
   value: state.code,
 }))
-
 const basicDetailsIllus =
   process.env.APP_BASE_URL + '/dist/images/icons/basic-details-illustration.svg'
 
@@ -86,17 +85,31 @@ class GenderPopup extends Component {
 
   selectEarlierChoosenOptions() {
     let { gender, langCode } = this.props
-    if (langCode !== '' && gender !== '') {
-      this.setState({
-        langCode: langCode,
-        genderSelected: gender,
-      })
+
+    if (langCode !== '') {
+      this.setState(
+        {
+          langCode: langCode,
+          genderSelected: gender,
+        },
+        () => {
+          this.checkInputs()
+        }
+      )
     }
+    this.checkInputs()
   }
 
   submitGender() {
-    let { genderSelected, langCode } = this.state
+    if (this.props.customizations.appearance_enabled) {
+      this.whenAppearanceEnabled()
+    } else {
+      this.whenAppearanceNotEnabled()
+    }
+  }
 
+  whenAppearanceEnabled() {
+    let { genderSelected, langCode } = this.state
     mutuals.socketTracking({
       event_type: 'click',
       event_description: `confirm_button_results_gender_${genderSelected}_accent_${langCode}`,
@@ -111,6 +124,26 @@ class GenderPopup extends Component {
 
     let fd = new FormData()
     fd.append('gender', genderSelected)
+    fd.append('accent', langCode)
+    updateUserInfo(fd, this.onSuccess)
+  }
+
+  whenAppearanceNotEnabled() {
+    let { langCode } = this.state
+    mutuals.socketTracking({
+      event_type: 'click',
+      event_description: `confirm_button_results_accent_${langCode}`,
+      interview_id: -1,
+    })
+
+    if (langCode === '-1') {
+      alert('Please select your Accent')
+      return
+    }
+    this.setState({ isConfirmActive: false })
+
+    let fd = new FormData()
+    fd.append('gender', '')
     fd.append('accent', langCode)
     updateUserInfo(fd, this.onSuccess)
   }
@@ -143,15 +176,23 @@ class GenderPopup extends Component {
   }
 
   checkInputs() {
-    if (
-      this.state.langCode !== '-1' &&
-      this.state.langCode !== '' &&
-      this.state.genderSelected !== null &&
-      this.state.genderSelected !== ''
-    ) {
-      this.setState({ isConfirmActive: true })
+    if (this.props.customizations.appearance_enabled) {
+      if (
+        this.state.langCode !== '-1' &&
+        this.state.langCode !== '' &&
+        this.state.genderSelected !== null &&
+        this.state.genderSelected !== ''
+      ) {
+        this.setState({ isConfirmActive: true })
+      } else {
+        this.setState({ isConfirmActive: false })
+      }
     } else {
-      this.setState({ isConfirmActive: false })
+      if (this.state.langCode !== '-1' && this.state.langCode !== '') {
+        this.setState({ isConfirmActive: true })
+      } else {
+        this.setState({ isConfirmActive: false })
+      }
     }
   }
 
@@ -160,7 +201,11 @@ class GenderPopup extends Component {
 
     return (
       <div className="gender-wrapper">
-        <div style={{ paddingLeft: 70, paddingTop: 55 }}>
+        <div
+          style={{
+            paddingLeft: 70,
+            paddingTop: this.props.customizations.appearance_enabled ? 55 : 112,
+          }}>
           <h1
             id="basicInfo"
             className="para hintColor text-left"
@@ -186,7 +231,7 @@ class GenderPopup extends Component {
                 onChange={(event, data) => {
                   this.setLangCode(data.value)
                 }}
-                className="mt-6"
+                className="mt-6 w-full"
                 tabIndex="20"
                 aria-label={`This is a dropdown menu. up or down the arrow keys to select different accents.`}
                 value={langCode}
@@ -195,79 +240,83 @@ class GenderPopup extends Component {
             </div>
           </div>
 
-          <div className="text-left clearfix mt-12">
-            <div className="basicInfoOption">
-              <label
-                className="para hintColor"
-                tabIndex="20"
-                aria-label={`Appearance selection field below. this is mandatory`}>
-                Appearance
-              </label>
-
-              <div className="gender clearfix">
-                <button
+          {this.props.customizations.appearance_enabled ? (
+            <div className="text-left clearfix mt-12">
+              <div className="basicInfoOption">
+                <label
+                  className="para hintColor"
                   tabIndex="20"
-                  aria-label={`${
-                    this.state.genderSelected === 'male'
-                      ? 'male gender selected'
-                      : 'click to select male gender'
-                  }`}
-                  className={classNames({
-                    'eachGender relative cursor-pointer': true,
-                  })}
-                  onClick={() => {
-                    this.genderSelected('male')
-                  }}>
-                  <div
+                  aria-label={`Appearance selection field below. this is mandatory`}>
+                  Appearance
+                </label>
+
+                <div className="gender clearfix">
+                  <button
+                    tabIndex="20"
+                    aria-label={`${
+                      this.state.genderSelected === 'male'
+                        ? 'male gender selected'
+                        : 'click to select male gender'
+                    }`}
                     className={classNames({
-                      genderRadio: true,
-                      genderRadioBorder: this.state.genderSelected === 'male',
-                    })}>
+                      'eachGender relative cursor-pointer': true,
+                    })}
+                    onClick={() => {
+                      this.genderSelected('male')
+                    }}>
                     <div
                       className={classNames({
-                        clearfix: true,
-                        genderRadioFilled: this.state.genderSelected === 'male',
-                      })}
-                    />
-                  </div>
+                        genderRadio: true,
+                        genderRadioBorder: this.state.genderSelected === 'male',
+                      })}>
+                      <div
+                        className={classNames({
+                          clearfix: true,
+                          genderRadioFilled:
+                            this.state.genderSelected === 'male',
+                        })}
+                      />
+                    </div>
 
-                  <div className="genderLabel hintColor">
-                    Business suit and tie
-                  </div>
-                </button>
+                    <div className="genderLabel hintColor">
+                      Business suit and tie
+                    </div>
+                  </button>
 
-                <button
-                  tabIndex="20"
-                  aria-label={`${
-                    this.state.genderSelected === 'female'
-                      ? 'female gender selected'
-                      : 'click to select female gender'
-                  }`}
-                  className={classNames({
-                    'eachGender relative cursor-pointer': true,
-                  })}
-                  onClick={() => {
-                    this.genderSelected('female')
-                  }}>
-                  <div
+                  <button
+                    tabIndex="20"
+                    aria-label={`${
+                      this.state.genderSelected === 'female'
+                        ? 'female gender selected'
+                        : 'click to select female gender'
+                    }`}
                     className={classNames({
-                      genderRadio: true,
-                      genderRadioBorder: this.state.genderSelected === 'female',
-                    })}>
+                      'eachGender relative cursor-pointer': true,
+                    })}
+                    onClick={() => {
+                      this.genderSelected('female')
+                    }}>
                     <div
                       className={classNames({
-                        clearfix: true,
-                        genderRadioFilled:
+                        genderRadio: true,
+                        genderRadioBorder:
                           this.state.genderSelected === 'female',
-                      })}
-                    />
-                  </div>
+                      })}>
+                      <div
+                        className={classNames({
+                          clearfix: true,
+                          genderRadioFilled:
+                            this.state.genderSelected === 'female',
+                        })}
+                      />
+                    </div>
 
-                  <div className="genderLabel hintColor">Business suit</div>
-                </button>
+                    <div className="genderLabel hintColor">Business suit</div>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="mt-16">
             <button
@@ -287,7 +336,9 @@ class GenderPopup extends Component {
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div
+          className="flex items-center justify-center"
+          style={{ height: 420 }}>
           <img src={basicDetailsIllus} alt={'basic details illustration'} />
         </div>
       </div>

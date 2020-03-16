@@ -123,6 +123,16 @@ h6 {
     font-weight: 400;
   }
 
+  .text-12-med {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .text-12-demi {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
   .text-12-normal {
     font-size: 12px;
     font-weight: 400;
@@ -1037,7 +1047,7 @@ h6 {
   }
 
   .basicInfoOption {
-    width: calc(100% - 50px);
+    width: 100%;
     float: left;
   }
 
@@ -3387,5 +3397,21 @@ h6 {
 
   .smallSummaryCardInfo .cardFeature {
     margin-top: 0px;
+  }
+  .cs-control:hover .cs-control-hover {
+    visibility: visible;
+  }
+
+  .cs-control-hover {
+    visibility: hidden;
+    background: white;
+    @extend .p-6;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    border: solid 1px #eeeeee;
+    background-color: #ffffff;
+    z-index: 1000;
+    border-radius: 3px;
+    right: 8px;
+    top: 33px;
   }
 }

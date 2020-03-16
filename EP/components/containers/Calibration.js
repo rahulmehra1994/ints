@@ -313,7 +313,7 @@ class Calibration extends Component {
       this.setState({
         isSystemCheckOpen: false,
       })
-    if (gender === '' || langCode === '') {
+    if (gender === '' && langCode === '') {
       this.setState({
         isSystemCheckOpen: true,
         firstTimeUser: true,
