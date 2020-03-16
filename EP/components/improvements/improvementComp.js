@@ -258,7 +258,7 @@ export class ModalTemplate extends Component {
     return (
       <div className="epModalCover">
         <div className="epModal">
-          <div className="text-24-bold pl-16 pt-16 pb-8">Suggested Reads</div>
+          <div className="text-24-bold pl-10 pt-10 pb-8">Suggested Reads</div>
 
           <button
             className="epModalClose"
@@ -281,7 +281,7 @@ export class ModalTemplate extends Component {
           />
 
           <div className="epModalContent">
-            <div className="subHead mt-8">{props.item.title}</div>
+            <div className="subHead">{props.item.title}</div>
             <div className="mt-6">
               {ReactHtmlParser(props.item.description)}
             </div>

@@ -166,7 +166,7 @@ class ContentSamples extends Component {
     return (
       <FocusTrap>
         <div className="epModalCover sentenceSamplesModal">
-          <div className="epModal p-16">
+          <div className="epModal p-10">
             <button
               className="epModalClose"
               onClick={() => {

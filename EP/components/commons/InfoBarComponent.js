@@ -252,7 +252,7 @@ class InfoBarComponent extends React.Component {
                     threshold.data[0]['value']}%`,
                   width: `${this.state.multiplier * threshold.data[1]['value'] -
                     this.state.multiplier * threshold.data[0]['value']}%`,
-                  bottom: barEnds ? -48 : -42,
+                  bottom: -56,
                   paddingTop: 13,
                   borderTop: '1px solid black',
                   whiteSpace: 'nowrap',
@@ -263,7 +263,7 @@ class InfoBarComponent extends React.Component {
               className="absolute"
               style={{
                 left: `calc(${percentage}% + ${shifter}px)`,
-                bottom: barEnds ? -54 : -46,
+                bottom: barEnds ? -62 : -48,
                 width: 150,
               }}>
               <div className="relative mt-4 text-center">
@@ -278,7 +278,7 @@ class InfoBarComponent extends React.Component {
                   className="absolute"
                   style={{
                     left: this.state.multiplier * obj.value + '%',
-                    bottom: barEnds ? -64 : -56,
+                    bottom: barEnds ? -72 : -58,
                     transform: 'translateX(-50%)',
                   }}>
                   <div className="">

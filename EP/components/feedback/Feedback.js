@@ -213,14 +213,14 @@ class Feedback extends Component {
               onClick={this.onFeedbackClose}>
               <span className="ep-icon-close"></span>
             </button>
-            <div className="p-8">
+            <div className="p-4">
               <h1
                 ref="label"
-                className="font-bold pt-6 pl-3"
+                className="font-bold pt-5 pl-3"
                 style={{ fontSize: 30 }}>
                 VMock Elevator Pitch Feedback
               </h1>
-              <label className="para mt-5 pl-3">
+              <label className="para mt-4 pl-3">
                 Have a suggestion, faced an issue or liked something? Tell us
                 about your experience.
               </label>
@@ -236,9 +236,9 @@ class Feedback extends Component {
                 )
               })}
 
-              <div className="mt-6 pl-3 hintColor">*Mandatory</div>
+              <div className="mt-4 pl-3 hintColor">*Mandatory</div>
 
-              <div className="mt-16 text-right">
+              <div className="mt-10 text-right">
                 <button
                   type="submit"
                   onClick={() => {
@@ -332,7 +332,7 @@ class Question extends React.Component {
     let { data, tabIndex } = this.props
 
     return (
-      <div className="feedback-ep mt-10">
+      <div className="feedback-ep mt-6">
         <div
           className="border-left pl-3"
           style={
@@ -347,7 +347,7 @@ class Question extends React.Component {
           </label>
 
           {data.config.type === 'select' ? (
-            <div className="ep-icon-wrap clearfix mt-12">
+            <div className="icon-wrap clearfix mt-6">
               {data.options.map((item, index) => {
                 return (
                   <button
@@ -418,7 +418,7 @@ class Question extends React.Component {
         </div>
 
         {data.config.suggestion ? (
-          <div className="mt-6 pl-3">
+          <div className="mt-4 pl-3">
             <TextArea
               placeholder="Tell us more"
               onChange={event => {

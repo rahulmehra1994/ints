@@ -165,7 +165,7 @@ class SystemCheck extends Component {
         <div className="epModalCover">
           <div
             className={`epModal`}
-            style={{ width: 875, height: 467, padding: '0 0 20px 0' }}>
+            style={{ width: 875, height: 480, padding: '0 0 20px 0' }}>
             {this.props.firstTimeUser ? (
               <button
                 style={{

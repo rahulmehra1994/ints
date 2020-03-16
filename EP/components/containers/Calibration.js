@@ -1068,27 +1068,27 @@ class Calibration extends Component {
 
                 <div
                   className="rounded-b-lg"
-                  style={{ padding: 30, background: 'white', height: 345 }}>
+                  style={{ padding: 30, background: 'white'}}>
                   <div className="clearfix">
                     <div className="float-left" style={{ width: '20%' }}>
                       <img alt="maintain distance" src={maintainDistance} />
                     </div>
                     <div className="float-left" style={{ width: '80%' }}>
                       <div className="subHead">Sit at an arm's length</div>
-                      <div className="mt-4">
+                      <div className="mt-3">
                         Ensure your head and torso are properly visible in the
                         camera during the calibration.
                       </div>
                     </div>
                   </div>
 
-                  <div className="clearfix mt-12">
+                  <div className="clearfix mt-8">
                     <div className="float-left" style={{ width: '20%' }}>
                       <img alt="person" src={person} />
                     </div>
                     <div className="float-left" style={{ width: '80%' }}>
                       <div className="subHead">No other participant</div>
-                      <div className="mt-4">
+                      <div className="mt-3">
                         Make sure that only <span className="italic">your</span>{' '}
                         face is in the camera focus, and no one else is around
                         during the interview.
@@ -1096,13 +1096,13 @@ class Calibration extends Component {
                     </div>
                   </div>
 
-                  <div className="clearfix mt-12">
+                  <div className="clearfix mt-8">
                     <div className="float-left" style={{ width: '20%' }}>
                       <img alt="Surrounding Illumination" src={lamp} />
                     </div>
                     <div className="float-left" style={{ width: '80%' }}>
                       <div className="subHead">Illumination</div>
-                      <div className="mt-4">
+                      <div className="mt-3">
                         Ensure room is properly lit for the interview.
                       </div>
                     </div>
@@ -1139,7 +1139,7 @@ class Calibration extends Component {
                       <div className="subHead">
                         Earphones with mic (Recommended)
                       </div>
-                      <div className="mt-4">
+                      <div className="mt-3">
                         Please consider using earphones for better speech
                         recognition. Specifically essential for noisy
                         surroundings.
@@ -1147,7 +1147,7 @@ class Calibration extends Component {
                     </div>
                   </div>
 
-                  <div className="clearfix mt-12">
+                  <div className="clearfix mt-8">
                     <div className="float-left" style={{ width: '20%' }}>
                       <img
                         alt="minimize background noise"
@@ -1156,7 +1156,7 @@ class Calibration extends Component {
                     </div>
                     <div className="float-left" style={{ width: '80%' }}>
                       <div className="subHead">Minimise background noise</div>
-                      <div className="mt-4">
+                      <div className="mt-3">
                         Try sitting in a quiet place. Even though minor
                         background noise does not interfere with the feedback,
                         it can decrease the accuracy of the speech recognition

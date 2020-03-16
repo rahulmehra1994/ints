@@ -69,7 +69,7 @@ class LevelInfo extends Component {
 
   levelHeadBlock(label, status) {
     return (
-      <div className="mb-8">
+      <div className="mb-5">
         {' '}
         <span className="subHead">{label}</span> {this.mgsBlock(status)}
       </div>
@@ -122,11 +122,11 @@ class LevelInfo extends Component {
     return (
       <div
         className={classNames('p-4 sub-section', { hidden: !item.isOpen })}
-        style={{ paddingLeft: 42 }}>
+        style={{ paddingLeft: 50 }}>
         <div
           className="grid-2-cols paraHead"
           style={{ gridTemplateColumns: '2fr 1fr' }}>
-          <div className="pl-12">Objectives</div>
+          <div className="pl-10">Objectives</div>
           <div className="">Required</div>
         </div>
         {arr.map((item, index) => {
@@ -260,7 +260,7 @@ class LevelInfo extends Component {
               <span className="ep-icon-close"></span>
             </button>
             <div className="level-info-modal p-3">
-              <div className="px-10 pt-8 pb-4">
+              <div className="px-5 pt-8 pb-4">
                 <span className="font-bold" style={{ fontSize: 24 }}>
                   Levels Objectives
                 </span>
@@ -276,7 +276,7 @@ class LevelInfo extends Component {
               {levels2.map((item, index) => {
                 return (
                   <div key={index}>
-                    <div className="px-10 py-8">
+                    <div className="px-5 py-5">
                       <div key={index} className="">
                         {this.levelHeadBlock(item.label, item.status)}
 
