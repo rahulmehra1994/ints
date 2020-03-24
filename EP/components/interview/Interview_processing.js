@@ -20,8 +20,6 @@ class Interview_processing extends Component {
     }
   }
 
-  componentDidMount() {}
-
   render() {
     return (
       <div className={this.props.className}>

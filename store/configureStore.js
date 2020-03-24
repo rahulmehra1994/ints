@@ -3,10 +3,11 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers'
 import { routerMiddleware } from 'react-router-redux'
-import browserHistory from 'commonComps/history'
 import * as DashboardStates from '@vmockinc/dashboard/Dashboard/states'
 import * as AccountStates from '@vmockinc/dashboard/Account/states'
+import { createBrowserHistory } from 'history'
 
+const browserHistory = createBrowserHistory()
 const logger = createLogger()
 const routerMiddleWare = routerMiddleware(browserHistory)
 let middleware

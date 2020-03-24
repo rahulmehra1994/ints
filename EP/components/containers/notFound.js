@@ -5,10 +5,6 @@ import { Link, Route, Redirect } from 'react-router-dom'
 var Loader = require('react-loaders').Loader
 
 class NotFound extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <React.Fragment>

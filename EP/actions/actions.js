@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions'
-import moment from 'moment'
 import store from './../../store/configureStore'
 import { defaultUrls } from './../services/services'
 

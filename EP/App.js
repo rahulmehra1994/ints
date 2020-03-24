@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import _ from 'underscore'
 import * as cookie from 'js-cookie'
-import Main from './components/Main/index'
+import Main from './components/Main'
 import {
   fetchUserCustomizations,
   userCustomizationsEP,
@@ -17,7 +17,13 @@ class App extends Component {
     super(props)
     this.props.fetchUserCustomizations()
     userCustomizationsEP()
-    if (cookie.get('accessible_styles') === undefined) {
+    this.intializeHighContrastCookie()
+  }
+
+  intializeHighContrastCookie() {
+    if (cookie.get('accessible_styles') === true) {
+      cookie.set('accessible_styles', 'true')
+    } else {
       cookie.set('accessible_styles', 'false')
     }
   }
