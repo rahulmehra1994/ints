@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { mutuals } from './../../actions/commonActions'
+import { mutuals, log } from './../../actions/commonActions'
 
 var Loader = require('react-loaders').Loader
 
@@ -12,8 +12,6 @@ class PageInfo extends Component {
       modalToggle: false,
     }
   }
-
-  componentDidMount() {}
 
   modalToggler() {
     this.setState({ modalToggle: !this.state.modalToggle })
@@ -50,17 +48,7 @@ class PageInfo extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    common: state.commonStuff,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  {},
+  {}
 )(PageInfo)

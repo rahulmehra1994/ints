@@ -25,13 +25,13 @@ class VideoAnalysis extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      facePoints: [],
-      rightEye: [],
-      leftEye: [],
-      lips: [],
-      count: 0,
       isBlackInfoStripVisible: false,
     }
+    this.count = 0
+    this.facePoints = 0
+    this.rightEye = 0
+    this.leftEye = 0
+    this.lips = 0
     this.afterFacePointsArrived = this.afterFacePointsArrived.bind(this)
   }
 
@@ -42,19 +42,19 @@ class VideoAnalysis extends Component {
   componentDidUpdate() {
     if (
       this.props.animState &&
-      this.state.count < 1 &&
+      this.count < 1 &&
       this.props.facePointsImgPath !== null &&
       this.props.facePoints !== null
     ) {
-      this.setState({ count: ++this.state.count }, () => {
-        setTimeout(() => {
-          this.create()
-        }, 1000)
-        setTimeout(() => {
-          this.setState({ isBlackInfoStripVisible: true })
-          this.showPopup()
-        }, 4000)
-      })
+      this.count += 1
+
+      setTimeout(() => {
+        this.create()
+      }, 1000)
+      setTimeout(() => {
+        this.setState({ isBlackInfoStripVisible: true })
+        this.showPopup()
+      }, 4000)
     }
   }
 
@@ -111,10 +111,10 @@ class VideoAnalysis extends Component {
         lips.push(this.state.userPoints[i])
       }
 
-      this.state.facePoints = f
-      this.state.leftEye = le
-      this.state.rightEye = re
-      this.state.lips = lips
+      this.facePoints = f
+      this.leftEye = le
+      this.rightEye = re
+      this.lips = lips
     })
   }
 
@@ -134,7 +134,7 @@ class VideoAnalysis extends Component {
 
     setInterval(() => {
       this.startAnim()
-    }, this.state.facePoints.length * duration)
+    }, this.facePoints.length * duration)
   }
 
   startAnim() {
@@ -150,7 +150,7 @@ class VideoAnalysis extends Component {
 
   faceAnim() {
     circles
-      .data(this.state.facePoints)
+      .data(this.facePoints)
       .enter()
       .append('circle')
       .attr('class', 'facePoints')
@@ -175,7 +175,7 @@ class VideoAnalysis extends Component {
 
   eyeAnim() {
     circles
-      .data(this.state.leftEye)
+      .data(this.leftEye)
       .enter()
       .append('circle')
       .attr('class', 'leftEyePoints')
@@ -198,7 +198,7 @@ class VideoAnalysis extends Component {
       .style('opacity', 1)
 
     circles
-      .data(this.state.rightEye)
+      .data(this.rightEye)
       .enter()
       .append('circle')
       .attr('class', 'rightEyePoints')
@@ -223,7 +223,7 @@ class VideoAnalysis extends Component {
 
   lipAnim() {
     circles
-      .data(this.state.lips)
+      .data(this.lips)
       .enter()
       .append('circle')
       .attr('class', 'lipsPoints')

@@ -3,7 +3,12 @@ import { Link, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import $ from 'jquery'
-import { highContrast, common, mutuals } from './../../actions/commonActions'
+import {
+  highContrast,
+  common,
+  mutuals,
+  log,
+} from './../../actions/commonActions'
 
 var classNames = require('classnames')
 const trackingDebounceSmall = _.debounce(
@@ -154,46 +159,23 @@ class Leftbar extends Component {
 
   setFocusForAccessiblity() {
     let path = this.props.location.pathname
-    let appUrls = this.props.appUrls
-    switch (path) {
-      case appUrls.eyeGaze:
-        document.getElementById(data.eyeGaze.route).focus()
-        break
-      case appUrls.smile:
-        document.getElementById(data.smile.route).focus()
-        break
-      case appUrls.gesture:
-        document.getElementById(data.gesture.route).focus()
-        break
-      case appUrls.body:
-        document.getElementById(data.body.route).focus()
-        break
-      case appUrls.appearance:
-        document.getElementById(data.appearance.route).focus()
-        break
-      case appUrls.word:
-        document.getElementById(data.word.route).focus()
-        break
-      case appUrls.sentence:
-        document.getElementById(data.sentence.route).focus()
-        break
-      case appUrls.vocal:
-        document.getElementById(data.vocal.route).focus()
-        break
-      case appUrls.pauses:
-        document.getElementById(data.pauses.route).focus()
-        break
-      case appUrls.disfluencies:
-        document.getElementById(data.disfluencies.route).focus()
-        break
-      case appUrls.modulation:
-        document.getElementById(data.modulation.route).focus()
-        break
-      case appUrls.videosummary:
-        document.getElementById('videosummary').focus()
-        break
-      default:
-        return null
+    _.map(this.props.appUrls, (val, key) => {
+      if (val === path && key !== 'videosummary')
+        this.setElementFocus(data[key].route)
+
+      if (val === path && key === 'videosummary')
+        this.setElementFocus('videosummary')
+    })
+  }
+
+  setElementFocus(el) {
+    try {
+      document.getElementById(el).focus()
+    } catch (e) {
+      console.error(
+        'cannot find element id in setFocusForAccessiblity error=> ',
+        e
+      )
     }
   }
 
