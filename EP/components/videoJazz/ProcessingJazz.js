@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { log } from './../../actions/commonActions'
 import _ from 'underscore'
 import * as d3 from 'd3'
-import InterviewProcessing from './../interview/Interview_processing.js'
+import InterviewProcessing from './../interview/Interview_processing'
 import { notify } from '@vmockinc/dashboard/services/helpers'
 
 var classNames = require('classnames')

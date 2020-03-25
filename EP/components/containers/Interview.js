@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import VoiceRecognition from './../interview/VoiceRecognition.js'
+import VoiceRecognition from './../interview/VoiceRecognition'
 import myEnv from './../../myEnv'
-import ProcessingJazz from './../videoJazz/ProcessingJazz.js'
+import ProcessingJazz from './../videoJazz/ProcessingJazz'
 import _ from 'underscore'
 import { connect } from 'react-redux'
 import {

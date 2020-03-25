@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Leftbar from './../leftbar/Leftbar.js'
-import Contentbar from './../details/Contentbar.js'
+import Leftbar from './../leftbar/Leftbar'
+import Contentbar from './../details/Contentbar'
 import { connect } from 'react-redux'
 import { mutuals, log } from './../../actions/commonActions'
 import { throughInterview } from './../../actions/resultsActions'
 import { toggleVideoFloating } from './../../actions/actions'
-import VideoFloating from '../details/VideoFloating.js'
+import VideoFloating from '../details/VideoFloating'
 import VideoPreloader from './../utilities/VideoPreloader'
 
 class Results extends Component {

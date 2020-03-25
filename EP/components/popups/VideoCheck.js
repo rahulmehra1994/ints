@@ -8,7 +8,7 @@ import {
   checkForAudioTracks,
 } from './../utilities/AppUtils'
 import RecordRTC from 'recordrtc'
-import VoiceRecognition from './../interview/VoiceRecognition.js'
+import VoiceRecognition from './../interview/VoiceRecognition'
 import { highContrast, log } from './../../actions/commonActions'
 import _ from 'underscore'
 import { Media, Player, controls } from 'react-media-player'

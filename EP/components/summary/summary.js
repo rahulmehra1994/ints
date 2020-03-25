@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Comparison from './../summary/Comparison.js'
+import Comparison from './../summary/Comparison'
 import _ from 'underscore'
 import ContentLoader from 'react-content-loader'
 import { common, log, mutuals } from './../../actions/commonActions'

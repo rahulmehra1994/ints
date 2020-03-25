@@ -5,7 +5,7 @@ import { mutuals, common } from './../../actions/commonActions'
 import { modulationMsgs } from './../messages/messages'
 import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { DetailInfoHeader } from './../commons/DetailHeader'
-import IsThereOrNotBox from './../commons/IsThereOrNotBox.js'
+import IsThereOrNotBox from './../commons/IsThereOrNotBox'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const modualtionBig =

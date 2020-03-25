@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { mutuals, common, noDetection, log } from '../../actions/commonActions'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import anime from 'animejs/lib/anime.es.js'
+import anime from 'animejs/lib/anime'
 import { setInfoBarsAnimationState } from '../../actions/actions'
 
 var classNames = require('classnames')

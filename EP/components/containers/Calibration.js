@@ -29,7 +29,7 @@ import {
   AnalyzeAnim,
 } from './../../images/svg-files/InstantLoad'
 import ReactHtmlParser from 'react-html-parser'
-import anime from 'animejs/lib/anime.es.js'
+import anime from 'animejs/lib/anime'
 import SystemCheck from './../popups/SystemCheck'
 
 const leftArrowBlack =
@@ -1068,7 +1068,7 @@ class Calibration extends Component {
 
                 <div
                   className="rounded-b-lg"
-                  style={{ padding: 30, background: 'white'}}>
+                  style={{ padding: 30, background: 'white' }}>
                   <div className="clearfix">
                     <div className="float-left" style={{ width: '20%' }}>
                       <img alt="maintain distance" src={maintainDistance} />

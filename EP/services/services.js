@@ -1,4 +1,4 @@
-import { urlEnds } from './../actions/commonActions.js'
+import { urlEnds } from './../actions/commonActions'
 
 export function defaultUrls(intkey) {
   return {

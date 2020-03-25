@@ -6,7 +6,7 @@ import { log, common } from './../../actions/commonActions'
 import AsyncImage from './../Loading/asyncImage'
 import { appearMsgs } from './../messages/messages'
 import { DetailInfoHeader } from './../commons/DetailHeader'
-import IsThereOrNotBox from './../commons/IsThereOrNotBox.js'
+import IsThereOrNotBox from './../commons/IsThereOrNotBox'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const feedback =

@@ -13,7 +13,7 @@ import Feedback from './../feedback/Feedback'
 import {
   SubtitlesIcon,
   SubtitlesOffIcon,
-} from './../../images/svg-files/Subtitles.js'
+} from './../../images/svg-files/Subtitles'
 
 var classNames = require('classnames')
 var Loader = require('react-loaders').Loader

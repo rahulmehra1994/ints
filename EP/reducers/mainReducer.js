@@ -1,8 +1,4 @@
 import { handleActions } from 'redux-actions'
-import { combineReducers } from 'redux'
-// import { user } from './../../Navbar/reducers'
-
-// import State from './../../services/State.js'
 import State from '@vmockinc/dashboard/services/State'
 
 import {
@@ -285,7 +281,6 @@ const combined = {
   animations,
   appUrls,
   calibration,
-  // user: user,
   State: State,
   results: epResults,
   commonStuff: commonStuff,
@@ -311,7 +306,3 @@ const combined = {
 }
 
 export default combined
-
-// const rootReducer = combineReducers()
-
-// export default rootReducer

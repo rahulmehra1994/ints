@@ -10,7 +10,7 @@ import {
   apiCallAgain,
   fetchFacePointsImg,
 } from './../../actions/apiActions'
-import InterviewProcessing from './../interview/Interview_processing.js'
+import InterviewProcessing from './../interview/Interview_processing'
 
 var classNames = require('classnames')
 

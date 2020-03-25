@@ -8,7 +8,7 @@ import {
   insightsGraphValColors,
 } from '../../actions/commonActions'
 import Tabs from '../commons/Tabs'
-import InsightsChart from './charts/InsightsChart.js'
+import InsightsChart from './charts/InsightsChart'
 
 class InsightsWrap extends Component {
   constructor(props) {

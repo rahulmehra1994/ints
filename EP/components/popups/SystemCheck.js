@@ -3,10 +3,10 @@ import ModalHOC from '../hoc/ModalHOC'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import VideoCheck from './VideoCheck'
-import Gender from './../popups/genderPopup.js'
+import Gender from './../popups/genderPopup'
 import { updateChecksDone } from './../../actions/apiActions'
 import { mutuals, log, common } from './../../actions/commonActions'
-import InterviewQuestions from './../popups/InterviewQuestions.js'
+import InterviewQuestions from './../popups/InterviewQuestions'
 
 const InputCheckImg =
   process.env.APP_BASE_URL + '/dist/images/icons/input-check-illustration.svg'
