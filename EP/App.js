@@ -9,7 +9,6 @@ import {
   fetchUserCustomizations,
   userCustomizationsEP,
 } from './actions/apiActions'
-import UserActivityMonitor from './components/UserActivityTracker/component'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 
 class App extends Component {
@@ -67,7 +66,6 @@ class App extends Component {
             <Main />
           </div>
           <CustomerSupport />
-          <UserActivityMonitor />
         </React.Fragment>
       )
     }

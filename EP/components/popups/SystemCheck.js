@@ -82,7 +82,6 @@ class SystemCheck extends Component {
     })
     this.activateTab('editBasicInfo')
     this.makeBasicDetailsFormVisible()
-    updateChecksDone('network_check')
   }
 
   modalToggler() {

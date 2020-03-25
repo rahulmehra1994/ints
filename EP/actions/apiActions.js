@@ -79,7 +79,6 @@ export var counters = {
   submitTranscriptCount: 0,
   fetchTotalResultCount: 0,
   interviewStatusCallbackCount: 0,
-  fetchUserInfoCount: 0,
   updateUserInfoCount: 0,
   checkUserRegistrationCount: 0,
   fetchIllustrationDataCount: 0,
@@ -121,6 +120,7 @@ export function fetchImproveArticles() {
       contentType: false,
     })
     .done(data => {
+      counters['fetchImproveArticlesCount'] = 0
       store.dispatch(setImproveArticles(data.articles))
     })
     .fail(xhr => {
@@ -150,32 +150,6 @@ export function setImproveArticles(data) {
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
-
-export function fetchUserInfo() {
-  let gender = store.getState().userInfoEP.gender
-  if (gender === null) {
-    api
-      .service('ep')
-      .get('/getuserdata')
-      .done(data => {
-        counters['fetchUserInfoCount'] = 0
-        setUserInfo(data)
-      })
-      .fail(xhr => {
-        apiCallAgain(
-          counters,
-          'fetchUserInfoCount',
-          () => {
-            fetchUserInfo()
-          },
-          1000,
-          5,
-          xhr
-        )
-        log('%c Api faliure /getuserdata', 'background: red; color: white', xhr)
-      })
-  }
-}
 
 export function getUserInfo() {
   api
@@ -214,6 +188,7 @@ export function updateUserInfo(fd, onSuccess) {
     .service('ep')
     .post(`/updateuserdata`, fd, { processData: false, contentType: false })
     .done(data => {
+      counters['updateUserInfoCount'] = 0
       setUserInfo(data)
       onSuccess()
     })
@@ -248,7 +223,9 @@ export function updateChecksDone(type) {
       contentType: false,
     })
     .done(data => {
-      fetchUserInfo()
+      let gender = store.getState().userInfoEP.gender
+      if (gender === null) getUserInfo()
+
       counters['updateChecksDoneCount'] = 0
     })
     .fail(xhr => {
@@ -318,7 +295,7 @@ export function getInterviewStatus(arg, onGetIntStatusSuccess) {
       contentType: false,
     })
     .done(data => {
-      // store.dispatch(setIntReady(data.status))
+      counters['interviewStatusCallbackCount'] = 0
       onGetIntStatusSuccess(data.status)
     })
     .fail(xhr => {
@@ -374,6 +351,7 @@ export function fetchConcatenateResults() {
       contentType: false,
     })
     .done(data => {
+      counters['concatApiCount'] = 0
       store.dispatch(isEyeDataLegit(data))
       store.dispatch(isFaceDataLegit(data))
       store.dispatch(isHandDataLegit(data))
@@ -449,6 +427,7 @@ export function fetchPunctuator() {
       contentType: false,
     })
     .done(data => {
+      counters['punctuatorApiCount'] = 0
       store.dispatch(wordResults(data.content.content_results_overall))
       store.dispatch(sentenceResults(data.category.category_results_overall))
       store.dispatch(punctuatorResults(data))
@@ -483,6 +462,7 @@ export function newGentle() {
       contentType: false,
     })
     .done(data => {
+      counters['gentleProcessedApiCount'] = 0
       if (store.getState().statuses.post_gentle_praat !== 'success') return
 
       genlteDataToStore(data)
@@ -518,6 +498,7 @@ export function fetchGentleAfterRevaluation() {
       contentType: false,
     })
     .done(data => {
+      counters['gentleAfterApiCount'] = 0
       genlteDataToStore(data)
     })
     .fail(xhr => {
@@ -575,6 +556,7 @@ export function fetchInterviews(callback = null, onFailure = null) {
       contentType: false,
     })
     .done(data => {
+      counters['inteviewsApiCount'] = 0
       if (data.interview_keys === null) {
         store.dispatch(interviewKeys(null))
       } else {
@@ -617,6 +599,7 @@ export function fetchUserVideoPath() {
     .service('ep')
     .get(url)
     .done(data => {
+      counters['fetchUserVideoPathCount'] = 0
       store.dispatch(videoPath(data.url))
       store.dispatch(videoProcessThumb(data.url_image))
     })
@@ -646,6 +629,7 @@ export function fetchUserSpeechSubtitles() {
     .service('ep')
     .get(url)
     .done(data => {
+      counters['fetchUserSpeechSubtitlesCount'] = 0
       store.dispatch(setVideoSubtitlePath(data.url))
     })
     .fail(xhr => {
@@ -674,6 +658,7 @@ export function fetchAppearCompImg() {
     .service('ep')
     .get(url)
     .done(data => {
+      counters['fetchAppearCompImgCount'] = 0
       store.dispatch(appearImgPath(data.url))
     })
     .fail(xhr => {
@@ -709,6 +694,7 @@ export function fetchUserVideoProcessedPath() {
     .service('ep')
     .get(url)
     .done(data => {
+      counters['fetchUserVideoProcessedPathCount'] = 0
       store.dispatch(videoProcessedPath(data.url))
       store.dispatch(videoProcessedThumb(data.url_image))
     })
@@ -775,6 +761,7 @@ export function fetchFacePointsImg() {
     .service('ep')
     .post(url, fd, { processData: false, contentType: false })
     .done(data => {
+      counters['fetchFacePointsImgCount'] = 0
       store.dispatch(facePointImgPath(data.url))
     })
     .fail(xhr => {
@@ -808,7 +795,7 @@ export function fetchUserfacePoints() {
       contentType: false,
     })
     .done(data => {
-      // callback(data)
+      counters['facePointCount'] = 0
       store.dispatch(facePoints(data))
     })
     .fail(xhr => {
@@ -873,7 +860,10 @@ export function fetchUserCustomizations() {
     api
       .service('accounts')
       .get('user/customizations')
-      .done(response => dispatch(setUserCustomizations(response)))
+      .done(response => {
+        fetchUserCustomizationsCount = 0
+        dispatch(setUserCustomizations(response))
+      })
       .fail(xhr => {
         if (xhr && (xhr.status === 401 || xhr.status === 400)) {
           logout()
@@ -914,6 +904,7 @@ export function intKeyIsValid(
       contentType: false,
     })
     .done(data => {
+      counters['intKeyIsValidCount'] = 0
       setInterviewDuration(data.duration)
       setInterviewName(data.name)
       setInterviewQuestion(data.question_id)
@@ -964,6 +955,7 @@ export function fetchTranscript(callback, onFailure = null) {
       contentType: false,
     })
     .done(data => {
+      counters['fetchTranscriptCount'] = 0
       store.dispatch(setTranscript(data))
       if (callback !== null) {
         callback(data)
@@ -1013,24 +1005,6 @@ export function submitTranscript(transcript, onSuccess, onFailure) {
     })
     .fail(xhr => {
       onFailure()
-      return
-
-      apiCallAgain(
-        counters,
-        'submitTranscriptCount',
-        () => {
-          submitTranscript(transcript, onSuccess, onFailure)
-        },
-        1000,
-        10,
-        xhr
-      )
-
-      log(
-        '%c Api faliure /submitTranscript',
-        'background: red; color: white',
-        xhr
-      )
     })
 }
 
@@ -1045,7 +1019,7 @@ export function fetchTotalResult() {
       contentType: false,
     })
     .done(data => {
-      log('​fetchTotalResult -> ', data, '')
+      counters['fetchTotalResultCount'] = 0
       store.dispatch(setTotalResult(data))
     })
     .fail(xhr => {
@@ -1077,6 +1051,7 @@ export function checkUserRegistration(callback) {
       contentType: false,
     })
     .done(data => {
+      counters['checkUserRegistrationCount'] = 0
       if (data.status === 'success') {
         callback()
       } else {
@@ -1106,6 +1081,7 @@ export function fetchIllustrationData() {
     .service('ep')
     .post(url, fd, { processData: false, contentType: false })
     .done(data => {
+      counters['fetchIllustrationDataCount'] = 0
       store.dispatch(setIllustrationData(data.illustration_videos))
     })
     .fail(xhr => {
@@ -1157,6 +1133,7 @@ export function updateFeedback(data, onSuccess, onFailure) {
     .service('ep')
     .post(`/updatefeedback`, fd, { processData: false, contentType: false })
     .done(data => {
+      counters['updateFeedbackCount'] = 0
       onSuccess()
     })
     .fail(xhr => {
@@ -1191,6 +1168,7 @@ export function userCustomizationsEP() {
     .post(`/usercustomizations`, fd, { processData: false, contentType: false })
     .done(data => {
       //success
+      counters['userCustomizationsEPCount'] = 0
       store.dispatch(setEPCustomizations(data))
     })
     .fail(xhr => {
