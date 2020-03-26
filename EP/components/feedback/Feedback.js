@@ -380,7 +380,7 @@ class Question extends React.Component {
                     </div>
 
                     <p
-                      className="mt-2 para capitalize"
+                      className="mt-2 text-14-med capitalize app-text-font"
                       style={item.selected ? { fontWeight: 'bold' } : null}>
                       {item.label}
                     </p>

@@ -137,6 +137,10 @@ h6 {
     font-weight: 400;
   }
 
+  .app-text-font {
+    font-family: $app-font;
+  }
+
   .caption {
     font-size: 12px;
     font-weight: normal;
@@ -215,7 +219,7 @@ h6 {
   }
 
   .default-text-color {
-    color: black;
+    color: $black;
   }
 
   .ml20 {
@@ -237,7 +241,7 @@ h6 {
   }
 
   .font-family-number {
-    font-family: 'Bebas W00';
+    font-family: $app-number-font;
     font-weight: 400;
     font-size: 1.388vw;
   }
@@ -315,7 +319,7 @@ h6 {
   }
 
   .ceruleanBg {
-    background: #0075cb;
+    background: $cerulean;
   }
 
   .under {
@@ -339,8 +343,8 @@ h6 {
     height: 140px;
     border-radius: 100%;
     box-shadow: 0 2px 20px 0 rgba(202, 221, 235, 0.5);
-    background-color: #e8edf3;
-    border: solid 8px #ffffff;
+    background-color: $background-color;
+    border: solid 8px $white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -395,7 +399,6 @@ h6 {
     font-size: 14px;
     font-weight: 600;
     font-stretch: normal;
-    font-family: 'Avenir Next W00', Helvetica Neue, Helvetica, Arial, sans-serif;
   }
 
   .para {
@@ -403,7 +406,6 @@ h6 {
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
-    font-family: 'Avenir Next W00', Helvetica Neue, Helvetica, Arial, sans-serif;
   }
 
   .hint {
@@ -414,7 +416,7 @@ h6 {
   }
 
   .hintColor {
-    color: #757575;
+    color: $grey;
   }
 
   .anchorStyle {
@@ -472,19 +474,6 @@ h6 {
     text-decoration: underline;
   }
 
-  .avatar {
-    display: inline-block;
-    border-radius: 50%;
-  }
-
-  .avatar-initials {
-    text-align: center;
-    vertical-align: middle;
-    background-color: #666;
-    color: #fff;
-    letter-spacing: 1px;
-  }
-
   .button {
     border-radius: 3px;
     font-size: 15px;
@@ -500,18 +489,18 @@ h6 {
 
   .blueButton:hover {
     background-color: $dark-blue;
-    color: white;
+    color: $white;
   }
 
   .whiteButton {
-    background: white;
+    background: $white;
     color: $cerulean;
     border: 1px solid $cerulean;
   }
 
   .whiteButton:hover {
     background-color: $cerulean;
-    color: white;
+    color: $white;
   }
 
   .opacity0 {
@@ -550,7 +539,7 @@ h6 {
     height: 100%;
     width: 100%;
     z-index: 100;
-    background-color: white;
+    background-color: $white;
     opacity: 0.6;
   }
 
@@ -580,7 +569,7 @@ h6 {
 
   .epModal {
     width: 768px;
-    background: white;
+    background: $white;
     position: relative;
     border-radius: 5px;
     margin: 30px auto;
@@ -721,7 +710,7 @@ h6 {
     border-radius: 100%;
     height: 30px;
     width: 30px;
-    background: #ccc;
+    background: $grey-dark;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -805,7 +794,7 @@ h6 {
 
   .videoCard {
     margin-bottom: 1%;
-    background-color: #ffffff;
+    background-color: $white;
     position: relative;
     cursor: pointer;
     width: 24%;
@@ -839,22 +828,22 @@ h6 {
 
   .greenBg {
     background: $green;
-    color: white;
+    color: $white;
   }
 
   .redBg {
     background: $red;
-    color: white;
+    color: $white;
   }
 
   .accessiblityRedBg {
-    color: white;
+    color: $white;
     background: $accessiblityRed;
   }
 
   .accessiblityGreenBg {
     background: $accessiblityGreen;
-    color: white;
+    color: $white;
   }
 
   .brand-blue-color {
@@ -979,7 +968,7 @@ h6 {
     justify-content: center;
     align-items: center;
     background: $black;
-    color: white;
+    color: $white;
   }
 
   .vs-video-container {
@@ -1002,7 +991,7 @@ h6 {
   }
 
   .player-play-copy {
-    border: 2px solid white;
+    border: 2px solid $white;
     border-radius: 10px;
     width: 92px;
     height: 24px;
@@ -1027,20 +1016,7 @@ h6 {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left: 15px solid white;
-  }
-
-  .circleNum {
-    border-radius: 100%;
-    padding: 10px 15px;
-    border: 1px solid gray;
-    float: left;
-  }
-
-  .basicInfoIndex {
-    width: 50px;
-    min-height: 50px;
-    float: left;
+    border-left: 15px solid $white;
   }
 
   .basicInfoOption {
@@ -1127,7 +1103,7 @@ h6 {
     visibility: hidden;
     width: 120px;
     background-color: black;
-    color: #fff;
+    color: $white;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -1170,7 +1146,7 @@ h6 {
     border-radius: 4px;
     position: absolute;
     background: $grey;
-    color: white;
+    color: $white;
     text-align: center;
   }
 
@@ -1197,7 +1173,7 @@ h6 {
     border-radius: 4px;
     position: absolute;
     background: $grey;
-    color: white;
+    color: $white;
     text-align: center;
   }
 
@@ -1210,58 +1186,6 @@ h6 {
     position: absolute;
     top: -5px;
     right: 5px;
-  }
-
-  .tooltip-container {
-    overflow: hidden;
-    margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px;
-    height: 70px;
-    background: lightblue;
-    text-align: center;
-  }
-
-  .has-tooltip {
-    display: inline;
-  }
-  .tooltip-wrapper {
-    position: absolute;
-    visibility: hidden;
-  }
-  .has-tooltip:hover .tooltip-wrapper {
-    visibility: visible;
-    opacity: 0.7;
-  }
-
-  .tooltip2 {
-    display: block;
-    position: relative;
-    top: 2em;
-    right: 100%;
-    width: 140px;
-    height: 96px;
-    color: #ffffff;
-    background: #000000;
-    line-height: 96px;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 4px 3px 10px #800000;
-    z-index: 10000;
-  }
-  .tooltip2:after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -8px;
-    width: 0;
-    height: 0;
-    border-bottom: 8px solid #000000;
-    border-right: 8px solid transparent;
-    border-left: 8px solid transparent;
-    z-index: 10000;
   }
 
   .basicDetailsButt {
@@ -1304,7 +1228,7 @@ h6 {
   }
 
   .chunks-play-white .path2:before {
-    color: white;
+    color: $white;
   }
 
   .chunks-play-light-grey .path1:before {
@@ -1324,7 +1248,7 @@ h6 {
   }
 
   .chunks-play-disabled2 .path1:before {
-    color: white;
+    color: $white;
   }
 
   .chunks-play-disabled2 .path2:before {
@@ -1332,7 +1256,7 @@ h6 {
   }
 
   .chunks-play-blue .path1:before {
-    color: white;
+    color: $white;
   }
 
   .chunks-play-blue .path2:before {
@@ -1340,7 +1264,7 @@ h6 {
   }
 
   .chunks-play-dark-blue .path1:before {
-    color: white;
+    color: $white;
   }
 
   .chunks-play-dark-blue .path2:before {
@@ -1559,7 +1483,7 @@ h6 {
   }
 
   .calib-setup .card-wrap {
-    background: #ffffff;
+    background: $white;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     margin: 0 auto;
@@ -1592,7 +1516,7 @@ h6 {
     line-height: 1.43;
 
     text-align: left;
-    color: #444444;
+    color: $grey-darkest;
     padding: 18px 0px 0px 0px;
   }
 
@@ -1616,7 +1540,7 @@ h6 {
   .test1 {
     height: 40px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
-    background-color: #ffffff;
+    background-color: $white;
   }
 
   .horizontal-scroll:hover {
@@ -1629,20 +1553,20 @@ h6 {
 
   video::cue {
     background: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: $white;
     font-size: 22px;
     line-height: 2.5;
     size: 100%;
   }
   video::cue(b) {
-    color: white;
+    color: $white;
   }
 
   .exclusive-illus-video {
     position: absolute;
     left: 10px;
     top: 10px;
-    color: white;
+    color: $white;
     font-size: 12px;
     font-weight: 500;
   }
@@ -1676,7 +1600,7 @@ h6 {
     border-radius: 4px;
     position: absolute;
     background: $grey;
-    color: white;
+    color: $white;
     text-align: center;
   }
 
@@ -1701,7 +1625,7 @@ h6 {
     position: absolute;
     right: 4px;
     background: $grey;
-    color: white;
+    color: $white;
     text-align: center;
   }
 
@@ -1744,7 +1668,7 @@ h6 {
   .video-trail-wrap {
     position: relative;
     width: 900px;
-    background: white;
+    background: $white;
     height: calc(100vh - 50px);
     margin: 0 auto;
     margin-top: 10px;
@@ -1853,7 +1777,7 @@ h6 {
 
   .status-el-active {
     background: $cerulean;
-    color: white;
+    color: $white;
   }
 
   .bread-crumbs {
@@ -1944,7 +1868,7 @@ h6 {
   }
 
   .progressbar-bg-detection {
-    background: white;
+    background: $white;
   }
 
   .progressbar-bg-nodetection {
@@ -2254,7 +2178,7 @@ h6 {
       border-radius: 3px;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.38);
       padding: 10px;
-      background: white;
+      background: $white;
       z-index: 10;
     }
   }
@@ -2311,7 +2235,7 @@ h6 {
     top: 0;
     border-radius: 3px;
     box-shadow: 0 1px 22px 0 rgba(0, 0, 0, 0.31);
-    background-color: #ffffff;
+    background-color: $white;
     animation: 1s ease level-info-modal-animation forwards;
     height: 100%;
     width: 480px;
@@ -2321,7 +2245,7 @@ h6 {
       @extend .p-4, .border-gray, .w-full, .text-left;
     }
     .section-head:hover {
-      background: #e0edf6;
+      background: $int-ques-hover;
     }
   }
 
@@ -2366,7 +2290,7 @@ h6 {
     margin: 0 auto;
     padding: 10px 25px 25px 25px;
     text-align: center;
-    background: white;
+    background: $white;
   }
 
   .calibration-video {
@@ -2424,7 +2348,7 @@ h6 {
     position: relative;
     width: 100%;
     min-height: 95px;
-    background: #ffffff;
+    background: $white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2453,7 +2377,7 @@ h6 {
     width: 900px;
     height: 100%;
     border-radius: 2px;
-    background-color: #ffffff;
+    background-color: $white;
     border: solid 1px #dadada;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -2488,7 +2412,7 @@ h6 {
     font-size: 20px;
     font-weight: 300;
     text-align: center;
-    color: #ffffff;
+    color: $white;
   }
 
   #time {
@@ -2537,7 +2461,7 @@ h6 {
     margin: 0 auto;
     font-size: 36px;
     font-weight: 600;
-    color: white;
+    color: $white;
     width: 840px;
     height: 130px;
     text-align: center;
@@ -2567,12 +2491,12 @@ h6 {
     width: 20%;
     height: 30px;
     border-radius: 4px;
-    background-color: #ff5500;
+    background-color: $red;
     z-index: 10;
     font-size: 14px;
     font-weight: 500;
     text-align: center;
-    color: #ffffff;
+    color: $white;
   }
 
   video#interview-video {
@@ -2600,7 +2524,7 @@ h6 {
     font-weight: 500;
     letter-spacing: 1px;
     text-align: left;
-    color: #ffffff;
+    color: $white;
   }
 
   @media all and (max-width: 980px) {
@@ -2611,7 +2535,7 @@ h6 {
       width: 95%;
       height: 866px;
       border-radius: 2px;
-      background-color: #ffffff;
+      background-color: $white;
       border: solid 1px #dadada;
     }
   }
@@ -2628,7 +2552,7 @@ h6 {
     align-items: center;
     flex-wrap: wrap;
     font-size: 20px;
-    color: white;
+    color: $white;
     z-index: 1000;
   }
 
@@ -2640,7 +2564,7 @@ h6 {
   .intProcess {
     text-align: center;
     background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: $white;
     padding: 20px 0px;
   }
 
@@ -2812,7 +2736,7 @@ h6 {
     width: 100%;
     padding-top: 14px;
     padding-bottom: 14px;
-    border-bottom: 1px solid #dadada;
+    border-bottom: 1px solid $light-grey;
   }
 
   .single-column {
@@ -2890,7 +2814,7 @@ h6 {
     top: 16px;
     width: 100%;
     border-radius: 2px;
-    background-color: #ffffff;
+    background-color: $white;
     border: solid 1px #dadada;
   }
 
@@ -2911,7 +2835,7 @@ h6 {
     margin-left: 16px;
     margin-right: 16px;
     height: 1px;
-    background-color: #dadada;
+    background-color: $light-grey;
   }
 
   #improvement-content {
@@ -2991,7 +2915,7 @@ h6 {
   #divider {
     margin: 8px 0;
     height: 1px;
-    background-color: #757575;
+    background-color: $grey;
   }
 
   #primary-bar {
@@ -3000,7 +2924,7 @@ h6 {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background-color: $white;
   }
 
   .leftbar-component-true {
@@ -3016,7 +2940,7 @@ h6 {
     position: relative;
     width: 100%;
     height: 40px;
-    background: white;
+    background: $white;
     padding: 0 20px;
     margin: 1px 0;
   }
@@ -3034,7 +2958,7 @@ h6 {
     position: relative;
     width: 100%;
     height: 40px;
-    background: #ffffff;
+    background: $white;
     padding: 0 20px;
     margin: 1px 0;
   }
@@ -3094,7 +3018,7 @@ h6 {
     font-weight: 500;
     letter-spacing: -0.1px;
     text-align: left;
-    color: #000000;
+    color: $black;
   }
 
   #leftbar .leftBarTxtHighlight {
@@ -3128,7 +3052,7 @@ h6 {
     position: relative;
     width: 100%;
     height: 50px;
-    background-color: #ffffff;
+    background-color: $white;
     z-index: 10;
     display: flex;
     align-items: center;
@@ -3139,8 +3063,8 @@ h6 {
     display: inline-block;
     width: 2.35%;
     height: 100%;
-    background-color: #0075cb;
-    border: solid 1px #0075cb;
+    background-color: $cerulean;
+    border: solid 1px $cerulean;
   }
 
   .secondary-component-false .cell-state {
@@ -3148,8 +3072,8 @@ h6 {
     display: inline-block;
     width: 2.35%;
     height: 100%;
-    background-color: #ffffff;
-    border-bottom: solid 1px #dadada;
+    background-color: $white;
+    border-bottom: solid 1px $light-grey;
   }
 
   .secondary-component-text {
@@ -3159,7 +3083,7 @@ h6 {
     font-size: 14px;
     font-weight: 500;
     text-align: left;
-    color: black;
+    color: $black;
   }
 
   .right-arrow {
@@ -3205,25 +3129,7 @@ h6 {
     height: 100%;
     font-size: 12px;
     text-align: left;
-    color: #757575;
-  }
-
-  .performance-result {
-    position: relative;
-    display: inline-block;
-    margin-top: 8px;
-    margin-bottom: 16px;
-    margin-left: 25px;
-    margin-right: 10px;
-    padding-top: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 2px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-    color: #ffffff;
+    color: $grey;
   }
 
   .leftbarSelectColor {
@@ -3377,11 +3283,10 @@ h6 {
 
   .cs-control-hover {
     visibility: hidden;
-    background: white;
     @extend .p-6;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
     border: solid 1px #eeeeee;
-    background-color: #ffffff;
+    background-color: $white;
     z-index: 1000;
     border-radius: 3px;
     right: 8px;

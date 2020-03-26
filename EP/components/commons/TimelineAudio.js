@@ -1,6 +1,5 @@
 import React from 'react'
-import $ from 'jquery'
-import { highContrast, log, mutuals } from './../../actions/commonActions'
+import { log } from './../../actions/commonActions'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import { toggleVideoFloating } from './../../actions/actions'
