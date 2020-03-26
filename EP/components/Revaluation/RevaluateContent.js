@@ -162,7 +162,7 @@ class RevaluateContent extends Component {
 
   resetForTranscriptApiCall() {
     this.canRecallFetch = true
-    this.fetchApiCounter = this.fetchApiCounter += 1
+    this.fetchApiCounter += 1
   }
 
   showLoader() {
