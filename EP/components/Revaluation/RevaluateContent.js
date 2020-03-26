@@ -32,9 +32,9 @@ class RevaluateContent extends Component {
       buttonTxt: 'Re-evaluate Feedback',
       transcriptDataArrived: false,
       interviewKeysArrived: false,
-      recalltranscriptCounter: 0,
       audioLoader: false,
     }
+    this.recalltranscriptCounter = 0
     this.modalToggler = this.modalToggler.bind(this)
     this.onTranscriptSaveSuccess = this.onTranscriptSaveSuccess.bind(this)
     this.onTranscriptSaveFail = this.onTranscriptSaveFail.bind(this)
@@ -71,11 +71,8 @@ class RevaluateContent extends Component {
   }
 
   onFetchTranscriptSuccess(data) {
-    if (
-      data.status === 'processing' &&
-      this.state.recalltranscriptCounter < 10
-    ) {
-      this.state.recalltranscriptCounter++
+    if (data.status === 'processing' && this.recalltranscriptCounter < 10) {
+      this.recalltranscriptCounter++
       this.recallTranscript()
       return
     }
@@ -99,13 +96,13 @@ class RevaluateContent extends Component {
   showSuccessTxt() {
     this.setState({ buttonTxt: 'Success!' })
     setTimeout(() => {
+      this.recalltranscriptCounter = 0
       this.setState(
         {
           loaderStatus: false,
           buttonTxt: 'Re-evaluate Feedback',
           transcriptDataArrived: false,
           interviewKeysArrived: false,
-          recalltranscriptCounter: 0,
         },
         () => {
           this.modalClose()
@@ -209,13 +206,13 @@ class RevaluateContent extends Component {
   onTranscriptSaveFail() {
     this.setState({ buttonTxt: 'failure!' })
     setTimeout(() => {
+      this.recalltranscriptCounter = 0
       this.setState(
         {
           loaderStatus: false,
           buttonTxt: 'Re-evaluate Feedback',
           transcriptDataArrived: false,
           interviewKeysArrived: false,
-          recalltranscriptCounter: 0,
         },
         () => {
           this.modalClose()

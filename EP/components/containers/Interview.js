@@ -25,7 +25,6 @@ import {
   getInterviewStatus2,
   fetchFacePointsImg,
   fetchUserfacePoints,
-  commonApi,
 } from './../../actions/apiActions'
 import {
   startInterviewApi,

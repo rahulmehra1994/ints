@@ -832,22 +832,6 @@ function facePoints(data) {
   }
 }
 
-export function userActivityMeasure(callback) {
-  api
-    .service('accounts')
-    .patch(`login/token`)
-    .done(response => {
-      callback(response)
-    })
-    .fail(xhr => {
-      if (xhr && (xhr.status === 401 || xhr.status === 400)) {
-        logout()
-        return
-      }
-      log('', '', xhr)
-    })
-}
-
 export function reCallImgVideo() {
   fetchUserVideoProcessedPath()
   fetchUserVideoPath()
@@ -1102,27 +1086,6 @@ export function fetchIllustrationData() {
         xhr
       )
     })
-}
-
-export function trackingDataEP(
-  url = window.location.href,
-  trackType,
-  eventCategory = '',
-  eventAction = '',
-  eventLabel = ''
-) {
-  return api.service('tracking').post('resume', {
-    curr_url: url,
-    curr_base_url: window.location.hostname,
-    track_type: trackType,
-    event_category: eventCategory,
-    event_action: eventAction,
-    event_label: eventLabel,
-  })
-}
-
-export const commonApi = {
-  trackingDataEP,
 }
 
 export function updateFeedback(data, onSuccess, onFailure) {

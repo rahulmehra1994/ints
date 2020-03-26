@@ -49,6 +49,7 @@ class WordUsage extends Component {
 
   toggleAll(category) {
     let { categories } = this.state
+    categories = mutuals.deepCopy(categories)
     for (let item in categories) {
       if (item === category) {
         continue
@@ -62,8 +63,9 @@ class WordUsage extends Component {
 
   openFirstFilled = _.once(category => {
     let { categories } = this.state
+    categories = mutuals.deepCopy(categories)
     for (let item in categories) categories[item] = false
-    categories[category] = !categories[category]
+    categories[category] = true
     this.setState({ categories: categories })
   })
 

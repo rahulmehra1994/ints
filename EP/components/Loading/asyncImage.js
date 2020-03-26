@@ -9,10 +9,6 @@ class AsyncImage extends Component {
     this.state = { loader: true }
   }
 
-  compToggle(comp) {
-    this.setState({ [comp]: !this.state.comp })
-  }
-
   render() {
     let { width, height, loaderSize, alt } = this.props
     let localStyle = {
@@ -32,7 +28,7 @@ class AsyncImage extends Component {
     }
 
     return (
-      <div className="relative" style={{ width: width, height: height }}>
+      <div className="relative" style={{ width, height }}>
         <img
           alt={alt}
           src={this.props.src}

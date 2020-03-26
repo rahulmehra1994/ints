@@ -19,6 +19,7 @@ import { defaultUrls } from './../../services/services'
 import CenterLoading from './../CenterLoading/index'
 import Loadable from 'react-loadable'
 import _ from 'underscore'
+
 const Calib = Loadable({
   loader: () => import('./../containers/Calibration'),
   loading: () => (
@@ -47,12 +48,6 @@ const SummaryDetailedParent = Loadable({
 })
 
 var xhrPool = []
-export const cancelAllAjax = callback => {
-  $.each(xhrPool, function(idx, xhr) {
-    xhr.abort()
-  })
-  callback()
-}
 
 $.ajaxSetup({
   beforeSend: (xhr, options) => {
@@ -92,21 +87,28 @@ class Main extends React.PureComponent {
 
     this.pathArr = []
     this.calc404 = this.calc404.bind(this)
-    this.whenIntKeyFound = this.whenIntKeyFound.bind(this)
     this.whenIntKeyIsNotFound = this.whenIntKeyIsNotFound.bind(this)
     //  react router history to be used by the containers.
     window.reactRouterHistory = this.props.history
-    this.goFurther = this.goFurther.bind(this)
     this.validIntKeyUsed = this.validIntKeyUsed.bind(this)
     this.inValidIntKeyUsed = this.inValidIntKeyUsed.bind(this)
   }
 
   componentDidMount() {
+    this.splitPath()
     onAndBlurFocus()
     getUserInfo()
     fetchImproveArticles()
     this.calc404()
+    this.applyUsingMouseClassFunctionality()
+  }
 
+  splitPath() {
+    this.pathArr = window.location.pathname.split('/')
+    removeOnAndBlurFocus()
+  }
+
+  applyUsingMouseClassFunctionality() {
     document.body.classList.add('using-mouse')
     document.body.addEventListener('mousedown', function() {
       document.body.classList.add('using-mouse')
@@ -116,17 +118,18 @@ class Main extends React.PureComponent {
     })
   }
 
-  UNSAFE_componentWillMount() {
-    this.pathArr = window.location.pathname.split('/')
-    removeOnAndBlurFocus()
-  }
-
   alertOffline() {
     setInterval(() => {
       if (navigator.onLine) {
         //online
       } else {
-        alert(`You are offline! Don't proceed further.`)
+        notify('You are offline! Do not proceed further.', 'error', {
+          layout: 'center',
+          timeout: false,
+          callback: {
+            onClose: () => {},
+          },
+        })
       }
     }, 3000)
   }
@@ -192,18 +195,8 @@ class Main extends React.PureComponent {
     this.setState({ notFound: true })
   }
 
-  goFurther() {}
-
-  whenIntKeyFound() {
-    this.setState({ notFound: false, mountRoutesComp: true })
-  }
-
   whenIntKeyIsNotFound() {
     this.setState({ notFound: true })
-  }
-
-  getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value)
   }
 
   cancelAllAjax = callback => {
