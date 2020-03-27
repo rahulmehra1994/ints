@@ -40,7 +40,7 @@ class Results extends Component {
   render() {
     return (
       <div className="results">
-        <div className="clearfix mt-3">
+        <div className="clearfix mt-2">
           <Leftbar
             updateActiveTab={this.updateActiveTab}
             userInfo={this.props.userInfo}

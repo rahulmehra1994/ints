@@ -32,9 +32,16 @@ class LevelInfo extends Component {
     document.onkeydown = null
   }
 
+  scrollModalUp() {
+    document.querySelector('.summ-main-wrap').scrollTop = 0
+  }
+
   modalToggler() {
     this.setState({ isModalOpen: !this.state.isModalOpen }, () => {
       this.props.modalVisiblity(mutuals.deepCopy(this.state.isModalOpen))
+      if (this.state.isModalOpen === true) {
+        this.scrollModalUp()
+      }
     })
   }
 
@@ -248,7 +255,7 @@ class LevelInfo extends Component {
         </div>
 
         {this.state.isModalOpen ? (
-          <div>
+          <div id="scrollerer">
             <button
               className="epModalClose"
               style={{ right: -470 }}

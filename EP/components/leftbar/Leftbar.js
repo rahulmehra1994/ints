@@ -350,8 +350,8 @@ class Leftbar extends Component {
             return (
               <React.Fragment>
                 {_.has(item, 'sectionHeading') ? (
-                  <div className="paraHead mt-12 mb-2">
-                    <span className="ml-8">{item.sectionHeading}</span>
+                  <div className="paraHead mt-8 mb-2">
+                    <span className="ml-6">{item.sectionHeading}</span>
                   </div>
                 ) : null}
                 <this.TemplateBlock
@@ -368,7 +368,7 @@ class Leftbar extends Component {
           })}
 
           {mutuals.isContentEnabled(this.props) ? null : (
-            <div className="p-8 no-content-leftbar">
+            <div className="px-6 py-8 no-content-leftbar">
               <div className={classNames('')}>
                 <div className="w-full">
                   <span className="float-left para">Content Strength</span>
