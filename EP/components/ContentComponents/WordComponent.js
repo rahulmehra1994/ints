@@ -63,7 +63,7 @@ export default class WordComponent extends Component {
 
     if (this.props.results) {
       data = this.props.results.map((item, index) => {
-        if (item['  '] === '') return null
+        if (item['content'] === '') return null
 
         if (item['type'] === 3 || item['type'] === 5)
           classname = highContrast ? 'accessiblityGreenBg' : 'greenBg'
