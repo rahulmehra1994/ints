@@ -31,6 +31,15 @@ h6 {
   font-weight: 600;
 }
 
+body.using-mouse :focus {
+  outline: none;
+}
+
+body:not(.using-mouse) .btn-primary:focus {
+  background-color: #005c9e;
+  border-color: #000;
+}
+
 .ep-app {
   .text-54-med {
     font-size: 54px;
@@ -1393,17 +1402,6 @@ h6 {
 
   .loader-inner > div {
     background: black;
-  }
-
-  /* When mouse is detected, ALL focused elements have outline removed. */
-  /* You could apply this selector only to buttons, if you wanted. */
-  body.using-mouse :focus {
-    outline: none;
-  }
-
-  body:not(.using-mouse) .btn-primary:focus {
-    background-color: #005c9e;
-    border-color: #000;
   }
 
   .loader-inner > div {

@@ -27,6 +27,7 @@ class SubNavbar extends Component {
       detailedActive: false,
       openRenameModal: false,
       disableFavourite: false,
+      disableRename: false,
     }
     this.intOptions = null
     this.isVideoSummDisabled = this.isVideoSummDisabled.bind(this)
@@ -34,6 +35,16 @@ class SubNavbar extends Component {
     this.optionsDropdownClose = this.optionsDropdownClose.bind(this)
     this.closeOptionsDropdownOnEsc = this.closeOptionsDropdownOnEsc.bind(this)
   }
+
+  componentDidMount() {
+    this.deactivateButtonForAdmin()
+  }
+
+  deactivateButtonForAdmin() {
+    if (this.props.epCustomizations.user_type === 'admin')
+      this.setState({ disableFavourite: true, disableRename: true })
+  }
+
   summaryActive() {
     if (this.props.location.pathname === this.props.appUrls.summary) {
       return true
@@ -88,14 +99,9 @@ class SubNavbar extends Component {
   }
 
   optionsDropdownClose(event) {
-    // if (
-    //   (this.intOptions && !this.intOptions.contains(event.target)) ||
-    //   event === 'clickedSortOption'
-    // ) {
     this.setState({ optionsDropdown: false })
     document.removeEventListener('click', this.optionsDropdownClose)
     document.removeEventListener('keydown', this.closeOptionsDropdownOnEsc)
-    // }
   }
 
   optionsDropdownOpen() {
@@ -167,6 +173,7 @@ class SubNavbar extends Component {
                 this.optionsDropdownOpen()
               }
             }}
+            disabled={this.state.disableRename}
             tabIndex={tabIndex}
             aria-label={'open interview alterations panel'}>
             <span className="ep-icon-option align-text-bottom text-20-normal" />
@@ -296,6 +303,7 @@ const mapStateToProps = state => {
       ? state.epPaths.userVideoProcessedPath
       : null,
     intDetails: state.interviewEP,
+    epCustomizations: state.epCustomizations,
   }
 }
 
