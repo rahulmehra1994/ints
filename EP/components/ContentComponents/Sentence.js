@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import {
@@ -56,6 +55,18 @@ function isEssentialItem(props) {
 }
 
 const DataRow = props => {
+  let samplesAvailable = () => {
+    if (
+      props.type === 'Greeting' ||
+      props.type === 'Gratitude' ||
+      props.type === 'Name'
+    ) {
+      return false
+    } else {
+      return true
+    }
+  }
+
   return (
     <div
       className="single-row"
@@ -87,10 +98,6 @@ const DataRow = props => {
             <div style={{ width: 'calc(100% - 100px)' }}>
               {breakLine(props.data.join('<br />'))}
             </div>
-
-            <span className="contentSample float-right mt-1">
-              <div className="tooltipInfo">No Sample</div>
-            </span>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -103,8 +110,7 @@ const DataRow = props => {
                   Not detected!
                 </span>
 
-                {props.type === 'Greeting' ||
-                props.type === 'Gratitude' ? null : (
+                {samplesAvailable() ? (
                   <div className="float-right">
                     <ViewSampleButton
                       tabIndex={props.tabIndex}
@@ -113,7 +119,7 @@ const DataRow = props => {
                       }}
                     />
                   </div>
-                )}
+                ) : null}
               </React.Fragment>
             ) : (
               <span
@@ -123,9 +129,6 @@ const DataRow = props => {
                 Can be added
               </span>
             )}
-            <span className="contentSample float-right cursor-pointer mt-1">
-              <div className="tooltipInfo">View Sample</div>
-            </span>
           </React.Fragment>
         )}
       </div>

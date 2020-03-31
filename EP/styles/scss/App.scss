@@ -1332,17 +1332,6 @@ body:not(.using-mouse) .btn-primary:focus {
     z-index: 100;
   }
 
-  .contentSample .tooltipInfo {
-    display: none;
-    width: 100px;
-    top: 28px;
-    transform: translateX(2.5px);
-  }
-
-  .contentSample:hover div {
-    display: block;
-  }
-
   /*------------------------------------*\
   #Sentence sample modal css
 \*------------------------------------*/
