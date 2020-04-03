@@ -41,8 +41,8 @@ class SubNavbar extends Component {
   }
 
   deactivateButtonForAdmin() {
-    if (this.props.epCustomizations.user_type === 'admin')
-      this.setState({ disableFavourite: true, disableRename: true })
+    // if (this.props.epCustomizations.user_type === 'admin')
+    //   this.setState({ disableFavourite: true, disableRename: true })
   }
 
   summaryActive() {
@@ -79,7 +79,6 @@ class SubNavbar extends Component {
     let { isFavourite } = this.props.intDetails
 
     let res = isFavourite === 1 ? 0 : 1
-    log('see the magic =>', typeof res)
 
     modifyInterview({ id, type, val: res }, () => {
       this.setState({ disableFavourite: true })
@@ -190,7 +189,7 @@ class SubNavbar extends Component {
                   onKeyPress={e => {
                     if (e.key === 'Enter') this.openRenameModalHandler()
                   }}
-                  className="px-8 py-6 pointer-cursor hover:bg-grey-lightest"
+                  className="px-4 py-3 pointer-cursor hover:bg-grey-lightest"
                   tabIndex={tabIndex}
                   aria-label={'opens interview rename popup'}>
                   Rename

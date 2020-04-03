@@ -45,6 +45,9 @@ import CenterLoading from './../CenterLoading/index'
 import { notify } from '@vmockinc/dashboard/services/helpers'
 import { OverlayMask } from './../../images/svg-files/CalibOverlayMask'
 
+const clock = process.env.APP_BASE_URL + '/dist/images/ic-timer-black-24-px.svg'
+const interviewerImage = process.env.APP_BASE_URL + '/dist/images/group-3.svg'
+
 var classNames = require('classnames')
 var fullStream = ''
 var audioStream = ''
@@ -786,9 +789,16 @@ class Interview extends Component {
                       muted
                       type="video/webm"
                     />
-                    <div className="interviewer-container-old" />
+                    <div
+                      className="interviewer-container-old"
+                      style={{ backgroundImage: `url(${interviewerImage})` }}
+                    />
                     <div className="clock">
-                      <div id="clock-logo" />
+                      <div
+                        id="clock-logo"
+                        style={{ backgroundImage: `url(${clock})` }}
+                      />
+
                       <div id="time">
                         <div id="time-remaining" ref="timeremaining" />
                       </div>

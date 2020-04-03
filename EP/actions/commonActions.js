@@ -216,6 +216,12 @@ export function singleOrPlural(val, word) {
   }
 }
 
+export function singluarOrPlural(val, word) {
+  var v = parseInt(val, word)
+  if (v !== 1) return ' ' + word + 's'
+  else return ' ' + word
+}
+
 export function shouldShowConcatNA(obj) {
   if (obj.concatenate_status === 'success') {
     return true
@@ -352,6 +358,7 @@ function isContentEnabled(props) {
 
 export var mutuals = {
   singleOrPlural,
+  singluarOrPlural,
   oneOrMany2,
   dateFormat,
   dateSmall,

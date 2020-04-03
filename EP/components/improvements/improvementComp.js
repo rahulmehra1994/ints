@@ -234,7 +234,7 @@ class Improvement extends Component {
                   }
                 }}>
                 <div
-                  className="clearfix relative mt-6 cursor-pointer"
+                  className="clearfix relative mt-4 cursor-pointer"
                   onClick={() => {
                     this.modalOpener(index, item)
                   }}>

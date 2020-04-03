@@ -431,7 +431,7 @@ class Common extends Component {
                 return (
                   <div
                     id={index === 0 ? 'firstFocusIllus' : ''}
-                    className="cursor-pointer clearfix pl-6 pr-6 mb-6"
+                    className="cursor-pointer clearfix pl-6 pr-6 mb-4"
                     onClick={() => this.videoOpener(item)}
                     onKeyPress={e => {
                       if (e.key === 'Enter') this.videoOpener(item)

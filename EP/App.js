@@ -69,7 +69,11 @@ class App extends Component {
         </React.Fragment>
       )
     }
-    return <CenterLoading />
+    return (
+      <div className="fixed pin flex items-center justify-center">
+        <CenterLoading />
+      </div>
+    )
   }
 }
 

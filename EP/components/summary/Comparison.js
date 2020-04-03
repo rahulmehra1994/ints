@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import {
+  mutuals,
   common,
   highContrast,
   getStatusIcon,
@@ -49,7 +50,7 @@ class Comparison extends Component {
     this.state = {
       modalVisiblity: false,
       remainingParameters: [],
-      currentLevelTasksCount: 0,
+      currLevelTotalTasks: 0,
       onFinalLevel: false,
     }
   }
@@ -73,86 +74,75 @@ class Comparison extends Component {
   })
 
   findRemainingTasks(onGoingLevel) {
-    let currentLevelTasksCount = 0
-    let levelsObj = this.props.performanceInfo.level_info
+    let currLevelTotalTasks = 0
     let remainingParameters = []
 
     let parameterLoop = function(item) {
-      let { subSection, subSectionLabel } = item
-      let parameterKeys = Object.keys(subSection)
-      parameterKeys.forEach((key, index) => {
-        if (subSection[key].status === 2) {
+      let handleParameters = function(parameterVal, parameterkey) {
+        if (parameterVal.status === 2) {
           let temp = Object.assign(
             {},
-            { label: key },
-            { parameter: subSection[key] }
+            { label: parameterkey },
+            { parameter: parameterVal }
           )
           remainingParameters.push(temp)
         }
 
-        if (_.has(subSection[key], 'required_value')) {
-          currentLevelTasksCount += 1
-        }
-      })
+        if (_.has(parameterVal, 'required_value')) currLevelTotalTasks += 1
+      }
+
+      _.each(item.subSection, handleParameters)
     }
 
     let checkSubSectionFurtherNested = function(item) {
       let subSectionLabel = item.label
       let subSection = item.subSection
 
-      if (
-        subSection.hasOwnProperty('required_value') &&
-        subSection.status === 2
-      ) {
+      if (_.has(subSection, 'required_value') && subSection.status === 2) {
         let temp = Object.assign(
           {},
           { label: subSectionLabel },
           { parameter: subSection }
         )
         remainingParameters.push(temp)
-        currentLevelTasksCount += 1
+        currLevelTotalTasks += 1
       } else {
+        //check further inside the subSection
         parameterLoop(item)
       }
     }
 
-    let sectionLoop = function(item) {
-      let section = item.section
-      let sectionKeys = Object.keys(section)
-      sectionKeys.forEach((key, index) => {
+    let sectionIterator = function(item) {
+      let handleSection = (subSectionVal, subSectionkey) => {
         let temp = Object.assign(
           {},
-          { label: key },
-          { subSection: section[key] }
+          { label: subSectionkey },
+          { subSection: subSectionVal }
         )
         checkSubSectionFurtherNested(temp)
-      })
+      }
+      _.each(item.section, handleSection)
     }
 
-    let levelsLoop = function(obj) {
-      let levelsKeys = Object.keys(obj)
-      levelsKeys.forEach((key, index) => {
-        if (obj[key].status === 'next') {
+    let levelsIterator = function(levels) {
+      let handleLevel = (level, levelKey) => {
+        if (level.status === 'next') {
           let item = Object.assign(
             {},
-            { label: key },
-            { section: obj[key].section }
+            { label: levelKey },
+            { section: level.section }
           )
-          sectionLoop(item)
+          sectionIterator(item)
         }
-      })
+      }
+      _.each(levels, handleLevel)
     }
 
-    levelsLoop(levelsObj)
+    levelsIterator(this.props.performanceInfo.level_info)
     this.setState({
       remainingParameters: remainingParameters,
-      currentLevelTasksCount: currentLevelTasksCount,
+      currLevelTotalTasks: currLevelTotalTasks,
     })
-    log(
-      'logger',
-      this.state.remainingParameters,
-      this.state.currentLevelTasksCount
-    )
   }
 
   currentLevelNumber(level) {
@@ -165,9 +155,14 @@ class Comparison extends Component {
   }
 
   getWidthTasks() {
-    let { currentLevelTasksCount, remainingParameters } = this.state
-    let tasksDoneCount = currentLevelTasksCount - remainingParameters.length
-    let percent = (tasksDoneCount / currentLevelTasksCount) * 100
+    let { currLevelTotalTasks, remainingParameters } = this.state
+    if (currLevelTotalTasks === 0) return `0%`
+
+    let tasksDoneCount = currLevelTotalTasks - remainingParameters.length
+    let percent = (tasksDoneCount / currLevelTotalTasks) * 100
+
+    if (percent === 0) return `5%`
+
     return `${percent}%`
   }
 
@@ -209,8 +204,8 @@ class Comparison extends Component {
           <div className="text-center mt-4">
             <span className="text-16-demi">{remainingParameters.length}</span>
             <span className="text-14-med hintColor">
-              {' '}
-              Tasks to {this.state.onGoingLevel}
+              {mutuals.singluarOrPlural(remainingParameters.length, 'Task')} to{' '}
+              {this.state.onGoingLevel}
             </span>
           </div>
         </div>
@@ -227,7 +222,8 @@ class Comparison extends Component {
               }}
             />
             <span className="ml-2">
-              {remainingParameters.length} Remaining tasks
+              {remainingParameters.length} Remaining{' '}
+              {mutuals.singluarOrPlural(remainingParameters.length, 'task')}
             </span>
           </div>
           {remainingParameters.map((item, index) => {
