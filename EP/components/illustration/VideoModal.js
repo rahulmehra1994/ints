@@ -148,7 +148,7 @@ class VideoModal extends Component {
     } = this.state
 
     return (
-      <div className="epModalCover">
+      <div className="epModalCover flex items-center">
         <div className="epModal" style={{ background: 'transparent' }}>
           <div style={{ margin: '0 auto', width: 500 }}>
             <div

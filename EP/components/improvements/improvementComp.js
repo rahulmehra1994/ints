@@ -305,8 +305,6 @@ export class ModalTemplate extends Component {
       <FocusTrap>
         <div className="epModalCover">
           <div className="epModal">
-            <div className="text-24-bold pl-10 pt-10 pb-8">Suggested Reads</div>
-
             <button
               className="epModalClose"
               style={{ zIndex: 1 }}
@@ -317,6 +315,15 @@ export class ModalTemplate extends Component {
               aria-label={'improvement modal close button'}>
               <span className="ep-icon-close"></span>
             </button>
+
+            <div className="pl-10 pt-8">
+              <img src={improvementSection} alt="Suggested Reads" />
+              <span className="ml-4 hintColor">Suggested Reads</span>
+            </div>
+
+            <div className="text-24-bold pl-10 pt-2 pb-5">
+              {props.item.title}
+            </div>
 
             <AsyncImage
               src={props.item.images}
@@ -329,11 +336,8 @@ export class ModalTemplate extends Component {
 
             <div
               className="epModalContent overflow-auto"
-              style={{ height: 360 }}>
-              <div className="subHead">{props.item.title}</div>
-              <div className="mt-6">
-                {ReactHtmlParser(props.item.description)}
-              </div>
+              style={{ height: 300 }}>
+              {ReactHtmlParser(props.item.description)}
             </div>
 
             <div className="py-6 text-center">

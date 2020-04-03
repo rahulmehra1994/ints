@@ -86,6 +86,11 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: bold;
   }
 
+  .text-22-normal {
+    font-size: 22px;
+    font-weight: 400;
+  }
+
   .text-18-demi {
     font-size: 18px;
     font-weight: 600;
@@ -1563,7 +1568,7 @@ body:not(.using-mouse) .btn-primary:focus {
     right: 5px;
     top: 5px;
     z-index: 1000;
-    padding: 8px;
+    padding: 8px 10px;
     border-radius: 8px;
     visibility: visible;
     opacity: 1;

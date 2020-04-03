@@ -23,9 +23,6 @@ const trackingDebounceSmall = _.debounce(
   true
 )
 
-const downloadIcon =
-  process.env.APP_BASE_URL + '/dist/images/video-download-icon.svg'
-
 class VideoSummary extends Component {
   constructor(props) {
     super(props)
@@ -235,6 +232,7 @@ class VideoSummary extends Component {
       userVideoProcessedPath,
       userVideoPath,
       isVideoNormal,
+      videoFloating,
     } = this.props
     let { tabIndex, subtitleActivated } = this.state
 
@@ -259,11 +257,48 @@ class VideoSummary extends Component {
 
         <BigPlayButton position="center" />
 
-        <div className="extra-video-controls" style={extraVideoControlsStyle}>
+        <div
+          className="extra-video-controls"
+          style={{ background: 'rgba(0,0,0,0.5)', ...extraVideoControlsStyle }}>
+          <div
+            className="float-left relative cursor-pointer"
+            tabIndex={tabIndex}
+            aria-label={`This is a toggle button. Click here to ${
+              videoFloating ? 'open' : 'close'
+            } the smart player. Using this you can see the interview while reviewing the detailed feedback`}
+            onClick={() => {
+              this.enableFloatingVideo()
+            }}
+            onKeyPress={e => {
+              if (e.key === 'Enter') this.enableFloatingVideo()
+            }}
+            onMouseEnter={() => {
+              this.setState({ smartPlayerHover: false })
+            }}
+            onMouseLeave={() => {
+              this.setState({ smartPlayerHover: true })
+            }}>
+            <span className="ep-icon-small-player align-text-bottom text-22-normal" />
+
+            <div
+              className={classNames('tooltip-info-right', {
+                hidden: this.state.smartPlayerHover,
+              })}
+              style={{
+                top: 35,
+                right: 0,
+                width: 184,
+                zIndex: 10000,
+              }}>
+              Smart player allows you to watch your interview simultaneously
+              while reviewing your detailed feedback.
+            </div>
+          </div>
+
           <a
             download
             href={isVideoNormal ? userVideoProcessedPath : userVideoPath}
-            className="download-video"
+            className="download-video ml-4"
             onClick={() => {
               trackingDebounceSmall({
                 event_type: 'click',
@@ -279,7 +314,7 @@ class VideoSummary extends Component {
             }}
             tabIndex={this.state.tabIndex}
             aria-label={`download video`}>
-            <img src={downloadIcon} alt="download" />
+            <span className="icon-download text-22-normal" />
             <div
               className="tooltip-basic-left"
               style={{ marginTop: 8, marginLeft: 6, width: 120 }}>
@@ -458,44 +493,7 @@ class VideoSummary extends Component {
             </label>
           </div>
 
-          <div className="clearfix float-right">
-            <div
-              className="inline-block relative cursor-pointer"
-              tabIndex={tabIndex}
-              aria-label={`This is a toggle button. Click here to ${
-                videoFloating ? 'open' : 'close'
-              } the smart player. Using this you can see the interview while reviewing the detailed feedback`}
-              onClick={() => {
-                this.enableFloatingVideo()
-              }}
-              onKeyPress={e => {
-                if (e.key === 'Enter') this.enableFloatingVideo()
-              }}
-              onMouseEnter={() => {
-                this.setState({ smartPlayerHover: false })
-              }}
-              onMouseLeave={() => {
-                this.setState({ smartPlayerHover: true })
-              }}>
-              <div className="inline-block brand-blue-color">
-                <span className="ep-icon-small-player align-text-bottom text-18-normal" />
-                <span className="text-14-600 ml-6"> Smart Player</span>
-              </div>
-              <div
-                className={classNames('tooltip-info-right', {
-                  hidden: this.state.smartPlayerHover,
-                })}
-                style={{
-                  top: 35,
-                  right: 0,
-                  width: 184,
-                  zIndex: 10000,
-                }}>
-                Smart player allows you to watch your interview simultaneously
-                while reviewing your detailed feedback.
-              </div>
-            </div>
-          </div>
+          <div className="clearfix float-right"></div>
         </div>
 
         <div

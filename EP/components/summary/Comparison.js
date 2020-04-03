@@ -202,10 +202,12 @@ class Comparison extends Component {
           </div>
 
           <div className="text-center mt-4">
-            <span className="text-16-demi">{remainingParameters.length}</span>
+            <span className="text-16-demi">
+              {remainingParameters.length}{' '}
+              {mutuals.singluarOrPlural(remainingParameters.length, 'Task')}{' '}
+            </span>
             <span className="text-14-med hintColor">
-              {mutuals.singluarOrPlural(remainingParameters.length, 'Task')} to{' '}
-              {this.state.onGoingLevel}
+              to {this.state.onGoingLevel}
             </span>
           </div>
         </div>
@@ -345,7 +347,7 @@ class Comparison extends Component {
       <React.Fragment>
         <div
           role="main"
-          aria-label={`you are at level ${performanceInfo.current_level}`}
+          aria-label={`you are at ${performanceInfo.current_level}`}
           className={'comparison-container ' + this.props.customClasses}>
           {this.state.onFinalLevel ? (
             this.finalLevel()
@@ -364,13 +366,13 @@ class Comparison extends Component {
                   </div>
 
                   <img
-                    style={{ width: '100%', height: 185 }}
+                    style={{ width: '100%', height: 185, marginTop: 25 }}
                     src={
                       levels[
                         this.currentLevelNumber(performanceInfo.current_level)
                       ]
                     }
-                    alt={`you are at level ${performanceInfo.current_level}`}
+                    alt={`you are at ${performanceInfo.current_level}`}
                   />
                 </div>
                 <div className="subHead mt-2 font-bold"></div>
