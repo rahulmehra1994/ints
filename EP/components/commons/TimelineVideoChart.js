@@ -56,9 +56,10 @@ class TimelineChart extends Component {
         gridLineWidth: 1,
         max: this.props.intDuration,
         min: 0,
+        allowDecimals: false,
         labels: {
           formatter: function() {
-            return new Date(this.value * 1000).toISOString().substr(14, 5)
+            return mutuals.xAxisGraphsTick(this.value)
           },
         },
       },
@@ -115,6 +116,17 @@ class TimelineChart extends Component {
         x: (item.start_time + item.end_time) / 2,
       }
     })
+
+    arr = [
+      {
+        y: 0,
+        x: 0.5,
+      },
+      {
+        y: 0,
+        x: 1.5,
+      },
+    ]
 
     return this.graph(arr)
   }

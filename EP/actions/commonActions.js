@@ -386,6 +386,7 @@ export var mutuals = {
   isContentEnabled,
   deepCopy,
   randomStr,
+  xAxisGraphsTick,
 }
 
 export var timeoutInMiliseconds = { time: defaultInactivityTime }
@@ -606,4 +607,9 @@ export function checkForSpecialChars(val) {
   } else {
     return false
   }
+}
+
+export function xAxisGraphsTick(val) {
+  let str = new Date(val * 1000).toISOString()
+  return str.substr(14, 5)
 }

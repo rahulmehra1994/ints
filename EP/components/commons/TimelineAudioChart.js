@@ -53,9 +53,10 @@ class TimelineAudioChart extends Component {
         gridLineWidth: 1,
         max: this.props.intDuration,
         min: 0,
+        allowDecimals: false,
         labels: {
           formatter: function() {
-            return new Date(this.value * 1000).toISOString().substr(14, 5)
+            return mutuals.xAxisGraphsTick(this.value)
           },
         },
       },
