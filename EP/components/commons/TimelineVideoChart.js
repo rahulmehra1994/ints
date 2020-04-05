@@ -117,17 +117,6 @@ class TimelineChart extends Component {
       }
     })
 
-    arr = [
-      {
-        y: 0,
-        x: 0.5,
-      },
-      {
-        y: 0,
-        x: 1.5,
-      },
-    ]
-
     return this.graph(arr)
   }
 
