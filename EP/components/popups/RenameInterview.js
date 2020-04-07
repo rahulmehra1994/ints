@@ -28,11 +28,31 @@ class RenameModal extends Component {
     this.submitName = this.submitName.bind(this)
     this.activateButton = this.activateButton.bind(this)
     this.modalToggler = this.modalToggler.bind(this)
+    this.escEvent = this.escEvent.bind(this)
   }
 
   componentDidMount() {
     let initialName = modifyIntNameForDisplay(this.props.intDetails.intName)
     this.setState({ initialName: initialName })
+    this.attachEscEvent()
+  }
+
+  componentWillUnmount() {
+    this.removeEscEvent()
+  }
+
+  attachEscEvent() {
+    document.addEventListener('keydown', this.escEvent)
+  }
+
+  removeEscEvent() {
+    document.removeEventListener('keydown', this.escEvent)
+  }
+
+  escEvent(e) {
+    if (e.key === 'Escape') {
+      this.props.closeModal()
+    }
   }
 
   toggleFunction() {

@@ -316,6 +316,33 @@ export class ModalTemplate extends Component {
               <span className="ep-icon-close"></span>
             </button>
 
+            <div>
+              <button
+                className="traverse-button-side"
+                style={{ left: -100 }}
+                onClick={() => {
+                  this.props.previous()
+                }}
+                tabIndex={0}
+                aria-label={'article previous move button'}>
+                <span className="ep-icon-expand-left text-white text-24-normal" />
+              </button>
+
+              {/* <span className="para grey-color mx-12">{`${this.props.index +
+                  1}/${this.props.articles.length}`}</span> */}
+
+              <button
+                className="traverse-button-side"
+                style={{ right: -100 }}
+                onClick={() => {
+                  this.props.forward()
+                }}
+                tabIndex={0}
+                aria-label={'article forward move button'}>
+                <span className="ep-icon-expand-right text-white text-24-normal" />
+              </button>
+            </div>
+
             <div className="pl-10 pt-8">
               <img src={improvementSection} alt="Suggested Reads" />
               <span className="ml-4 hintColor">Suggested Reads</span>
@@ -334,52 +361,8 @@ export class ModalTemplate extends Component {
               style={{ borderRadius: 0 }}
             />
 
-            <div
-              className="epModalContent overflow-auto"
-              style={{ height: 300 }}>
+            <div className="epModalContent overflow-auto">
               {ReactHtmlParser(props.item.description)}
-            </div>
-
-            <div className="py-6 text-center">
-              <span>
-                <button
-                  onClick={() => {
-                    this.props.previous()
-                  }}
-                  className="traverse brand-blue-color"
-                  tabIndex={0}
-                  aria-label={'article previous move button'}>
-                  <span
-                    className="ep-icon-expand-left"
-                    style={{
-                      '-webkit-text-stroke': '1px',
-                      'vertical-align': -2,
-                    }}
-                  />
-                  <span className="ml-6">Prev</span>
-                </button>
-
-                <span className="para grey-color mx-12">{`${this.props.index +
-                  1}/${this.props.articles.length}`}</span>
-
-                <button
-                  onClick={() => {
-                    this.props.forward()
-                  }}
-                  className="traverse brand-blue-color"
-                  tabIndex={0}
-                  aria-label={'article forward move button'}>
-                  <span>Next</span>
-
-                  <span
-                    className="ep-icon-expand-right ml-6 align-middle"
-                    style={{
-                      '-webkit-text-stroke': '1px',
-                      'vertical-align': -2,
-                    }}
-                  />
-                </button>
-              </span>
             </div>
           </div>
         </div>

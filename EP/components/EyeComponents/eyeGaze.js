@@ -147,7 +147,7 @@ class EyeContactCenter extends Component {
           <Disclaimer
             body="Eye contact results may become less accurate if the eyes are not visible clearly under poor lighting, effects of shadow on face, coloured glasses, or poor camera quality."
             buttonText="Disclaimer"
-            config={{ style: { width: 450 } }}
+            config={{ style: { width: 450 }, icon: 'ep-icon-warning-outline' }}
           />
 
           {this.trackFromRender(sectionStatus[eyeCombinedVal])}

@@ -16,20 +16,26 @@ class LevelInfo extends Component {
   constructor(...args) {
     super(...args)
     this.state = { isModalOpen: false, levels2: [], isExpanded: false }
-    this.attachEscEvent()
     this.modalToggler = this.modalToggler.bind(this)
+    this.escEvent = this.escEvent.bind(this)
   }
 
   attachEscEvent() {
-    document.onkeydown = e => {
-      if (e.key === 'Escape') {
-        this.modalToggler()
-      }
+    document.addEventListener('keydown', this.escEvent)
+  }
+
+  removeEscEvent() {
+    document.removeEventListener('keydown', this.escEvent)
+  }
+
+  escEvent(e) {
+    if (e.key === 'Escape') {
+      this.modalToggler()
     }
   }
 
   componentWillUnmount() {
-    document.onkeydown = null
+    this.removeEscEvent()
   }
 
   scrollModalUp() {
@@ -41,6 +47,13 @@ class LevelInfo extends Component {
       this.props.modalVisiblity(mutuals.deepCopy(this.state.isModalOpen))
       if (this.state.isModalOpen === true) {
         this.scrollModalUp()
+      }
+
+      if (this.state.isModalOpen) {
+        this.attachEscEvent()
+      }
+      if (this.state.isModalOpen === false) {
+        this.removeEscEvent()
       }
     })
   }

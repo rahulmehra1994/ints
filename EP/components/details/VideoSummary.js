@@ -10,10 +10,6 @@ import {
 import { Player, BigPlayButton } from 'video-react'
 import VideoReplay from './../utilities/VideoReplay'
 import Feedback from './../feedback/Feedback'
-import {
-  SubtitlesIcon,
-  SubtitlesOffIcon,
-} from './../../images/svg-files/Subtitles'
 
 var classNames = require('classnames')
 var Loader = require('react-loaders').Loader
@@ -257,9 +253,7 @@ class VideoSummary extends Component {
 
         <BigPlayButton position="center" />
 
-        <div
-          className="extra-video-controls"
-          style={{ background: 'rgba(0,0,0,0.5)', ...extraVideoControlsStyle }}>
+        <div className="extra-video-controls" style={extraVideoControlsStyle}>
           <div
             className="float-left relative cursor-pointer"
             tabIndex={tabIndex}
@@ -278,14 +272,14 @@ class VideoSummary extends Component {
             onMouseLeave={() => {
               this.setState({ smartPlayerHover: true })
             }}>
-            <span className="ep-icon-small-player align-text-bottom text-22-normal" />
-
+            <div className="p-2 bg-black-transcluent rounded-lg">
+              <span className="ep-icon-miniplayer align-text-bottom text-22-normal" />
+            </div>
             <div
               className={classNames('tooltip-info-right', {
                 hidden: this.state.smartPlayerHover,
               })}
               style={{
-                top: 35,
                 right: 0,
                 width: 184,
                 zIndex: 10000,
@@ -298,7 +292,7 @@ class VideoSummary extends Component {
           <a
             download
             href={isVideoNormal ? userVideoProcessedPath : userVideoPath}
-            className="download-video ml-4"
+            className="ml-3 download-video "
             onClick={() => {
               trackingDebounceSmall({
                 event_type: 'click',
@@ -314,7 +308,9 @@ class VideoSummary extends Component {
             }}
             tabIndex={this.state.tabIndex}
             aria-label={`download video`}>
-            <span className="icon-download text-22-normal" />
+            <div className="p-2 bg-black-transcluent rounded-lg">
+              <span className="ep-icon-download text-22-normal text-white" />
+            </div>
             <div
               className="tooltip-basic-left"
               style={{ marginTop: 8, marginLeft: 6, width: 120 }}>
@@ -332,7 +328,7 @@ class VideoSummary extends Component {
     let { videoSubtitlesSrc } = this.props
     let { tabIndex, subtitleActivated, subtitleToolTipText } = this.state
     return (
-      <div className="subtitle-icon ml-4">
+      <div className="subtitle-icon ml-3">
         {subtitleActivated ? (
           <button
             style={{
@@ -356,9 +352,9 @@ class VideoSummary extends Component {
             }}
             tabIndex={tabIndex}
             aria-label={'subtitles icon'}>
-            <SubtitlesIcon
-              blocked={videoSubtitlesSrc === null ? true : false}
-            />
+            <div className="p-2 bg-black-transcluent rounded-lg">
+              <span className="ep-icon-caption-off text-22-normal" />
+            </div>
           </button>
         ) : (
           <button
@@ -383,9 +379,9 @@ class VideoSummary extends Component {
             }}
             tabIndex={tabIndex}
             aria-label={'subtitles off icon'}>
-            <SubtitlesOffIcon
-              blocked={videoSubtitlesSrc === null ? true : false}
-            />
+            <div className="p-2 bg-black-transcluent rounded-lg">
+              <span className="ep-icon-caption-on text-22-normal" />
+            </div>
           </button>
         )}
 

@@ -24,7 +24,7 @@ export default class Disclaimer extends Component {
           onMouseEnter={this.mouseEnter}
           onMouseLeave={this.mouseLeave}>
           <div className="disclaimer-label">
-            <span className="ep-icon-warning-outline align-middle"></span>
+            <span className={`${this.props.config.icon} align-middle`}></span>
             {_.has(this.props, 'buttonText') ? (
               <span className="ml-4">{this.props.buttonText}</span>
             ) : null}

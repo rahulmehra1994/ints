@@ -332,7 +332,7 @@ class Comparison extends Component {
           <Disclaimer
             body="Overall Performance Index (OPI) is the cumulative measure of
     your performance over the recent interview attempts."
-            config={{ style: { width: 260 } }}
+            config={{ style: { width: 260 }, icon: 'ep-icon-info-outline' }}
           />
         </span>
       </div>
@@ -386,7 +386,7 @@ class Comparison extends Component {
 
               <div
                 className="bg-white shadow-1 px-6 py-8 rounded"
-                style={{ minHeight: 402 }}>
+                style={{ height: 378 }}>
                 {this.nonFinalLevel()}
                 {this.levelInfoBlock()}
               </div>

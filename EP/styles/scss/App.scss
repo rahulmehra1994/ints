@@ -56,6 +56,11 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: normal;
   }
 
+  .text-24-normal {
+    font-size: 24px;
+    font-weight: normal;
+  }
+
   .text-24-bold {
     font-size: 24px;
     font-weight: bold;
@@ -3281,5 +3286,18 @@ body:not(.using-mouse) .btn-primary:focus {
     border-radius: 3px;
     right: 8px;
     top: 33px;
+  }
+
+  .bg-black-transcluent {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .traverse-button-side {
+    @extend .bg-black-transcluent, .rounded-full;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

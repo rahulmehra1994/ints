@@ -6,9 +6,6 @@ import { mutuals, log } from './../../actions/commonActions'
 import _ from 'underscore'
 
 var classNames = require('classnames')
-const subtitle = process.env.APP_BASE_URL + '/dist/images/subtitle-icon.svg'
-const subtitleOff =
-  process.env.APP_BASE_URL + '/dist/images/subtitle-off-icon.svg'
 
 class VideoModal extends Component {
   constructor(...args) {
@@ -186,9 +183,8 @@ class VideoModal extends Component {
                   }}>
                   <div className="subtitle-icon border-r border-white pr-4 opacity-50">
                     {subtitleActivated ? (
-                      <img
+                      <div
                         className="cursor-pointer"
-                        style={{ width: 35 }}
                         onClick={() => {
                           this.setState({
                             subtitleActivated: false,
@@ -202,14 +198,13 @@ class VideoModal extends Component {
                               subtitleToolTipText: 'Subtitles:OFF',
                             })
                         }}
-                        src={subtitle}
                         alt={'subtitles icon'}
-                        tabIndex={tabIndex}
-                      />
+                        tabIndex={tabIndex}>
+                        <span className="ep-icon-caption-on text-22-normal" />
+                      </div>
                     ) : (
-                      <img
+                      <div
                         className="cursor-pointer"
-                        style={{ width: 35 }}
                         onClick={() => {
                           this.setState({
                             subtitleActivated: true,
@@ -223,10 +218,10 @@ class VideoModal extends Component {
                               subtitleToolTipText: 'Subtitles:ON',
                             })
                         }}
-                        src={subtitleOff}
                         alt={'subtitles icon'}
-                        tabIndex={tabIndex}
-                      />
+                        tabIndex={tabIndex}>
+                        <span className="ep-icon-caption-off text-22-normal" />
+                      </div>
                     )}
 
                     <div
