@@ -324,7 +324,7 @@ class Comparison extends Component {
         <span className="float-left">
           <span className="text-14-med"> Overall Performance Index</span>
           <span className="text-16-demi ml-3">
-            {performanceInfo.op_index.toFixed(2)}{' '}
+            {Number(performanceInfo.op_index.toFixed(2))}{' '}
           </span>
           <span className="font-size-s" style={{ marginLeft: -5 }}>
             /5

@@ -321,7 +321,7 @@ export class ModalTemplate extends Component {
             </button>
           </div>
 
-          <div className="h-screen overflow-auto">
+          <div className="articles-scroll h-screen">
             <div className="epModal">
               <button
                 className="epModalClose"

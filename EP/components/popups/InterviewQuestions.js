@@ -338,7 +338,7 @@ class InterviewQuestions extends Component {
                   {item.label}
 
                   {item.isSelected ? (
-                    <span className="icon-right-rounded ml-6"></span>
+                    <span className="ep-icon-right-rounded ml-6"></span>
                   ) : null}
                 </div>
               )
@@ -352,12 +352,12 @@ class InterviewQuestions extends Component {
                   <div key={index} className="int-ques">
                     <label
                       className={classNames(
-                        'paraHead px-8 py-4 cursor-pointer',
+                        'paraHead px-6 py-3 cursor-pointer',
                         { 'cat-active': item.isSelected }
                       )}>
                       {item.label}
                       {item.isSelected ? (
-                        <span className="icon-right-rounded ml-6"></span>
+                        <span className="ep-icon-right-rounded ml-6"></span>
                       ) : null}
                       <button
                         className="float-right"
@@ -368,9 +368,9 @@ class InterviewQuestions extends Component {
                         tabIndex="20"
                         aria-label={`question selection button`}>
                         {item.isOpen ? (
-                          <span className="icon-expand-up"></span>
+                          <span className="ep-icon-expand-up"></span>
                         ) : (
-                          <span className="icon-expand-down"></span>
+                          <span className="ep-icon-expand-down"></span>
                         )}
                       </button>
                     </label>
@@ -384,13 +384,13 @@ class InterviewQuestions extends Component {
                               style={{
                                 background: this.isQuesSelected(item2),
                               }}
-                              className="cursor-pointer py-4 pr-4 pl-12 w-full text-left relative"
+                              className="cursor-pointer py-2 pr-2 pl-8 w-full text-left relative"
                               onClick={() => {
                                 this.handleSelectedQues(item2, item.label)
                               }}>
                               {this.isQuesSelected(item2) ? (
                                 <span
-                                  className="icon-right absolute"
+                                  className="ep-icon-right absolute"
                                   style={{ left: 10, top: 10 }}>
                                   {' '}
                                 </span>
@@ -400,7 +400,7 @@ class InterviewQuestions extends Component {
                                 item2.question_id
                               ].is_content_strength_enabled ? (
                                 <span
-                                  className="bg-white rounded-lg float-right px-3 pt-2 pb-1 cs-control text-12-demi rounded-full"
+                                  className="bg-white rounded-lg float-right px-2 py-1 cs-control text-12-demi rounded-full"
                                   style={{
                                     border: 'solid 1px #dddddd',
                                     color: '#666666',
@@ -434,7 +434,7 @@ class InterviewQuestions extends Component {
             tabIndex="20"
             aria-label={`confirm your options`}>
             <span
-              className="icon-expand-left"
+              className="ep-icon-expand-left"
               style={{
                 '-webkit-text-stroke': '1px',
                 'vertical-align': -2,
