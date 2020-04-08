@@ -323,7 +323,9 @@ class Comparison extends Component {
       <div className="flex items-center justify-between text-center">
         <span className="float-left">
           <span className="text-14-med"> Overall Performance Index</span>
-          <span className="text-16-demi ml-4">{performanceInfo.op_index} </span>
+          <span className="text-16-demi ml-3">
+            {performanceInfo.op_index.toFixed(2)}{' '}
+          </span>
           <span className="font-size-s" style={{ marginLeft: -5 }}>
             /5
           </span>
@@ -342,6 +344,7 @@ class Comparison extends Component {
   render() {
     let { performanceInfo } = this.props
     let { remainingParameters } = this.state
+    let commonOutClasses = 'bg-white shadow-1 px-5 py-6 rounded'
 
     return this.safeToRender() ? (
       <React.Fragment>
@@ -353,7 +356,7 @@ class Comparison extends Component {
             this.finalLevel()
           ) : (
             <section>
-              <div className="bg-white shadow-1 px-6 py-8 rounded">
+              <div className={commonOutClasses}>
                 <div>
                   <div className="absolute">
                     <div className="hintColor text-16-med">
@@ -385,8 +388,8 @@ class Comparison extends Component {
               {this.subLevelsOngoingBlock()}
 
               <div
-                className="bg-white shadow-1 px-6 py-8 rounded overflow-auto"
-                style={{ height: 378 }}>
+                className={commonOutClasses + ' overflow-auto'}
+                style={{ height: 391 }}>
                 {this.nonFinalLevel()}
                 {this.levelInfoBlock()}
               </div>
