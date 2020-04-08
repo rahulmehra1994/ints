@@ -49,16 +49,10 @@ class TimelineVideos extends React.Component {
 
   changeDataForTabs() {
     let temp = []
-    for (let key in this.props.data) {
-      temp.push({ label: key, arr: this.props.data[key] })
+    let propsClone = mutuals.deepCopy(this.props.data)
+    for (let key in propsClone) {
+      temp.push({ label: key, arr: propsClone[key] })
     }
-
-    // let all = []
-    // temp.forEach((item, index) => {
-    //   all.push(...item.arr)
-    // })
-
-    // temp.splice(0, 1, { label: 'All', arr: all })
 
     this.setState({ tabsData: temp })
   }
@@ -114,6 +108,7 @@ class TimelineVideos extends React.Component {
 
   play() {
     if (this.refs.chunksPlayer) this.refs.chunksPlayer.play()
+    this.setState({ showReplay: false })
   }
 
   pause() {
@@ -155,6 +150,7 @@ class TimelineVideos extends React.Component {
 
   handleStateChange(state, prevState) {
     this.props.setVideoChunksState(state)
+    this.modifyVideoDataEndTime(state)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -174,7 +170,7 @@ class TimelineVideos extends React.Component {
             this.nearTarget(
               nextState.currentTime,
               this.state.videoChunks[i]['end_time'],
-              0.2
+              0.25
             )
           ) {
             this.state.videoChunks[i]['played'] = true
@@ -367,7 +363,6 @@ class TimelineVideos extends React.Component {
         if (this.refs.chunksPlayer) {
           this.pause()
           this.refs.chunksPlayer.seek(this.state.videoChunks[0].start_time)
-          this.modifyVideoDataEndTime(this.props.videoChunksState)
         }
       }
     )
@@ -457,7 +452,7 @@ class TimelineVideos extends React.Component {
     return (
       <div>
         {_.has(this.props, 'heading') ? (
-          <div className="subHead mt-12 mb-8">{this.props.heading}</div>
+          <div className="subHead mt-10 mb-8">{this.props.heading}</div>
         ) : null}
 
         <Tabs

@@ -172,21 +172,21 @@ class Comparison extends Component {
     return (
       <section>
         <div className="">
-          <p className="text-18-demi">Up Next</p>
+          <p className="text-16-demi">Up Next</p>
 
           <div
-            className="grid mt-4"
+            className="grid mt-4 hintColor"
             style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
             <div className="flex items-center">
-              <span className="text-14-med hintColor">
+              <span className="text-14-med">
                 {performanceInfo.current_level}
               </span>
             </div>
             <div className="flex items-center justify-center">
-              <span className="ep-icon-arrow-right text-center text-20-demi hintColor" />
+              <span className="ep-icon-arrow-right text-center text-20-demi" />
             </div>
             <div className="flex items-center justify-end">
-              <span className="text-center text-18-demi">
+              <span className="text-center text-14-med">
                 {this.state.onGoingLevel}
               </span>
             </div>
@@ -202,7 +202,7 @@ class Comparison extends Component {
           </div>
 
           <div className="text-center mt-4">
-            <span className="text-16-demi">
+            <span className="text-14-demi">
               {remainingParameters.length}{' '}
               {mutuals.singluarOrPlural(remainingParameters.length, 'Task')}{' '}
             </span>
@@ -223,7 +223,7 @@ class Comparison extends Component {
                 verticalAlign: 'sub',
               }}
             />
-            <span className="ml-2">
+            <span className="ml-2 text-16-demi">
               {remainingParameters.length} Remaining{' '}
               {mutuals.singluarOrPlural(remainingParameters.length, 'task')}
             </span>
@@ -385,7 +385,7 @@ class Comparison extends Component {
               {this.subLevelsOngoingBlock()}
 
               <div
-                className="bg-white shadow-1 px-6 py-8 rounded"
+                className="bg-white shadow-1 px-6 py-8 rounded overflow-auto"
                 style={{ height: 378 }}>
                 {this.nonFinalLevel()}
                 {this.levelInfoBlock()}

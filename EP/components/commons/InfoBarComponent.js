@@ -190,7 +190,7 @@ class InfoBarComponent extends React.Component {
     return (
       <div
         ref={id}
-        className="test5 mt-12"
+        className="test5 mt-10"
         style={
           noDetection(this.props)
             ? { border: 'solid 1px #dddddd' }

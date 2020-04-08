@@ -281,11 +281,10 @@ class VideoSummary extends Component {
               })}
               style={{
                 right: 0,
-                width: 184,
+                width: 95,
                 zIndex: 10000,
               }}>
-              Smart player allows you to watch your interview simultaneously
-              while reviewing your detailed feedback.
+              Smart player
             </div>
           </div>
 
@@ -353,7 +352,7 @@ class VideoSummary extends Component {
             tabIndex={tabIndex}
             aria-label={'subtitles icon'}>
             <div className="p-2 bg-black-transcluent rounded-lg">
-              <span className="ep-icon-caption-off text-22-normal" />
+              <span className="ep-icon-caption-on text-22-normal" />
             </div>
           </button>
         ) : (
@@ -380,7 +379,7 @@ class VideoSummary extends Component {
             tabIndex={tabIndex}
             aria-label={'subtitles off icon'}>
             <div className="p-2 bg-black-transcluent rounded-lg">
-              <span className="ep-icon-caption-on text-22-normal" />
+              <span className="ep-icon-caption-off text-22-normal" />
             </div>
           </button>
         )}
@@ -450,7 +449,7 @@ class VideoSummary extends Component {
         <div className="clearfix">
           <div className="clearfix float-left">
             <div className="inline-block relative">
-              <span className="text-14-600"> Smart Video</span>
+              <span className="text-14-demi"> SMART Video</span>
               <div
                 className={classNames('tooltipInfo', {
                   hidden: this.state.smartVideoHover,

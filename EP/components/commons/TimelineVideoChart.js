@@ -110,7 +110,8 @@ class TimelineChart extends Component {
   }
 
   graphMaker(props) {
-    let arr = props.data.map((item, index) => {
+    let propsClone = mutuals.deepCopy(props)
+    let arr = propsClone.data.map((item, index) => {
       return {
         y: 0,
         x: (item.start_time + item.end_time) / 2,
@@ -128,7 +129,8 @@ class TimelineChart extends Component {
 
   getLeftVal(item) {
     let avg = (item.start_time + item.end_time) / 2
-    return avg * this.state.multiplier
+    let temp = avg * this.state.multiplier
+    return temp
   }
 
   playSpecificVideo(index) {
