@@ -303,67 +303,72 @@ export class ModalTemplate extends Component {
     let { props } = this
     return (
       <FocusTrap>
-        <div className="epModalCover">
-          <div className="epModal">
+        <div
+          className="epModalCover grid"
+          style={{
+            gridTemplateColumns: '1fr 768px 1fr',
+          }}>
+          <div className="flex justify-center items-center">
             <button
-              className="epModalClose"
-              style={{ zIndex: 1 }}
+              className="traverse-button-side"
+              style={{ left: -100 }}
               onClick={() => {
-                props.modalClose(props.index, props.item)
+                this.props.previous()
               }}
               tabIndex={0}
-              aria-label={'improvement modal close button'}>
-              <span className="ep-icon-close"></span>
+              aria-label={'article previous move button'}>
+              <span className="ep-icon-expand-left text-white text-24-normal" />
             </button>
+          </div>
 
-            <div>
+          <div className="h-screen overflow-auto">
+            <div className="epModal">
               <button
-                className="traverse-button-side"
-                style={{ left: -100 }}
+                className="epModalClose"
+                style={{ zIndex: 1 }}
                 onClick={() => {
-                  this.props.previous()
+                  props.modalClose(props.index, props.item)
                 }}
                 tabIndex={0}
-                aria-label={'article previous move button'}>
-                <span className="ep-icon-expand-left text-white text-24-normal" />
+                aria-label={'improvement modal close button'}>
+                <span className="ep-icon-close"></span>
               </button>
 
-              {/* <span className="para grey-color mx-12">{`${this.props.index +
-                  1}/${this.props.articles.length}`}</span> */}
+              <div className="pl-10 pt-8">
+                <img src={improvementSection} alt="Suggested Reads" />
+                <span className="ml-4 hintColor">Suggested Reads</span>
+              </div>
 
-              <button
-                className="traverse-button-side"
-                style={{ right: -100 }}
-                onClick={() => {
-                  this.props.forward()
-                }}
-                tabIndex={0}
-                aria-label={'article forward move button'}>
-                <span className="ep-icon-expand-right text-white text-24-normal" />
-              </button>
+              <div className="text-24-bold pl-10 pt-2 pb-5">
+                {props.item.title}
+              </div>
+
+              <AsyncImage
+                src={props.item.images}
+                width={768}
+                height={256}
+                loaderSize={1.2}
+                alt={props.item.title}
+                style={{ borderRadius: 0 }}
+              />
+
+              <div className="epModalContent overflow-auto">
+                {ReactHtmlParser(props.item.description)}
+              </div>
             </div>
+          </div>
 
-            <div className="pl-10 pt-8">
-              <img src={improvementSection} alt="Suggested Reads" />
-              <span className="ml-4 hintColor">Suggested Reads</span>
-            </div>
-
-            <div className="text-24-bold pl-10 pt-2 pb-5">
-              {props.item.title}
-            </div>
-
-            <AsyncImage
-              src={props.item.images}
-              width={768}
-              height={256}
-              loaderSize={1.2}
-              alt={props.item.title}
-              style={{ borderRadius: 0 }}
-            />
-
-            <div className="epModalContent overflow-auto">
-              {ReactHtmlParser(props.item.description)}
-            </div>
+          <div className="flex justify-center items-center">
+            <button
+              className="traverse-button-side"
+              style={{ right: -100 }}
+              onClick={() => {
+                this.props.forward()
+              }}
+              tabIndex={0}
+              aria-label={'article forward move button'}>
+              <span className="ep-icon-expand-right text-white text-24-normal" />
+            </button>
           </div>
         </div>
       </FocusTrap>

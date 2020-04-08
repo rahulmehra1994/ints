@@ -837,7 +837,6 @@ body:not(.using-mouse) .btn-primary:focus {
     background: rgba(0, 0, 0, 0.7);
     z-index: 10000;
     overflow: auto;
-    padding: 20px;
   }
 
   .navbarActiveTxt {
@@ -3160,7 +3159,6 @@ body:not(.using-mouse) .btn-primary:focus {
     border-radius: 8px;
     border: solid 1px #eeeeee;
     position: relative;
-    overflow: auto;
     padding: 10px;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -3294,10 +3292,7 @@ body:not(.using-mouse) .btn-primary:focus {
 
   .traverse-button-side {
     @extend .bg-black-transcluent, .rounded-full;
-    position: absolute;
     height: 50px;
     width: 50px;
-    top: 50%;
-    transform: translateY(-50%);
   }
 }
