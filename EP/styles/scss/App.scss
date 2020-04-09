@@ -1081,7 +1081,7 @@ body:not(.using-mouse) .btn-primary:focus {
   }
 
   .resizeable {
-    z-index: 1000;
+    z-index: 998;
     border: 2px solid $cerulean;
   }
 
