@@ -36,6 +36,7 @@ class VideoSummary extends Component {
       subtitleToolTipText: 'Subtitles:ON',
       subtitleActivated: subtitleActivated,
       subtitleToolTipText: subtitleActivated ? 'Subtitles:ON' : 'Subtitles:OFF',
+      hideMiniPlayerButton: false,
     }
 
     this.handleStateChange = this.handleStateChange.bind(this)
@@ -89,6 +90,14 @@ class VideoSummary extends Component {
     this.checkPlayerStateChangedForTracking(nextProps.regularVideoState)
   }
 
+  displayMiniPlayerButton(videoState) {
+    if (videoState.isFullscreen) {
+      this.setState({ hideMiniPlayerButton: true })
+    } else {
+      this.setState({ hideMiniPlayerButton: false })
+    }
+  }
+
   checkPlayerStateChangedForTracking(regularVideoState) {
     let currState = this.props.regularVideoState
     let nextState = regularVideoState
@@ -110,6 +119,8 @@ class VideoSummary extends Component {
             ? 'normal video fullscreen'
             : 'normal video not fullscreen',
         })
+
+        this.displayMiniPlayerButton(nextState)
       }
 
       if (nextState.muted !== currState.muted) {
@@ -254,44 +265,46 @@ class VideoSummary extends Component {
         <BigPlayButton position="center" />
 
         <div className="extra-video-controls" style={extraVideoControlsStyle}>
-          <div
-            className="float-left relative cursor-pointer"
-            tabIndex={tabIndex}
-            aria-label={`This is a toggle button. Click here to ${
-              videoFloating ? 'open' : 'close'
-            } the smart player. Using this you can see the interview while reviewing the detailed feedback`}
-            onClick={() => {
-              this.enableFloatingVideo()
-            }}
-            onKeyPress={e => {
-              if (e.key === 'Enter') this.enableFloatingVideo()
-            }}
-            onMouseEnter={() => {
-              this.setState({ smartPlayerHover: false })
-            }}
-            onMouseLeave={() => {
-              this.setState({ smartPlayerHover: true })
-            }}>
-            <div className="p-2 bg-black-transcluent rounded-lg">
-              <span className="ep-icon-miniplayer align-text-bottom text-22-normal" />
-            </div>
+          {this.state.hideMiniPlayerButton ? null : (
             <div
-              className={classNames('tooltip-info-right', {
-                hidden: this.state.smartPlayerHover,
-              })}
-              style={{
-                right: 0,
-                width: 95,
-                zIndex: 10000,
+              className="float-left relative cursor-pointer mr-3"
+              tabIndex={tabIndex}
+              aria-label={`This is a toggle button. Click here to ${
+                videoFloating ? 'open' : 'close'
+              } the smart player. Using this you can see the interview while reviewing the detailed feedback`}
+              onClick={() => {
+                this.enableFloatingVideo()
+              }}
+              onKeyPress={e => {
+                if (e.key === 'Enter') this.enableFloatingVideo()
+              }}
+              onMouseEnter={() => {
+                this.setState({ smartPlayerHover: false })
+              }}
+              onMouseLeave={() => {
+                this.setState({ smartPlayerHover: true })
               }}>
-              Smart Player
+              <div className="p-2 bg-black-transcluent rounded-lg">
+                <span className="ep-icon-miniplayer align-text-bottom text-22-normal" />
+              </div>
+              <div
+                className={classNames('tooltip-info-right', {
+                  hidden: this.state.smartPlayerHover,
+                })}
+                style={{
+                  right: 0,
+                  width: 95,
+                  zIndex: 10000,
+                }}>
+                Smart Player
+              </div>
             </div>
-          </div>
+          )}
 
           <a
             download
             href={isVideoNormal ? userVideoProcessedPath : userVideoPath}
-            className="ml-3 download-video "
+            className="download-video "
             onClick={() => {
               trackingDebounceSmall({
                 event_type: 'click',

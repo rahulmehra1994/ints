@@ -248,10 +248,13 @@ class InfoBarComponent extends React.Component {
               <div
                 className="absolute"
                 style={{
-                  left: `${this.state.multiplier *
-                    threshold.data[0]['value']}%`,
-                  width: `${this.state.multiplier * threshold.data[1]['value'] -
-                    this.state.multiplier * threshold.data[0]['value']}%`,
+                  left: `${
+                    this.state.multiplier * threshold.data[0]['value']
+                  }%`,
+                  width: `${
+                    this.state.multiplier * threshold.data[1]['value'] -
+                    this.state.multiplier * threshold.data[0]['value']
+                  }%`,
                   bottom: -56,
                   paddingTop: 13,
                   borderTop: '1px solid black',
@@ -351,10 +354,7 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-const InfoBar = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InfoBarComponent)
+const InfoBar = connect(mapStateToProps, mapDispatchToProps)(InfoBarComponent)
 
 const InfoBarHOC = WrappedComponent => {
   return class HOC extends Component {
@@ -365,7 +365,16 @@ const InfoBarHOC = WrappedComponent => {
 
     render() {
       let modifiedProps = JSON.parse(JSON.stringify(this.props))
-      let { mainValue } = modifiedProps
+      let { mainValue, barsAndLegends } = modifiedProps
+      let temp = barsAndLegends.map(item => {
+        if (item.value > 0 && item.value < 1) {
+          item.value = 1
+        } else {
+          item.value = parseInt(item.value, 10)
+        }
+        return item
+      })
+      modifiedProps.barsAndLegends = temp
       if (mainValue > 0 && mainValue < 1) {
         modifiedProps.mainValue = 1
       } else {
