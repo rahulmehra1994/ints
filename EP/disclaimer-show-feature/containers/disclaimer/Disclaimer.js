@@ -23,10 +23,10 @@ export default class Disclaimer extends Component {
           className="hover-section"
           onMouseEnter={this.mouseEnter}
           onMouseLeave={this.mouseLeave}>
-          <div className="disclaimer-label">
-            <span className={`${this.props.config.icon} align-middle`}></span>
+          <div className="disclaimer-label flex justify-center items-center">
+            <span className={`${this.props.config.icon} app-line-height`} />
             {_.has(this.props, 'buttonText') ? (
-              <span className="ml-4">{this.props.buttonText}</span>
+              <span className="ml-2">{this.props.buttonText}</span>
             ) : null}
           </div>
 

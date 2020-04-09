@@ -77,8 +77,8 @@ class Comparison extends Component {
     let currLevelTotalTasks = 0
     let remainingParameters = []
 
-    let parameterLoop = function(item) {
-      let handleParameters = function(parameterVal, parameterkey) {
+    let parameterLoop = function (item) {
+      let handleParameters = function (parameterVal, parameterkey) {
         if (parameterVal.status === 2) {
           let temp = Object.assign(
             {},
@@ -94,7 +94,7 @@ class Comparison extends Component {
       _.each(item.subSection, handleParameters)
     }
 
-    let checkSubSectionFurtherNested = function(item) {
+    let checkSubSectionFurtherNested = function (item) {
       let subSectionLabel = item.label
       let subSection = item.subSection
 
@@ -112,7 +112,7 @@ class Comparison extends Component {
       }
     }
 
-    let sectionIterator = function(item) {
+    let sectionIterator = function (item) {
       let handleSection = (subSectionVal, subSectionkey) => {
         let temp = Object.assign(
           {},
@@ -124,7 +124,7 @@ class Comparison extends Component {
       _.each(item.section, handleSection)
     }
 
-    let levelsIterator = function(levels) {
+    let levelsIterator = function (levels) {
       let handleLevel = (level, levelKey) => {
         if (level.status === 'next') {
           let item = Object.assign(
@@ -150,7 +150,7 @@ class Comparison extends Component {
     return parseInt(arr[1], 10) - 1
   }
 
-  modalVisiblity = val => {
+  modalVisiblity = (val) => {
     this.setState({ modalVisiblity: val })
   }
 
@@ -202,7 +202,7 @@ class Comparison extends Component {
           </div>
 
           <div className="text-center mt-4">
-            <span className="text-14-demi">
+            <span className="text-14-med hintColor">
               {remainingParameters.length}{' '}
               {mutuals.singluarOrPlural(remainingParameters.length, 'Task')}{' '}
             </span>
@@ -423,7 +423,4 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Comparison)
+export default connect(mapStateToProps, {})(Comparison)

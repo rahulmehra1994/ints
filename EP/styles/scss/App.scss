@@ -15,7 +15,7 @@ html {
   font-size: 14px;
   font-weight: 500;
   font-family: $app-font;
-  line-height: 1.5;
+  line-height: $app-line-height;
   min-width: 1080px;
   background-color: $background-color;
   color: $black;
@@ -41,6 +41,10 @@ body:not(.using-mouse) .btn-primary:focus {
 }
 
 .ep-app {
+  .app-line-height {
+    line-height: $app-line-height;
+  }
+
   .text-54-med {
     font-size: 54px;
     font-weight: 500;
