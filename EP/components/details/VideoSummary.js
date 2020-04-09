@@ -284,7 +284,7 @@ class VideoSummary extends Component {
                 width: 95,
                 zIndex: 10000,
               }}>
-              Smart player
+              Smart Player
             </div>
           </div>
 
@@ -589,7 +589,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoSummary)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoSummary)

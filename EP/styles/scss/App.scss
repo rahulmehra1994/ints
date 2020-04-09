@@ -41,6 +41,11 @@ body:not(.using-mouse) .btn-primary:focus {
 }
 
 .ep-app {
+  input::selection,
+  textarea::selection {
+    background: #accef7;
+  }
+
   .app-line-height {
     line-height: $app-line-height;
   }
