@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Body Posture</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Body-Posture" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(8.225911, 5.000000)">
+            <circle id="Oval" fill="#F3F8FE" cx="42" cy="45" r="42"></circle>
+            <path d="M50.7740895,11.5 C50.7740895,16.1944022 46.9684917,20 42.2740895,20 C37.5796873,20 33.7740895,16.1944022 33.7740895,11.5 C33.7740895,6.80559783 37.5796873,3 42.2740895,3 C46.9684917,3 50.7740895,6.80559783 50.7740895,11.5" id="Fill-1" stroke="url(#linearGradient-1)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+            <path d="M62.7740895,60.763773 L62.7740895,83.2627119 C62.7740895,85.3230951 61.0873262,87 59.0148302,87 C56.9414003,87 55.255571,85.3230951 55.255571,83.2627119 L55.255571,65.6440678 L40.3259413,65.6440678 C36.7058447,65.6440678 33.7740895,62.7285188 33.7740895,59.1305085 L33.7740895,33.0762712 C33.7740895,28.0678408 37.8667787,24 42.9037191,24 C45.4170525,24 47.7043632,25.0139425 49.3584373,26.6583493 C51.0125114,28.3036846 52.0333487,30.5776271 52.0333487,33.0762712 L52.0333487,57.1016949 L59.0904824,57.1016949 C61.1200154,57.1016949 62.7740895,58.7461017 62.7740895,60.763773" id="Fill-7" stroke="url(#linearGradient-2)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+            <path d="M74.7740895,40.7307692 C74.7740895,41.6357302 74.4001784,42.4525641 73.8063196,43.0410256 C73.2124608,43.6294872 72.3871788,44 71.474874,44 L57.1782733,44 C56.4964354,44 55.8585871,43.7924749 55.3307126,43.4447046 C54.7913626,43.3025641 54.2749636,43.0192308 53.8455874,42.6051282 L43.7394686,32.5908584 C42.4522964,31.304961 42.4522964,29.2344482 43.7394686,27.9589744 C44.377317,27.3269231 45.2236375,27 46.0709143,27 C46.9172348,27 47.7645116,27.3269231 48.4138355,27.9589744 L58.002599,37.4615385 L71.474874,37.4615385 C73.3004399,37.4615385 74.7740895,38.9217949 74.7740895,40.7307692" id="Fill-15" stroke="url(#linearGradient-3)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+            <path d="M24.2740895,64.1442195 L24.2740895,0 M24.2740895,64 L2.27408949,6" id="Combined-Shape" stroke="url(#linearGradient-4)" stroke-width="2" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="bevel" stroke-dasharray="5"></path>
+        </g>
+    </g>
+</svg>

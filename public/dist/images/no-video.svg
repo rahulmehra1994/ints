@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="24px" viewBox="0 0 28 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>video not available</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="video-not-available" transform="translate(-1.000000, 0.000000)">
+            <ellipse id="Oval" fill="#5B5B5B" cx="15.5454545" cy="12.5454545" rx="7.5" ry="8.18181818"></ellipse>
+            <path d="M15,0 C8.4,0 3,5.4 3,12 C3,18.6 8.4,24 15,24 C21.6,24 27,18.6 27,12 C27,5.4 21.6,0 15,0 Z M19.9115027,12.7198189 L13.0873418,17.205607 C12.9763798,17.2696897 12.8931584,17.3337724 12.7544559,17.3337724 C12.6157534,17.3337724 12.4493105,17.2696897 12.366089,17.205607 C12.1719056,17.0454003 12.0332031,16.7570282 12.0332031,16.4686561 L12.0332031,7.4970799 C12.0332031,7.20870781 12.1441651,6.92033572 12.366089,6.760129 C12.6157534,6.59992228 12.8654179,6.59992228 13.0873418,6.760129 L19.9115027,11.2459171 C20.1611671,11.4061238 20.2998695,11.6944959 20.2998695,11.982868 C20.2998695,12.2712401 20.1611671,12.5596122 19.9115027,12.7198189 Z" id="Shape" fill="#D3D3D3" fill-rule="nonzero"></path>
+            <rect id="Rectangle-Copy" fill="#FFFFFF" fill-rule="nonzero" transform="translate(14.986265, 11.403319) rotate(-34.000000) translate(-14.986265, -11.403319) " x="-1.51373456" y="9.90331873" width="33" height="3" rx="1.5"></rect>
+            <rect id="Rectangle" fill="#5B5B5B" fill-rule="nonzero" transform="translate(14.986265, 11.403319) rotate(-34.000000) translate(-14.986265, -11.403319) " x="-0.513734563" y="10.9033187" width="31" height="1" rx="0.5"></rect>
+        </g>
+    </g>
+</svg>

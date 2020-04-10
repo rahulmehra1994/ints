@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Vocal Features</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-5">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Vocal-Features" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(8.225911, 8.000000)">
+            <circle id="Oval" fill="#F3F8FE" cx="42" cy="42" r="42"></circle>
+            <g id="Group-23" transform="translate(4.774089, 7.000000)">
+                <path d="M59,34 C63.3082778,37.6272324 66,42.779989 66,48.49953 C66,54.220011 63.3082778,59.3718277 59,63" id="Stroke-1" stroke="url(#linearGradient-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"></path>
+                <path d="M64,28 C70.1538462,33.0037977 74,40.1103874 74,48.0004603 C74,55.8896126 70.1538462,62.9962023 64,68" id="Stroke-3" stroke="url(#linearGradient-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"></path>
+                <path d="M56,41 C58.4620957,42.8759255 60,45.5412759 60,48.5 C60,51.4587241 58.4620957,54.1231491 56,56" id="Stroke-5" stroke="url(#linearGradient-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"></path>
+                <path d="M46,6.05875 C46,7.28092278 46,9.33052731 46,12.2075636 C46,15.1038006 52.3589964,27.0130503 52.3589964,30.8604289 C52.3589964,31.6245124 46,30.7468595 46,31.7066546 C46,35.4593324 46,44.4541975 46,58.69125 C46,62.03975 43.3044,64.75 39.974,64.75 L13.5036867,64.75 C6.04580647,64.75 9.79511111e-15,58.7041935 0,51.2463133 L0,6.05875 L0,6.05875 C0,2.71025 2.6956,0 6.026,0 L39.974,0 C43.3044,0 46,2.71025 46,6.05875 Z" id="Stroke-21" stroke="url(#linearGradient-4)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+                <path d="M42,36 L42,58 C35.928,58 30.428,55.536 26.446,51.554 C22.464,47.572 20,42.072 20,36 L42,36 Z" id="Fill-9" fill="url(#linearGradient-5)"></path>
+                <path d="M40,55 C35.308,55 31.058,53.208 27.981,50.312 C24.904,47.416 23,43.416 23,39 C27.692,39 31.942,40.792 35.019,43.688 C38.096,46.584 40,50.584 40,55" id="Fill-13" fill="#C9D0EA"></path>
+            </g>
+        </g>
+    </g>
+</svg>

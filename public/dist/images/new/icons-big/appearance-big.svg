@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Appearance</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Appearance" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#F3F8FE" cx="50.2259105" cy="50" r="42"></circle>
+        <path d="M41,42.534362 L41,60.5494748 L14.445071,75.1456711 C12.9931009,75.9437618 11.1690662,75.4136877 10.3709755,73.9617176 C10.1276043,73.5189512 10,73.0218907 10,72.5166466 L10,32.3657273 C10,30.708873 11.3431458,29.3657273 13,29.3657273 C13.4511318,29.3657273 13.896455,29.4674712 14.3028256,29.6633865 L41,42.534362 L41,42.534362 Z" id="Path-16" stroke="url(#linearGradient-1)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+        <path d="M93,42.534362 L93,60.5494748 L66.445071,75.1456711 C64.9931009,75.9437618 63.1690662,75.4136877 62.3709755,73.9617176 C62.1276043,73.5189512 62,73.0218907 62,72.5166466 L62,32.3657273 C62,30.708873 63.3431458,29.3657273 65,29.3657273 C65.4511318,29.3657273 65.896455,29.4674712 66.3028256,29.6633865 L93,42.534362 L93,42.534362 Z" id="Path-16-Copy" stroke="url(#linearGradient-1)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel" transform="translate(77.500000, 52.588951) scale(-1, 1) translate(-77.500000, -52.588951) "></path>
+        <path d="M41,42.5889512 C47.7354017,37.2556178 54.7354017,37.2556178 62,42.5889512" id="Path-17" stroke="url(#linearGradient-2)" stroke-width="2" stroke-linejoin="bevel"></path>
+        <path d="M41,64.5889512 C47.7354017,59.2556178 54.7354017,59.2556178 62,64.5889512" id="Path-17-Copy" stroke="url(#linearGradient-2)" stroke-width="2" stroke-linejoin="bevel" transform="translate(51.500000, 62.588951) scale(1, -1) translate(-51.500000, -62.588951) "></path>
+        <line x1="30.8077081" y1="44.9491457" x2="41" y2="48.9508184" id="Path-18" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round"></line>
+        <line x1="63" y1="55" x2="73.1922919" y2="59.0016727" id="Path-18-Copy" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round"></line>
+        <line x1="31" y1="54" x2="41.1922919" y2="58.0016727" id="Path-18" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round" transform="translate(36.096146, 56.000836) scale(1, -1) translate(-36.096146, -56.000836) "></line>
+        <line x1="63.1922919" y1="45" x2="73.3845837" y2="49.0016727" id="Path-18-Copy" stroke="url(#linearGradient-3)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round" transform="translate(68.288438, 47.000836) scale(1, -1) translate(-68.288438, -47.000836) "></line>
+        <line x1="31" y1="51.9258916" x2="41" y2="51.9258916" id="Path-19" stroke="url(#linearGradient-4)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round"></line>
+        <line x1="63" y1="51.9258916" x2="73" y2="51.9258916" id="Path-19-Copy" stroke="url(#linearGradient-4)" stroke-width="2" fill="#C9D0EA" stroke-linecap="round"></line>
+    </g>
+</svg>

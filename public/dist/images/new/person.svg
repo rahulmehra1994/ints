@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="44px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 58 (101010) - https://sketch.com -->
+    <title>5D050BC0-F63C-4926-A959-FA9C64A0DE9E</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="EP-calibration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Welcome-screen-Copy-36" transform="translate(-322.000000, -547.000000)">
+            <g id="Group-7" transform="translate(317.000000, 544.000000)">
+                <path d="M25,7 C28.309,7 31,9.691 31,13 C31,16.309 28.309,19 25,19 C21.691,19 19,16.309 19,13 C19,9.691 21.691,7 25,7 M25,23 C30.514,23 35,18.514 35,13 C35,7.486 30.514,3 25,3 C19.486,3 15,7.486 15,13 C15,18.514 19.486,23 25,23" id="Fill-1" fill="#233659"></path>
+                <path d="M25,24.2329 C13.972,24.2329 5,33.2049 5,44.2329 C5,45.3369 5.896,46.2329 7,46.2329 C8.104,46.2329 9,45.3369 9,44.2329 C9,35.4109 16.178,28.2329 25,28.2329 C33.822,28.2329 41,35.4109 41,44.2329 C41,44.4569 40.995,44.6799 40.986,44.9009 C40.94,46.0049 41.798,46.9369 42.902,46.9829 C42.93,46.9829 42.958,46.9839 42.986,46.9839 C44.052,46.9839 44.938,46.1419 44.983,45.0659 C44.994,44.7899 45,44.5129 45,44.2329 C45,33.2049 36.028,24.2329 25,24.2329" id="Fill-3" fill="#233659"></path>
+                <polygon id="Fill-5" points="0 50 50 50 50 0 0 0"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

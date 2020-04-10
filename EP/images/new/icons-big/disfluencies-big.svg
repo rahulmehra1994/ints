@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Disfluencies</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Disfluencies" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(5.000000, 8.000000)">
+            <circle id="Oval" fill="#F3F8FE" cx="45.2259105" cy="42" r="42"></circle>
+            <g id="Group-7" transform="translate(0.000000, 5.000000)">
+                <path d="M46.9090909,72.5 C45.4996364,72.5 44.2494545,71.5989091 43.8043636,70.2625455 L25.0909091,14.1221818 L17.2865455,37.5352727 C16.8414545,38.8716364 15.5912727,39.7727273 14.1818182,39.7727273 L3.27272727,39.7727273 C1.46509091,39.7727273 0,38.3076364 0,36.5 C0,34.6923636 1.46509091,33.2272727 3.27272727,33.2272727 L11.8232727,33.2272727 L21.9861818,2.73745455 C22.4323636,1.40109091 23.6814545,0.5 25.0909091,0.5 C26.5003636,0.5 27.7505455,1.40109091 28.1956364,2.73745455 L46.9090909,58.8778182 L54.7134545,35.4647273 C55.1585455,34.1283636 56.4087273,33.2272727 57.8181818,33.2272727 L68.7272727,33.2272727 C70.5349091,33.2272727 72,34.6923636 72,36.5 C72,38.3076364 70.5349091,39.7727273 68.7272727,39.7727273 L60.1767273,39.7727273 L50.0138182,70.2625455 C49.5687273,71.5989091 48.3185455,72.5 46.9090909,72.5" id="Fill-1" fill="url(#linearGradient-1)"></path>
+                <path d="M84.5,42.5 L84.5,42.5 C81.4629,42.5 79,40.0371 79,37 C79,33.9629 81.4629,31.5 84.5,31.5 C87.5371,31.5 90,33.9629 90,37 C90,40.0371 87.5371,42.5 84.5,42.5" id="Fill-3" stroke="url(#linearGradient-1)" stroke-width="2" fill="#FFFFFF" stroke-linejoin="bevel"></path>
+            </g>
+        </g>
+    </g>
+</svg>

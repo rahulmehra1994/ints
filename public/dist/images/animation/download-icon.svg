@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 57.1 (101010) - https://sketch.com -->
+    <title>D14521D4-4F32-40CB-B4A9-AB7A03F797F6</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="EP-calibration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Internet-error" transform="translate(-560.000000, -455.000000)">
+            <g id="24px-(7)-copy" transform="translate(569.000000, 464.000000) scale(1, -1) rotate(-270.000000) translate(-569.000000, -464.000000) translate(560.000000, 455.000000)">
+                <polygon id="Path" points="2.64705882 2.64705882 15.3529412 2.64705882 15.3529412 15.3529412 2.64705882 15.3529412"></polygon>
+                <path d="M9,0 C13.9705627,0 18,4.02943725 18,9 C18,13.9705627 13.9705627,18 9,18 C4.02943725,18 0,13.9705627 0,9 C0,4.02943725 4.02943725,0 9,0 Z M9,1.05882353 C4.61420934,1.05882353 1.05882353,4.61420934 1.05882353,9 C1.05882353,13.3857907 4.61420934,16.9411765 9,16.9411765 C13.3857907,16.9411765 16.9411765,13.3857907 16.9411765,9 C16.9411765,4.61420934 13.3857907,1.05882353 9,1.05882353 Z M9,4.76470588 L9.75176471,5.51117647 L6.79235294,8.47058824 L13.2352941,8.47058824 L13.2352941,9.52941176 L6.79235294,9.52941176 L9.74647059,12.4888235 L9,13.2352941 L4.76470588,9 L9,4.76470588 Z" id="Path-3" fill="#444444" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

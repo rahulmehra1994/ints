@@ -1,0 +1,33 @@
+#!/usr/bin/expect
+
+set timeout -1
+
+set ip [lindex $argv 0]
+
+set user [lindex $argv 1]
+
+set environ [lindex $argv 2]
+
+set folder [lindex $argv 2]
+
+set num_args [llength $argv]
+
+if { $num_args == 4 } {
+  set folder [lindex $argv 3]
+}
+
+spawn npm run build:$environ
+
+interact
+
+spawn scp [exec ls -lt | awk -F { } {{print $9}} | sed -n 2p] $user\@$ip:/var/www/dev/tarun/aspire-ui/$folder/
+
+interact
+
+spawn ssh -t $user\@$ip cd /var/www/dev/tarun/aspire-ui/$folder/ && (rm -r public || true) && unzip [exec ls -lt | awk -F { } {{print $9}} | sed -n 2p] && mv [exec ls -lt | awk -F { } {{print $9}} | sed -n 2p] ./builds/
+
+interact
+
+spawn mv [exec ls -lt | awk -F { } {{print $9}} | sed -n 2p] ./builds/
+
+interact

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="302px" height="280px" viewBox="0 0 302 280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>F84F37D9-1606-4CD3-8013-C965FEE98ACA</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-1">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-2">
+            <stop stop-color="#0274CB" offset="0%"></stop>
+            <stop stop-color="#4656B8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-3">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="113.102087%" id="linearGradient-4">
+            <stop stop-color="#0075CB" offset="0%"></stop>
+            <stop stop-color="#4052C8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="EP-calibration" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="008" transform="translate(-791.000000, -387.000000)">
+            <g id="Group-Copy" transform="translate(793.000000, 387.000000)">
+                <circle id="Oval" fill="#F3F8FE" cx="149.479167" cy="140" r="140"></circle>
+                <path d="M256,225.647817 L40,225.647817 L40,66.4197731 C40,62.6792318 43.0325542,59.6478175 46.7745021,59.6478175 L249.227572,59.6478175 C252.967446,59.6478175 256,62.6792318 256,66.4197731 L256,225.647817 Z" id="Fill-12" stroke="url(#linearGradient-1)" stroke-width="4" fill="#FFFFFF"></path>
+                <rect id="Rectangle" fill="#CBD3FF" x="0" y="237" width="298" height="18" rx="9"></rect>
+                <polygon id="Fill-14" stroke="url(#linearGradient-2)" stroke-width="2" fill="#C9D0EA" points="50 216 248 216 248 70 50 70"></polygon>
+                <path d="M10.8562952,243.647817 C4.85982132,243.647817 0,237.793788 0,230.577366 L0,225.647817 L298,225.647817 L298,230.577366 C298,237.793788 293.140179,243.647817 287.143705,243.647817 L10.8562952,243.647817 Z" id="Fill-376" stroke="url(#linearGradient-3)" stroke-width="4" fill="#FFFFFF"></path>
+                <path d="M187.89544,235 L108.108647,235 C103.629273,235 100,231.417549 100,227 L196,227 C196,231.417549 192.374814,235 187.89544,235" id="Fill-378" fill="#0075CB"></path>
+                <path d="M76,216 L220,216 L220,41 C220,36.581722 216.418278,33 212,33 L84,33 C79.581722,33 76,36.581722 76,41 L76,216 Z" id="Rectangle" stroke="url(#linearGradient-4)" stroke-width="2" fill="#FFFFFF"></path>
+                <circle id="Oval" fill="#C9D0EA" cx="107.479167" cy="84" r="12"></circle>
+                <rect id="Rectangle" fill="#C9D0EA" x="130.479167" y="72" width="70" height="8" rx="4"></rect>
+                <rect id="Rectangle-Copy-2" fill="#C9D0EA" x="130.479167" y="145" width="70" height="8" rx="4"></rect>
+                <rect id="Rectangle-Copy" fill="#C9D0EA" x="130.479167" y="86" width="35" height="8" rx="4"></rect>
+                <rect id="Rectangle-Copy-3" fill="#C9D0EA" x="130.479167" y="159" width="35" height="8" rx="4"></rect>
+                <rect id="Rectangle" fill="#C9D0EA" x="95.4791667" y="145" width="22" height="22" rx="2"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

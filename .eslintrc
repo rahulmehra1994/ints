@@ -1,0 +1,25 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "jsx": true,
+    },
+    "sourceType": "module",
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "quotes"							 : [2, "single", { "allowTemplateLiterals": true }],
+    "key-spacing"          : 0,
+    "jsx-quotes"           : [2, "prefer-single"],
+    "object-curly-spacing" : [2, "always"],
+    "indent"               : [2, 2],
+    "no-var"               : 2,
+  },
+  "plugins": [
+    "react"
+  ],
+}
