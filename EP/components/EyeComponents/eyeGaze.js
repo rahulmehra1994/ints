@@ -217,7 +217,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EyeContactCenter)
+export default connect(mapStateToProps, mapDispatchToProps)(EyeContactCenter)
