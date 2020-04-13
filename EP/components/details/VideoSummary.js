@@ -192,11 +192,23 @@ class VideoSummary extends Component {
 
   enableFloatingVideo() {
     this.pause()
-    let videoFloating = this.props.videoFloating
-    this.props.toggleVideoFloating(!videoFloating)
-    if (!videoFloating) {
-      this.props.history.push(this.props.appUrls.eyeGaze)
+    if (this.props.regularVideoState.isFullscreen) {
+      this.refs.normalPlayer.toggleFullscreen()
     }
+
+    setTimeout(() => {
+      let videoFloating = this.props.videoFloating
+      this.props.toggleVideoFloating(!videoFloating)
+
+      setTimeout(() => {
+        if (!videoFloating) {
+          this.props.history.push(this.props.appUrls.eyeGaze)
+        }
+      }, 300)
+
+      debugger
+    }, 300)
+    debugger
 
     trackingDebounceSmall({
       event_type: 'click',
@@ -265,7 +277,7 @@ class VideoSummary extends Component {
         <BigPlayButton position="center" />
 
         <div className="extra-video-controls" style={extraVideoControlsStyle}>
-          {this.state.hideMiniPlayerButton ? null : (
+          {false && this.state.hideMiniPlayerButton ? null : (
             <div
               className="float-left relative cursor-pointer mr-3"
               tabIndex={tabIndex}
@@ -509,13 +521,13 @@ class VideoSummary extends Component {
           tabIndex={this.state.tabIndex}>
           {this.player()}
 
-          <VideoReplay
+          {/* <VideoReplay
             togglingState={regularVideoState.ended}
             onVideoReplay={this.onVideoReplay}
             tabIndex={this.state.tabIndex}
-          />
+          /> */}
 
-          <div
+          {/* <div
             className={classNames('absolute pin', {
               hidden: this.state.thumbHidden,
             })}>
@@ -541,7 +553,7 @@ class VideoSummary extends Component {
                 <div className="play-triangle relative" style={{ top: -10 }} />
               </button>
             )}
-          </div>
+          </div> */}
 
           <Feedback tabIndex={tabIndex} pauseVideo={this.pause} />
 
