@@ -321,7 +321,8 @@ class Calibration extends Component {
     }
     if (
       (gender === 'male' || gender === 'female' || gender === 'undisclosed') &&
-      (langCode !== -1 && langCode !== '')
+      langCode !== -1 &&
+      langCode !== ''
     )
       this.setState({
         isSystemCheckOpen: false,
@@ -1212,7 +1213,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Calibration)
+export default connect(mapStateToProps, mapDispatchToProps)(Calibration)

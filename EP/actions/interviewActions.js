@@ -476,7 +476,13 @@ export function sendAudioData(index, state) {
     })
 }
 
-export function uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess) {
+export function uploadVideoAPI(
+  id,
+  blob,
+  interviewKey,
+  onUploadVideoSuccess,
+  onFailure
+) {
   let fd = new FormData()
   fd.append('clip', blob, 'clip')
   fd.append('id', id)
@@ -486,20 +492,21 @@ export function uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess) {
     .service('ep')
     .post(`/processclip`, fd, { processData: false, contentType: false })
     .done(() => {
-      onUploadVideoSuccess()
+      onUploadVideoSuccess(id)
     })
     .fail(xhr => {
-      apiCallAgain(
-        counters.sendClip,
-        id,
-        () => {
-          uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess)
-        },
-        2000,
-        10,
-        xhr
-      )
+      onFailure(id, blob, interviewKey, onUploadVideoSuccess, onFailure, xhr)
+      // apiCallAgain(
+      //   counters.sendClip,
+      //   id,
+      //   () => {
+      //     uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess,   onFailure)
+      //   },
+      //   2000,
+      //   10,
+      //   xhr
+      // )
 
-      log('%c Api faliure /processclip', 'background: red; color: white', xhr)
+      // log('%c Api faliure /processclip', 'background: red; color: white', xhr)
     })
 }
