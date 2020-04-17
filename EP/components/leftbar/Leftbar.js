@@ -342,7 +342,7 @@ class Leftbar extends Component {
 
     return (
       <div
-        className="leftbar-detailed"
+        className="leftbar-detailed ep-scroll"
         role="navigation"
         aria-label="User menu">
         <div id="primary-bar">
@@ -495,7 +495,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Leftbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Leftbar)

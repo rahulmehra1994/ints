@@ -196,19 +196,12 @@ class VideoSummary extends Component {
       this.refs.normalPlayer.toggleFullscreen()
     }
 
-    setTimeout(() => {
-      let videoFloating = this.props.videoFloating
-      this.props.toggleVideoFloating(!videoFloating)
+    let videoFloating = this.props.videoFloating
+    this.props.toggleVideoFloating(!videoFloating)
 
-      setTimeout(() => {
-        if (!videoFloating) {
-          this.props.history.push(this.props.appUrls.eyeGaze)
-        }
-      }, 300)
-
-      debugger
-    }, 300)
-    debugger
+    if (!videoFloating) {
+      this.props.history.push(this.props.appUrls.eyeGaze)
+    }
 
     trackingDebounceSmall({
       event_type: 'click',

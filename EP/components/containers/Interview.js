@@ -372,9 +372,6 @@ class Interview extends Component {
       return
     }
 
-    log('totalsent before api call', this.state.totalsent)
-    log('totalprocessed before api call', this.state.totalprocessed)
-
     uploadVideoAPI(
       id,
       blob,
@@ -408,6 +405,8 @@ class Interview extends Component {
 
   storeClip = (id, blob) => {
     let storageItem = { id, blob, status: '' }
+    log('totalsent before api call', this.state.totalsent)
+    log('totalprocessed before api call', this.state.totalprocessed)
     this.setState({ totalsent: this.state.totalsent + 1 })
     storageQueue.push(storageItem)
     allClipsQueue.push(storageItem)
