@@ -407,10 +407,16 @@ class Interview extends Component {
     let storageItem = { id, blob, status: '' }
     log('totalsent before api call', this.state.totalsent)
     log('totalprocessed before api call', this.state.totalprocessed)
-    this.setState({ totalsent: this.state.totalsent + 1 })
+    this.incrementRecordedClipsCount()
     storageQueue.push(storageItem)
     allClipsQueue.push(storageItem)
     this.checkStorageQueueIsNotEmpty()
+  }
+
+  incrementRecordedClipsCount() {
+    this.setState({ totalsent: this.state.totalsent + 1 }, () => {
+      if (this.state.interviewEnded) this.updateClipCounts()
+    })
   }
 
   checkStorageQueueIsNotEmpty() {
