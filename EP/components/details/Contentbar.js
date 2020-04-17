@@ -106,7 +106,7 @@ class Contentbar extends Component {
         </div>
 
         <div
-          className={classNames('improveSection', {
+          className={classNames('improveSection ep-scroll', {
             hidden: this.videoSummaryInPath(),
           })}
           role="complementary"
@@ -230,10 +230,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Contentbar)
+export default connect(mapStateToProps, {})(Contentbar)
 
 class eyeGaze extends Component {
   render() {

@@ -59,6 +59,10 @@ const hasGetUserMedia = !!(
   navigator.msGetUserMedia
 )
 
+let storageQueue = []
+let allClipsQueue = []
+let countOfParallelUpload = 0
+
 class Interview extends Component {
   constructor(props) {
     super(props)
@@ -88,7 +92,6 @@ class Interview extends Component {
       oneTabAlert: false,
       shouldMount: false,
       interviewKey: this.props.match.params.interviewKey,
-      intTimePeriod: 0,
       shouldReallyMount: false,
       jazzCount: highContrast ? 20 : 5,
       finalRecognitionStop: false,
@@ -97,8 +100,11 @@ class Interview extends Component {
       ariaLabel: temp(),
       isCountdownVisible: false,
       dynamicFontSize: null,
+      limitOfParallelUpload: 2,
+      enableParallelUploadTweeking: false,
     }
 
+    this.intTimePeriod = 0
     this.totalTime = this.props.epCustomizations.interview_duration
     this.audioRecorder = null
     this.mediaRecorder = null
@@ -114,7 +120,6 @@ class Interview extends Component {
     this.onVoiceResult = this.onVoiceResult.bind(this)
     this.stopVoice = this.stopVoice.bind(this)
     this.onEnd = this.onEnd.bind(this)
-    this.sendClip = this.sendClip.bind(this)
     this.onUploadVideoSuccess = this.onUploadVideoSuccess.bind(this)
     this.onSaveAudioAPISuccess = this.onSaveAudioAPISuccess.bind(this)
     this.intCreated = this.intCreated.bind(this)
@@ -123,7 +128,7 @@ class Interview extends Component {
     this.checkAllIntDataSentSuccessfully = this.checkAllIntDataSentSuccessfully.bind(
       this
     )
-
+    this.onUploadVideoFailure = this.onUploadVideoFailure.bind(this)
     this.setAppIntKey()
   }
 
@@ -138,6 +143,7 @@ class Interview extends Component {
   }
 
   componentDidMount() {
+    this.adminsFunctionalityActivation()
     this.getAllStreams()
     mutuals.changeInactivityTime(mutuals.largeInactivityTime)
     mutuals.setupTimers()
@@ -146,6 +152,11 @@ class Interview extends Component {
       event_type: 'mount',
     })
     this.checkCameFromCalibration()
+  }
+
+  adminsFunctionalityActivation() {
+    if (this.props.epCustomizations.user_type === 'admin')
+      this.setState({ enableParallelUploadTweeking: true })
   }
 
   getAllStreams() {
@@ -288,16 +299,9 @@ class Interview extends Component {
       )
 
       if (this.state.transcript) {
-        this.setState(
-          { transcript: this.state.transcript + finalTranscript },
-          () => {
-            //this.call(args.finalTranscript)
-          }
-        )
+        this.setState({ transcript: this.state.transcript + finalTranscript })
       } else {
-        this.setState({ transcript: finalTranscript }, () => {
-          // this.call(args.finalTranscript)
-        })
+        this.setState({ transcript: finalTranscript })
       }
 
       log(
@@ -340,60 +344,114 @@ class Interview extends Component {
     }
   }
 
-  showPopup() {
+  showPopup(callback) {
     notify(
       'Video recording library is not working properly. Please try again.',
       'error',
       {
         layout: 'center',
-        timeout: false,
+        timeout: 4000,
         callback: {
-          onClose: () => {},
+          onClose: () => {
+            callback()
+          },
         },
       }
     )
   }
 
   sendClip = (id, blob) => {
-    log('​sendClip -> blob', '', blob)
-    if (blob === null && this.state.interviewEnded === false) {
-      this.showPopup()
-      setTimeout(() => {
+    log('In ​sendClip function blob => ', blob)
+    if (
+      (_.isNull(blob) || _.isUndefined(blob)) &&
+      this.state.interviewEnded === false
+    ) {
+      this.showPopup(() => {
         this.props.history.push('/calibration')
-      }, 5000)
+      })
       return
     }
-    if (blob) {
-      if (blob.size === 0) {
-        this.updateClipCounts()
-        return
-      }
-      log('totalsent before api call', '', this.state.totalsent)
-      log('totalprocessed before api call', '', this.state.totalprocessed)
-      this.setState({ totalsent: this.state.totalsent + 1 }, () => {
-        this.updateClipCounts()
-        uploadVideoAPI(
-          id,
-          blob,
-          this.state.interviewKey,
-          this.onUploadVideoSuccess
-        )
-      })
-    } else {
-      this.updateClipCounts()
+
+    uploadVideoAPI(
+      id,
+      blob,
+      this.state.interviewKey,
+      this.onUploadVideoSuccess,
+      this.onUploadVideoFailure
+    )
+  }
+
+  onUploadVideoFailure(
+    id,
+    blob,
+    interviewKey,
+    onUploadVideoSuccess,
+    onFailure,
+    xhr
+  ) {
+    apiCallAgain(
+      counters.sendClip,
+      id,
+      () => {
+        uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess, onFailure)
+      },
+      2000,
+      10,
+      xhr
+    )
+
+    log('%c Api faliure /processclip', 'background: red; color: white', xhr)
+  }
+
+  storeClip = (id, blob) => {
+    let storageItem = { id, blob, status: '' }
+    log('totalsent before api call', this.state.totalsent)
+    log('totalprocessed before api call', this.state.totalprocessed)
+    this.incrementRecordedClipsCount()
+    storageQueue.push(storageItem)
+    allClipsQueue.push(storageItem)
+    this.checkStorageQueueIsNotEmpty()
+  }
+
+  incrementRecordedClipsCount() {
+    this.setState({ totalsent: this.state.totalsent + 1 }, () => {
+      if (this.state.interviewEnded) this.updateClipCounts()
+    })
+  }
+
+  checkStorageQueueIsNotEmpty() {
+    if (storageQueue.length > 0) {
+      this.eachRecordedClip()
+    }
+  }
+
+  eachRecordedClip() {
+    if (countOfParallelUpload < this.state.limitOfParallelUpload) {
+      countOfParallelUpload += 1
+      let firstObj = storageQueue.shift()
+      this.sendClip(firstObj.id, firstObj.blob)
     }
   }
 
   updateClipCounts() {
-    if (this.state.interviewEnded) {
-      sendNoOfVideoClips(this.state.totalsent, this.state.intTimePeriod)
-    }
+    sendNoOfVideoClips(this.state.totalsent, this.intTimePeriod)
+    log('all video clips =>', allClipsQueue)
   }
 
-  onUploadVideoSuccess() {
+  checkParallelUpload(id) {
+    countOfParallelUpload -= 1
+    this.checkStorageQueueIsNotEmpty()
+    allClipsQueue.forEach((item, index) => {
+      if (item.id === id) item.status = 'success'
+    })
+  }
+
+  onUploadVideoSuccess(id) {
+    this.checkParallelUpload(id)
     let totalprocessed = this.state.totalprocessed + 1
     this.state.totalprocessed = totalprocessed
     if (this.state.totalsent === totalprocessed && this.state.interviewEnded) {
+      this.updateClipCounts()
       this.checkAllIntDataSentSuccessfully()
     }
 
@@ -408,7 +466,7 @@ class Interview extends Component {
       this.state.totalsent === this.state.totalprocessed &&
       this.state.interviewEnded
     ) {
-      processresults(this.props, this.state.intTimePeriod)
+      processresults(this.props, this.intTimePeriod)
     }
   }
 
@@ -609,7 +667,7 @@ class Interview extends Component {
         console.error('blob of size zero and id is' + id, '', '')
 
       log('blob in handleBlob of id => ' + id, blob, '')
-      this.sendClip(id, blob)
+      this.storeClip(id, blob)
     })
   }
 
@@ -665,7 +723,7 @@ class Interview extends Component {
     })
 
     localStorage.setItem('interviewDuration', this.totalTime - this.state.time)
-    this.state.intTimePeriod = this.totalTime - this.state.time
+    this.intTimePeriod = this.totalTime - this.state.time
 
     let instruction = `${
       this.props.userInfo
@@ -755,13 +813,7 @@ class Interview extends Component {
   })
 
   render() {
-    let {
-      tabIndex,
-      instructions,
-      ariaLabel,
-      jazzCount,
-      isCountdownVisible,
-    } = this.state
+    let { tabIndex, instructions, ariaLabel } = this.state
 
     if (this.state.oneTabAlert) {
       return (
@@ -869,41 +921,71 @@ class Interview extends Component {
         </div>
       )
     } else {
-      return (
-        <React.Fragment>
-          <div className="fullscreen-loader">
-            <CenterLoading />
+      return this.countdownBlock()
+    }
+  }
+
+  countdownBlock() {
+    let { tabIndex, jazzCount, isCountdownVisible } = this.state
+    this.showCountdown()
+    return (
+      <React.Fragment>
+        <div className="fullscreen-loader">
+          <CenterLoading />
+        </div>
+
+        {this.state.enableParallelUploadTweeking ? (
+          <div
+            className="fixed pin-b pin-l bg-yellow"
+            style={{ height: 100, width: 250, zIndex: 10000 }}>
+            Current Upload Limit =>
+            <select
+              value={this.state.limitOfParallelUpload}
+              onChange={e => {
+                this.setState({ limitOfParallelUpload: e.target.value })
+              }}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+            </select>
           </div>
+        ) : null}
 
-          {this.showCountdown()}
-          <div style={{ opacity: isCountdownVisible ? 1 : 0 }}>
-            <div className="video-trail-wrap">
-              <div className="hugger">
-                <video ref="videoTrailer" muted />
-                <div className="overlay-mask">
-                  <OverlayMask className="calibTransparent" />
-                  <div
-                    ref="intStartCounter"
-                    className="intStartCounter"
-                    tabIndex={tabIndex}>
-                    <h1
-                      className="header"
-                      style={{ marginTop: 200 }}
-                      aria-label={'Please be ready with your pitch'}>
-                      Please be ready with your pitch
-                    </h1>
+        <div style={{ opacity: isCountdownVisible ? 1 : 0 }}>
+          <div className="video-trail-wrap">
+            <div className="hugger">
+              <video ref="videoTrailer" muted />
+              <div className="overlay-mask">
+                <OverlayMask className="calibTransparent" />
+                <div
+                  ref="intStartCounter"
+                  className="intStartCounter"
+                  tabIndex={tabIndex}>
+                  <h1
+                    className="header"
+                    style={{ marginTop: 200 }}
+                    aria-label={'Please be ready with your pitch'}>
+                    Please be ready with your pitch
+                  </h1>
 
-                    <h1 className="counter" aria-live={jazzCount}>
-                      {jazzCount}
-                    </h1>
-                  </div>
+                  <h1 className="counter" aria-live={jazzCount}>
+                    {jazzCount}
+                  </h1>
                 </div>
               </div>
             </div>
           </div>
-        </React.Fragment>
-      )
-    }
+        </div>
+      </React.Fragment>
+    )
   }
 }
 
@@ -940,7 +1022,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Interview)
+export default connect(mapStateToProps, mapDispatchToProps)(Interview)

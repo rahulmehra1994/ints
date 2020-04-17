@@ -224,7 +224,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BodyCombined)
+export default connect(mapStateToProps, mapDispatchToProps)(BodyCombined)

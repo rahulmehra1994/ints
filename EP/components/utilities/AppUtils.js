@@ -168,7 +168,7 @@ checkForAudioTracks().then(tracksRes => {
     if (result.state === 'granted') {
       if (tracksRes.status === false) {
         alert(
-          'Please close another software that using microphone or allow access to microphone for chrome'
+          'Please close any other software that is using microphone or allow access to microphone for chrome'
         )
       }
     }
@@ -180,7 +180,7 @@ checkForVideoTracks().then(tracksRes => {
     if (result.state === 'granted') {
       if (tracksRes.status === false) {
         alert(
-          'Please close another software that using camera or allow access to cameras for chrome'
+          'Please close any other software that is using camera or allow access to camera for chrome'
         )
       }
     }

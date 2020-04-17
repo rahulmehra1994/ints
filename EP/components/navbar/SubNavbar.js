@@ -12,7 +12,7 @@ import _ from 'underscore'
 import RenameInterivew from './../popups/RenameInterview'
 import { notify } from '@vmockinc/dashboard/services/helpers'
 
-var goto = function(data) {
+var goto = function (data) {
   mutuals.socketTracking({
     event_type: 'click',
     event_description: `In EP navbar ${data} clicked`,
@@ -41,8 +41,8 @@ class SubNavbar extends Component {
   }
 
   deactivateButtonForAdmin() {
-    // if (this.props.epCustomizations.user_type === 'admin')
-    //   this.setState({ disableFavourite: true, disableRename: true })
+    if (this.props.epCustomizations.user_type === 'admin')
+      this.setState({ disableFavourite: true, disableRename: true })
   }
 
   summaryActive() {
@@ -310,7 +310,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubNavbar)
+export default connect(mapStateToProps, mapDispatchToProps)(SubNavbar)

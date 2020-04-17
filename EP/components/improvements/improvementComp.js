@@ -191,7 +191,7 @@ class Improvement extends Component {
 
     if (articles.length <= 0) {
       return (
-        <div className="cardStyle clearfix bg-white p-6 mt-4">
+        <div className="cardStyle clearfix bg-white p-6">
           <div className="clearfix loaderWrap">
             <Loader
               type={compLoader.type}
@@ -378,7 +378,4 @@ export class ModalTemplate extends Component {
 
 const Modal = ModalHOC(ModalTemplate)
 
-export default connect(
-  mapStateToProps,
-  {}
-)(Improvement)
+export default connect(mapStateToProps, {})(Improvement)

@@ -134,16 +134,53 @@ class InfoBarComponent extends React.Component {
       background: item.color,
     }
 
-    if (this.props.barsAndLegends.length === 1) style.borderRadius = 13
+    return this.borderRadiusLogic(index, style)
+  }
 
-    if (index === 0) {
-      style.borderTopLeftRadius = 13
-      style.borderBottomLeftRadius = 13
+  borderRadiusLogic(selectedIndex, style) {
+    let bars = this.props.barsAndLegends
+
+    if (bars[selectedIndex - 1] === undefined) {
+      style = { ...style, borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }
+    }
+    if (bars[selectedIndex + 1] === undefined) {
+      style = {
+        ...style,
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6,
+      }
     }
 
-    if (index === 1) {
-      style.borderTopRightRadius = 13
-      style.borderBottomRightRadius = 13
+    if (
+      bars[selectedIndex - 1] !== undefined &&
+      bars[selectedIndex - 1].value === 0
+    ) {
+      style = { ...style, borderTopLeftRadius: 6, borderBottomLeftRadius: 6 }
+    }
+
+    if (
+      bars[selectedIndex - 1] !== undefined &&
+      bars[selectedIndex - 1].value !== 0
+    ) {
+      style = { ...style }
+    }
+
+    if (
+      bars[selectedIndex + 1] !== undefined &&
+      bars[selectedIndex + 1].value === 0
+    ) {
+      style = {
+        ...style,
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6,
+      }
+    }
+
+    if (
+      bars[selectedIndex + 1] !== undefined &&
+      bars[selectedIndex + 1].value !== 0
+    ) {
+      style = { ...style }
     }
 
     return style
