@@ -100,7 +100,8 @@ class Interview extends Component {
       ariaLabel: temp(),
       isCountdownVisible: false,
       dynamicFontSize: null,
-      limitOfParallelUpload: 3,
+      limitOfParallelUpload: 2,
+      enableParallelUploadTweeking: false,
     }
 
     this.intTimePeriod = 0
@@ -142,6 +143,7 @@ class Interview extends Component {
   }
 
   componentDidMount() {
+    this.adminsFunctionalityActivation()
     this.getAllStreams()
     mutuals.changeInactivityTime(mutuals.largeInactivityTime)
     mutuals.setupTimers()
@@ -150,6 +152,11 @@ class Interview extends Component {
       event_type: 'mount',
     })
     this.checkCameFromCalibration()
+  }
+
+  adminsFunctionalityActivation() {
+    if (this.props.epCustomizations.user_type === 'admin')
+      this.setState({ enableParallelUploadTweeking: true })
   }
 
   getAllStreams() {
@@ -292,16 +299,9 @@ class Interview extends Component {
       )
 
       if (this.state.transcript) {
-        this.setState(
-          { transcript: this.state.transcript + finalTranscript },
-          () => {
-            //this.call(args.finalTranscript)
-          }
-        )
+        this.setState({ transcript: this.state.transcript + finalTranscript })
       } else {
-        this.setState({ transcript: finalTranscript }, () => {
-          // this.call(args.finalTranscript)
-        })
+        this.setState({ transcript: finalTranscript })
       }
 
       log(
@@ -928,28 +928,30 @@ class Interview extends Component {
           <CenterLoading />
         </div>
 
-        <div
-          className="fixed pin-b pin-l bg-yellow"
-          style={{ height: 50, width: 250, zIndex: 10000 }}>
-          Current Upload Limit =>
-          <select
-            value={this.state.limitOfParallelUpload}
-            onChange={e => {
-              this.setState({ limitOfParallelUpload: e.target.value })
-            }}>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="25">25</option>
-          </select>
-        </div>
+        {this.state.enableParallelUploadTweeking ? (
+          <div
+            className="fixed pin-b pin-l bg-yellow"
+            style={{ height: 100, width: 250, zIndex: 10000 }}>
+            Current Upload Limit =>
+            <select
+              value={this.state.limitOfParallelUpload}
+              onChange={e => {
+                this.setState({ limitOfParallelUpload: e.target.value })
+              }}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+            </select>
+          </div>
+        ) : null}
 
         <div style={{ opacity: isCountdownVisible ? 1 : 0 }}>
           <div className="video-trail-wrap">
