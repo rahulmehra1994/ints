@@ -15,7 +15,7 @@ var classNames = require('classnames')
 class LevelInfo extends Component {
   constructor(...args) {
     super(...args)
-    this.state = { isModalOpen: false, levels2: [], expanded: false }
+    this.state = { isModalOpen: false, levels2: [], isExpanded: false }
     this.modalToggler = this.modalToggler.bind(this)
     this.escEvent = this.escEvent.bind(this)
   }
@@ -96,21 +96,6 @@ class LevelInfo extends Component {
     )
   }
 
-  expandContractLevels(selectedItem) {
-    let levels = mutuals.deepCopy(this.state.levels2)
-    let temp = levels.map(item => {
-      let sections = item.arr.map(item2 => {
-        if (item2.id === selectedItem.id) item2.isOpen = !item2.isOpen
-        return item2
-      })
-      return sections
-    })
-
-    this.setState({ levels2: temp }, () => {
-      this.checkAllExpandedOrContracted()
-    })
-  }
-
   sectionBlock(label, status, index, selectedItem) {
     let isClickable = selectedItem.arr.length > 0
     return (
@@ -119,7 +104,15 @@ class LevelInfo extends Component {
         className="section-head"
         disabled={!isClickable}
         onClick={() => {
-          this.expandContractLevels(selectedItem)
+          log('what i have to see', this.state.levels2, selectedItem)
+          let temp = this.state.levels2.map((item, index) => {
+            item.arr.map((item2, index2) => {
+              if (item2.id === selectedItem.id) item2.isOpen = !item2.isOpen
+              return item2
+            })
+            return item
+          })
+          this.setState({ item: temp })
         }}
         tabIndex={this.props.tabIndex}
         aria-label={
@@ -229,23 +222,23 @@ class LevelInfo extends Component {
 
   UNSAFE_componentWillMount() {
     let { level_info } = this.props.performanceInfo
+    let levelsObj = level_info
 
-    let levels = _.map(level_info, (level, key) => {
+    let levels = Object.keys(levelsObj).map(key => {
       return {
         label: key,
-        status: level['status'],
-        arr: this.extractSections(level['section']),
-        orderId: level['order_id'],
+        status: levelsObj[key]['status'],
+        arr: this.extractSections(levelsObj[key]['section']),
       }
     })
 
     this.setState({ levels2: levels })
   }
 
-  expandAllContractAll = () => {
+  expandContract = () => {
     let temp = this.state.levels2.map((item, index) => {
       item.arr.map((item2, index2) => {
-        if (this.state.expanded) {
+        if (this.state.isExpanded) {
           item2.isOpen = false
         } else {
           item2.isOpen = true
@@ -254,46 +247,11 @@ class LevelInfo extends Component {
       })
       return item
     })
-    this.setState({ item: temp, expanded: !this.state.expanded }, () => {
-      this.checkAllExpandedOrContracted()
-    })
-  }
-
-  checkAllExpandedOrContracted() {
-    let openCount = 0
-    let closeCount = 0
-    let levels = this.state.levels2
-
-    for (let i = 0; i < levels.length; i++) {
-      if (levels[i].status !== 'ongoing' && levels[i].label !== 'Level 1') {
-        let arr = levels[i].arr
-
-        for (let j = 0; j < arr.length; j++) {
-          let item = arr[i]
-          if (item.isOpen === true) openCount += 1
-          else closeCount += 1
-        }
-      }
-    }
-
-    if (openCount === 0) {
-      this.setState({ expanded: false })
-    }
-
-    if (openCount > 0) {
-      this.setState({ expanded: true })
-    }
-    if (closeCount === 0) {
-      this.setState({ expanded: false })
-    }
-
-    if (closeCount > 0) {
-      this.setState({ expanded: true })
-    }
+    this.setState({ item: temp, isExpanded: !this.state.isExpanded })
   }
 
   render() {
-    let { levels2, expanded } = this.state
+    let { levels2, isExpanded } = this.state
     let { tasksToShowCount, count, tabIndex } = this.props
 
     return (
@@ -329,9 +287,9 @@ class LevelInfo extends Component {
                 <button
                   className="ml-6 bluePrimaryTxt font-semibold"
                   onClick={() => {
-                    this.expandAllContractAll()
+                    this.expandContract()
                   }}>
-                  {expanded ? 'Collapse All' : 'Expand All'}
+                  {isExpanded ? 'Collapse All' : 'Expand All'}
                 </button>
               </div>
 
