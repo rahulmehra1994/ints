@@ -15,8 +15,7 @@ let middleware
 if (process.env.APP_ENV === 'live') {
   middleware = applyMiddleware(thunk, routerMiddleWare)
 } else {
-  // middleware = applyMiddleware(thunk, routerMiddleWare, logger)
-  middleware = applyMiddleware(thunk, routerMiddleWare)
+  middleware = applyMiddleware(thunk, routerMiddleWare, logger)
 }
 
 function configureStore() {
