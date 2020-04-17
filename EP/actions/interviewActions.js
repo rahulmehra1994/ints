@@ -496,17 +496,5 @@ export function uploadVideoAPI(
     })
     .fail(xhr => {
       onFailure(id, blob, interviewKey, onUploadVideoSuccess, onFailure, xhr)
-      // apiCallAgain(
-      //   counters.sendClip,
-      //   id,
-      //   () => {
-      //     uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess,   onFailure)
-      //   },
-      //   2000,
-      //   10,
-      //   xhr
-      // )
-
-      // log('%c Api faliure /processclip', 'background: red; color: white', xhr)
     })
 }
