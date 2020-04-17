@@ -192,13 +192,8 @@ class VideoSummary extends Component {
 
   enableFloatingVideo() {
     this.pause()
-    if (this.props.regularVideoState.isFullscreen) {
-      this.refs.normalPlayer.toggleFullscreen()
-    }
-
     let videoFloating = this.props.videoFloating
     this.props.toggleVideoFloating(!videoFloating)
-
     if (!videoFloating) {
       this.props.history.push(this.props.appUrls.eyeGaze)
     }
@@ -270,7 +265,7 @@ class VideoSummary extends Component {
         <BigPlayButton position="center" />
 
         <div className="extra-video-controls" style={extraVideoControlsStyle}>
-          {false && this.state.hideMiniPlayerButton ? null : (
+          {this.state.hideMiniPlayerButton ? null : (
             <div
               className="float-left relative cursor-pointer mr-3"
               tabIndex={tabIndex}
@@ -514,13 +509,13 @@ class VideoSummary extends Component {
           tabIndex={this.state.tabIndex}>
           {this.player()}
 
-          {/* <VideoReplay
+          <VideoReplay
             togglingState={regularVideoState.ended}
             onVideoReplay={this.onVideoReplay}
             tabIndex={this.state.tabIndex}
-          /> */}
+          />
 
-          {/* <div
+          <div
             className={classNames('absolute pin', {
               hidden: this.state.thumbHidden,
             })}>
@@ -546,7 +541,7 @@ class VideoSummary extends Component {
                 <div className="play-triangle relative" style={{ top: -10 }} />
               </button>
             )}
-          </div> */}
+          </div>
 
           <Feedback tabIndex={tabIndex} pauseVideo={this.pause} />
 
