@@ -16,7 +16,7 @@ class NotFound extends Component {
           />
           <div className="float-right h-full pt-1 pb-1">
             <a href="/dashboard">
-              <button className="bg-red hover:bg-red-dark text-white py-4 px-10 rounded mr-6">
+              <button className="bg-red hover:bg-red-dark text-white py-3 px-10 rounded mr-6">
                 Dashboard
               </button>
             </a>
@@ -56,7 +56,7 @@ class NotFound extends Component {
               request a new link from home page.
             </p>
             <a href="/dashboard/elevator-pitch">
-              <button className="bg-red hover:bg-red-dark text-white py-5 px-16 rounded mt-12">
+              <button className="bg-red hover:bg-red-dark text-white py-4 px-16 rounded mt-12">
                 Go to home page
               </button>
             </a>
@@ -79,7 +79,4 @@ function mapStateToProps(state, ownProps) {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(NotFound)
+export default connect(mapStateToProps, {})(NotFound)
