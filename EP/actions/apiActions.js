@@ -50,7 +50,6 @@ export function isOnline() {
 export var counters = {
   fetchImproveArticlesCount: 0,
   interviewStatusCount: 0,
-  interviewStatusCount2: 0,
   concatApiCount: 0,
   praatApiCount: 0,
   punctuatorApiCount: 0,
@@ -71,14 +70,12 @@ export var counters = {
   changeInterviewToSuccessCount: 0,
   facePointCount: 0,
   sendClip: new Array(30).fill(0),
-  setInterviewStatusCount: 0,
   sendNoOfVideoClipsCount: 0,
   audioClips: new Array(50).fill(0),
   intKeyIsValidCount: 0,
   fetchTranscriptCount: 0,
   submitTranscriptCount: 0,
   fetchTotalResultCount: 0,
-  interviewStatusCallbackCount: 0,
   updateUserInfoCount: 0,
   checkUserRegistrationCount: 0,
   fetchIllustrationDataCount: 0,
@@ -101,7 +98,7 @@ export function apiCallAgain(
 ) {
   counters[key] += 1
   if (counters[key] < noOfTimes) {
-    if (isOnline() && (xhr.status >= 400 && xhr.status < 600)) {
+    if (isOnline() && xhr.status >= 400 && xhr.status < 600) {
       callback()
     } else {
       setTimeout(() => {
@@ -257,10 +254,9 @@ export function setIntReady(data) {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-export function getInterviewStatus2(arg) {
+export function getInterviewStatus() {
   return new Promise((resolve, reject) => {
     let fd = new FormData()
-    fd.append('page', arg)
 
     api
       .service('ep')
@@ -280,41 +276,6 @@ export function getInterviewStatus2(arg) {
         )
       })
   })
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-export function getInterviewStatus(arg, onGetIntStatusSuccess) {
-  let fd = new FormData()
-  fd.append('page', arg)
-
-  api
-    .service('ep')
-    .post(`/getinterviewstatus`, fd, {
-      processData: false,
-      contentType: false,
-    })
-    .done(data => {
-      counters['interviewStatusCallbackCount'] = 0
-      onGetIntStatusSuccess(data.status)
-    })
-    .fail(xhr => {
-      apiCallAgain(
-        counters,
-        'interviewStatusCallbackCount',
-        () => {
-          getInterviewStatus(arg, onGetIntStatusSuccess)
-        },
-        1000,
-        5,
-        xhr
-      )
-      log(
-        '%c Api faliure /getinterviewstatus',
-        'background: red; color: white',
-        xhr
-      )
-    })
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------

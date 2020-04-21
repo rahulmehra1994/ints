@@ -9,7 +9,7 @@ import { setAppUrls, setFinalCalibId } from './../../actions/actions'
 import {
   counters,
   apiCallAgain,
-  getInterviewStatus2,
+  getInterviewStatus,
   checkUserRegistration,
 } from './../../actions/apiActions'
 import { mutuals, log, common } from './../../actions/commonActions'
@@ -151,7 +151,7 @@ class Calibration extends Component {
     this.findPermission()
     checkUserRegistration(this.onSuccessCheckUser)
 
-    getInterviewStatus2('calibration').then(result => {
+    getInterviewStatus().then(result => {
       if (result === 'success') {
         this.setState({ oneTabAlert: false }, () => {
           this.furtherProceed()
@@ -477,7 +477,6 @@ class Calibration extends Component {
       })
 
       this.props.setFinalCalibrationId(this.state.clip_id)
-      this.reloadIfStillOnCalibration()
       this.checkAndSendToSumm()
       mutuals.socketTracking({
         event_type: 'app flow',
@@ -540,18 +539,14 @@ class Calibration extends Component {
     debugger
   }
 
-  reloadIfStillOnCalibration() {
-    setTimeout(() => {
-      if (window.location.pathname === '/elevator-pitch/calibration') {
-        window.location.reload(true)
-      }
-    }, 7000)
-  }
-
   checkAndSendToSumm() {
-    getInterviewStatus2('calibration').then(result => {
+    getInterviewStatus().then(result => {
       if (result === 'success') {
-        this.setState({ oneTabAlert: false, displayInterview: true })
+        this.setState({
+          oneTabAlert: false,
+          displayInterview: true,
+          shouldMount: false,
+        })
         // this.props.history.push(`/${this.state.interviewKey}/interview`)
       }
       if (result === 'failed') this.setState({ oneTabAlert: true })
@@ -559,7 +554,7 @@ class Calibration extends Component {
       if (result === 'API_FAILED') {
         apiCallAgain(
           counters,
-          'interviewStatusCount2',
+          'interviewStatusCount',
           () => {
             this.checkAndSendToSumm()
           },
@@ -773,28 +768,8 @@ class Calibration extends Component {
       oneTabAlert,
       shouldMount,
       showIntSetup,
-      stopCalibration,
-      statusBar1Completed,
-      statusBar2Completed,
-      statusBar3Completed,
+      displayInterview,
     } = this.state
-
-    let stage1Color, stage2Color, stage3Color
-
-    if (statusBar1Completed) stage1Color = '#0075cb'
-    if (statusBar1Completed === false) stage1Color = common.sectionColor[2]
-    if (statusBar1Completed === null) stage1Color = ''
-
-    if (statusBar2Completed) stage2Color = '#0075cb'
-    if (statusBar2Completed === false) stage2Color = common.sectionColor[2]
-    if (statusBar2Completed === null) stage2Color = ''
-
-    if (statusBar3Completed) stage3Color = '#0075cb'
-    if (statusBar3Completed === false) stage3Color = common.sectionColor[2]
-    if (statusBar3Completed === null) stage3Color = ''
-
-    if (stopCalibration === true)
-      stage1Color = stage2Color = stage3Color = common.sectionColor[0]
 
     if (browser.getBrowserName() !== 'Chrome')
       return (
@@ -811,16 +786,20 @@ class Calibration extends Component {
     if (oneTabAlert) {
       return this.OneTabShouldBeVisibleAtOneTimeUI()
     } else if (oneTabAlert === false && shouldMount && showIntSetup === false) {
-      this.state.displayInterview ? <Interview /> : this.calibrationUI()
+      return this.calibrationUI()
     } else if (showIntSetup) {
       return this.IntGuidlinesPopupUI()
-    } else {
+    } else if (displayInterview) {
       return (
-        <div className="fullscreen-loader">
-          <CenterLoading />
-        </div>
+        <Interview interviewKey={this.state.interviewKey} {...this.props} />
       )
     }
+
+    return (
+      <div className="fullscreen-loader">
+        <CenterLoading />
+      </div>
+    )
   }
 
   OneTabShouldBeVisibleAtOneTimeUI() {
@@ -849,7 +828,29 @@ class Calibration extends Component {
       calibStatusVisible,
       startCalibrationVisible,
       continueVisble,
+      stopCalibration,
+      statusBar1Completed,
+      statusBar2Completed,
+      statusBar3Completed,
     } = this.state
+
+    let stage1Color, stage2Color, stage3Color
+
+    if (statusBar1Completed) stage1Color = '#0075cb'
+    if (statusBar1Completed === false) stage1Color = common.sectionColor[2]
+    if (statusBar1Completed === null) stage1Color = ''
+
+    if (statusBar2Completed) stage2Color = '#0075cb'
+    if (statusBar2Completed === false) stage2Color = common.sectionColor[2]
+    if (statusBar2Completed === null) stage2Color = ''
+
+    if (statusBar3Completed) stage3Color = '#0075cb'
+    if (statusBar3Completed === false) stage3Color = common.sectionColor[2]
+    if (statusBar3Completed === null) stage3Color = ''
+
+    if (stopCalibration === true)
+      stage1Color = stage2Color = stage3Color = common.sectionColor[0]
+
     this.disableOpacity()
     return (
       <React.Fragment>

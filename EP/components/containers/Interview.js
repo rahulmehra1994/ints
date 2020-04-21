@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import VoiceRecognition from './../interview/VoiceRecognition'
-import myEnv from './../../myEnv'
 import ProcessingJazz from './../videoJazz/ProcessingJazz'
 import _ from 'underscore'
 import { connect } from 'react-redux'
@@ -21,8 +20,6 @@ import { initializeEpResults, setAppUrls } from './../../actions/actions'
 import {
   counters,
   apiCallAgain,
-  getInterviewStatus,
-  getInterviewStatus2,
   fetchFacePointsImg,
   fetchUserfacePoints,
 } from './../../actions/apiActions'
@@ -89,9 +86,8 @@ class Interview extends Component {
       showProcessing: false,
       savetranscript: false,
       cancelsaveinterview: false,
-      oneTabAlert: false,
       shouldMount: false,
-      interviewKey: this.props.match.params.interviewKey,
+      interviewKey: this.props.interviewKey,
       shouldReallyMount: false,
       jazzCount: highContrast ? 20 : 5,
       finalRecognitionStop: false,
@@ -151,7 +147,8 @@ class Interview extends Component {
       curr_page: mutuals.urlEnds['interview'],
       event_type: 'mount',
     })
-    this.checkInterviewStatus()
+
+    this.initRun()
   }
 
   adminsFunctionalityActivation() {
@@ -190,31 +187,6 @@ class Interview extends Component {
     this.refs.videoTrailer.srcObject = fullStream
     this.refs.videoTrailer.play()
   })
-
-  checkInterviewStatus() {
-    getInterviewStatus2('interview').then(result => {
-      if (result === 'success') {
-        this.setState({ oneTabAlert: false })
-        this.initRun()
-      }
-      if (result === 'failed') {
-        this.setState({ oneTabAlert: true })
-        window.location.href = myEnv.folder + '/calibration'
-      }
-      if (result === 'API_FAILED') {
-        apiCallAgain(
-          counters,
-          'setInterviewStatusCount',
-          () => {
-            this.checkInterviewStatus()
-          },
-          1000,
-          5,
-          'xhr'
-        )
-      }
-    })
-  }
 
   initializeStore() {
     //intialize store data
@@ -318,7 +290,7 @@ class Interview extends Component {
   }
 
   setAppIntKey() {
-    let intKey = this.props.match.params.interviewKey
+    let intKey = this.props.interviewKey
     this.props.setAppIntKey(intKey)
     setAppUrls('/' + intKey)
   }
@@ -684,7 +656,7 @@ class Interview extends Component {
           })
       }
     } catch (e) {
-      log('Error', '', e)
+      log('Error', e)
     }
   }
 
@@ -802,19 +774,7 @@ class Interview extends Component {
   render() {
     let { tabIndex, instructions, ariaLabel } = this.state
 
-    if (this.state.oneTabAlert) {
-      return (
-        <div>
-          <div className="fullScreenAlert">
-            <h1>Please close this tab! Another Interview is open right now.</h1>
-          </div>
-        </div>
-      )
-    } else if (
-      this.state.oneTabAlert === false &&
-      this.state.shouldMount &&
-      this.state.shouldReallyMount
-    ) {
+    if (this.state.shouldMount && this.state.shouldReallyMount) {
       return (
         <div>
           <div id="interviewPage">
