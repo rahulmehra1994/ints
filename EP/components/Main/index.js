@@ -78,7 +78,6 @@ class Main extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      clip_id: 0,
       calibration_msg: 'Click start to begin calibration process.',
       notFound: false,
       temp: false,
@@ -217,10 +216,6 @@ class Main extends React.PureComponent {
     callback()
   }
 
-  setClipId = id => {
-    this.setState({ clip_id: id })
-  }
-
   updateCalibrationMsg = msg => {
     setTimeout(() => {
       this.setState({ calibration_msg: msg })
@@ -252,7 +247,6 @@ class Main extends React.PureComponent {
                 path="/calibration"
                 component={Calib}
                 cancelAllAjax={this.cancelAllAjax}
-                setClipId={this.setClipId}
                 calibration_msg={this.state.calibration_msg}
                 updateCalibrationMsg={this.updateCalibrationMsg}
               />
@@ -261,7 +255,6 @@ class Main extends React.PureComponent {
                 exact
                 path="/:interviewKey/interview"
                 component={Int}
-                clipId={this.state.clip_id}
               />
 
               <PropsRoute

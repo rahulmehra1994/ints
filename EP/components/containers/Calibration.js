@@ -31,6 +31,7 @@ import {
 import ReactHtmlParser from 'react-html-parser'
 import anime from 'animejs/lib/anime'
 import SystemCheck from './../popups/SystemCheck'
+import Interview from './Interview'
 
 const leftArrowBlack =
   process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-white.svg'
@@ -148,7 +149,6 @@ class Calibration extends Component {
     })
 
     this.findPermission()
-
     checkUserRegistration(this.onSuccessCheckUser)
 
     getInterviewStatus2('calibration').then(result => {
@@ -551,9 +551,8 @@ class Calibration extends Component {
   checkAndSendToSumm() {
     getInterviewStatus2('calibration').then(result => {
       if (result === 'success') {
-        this.setState({ oneTabAlert: false })
-        localStorage.setItem('cameFromCalibration', 'true')
-        this.props.history.push(`/${this.state.interviewKey}/interview`)
+        this.setState({ oneTabAlert: false, displayInterview: true })
+        // this.props.history.push(`/${this.state.interviewKey}/interview`)
       }
       if (result === 'failed') this.setState({ oneTabAlert: true })
 
@@ -773,15 +772,11 @@ class Calibration extends Component {
     let {
       oneTabAlert,
       shouldMount,
-      tabIndex,
       showIntSetup,
       stopCalibration,
       statusBar1Completed,
       statusBar2Completed,
       statusBar3Completed,
-      calibStatusVisible,
-      startCalibrationVisible,
-      continueVisble,
     } = this.state
 
     let stage1Color, stage2Color, stage3Color
@@ -814,373 +809,11 @@ class Calibration extends Component {
       )
 
     if (oneTabAlert) {
-      return (
-        <div className="fullScreenAlert">
-          <div className="text-center">
-            <h1>
-              Please refresh this tab after two minutes! Another Interview is
-              open right now.
-            </h1>
-            <div>
-              <button
-                onClick={this.refreshPage}
-                className="button blueButton mt-6">
-                Refresh page
-              </button>
-            </div>
-          </div>
-        </div>
-      )
+      return this.OneTabShouldBeVisibleAtOneTimeUI()
     } else if (oneTabAlert === false && shouldMount && showIntSetup === false) {
-      this.disableOpacity()
-      return (
-        <React.Fragment>
-          {this.state.opacityComebackLoader ? (
-            <div className="fullscreen-loader">
-              <CenterLoading />
-            </div>
-          ) : null}
-
-          <div className={classNames({ opacity0: this.state.opacityOne })}>
-            {this.state.permsAlert ? (
-              <div className="fullScreenAlert opacity75">
-                <h1>{this.state.permsMsg}</h1>
-              </div>
-            ) : null}
-
-            {this.isFirstTimeUser2()}
-
-            <div id="calibration-body">
-              {this.state.isSystemCheckOpen ? (
-                <SystemCheck
-                  closePopup={this.closePopup}
-                  changeFirstTimeUserStatusAndClosePopup={
-                    this.changeFirstTimeUserStatusAndClosePopup
-                  }
-                  gender={this.props.gender}
-                  langCode={this.props.langCode}
-                  backToTips={this.backToTips}
-                  firstTimeUser={this.state.firstTimeUser}
-                  tabIndex={tabIndex}
-                  onSuccessOfCreateInt={this.onSuccessOfCreateInt}
-                />
-              ) : null}
-
-              <div ref="calibSidebar" className="calibration-right-images">
-                {this.state.basicDetailsVisible ? null : this.backToTipsBlock()}
-              </div>
-
-              <div ref="calibBox" id="calibration-box">
-                <div className="calibration-video-container">
-                  <div
-                    tabIndex={tabIndex}
-                    className="calibrationMsgsWrap"
-                    aria-live={this.state.calibInstructions}>
-                    <div
-                      ref="calibInstructions"
-                      className="calibInstructions subHeadLight">
-                      {this.state.greenOverlayVisible ? (
-                        <span className="calib-process-visual-cue-img mr-6">
-                          <SuccessTick />
-                        </span>
-                      ) : null}
-
-                      {this.state.analyzingAnim ? (
-                        <span className="calib-process-visual-cue-img mr-6">
-                          <AnalyzeAnim />
-                        </span>
-                      ) : null}
-
-                      {this.state.redOverlayVisible ? (
-                        <span className="calib-process-visual-cue-img mr-6">
-                          <ErrorExclam />
-                        </span>
-                      ) : null}
-
-                      {ReactHtmlParser(this.state.calibInstructions)}
-                    </div>
-
-                    {calibStatusVisible ? (
-                      <div className="calib-status">
-                        <div
-                          className="status-bar"
-                          style={{ background: stage1Color }}
-                        />
-                        <div
-                          className="status-bar"
-                          style={{ background: stage2Color }}
-                        />
-                        <div
-                          className="status-bar"
-                          style={{ background: stage3Color }}
-                        />
-                      </div>
-                    ) : null}
-                  </div>
-
-                  <div className="relative" style={{ minHeight: 368 }}>
-                    <video
-                      preload="none"
-                      className="calibration-video"
-                      ref="calibrationVideo"
-                      muted
-                      type="video/mp4"
-                    />
-                    <div
-                      ref="leftGuide"
-                      id="leftGuide"
-                      className={classNames(
-                        'calib-guide guide-left-offset',
-                        {}
-                      )}>
-                      <img src={calibPostureGuide} alt="calibration posture" />{' '}
-                      <div className="mt-4 text-white subHead">
-                        Maintain Upright Posture
-                      </div>
-                    </div>
-                    <div
-                      ref="rightGuide"
-                      id="rightGuide"
-                      className={classNames(
-                        'calib-guide guide-right-offset',
-                        {}
-                      )}>
-                      <img
-                        src={calibPositionGuide}
-                        alt="calibration position"
-                      />
-                      <div className="mt-4 text-white subHead">
-                        Ensure Upper-body Visibility
-                      </div>
-                    </div>
-                    {startCalibrationVisible ? (
-                      <button
-                        tabIndex={tabIndex}
-                        aria-label="start calibration button. it starts the process of calibration."
-                        onClick={this.startCalibration}
-                        className="button blueButton startCalib">
-                        Start Calibration
-                      </button>
-                    ) : null}
-                    {continueVisble ? (
-                      <button
-                        tabIndex={tabIndex}
-                        aria-label="continue button it lets you sit straight and align your face in the highlighted region"
-                        onClick={this.onContinue}
-                        className="button blueButton startCalib">
-                        Continue
-                      </button>
-                    ) : null}
-                    {this.state.fullOverlayVisible ? (
-                      <div
-                        className="absolute pin"
-                        style={{ background: 'rgba(0,0,0,0.7)', bottom: 5 }}
-                      />
-                    ) : null}
-                    {this.state.whiteOverlayVisible ? (
-                      <OverlayMask className="calibTransparent" />
-                    ) : null}
-                    {this.state.redOverlayVisible ? (
-                      <OverlayMaskRed className="calibTransparent" />
-                    ) : null}
-                    {this.state.greenOverlayVisible ? (
-                      <OverlayMaskGreen className="calibTransparent" />
-                    ) : null}
-                  </div>
-                  <div
-                    className="text-center"
-                    style={{ width: '100%', bottom: 10 }}>
-                    <div className="basicDetailsButt">
-                      <div style={{ color: '#444444' }}>
-                        {mutuals.multipleQuesEnabled(this.props)
-                          ? 'Change your question and basic details'
-                          : 'Check your hardware or modify your details'}
-                      </div>
-                      <button
-                        className="mt-3 bold bluePrimaryTxt font-semibold"
-                        onClick={this.openPopup}
-                        tabIndex={tabIndex}
-                        aria-label={
-                          mutuals.multipleQuesEnabled(this.props)
-                            ? 'Change your question and basic details'
-                            : 'Check your hardware or modify your details'
-                        }>
-                        Setup
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </React.Fragment>
-      )
+      this.state.displayInterview ? <Interview /> : this.calibrationUI()
     } else if (showIntSetup) {
-      this.focusFullScreenCenterText()
-      this.calibSetupAnimation()
-      return (
-        <div className="w-full full-height-without-navbar flex justify-center">
-          {this.state.instructionAnimDone ? null : (
-            <div
-              id="instructionOne"
-              className="flex items-center"
-              style={{ opacity: 0 }}>
-              <h1 className="mainHead">
-                Please read the instructions before proceeding
-              </h1>
-            </div>
-          )}
-
-          <div
-            id="start-of-content"
-            className="clearfix"
-            style={{
-              marginTop: 40,
-              display: this.state.instructionAnimDone ? 'block' : 'none',
-            }}
-            tabIndex={tabIndex}
-            role="main">
-            <div className="text-center mb-8">
-              <h1 className="mainHead">Important Instructions</h1>
-            </div>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gridColumnGap: 25,
-              }}>
-              <div className="float-left w-1/2" style={{ width: 450 }}>
-                <div
-                  className="text-center rounded-t-lg "
-                  style={{
-                    height: 150,
-                    backgroundColor: '#233659',
-                    paddingTop: 25,
-                  }}>
-                  <div style={{ height: 72 }}>
-                    <img src={webcam} alt="webcam" />
-                  </div>
-                  <div
-                    className="subHead text-white mt-2"
-                    style={{ fontSize: 21 }}>
-                    Camera Requirements
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-b-lg"
-                  style={{ padding: 30, background: 'white' }}>
-                  <div className="clearfix">
-                    <div className="float-left" style={{ width: '20%' }}>
-                      <img alt="maintain distance" src={maintainDistance} />
-                    </div>
-                    <div className="float-left" style={{ width: '80%' }}>
-                      <div className="subHead">Sit at an arm's length</div>
-                      <div className="mt-3">
-                        Ensure your head and torso are properly visible in the
-                        camera during the calibration.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="clearfix mt-8">
-                    <div className="float-left" style={{ width: '20%' }}>
-                      <img alt="person" src={person} />
-                    </div>
-                    <div className="float-left" style={{ width: '80%' }}>
-                      <div className="subHead">No other participant</div>
-                      <div className="mt-3">
-                        Make sure that only <span className="italic">your</span>{' '}
-                        face is in the camera focus, and no one else is around
-                        during the interview.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="clearfix mt-8">
-                    <div className="float-left" style={{ width: '20%' }}>
-                      <img alt="Surrounding Illumination" src={lamp} />
-                    </div>
-                    <div className="float-left" style={{ width: '80%' }}>
-                      <div className="subHead">Illumination</div>
-                      <div className="mt-3">
-                        Ensure room is properly lit for the interview.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="float-left w-1/2" style={{ width: 450 }}>
-                <div
-                  className="text-center rounded-t-lg "
-                  style={{
-                    height: 150,
-                    backgroundColor: '#233659',
-                    paddingTop: 25,
-                  }}>
-                  <div style={{ height: 72 }}>
-                    <img src={microphone} alt="microphone" />
-                  </div>
-                  <div
-                    className="subHead text-white mt-2"
-                    style={{ fontSize: 21 }}>
-                    Microphone Requirements
-                  </div>
-                </div>
-
-                <div
-                  className="rounded-b-lg"
-                  style={{ padding: 30, background: 'white', height: 345 }}>
-                  <div className="clearfix">
-                    <div className="float-left" style={{ width: '20%' }}>
-                      <img alt="headphones" src={headphones} />
-                    </div>
-                    <div className="float-left" style={{ width: '80%' }}>
-                      <div className="subHead">
-                        Earphones with mic (Recommended)
-                      </div>
-                      <div className="mt-3">
-                        Please consider using earphones for better speech
-                        recognition. Specifically essential for noisy
-                        surroundings.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="clearfix mt-8">
-                    <div className="float-left" style={{ width: '20%' }}>
-                      <img
-                        alt="minimize background noise"
-                        src={backgorundNoise}
-                      />
-                    </div>
-                    <div className="float-left" style={{ width: '80%' }}>
-                      <div className="subHead">Minimise background noise</div>
-                      <div className="mt-3">
-                        Try sitting in a quiet place. Even though minor
-                        background noise does not interfere with the feedback,
-                        it can decrease the accuracy of the speech recognition
-                        systems.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mt-12">
-              <button
-                onClick={this.showCalibModule}
-                className="button blueButton"
-                style={{ padding: '10px 100px' }}
-                tabIndex={tabIndex}
-                aria-label={'next button click to goto calibration page'}>
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
-      )
+      return this.IntGuidlinesPopupUI()
     } else {
       return (
         <div className="fullscreen-loader">
@@ -1188,6 +821,380 @@ class Calibration extends Component {
         </div>
       )
     }
+  }
+
+  OneTabShouldBeVisibleAtOneTimeUI() {
+    return (
+      <div className="fullScreenAlert">
+        <div className="text-center">
+          <h1>
+            Please refresh this tab after two minutes! Another Interview is open
+            right now.
+          </h1>
+          <div>
+            <button
+              onClick={this.refreshPage}
+              className="button blueButton mt-6">
+              Refresh page
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  calibrationUI() {
+    let {
+      tabIndex,
+      calibStatusVisible,
+      startCalibrationVisible,
+      continueVisble,
+    } = this.state
+    this.disableOpacity()
+    return (
+      <React.Fragment>
+        {this.state.opacityComebackLoader ? (
+          <div className="fullscreen-loader">
+            <CenterLoading />
+          </div>
+        ) : null}
+
+        <div className={classNames({ opacity0: this.state.opacityOne })}>
+          {this.state.permsAlert ? (
+            <div className="fullScreenAlert opacity75">
+              <h1>{this.state.permsMsg}</h1>
+            </div>
+          ) : null}
+
+          {this.isFirstTimeUser2()}
+
+          <div id="calibration-body">
+            {this.state.isSystemCheckOpen ? (
+              <SystemCheck
+                closePopup={this.closePopup}
+                changeFirstTimeUserStatusAndClosePopup={
+                  this.changeFirstTimeUserStatusAndClosePopup
+                }
+                gender={this.props.gender}
+                langCode={this.props.langCode}
+                backToTips={this.backToTips}
+                firstTimeUser={this.state.firstTimeUser}
+                tabIndex={tabIndex}
+                onSuccessOfCreateInt={this.onSuccessOfCreateInt}
+              />
+            ) : null}
+
+            <div ref="calibSidebar" className="calibration-right-images">
+              {this.state.basicDetailsVisible ? null : this.backToTipsBlock()}
+            </div>
+
+            <div ref="calibBox" id="calibration-box">
+              <div className="calibration-video-container">
+                <div
+                  tabIndex={tabIndex}
+                  className="calibrationMsgsWrap"
+                  aria-live={this.state.calibInstructions}>
+                  <div
+                    ref="calibInstructions"
+                    className="calibInstructions subHeadLight">
+                    {this.state.greenOverlayVisible ? (
+                      <span className="calib-process-visual-cue-img mr-6">
+                        <SuccessTick />
+                      </span>
+                    ) : null}
+
+                    {this.state.analyzingAnim ? (
+                      <span className="calib-process-visual-cue-img mr-6">
+                        <AnalyzeAnim />
+                      </span>
+                    ) : null}
+
+                    {this.state.redOverlayVisible ? (
+                      <span className="calib-process-visual-cue-img mr-6">
+                        <ErrorExclam />
+                      </span>
+                    ) : null}
+
+                    {ReactHtmlParser(this.state.calibInstructions)}
+                  </div>
+
+                  {calibStatusVisible ? (
+                    <div className="calib-status">
+                      <div
+                        className="status-bar"
+                        style={{ background: stage1Color }}
+                      />
+                      <div
+                        className="status-bar"
+                        style={{ background: stage2Color }}
+                      />
+                      <div
+                        className="status-bar"
+                        style={{ background: stage3Color }}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="relative" style={{ minHeight: 368 }}>
+                  <video
+                    preload="none"
+                    className="calibration-video"
+                    ref="calibrationVideo"
+                    muted
+                    type="video/mp4"
+                  />
+                  <div
+                    ref="leftGuide"
+                    id="leftGuide"
+                    className="calib-guide guide-left-offset">
+                    <img src={calibPostureGuide} alt="calibration posture" />{' '}
+                    <div className="mt-4 text-white subHead">
+                      Maintain Upright Posture
+                    </div>
+                  </div>
+                  <div
+                    ref="rightGuide"
+                    id="rightGuide"
+                    className={classNames(
+                      'calib-guide guide-right-offset',
+                      {}
+                    )}>
+                    <img src={calibPositionGuide} alt="calibration position" />
+                    <div className="mt-4 text-white subHead">
+                      Ensure Upper-body Visibility
+                    </div>
+                  </div>
+                  {startCalibrationVisible ? (
+                    <button
+                      tabIndex={tabIndex}
+                      aria-label="start calibration button. it starts the process of calibration."
+                      onClick={this.startCalibration}
+                      className="button blueButton startCalib">
+                      Start Calibration
+                    </button>
+                  ) : null}
+                  {continueVisble ? (
+                    <button
+                      tabIndex={tabIndex}
+                      aria-label="continue button it lets you sit straight and align your face in the highlighted region"
+                      onClick={this.onContinue}
+                      className="button blueButton startCalib">
+                      Continue
+                    </button>
+                  ) : null}
+                  {this.state.fullOverlayVisible ? (
+                    <div
+                      className="absolute pin"
+                      style={{ background: 'rgba(0,0,0,0.7)', bottom: 5 }}
+                    />
+                  ) : null}
+                  {this.state.whiteOverlayVisible ? (
+                    <OverlayMask className="calibTransparent" />
+                  ) : null}
+                  {this.state.redOverlayVisible ? (
+                    <OverlayMaskRed className="calibTransparent" />
+                  ) : null}
+                  {this.state.greenOverlayVisible ? (
+                    <OverlayMaskGreen className="calibTransparent" />
+                  ) : null}
+                </div>
+                <div
+                  className="text-center"
+                  style={{ width: '100%', bottom: 10 }}>
+                  <div className="basicDetailsButt">
+                    <div style={{ color: '#444444' }}>
+                      {mutuals.multipleQuesEnabled(this.props)
+                        ? 'Change your question and basic details'
+                        : 'Check your hardware or modify your details'}
+                    </div>
+                    <button
+                      className="mt-3 bold bluePrimaryTxt font-semibold"
+                      onClick={this.openPopup}
+                      tabIndex={tabIndex}
+                      aria-label={
+                        mutuals.multipleQuesEnabled(this.props)
+                          ? 'Change your question and basic details'
+                          : 'Check your hardware or modify your details'
+                      }>
+                      Setup
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  IntGuidlinesPopupUI() {
+    let { tabIndex } = this.state
+    this.focusFullScreenCenterText()
+    this.calibSetupAnimation()
+    return (
+      <div className="w-full full-height-without-navbar flex justify-center">
+        {this.state.instructionAnimDone ? null : (
+          <div
+            id="instructionOne"
+            className="flex items-center"
+            style={{ opacity: 0 }}>
+            <h1 className="mainHead">
+              Please read the instructions before proceeding
+            </h1>
+          </div>
+        )}
+
+        <div
+          id="start-of-content"
+          className="clearfix"
+          style={{
+            marginTop: 40,
+            display: this.state.instructionAnimDone ? 'block' : 'none',
+          }}
+          tabIndex={tabIndex}
+          role="main">
+          <div className="text-center mb-8">
+            <h1 className="mainHead">Important Instructions</h1>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gridColumnGap: 25,
+            }}>
+            <div className="float-left w-1/2" style={{ width: 450 }}>
+              <div
+                className="text-center rounded-t-lg "
+                style={{
+                  height: 150,
+                  backgroundColor: '#233659',
+                  paddingTop: 25,
+                }}>
+                <div style={{ height: 72 }}>
+                  <img src={webcam} alt="webcam" />
+                </div>
+                <div
+                  className="subHead text-white mt-2"
+                  style={{ fontSize: 21 }}>
+                  Camera Requirements
+                </div>
+              </div>
+
+              <div
+                className="rounded-b-lg"
+                style={{ padding: 30, background: 'white' }}>
+                <div className="clearfix">
+                  <div className="float-left" style={{ width: '20%' }}>
+                    <img alt="maintain distance" src={maintainDistance} />
+                  </div>
+                  <div className="float-left" style={{ width: '80%' }}>
+                    <div className="subHead">Sit at an arm's length</div>
+                    <div className="mt-3">
+                      Ensure your head and torso are properly visible in the
+                      camera during the calibration.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="clearfix mt-8">
+                  <div className="float-left" style={{ width: '20%' }}>
+                    <img alt="person" src={person} />
+                  </div>
+                  <div className="float-left" style={{ width: '80%' }}>
+                    <div className="subHead">No other participant</div>
+                    <div className="mt-3">
+                      Make sure that only <span className="italic">your</span>{' '}
+                      face is in the camera focus, and no one else is around
+                      during the interview.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="clearfix mt-8">
+                  <div className="float-left" style={{ width: '20%' }}>
+                    <img alt="Surrounding Illumination" src={lamp} />
+                  </div>
+                  <div className="float-left" style={{ width: '80%' }}>
+                    <div className="subHead">Illumination</div>
+                    <div className="mt-3">
+                      Ensure room is properly lit for the interview.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="float-left w-1/2" style={{ width: 450 }}>
+              <div
+                className="text-center rounded-t-lg "
+                style={{
+                  height: 150,
+                  backgroundColor: '#233659',
+                  paddingTop: 25,
+                }}>
+                <div style={{ height: 72 }}>
+                  <img src={microphone} alt="microphone" />
+                </div>
+                <div
+                  className="subHead text-white mt-2"
+                  style={{ fontSize: 21 }}>
+                  Microphone Requirements
+                </div>
+              </div>
+
+              <div
+                className="rounded-b-lg"
+                style={{ padding: 30, background: 'white', height: 345 }}>
+                <div className="clearfix">
+                  <div className="float-left" style={{ width: '20%' }}>
+                    <img alt="headphones" src={headphones} />
+                  </div>
+                  <div className="float-left" style={{ width: '80%' }}>
+                    <div className="subHead">
+                      Earphones with mic (Recommended)
+                    </div>
+                    <div className="mt-3">
+                      Please consider using earphones for better speech
+                      recognition. Specifically essential for noisy
+                      surroundings.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="clearfix mt-8">
+                  <div className="float-left" style={{ width: '20%' }}>
+                    <img
+                      alt="minimize background noise"
+                      src={backgorundNoise}
+                    />
+                  </div>
+                  <div className="float-left" style={{ width: '80%' }}>
+                    <div className="subHead">Minimise background noise</div>
+                    <div className="mt-3">
+                      Try sitting in a quiet place. Even though minor background
+                      noise does not interfere with the feedback, it can
+                      decrease the accuracy of the speech recognition systems.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-12">
+            <button
+              onClick={this.showCalibModule}
+              className="button blueButton"
+              style={{ padding: '10px 100px' }}
+              tabIndex={tabIndex}
+              aria-label={'next button click to goto calibration page'}>
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 

@@ -151,7 +151,7 @@ class Interview extends Component {
       curr_page: mutuals.urlEnds['interview'],
       event_type: 'mount',
     })
-    this.checkCameFromCalibration()
+    this.checkInterviewStatus()
   }
 
   adminsFunctionalityActivation() {
@@ -190,19 +190,6 @@ class Interview extends Component {
     this.refs.videoTrailer.srcObject = fullStream
     this.refs.videoTrailer.play()
   })
-
-  checkCameFromCalibration() {
-    if (localStorage.getItem('cameFromCalibration') !== null) {
-      if (localStorage.getItem('cameFromCalibration') === 'true') {
-        localStorage.setItem('cameFromCalibration', 'false')
-        this.checkInterviewStatus()
-      } else {
-        window.location.href = myEnv.folder + '/calibration'
-      }
-    } else {
-      window.location.href = myEnv.folder + '/calibration'
-    }
-  }
 
   checkInterviewStatus() {
     getInterviewStatus2('interview').then(result => {
