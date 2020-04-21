@@ -110,10 +110,10 @@ class Main extends React.PureComponent {
 
   applyUsingMouseClassFunctionality() {
     document.body.classList.add('using-mouse')
-    document.body.addEventListener('mousedown', function() {
+    document.body.addEventListener('mousedown', function () {
       document.body.classList.add('using-mouse')
     })
-    document.body.addEventListener('keydown', function() {
+    document.body.addEventListener('keydown', function () {
       document.body.classList.remove('using-mouse')
     })
   }
@@ -138,9 +138,9 @@ class Main extends React.PureComponent {
     let { urlsObj, customizationsEP, intQuestionId } = obj
     let temp = []
     _.each(urlsObj, (val, key) => {
-      if (key === 'appearance' && customizationsEP.appearance_enabled) {
+      if (key === 'appearance' && customizationsEP.appearance_enabled)
         temp.push(val)
-      }
+
       if (key !== 'appearance') {
         if (
           (key === 'word' || key === 'sentence') &&
@@ -152,7 +152,18 @@ class Main extends React.PureComponent {
           temp.push(val)
         }
 
-        if (key !== 'word' && key !== 'sentence') temp.push(val)
+        if (
+          key === 'noContent' &&
+          !mutuals.isContentEnabled({
+            customizations: customizationsEP,
+            intQuestionId,
+          })
+        ) {
+          temp.push(val)
+        }
+
+        if (key !== 'word' && key !== 'sentence' && key !== 'noContent')
+          temp.push(val)
       }
     })
 
@@ -200,7 +211,7 @@ class Main extends React.PureComponent {
   }
 
   cancelAllAjax = callback => {
-    $.each(xhrPool, function(idx, xhr) {
+    $.each(xhrPool, function (idx, xhr) {
       xhr.abort()
     })
     callback()
@@ -285,7 +296,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

@@ -12,7 +12,7 @@ import AppearanceCombined from './../AppearanceComponents/appearanceCombined'
 import WordUsage from '../ContentComponents/WordUsage'
 import Sentence from '../ContentComponents/Sentence'
 import VideoSummary from './../details/VideoSummary'
-import InsightsAllSection from '../insights/InsightsAllSection'
+import InsightsAllSection from './../insights/InsightsAllSection'
 import NoContent from './../ContentComponents/NoContent'
 
 const PropsRoute = ({ RouteComponent, ...rest }) => {

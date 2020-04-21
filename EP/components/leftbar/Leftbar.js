@@ -112,13 +112,20 @@ const data = {
     route: 'modulation',
     icon: 'ep-icon-speech-modulation',
   },
+  noContent: {
+    uiType: 'blocked',
+    label: 'Content Strength',
+    index: 6,
+    route: 'noContent',
+    uiType: 'blocked',
+    icon: 'ep-icon-disabled',
+  },
 }
 
 class Leftbar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      subindex: 0,
       delDetails: true,
       eye_contact: false,
       faceDetails: false,
@@ -128,7 +135,6 @@ class Leftbar extends Component {
       contentDetails: false,
       wordDetails: false,
       sentenceDetails: false,
-      contentBlockActive: false,
     }
     this.handleEnter = this.handleEnter.bind(this)
   }
@@ -148,6 +154,8 @@ class Leftbar extends Component {
     if (mutuals.isContentEnabled(this.props) === false) {
       delete data['word']
       delete data['sentence']
+    } else {
+      delete data['noContent']
     }
   }
 
@@ -183,7 +191,6 @@ class Leftbar extends Component {
     if (this.props.location.pathname === this.props.appUrls.eyeGaze) {
       //order of below two lines matter
       this.selectNavComponent(1, 'eye_contact')
-      this.setState({ subindex: 0 })
     }
   }
 
@@ -211,7 +218,6 @@ class Leftbar extends Component {
       {
         eye_contact: false,
         index: index,
-        subindex: 0,
       },
       () => {
         this.setState({ [comp]: !this.state[comp] })
@@ -262,18 +268,13 @@ class Leftbar extends Component {
     }
   }
 
-  handlerContentProcess() {
-    if (this.props.location.pathname === this.props.appUrls.noContent)
-      this.setState({ contentBlockActive: true })
-  }
-
-  TemplateBlock = customProps => {
+  UnblockedLinkUI = customProps => {
     let path = this.props.location.pathname
     let sectionColor = this.props.common.sectionColor
     let appUrls = this.props.appUrls
 
     return (
-      <div className="relative clearfix">
+      <div key={customProps.index} className="relative clearfix">
         {this.isLoaded(this.props[customProps.resultKey]) ? null : (
           <div className="deactivate" />
         )}
@@ -322,15 +323,49 @@ class Leftbar extends Component {
               })}
             />
 
-            <div
-              className={classNames('leftbar-text', {
-                leftBarTxtHighlight: path === appUrls[customProps.route],
-              })}>
-              {customProps.label}
-            </div>
+            <div className={'leftbar-text'}>{customProps.label}</div>
           </div>
         </Link>
       </div>
+    )
+  }
+
+  BlockedLinkUI = customProps => {
+    let path = this.props.location.pathname
+    let appUrls = this.props.appUrls
+
+    return (
+      <Link
+        key={customProps.index}
+        id={customProps.route}
+        to={appUrls[customProps.route]}
+        onClick={e => {
+          this.selectNavComponent(customProps.index, customProps.type, e)
+        }}
+        onKeyDown={e => {
+          this.handleEnter(customProps.index, customProps.type, e)
+        }}
+        tabIndex={common.tabIndexes[customProps.route] - 1}
+        aria-label={`${customProps.label} ${
+          common.sectionStatus[this.props[customProps.resultKey]]
+        }. click on this to view detailed feedback.`}>
+        <div
+          className={classNames('mt-8 flex justify-between items-center', {
+            ['contrast-leftbar-component-' +
+            (path === appUrls[customProps.route]).toString()]: highContrast,
+            ['leftbar-component-' +
+            (path === appUrls[customProps.route]).toString()]: !highContrast,
+          })}>
+          <span className="default-text-color">{customProps.label}</span>
+
+          <span
+            className={classNames(`float-right ${customProps.icon}`, {
+              blueColor: path === appUrls[customProps.route],
+              blackColor: path !== appUrls[customProps.route],
+            })}
+          />
+        </div>
+      </Link>
     )
   }
 
@@ -348,37 +383,36 @@ class Leftbar extends Component {
         <div id="primary-bar">
           {dataValues.map((item, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 {_.has(item, 'sectionHeading') ? (
                   <div className="paraHead mt-8 mb-2">
                     <span className="ml-6">{item.sectionHeading}</span>
                   </div>
                 ) : null}
-                <this.TemplateBlock
-                  key={index}
-                  resultKey={item.resultKey}
-                  index={item.index}
-                  type={item.type}
-                  route={item.route}
-                  icon={item.icon}
-                  label={item.label}
-                />
+
+                {_.has(item, 'uiType') && item.uiType === 'blocked' ? (
+                  <this.BlockedLinkUI
+                    key={index}
+                    index={item.index}
+                    type={item.type}
+                    route={item.route}
+                    icon={item.icon}
+                    label={item.label}
+                  />
+                ) : (
+                  <this.UnblockedLinkUI
+                    key={index}
+                    resultKey={item.resultKey}
+                    index={item.index}
+                    type={item.type}
+                    route={item.route}
+                    icon={item.icon}
+                    label={item.label}
+                  />
+                )}
               </React.Fragment>
             )
           })}
-
-          {mutuals.isContentEnabled(this.props) ? null : (
-            <div className="px-6 py-8 no-content-leftbar">
-              <div className={classNames('')}>
-                <div className="w-full">
-                  <span className="float-left para">Content Strength</span>
-                  <span>
-                    <img className="float-right" src={block} alt="block" />
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
 
           <div className="hr mt-6 mb-6" />
 
@@ -405,11 +439,13 @@ class Leftbar extends Component {
                 })}
                 aria-hidden={true}>
                 <span
-                  className={classNames('leftbar-logo ep-icon-videocam', {
-                    blueColor: path === appUrls.videosummary,
-                    blackColor: path !== appUrls.videosummary,
-                  })}
-                  style={{ fontSize: 16 }}
+                  className={classNames(
+                    'leftbar-logo ep-icon-videocam text-20-normal',
+                    {
+                      blueColor: path === appUrls.videosummary,
+                      blackColor: path !== appUrls.videosummary,
+                    }
+                  )}
                 />
 
                 {this.props.userVideoPath !== null &&
@@ -422,12 +458,7 @@ class Leftbar extends Component {
                   />
                 )}
 
-                <div
-                  className={classNames('leftbar-text', {
-                    leftBarTxtHighlight: path === appUrls.videosummary,
-                  })}>
-                  Video Feedback
-                </div>
+                <div className={'leftbar-text'}>Video Feedback</div>
               </div>
             </Link>
           </div>
