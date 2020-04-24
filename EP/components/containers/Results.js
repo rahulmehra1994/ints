@@ -3,7 +3,6 @@ import Leftbar from './../leftbar/Leftbar'
 import Contentbar from './../details/Contentbar'
 import { connect } from 'react-redux'
 import { mutuals, log } from './../../actions/commonActions'
-import { throughInterview } from './../../actions/resultsActions'
 import { toggleVideoFloating } from './../../actions/actions'
 import VideoFloating from '../details/VideoFloating'
 import VideoPreloader from './../utilities/VideoPreloader'
@@ -19,7 +18,6 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    if (this.props.throughInt) this.props.throughInterview(false)
     document.body.style.overflowY = 'hidden'
   }
 
@@ -61,7 +59,7 @@ class Results extends Component {
 const mapStateToProps = state => {
   return {
     userInfo: state.user ? state.user.data : null,
-    throughInt: state.throughInt,
+
     appUrls: state.appUrls,
     isVideoNormal: state.videoInfo.isVideoNormal,
     videoFloating: state.videoInfo.videoFloating,
@@ -73,16 +71,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    throughInterview: val => {
-      dispatch(throughInterview(val))
-    },
     toggleVideoFloating: val => {
       dispatch(toggleVideoFloating(val))
     },
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Results)
+export default connect(mapStateToProps, mapDispatchToProps)(Results)

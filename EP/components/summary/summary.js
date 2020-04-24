@@ -520,7 +520,7 @@ const mapStateToProps = state => {
     modulationCombinedMsg: state.results.modulationResults
       ? state.results.modulationResults.modulationCombinedMsg
       : null,
-    throughInt: state.throughInt,
+
     appUrls: state.appUrls,
     statuses: state.statuses,
     customizations: _.isEmpty(state.epCustomizations)
@@ -538,7 +538,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Summary)
+export default connect(mapStateToProps, mapDispatchToProps)(Summary)

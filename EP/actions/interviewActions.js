@@ -70,24 +70,25 @@ export function createInterview2(callback, fd) {
     })
 }
 
-export function startInterviewApi(clipId, callback) {
-  let fd1 = new FormData()
-  fd1.append('clip_id', clipId)
-  fd1.append('interview_key', store.getState().appIntKey.key)
+export function startInterviewApi(params, callback) {
+  let fd = new FormData()
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
+  fd.append('interview_key', store.getState().appIntKey.key)
 
   api
     .service('ep')
-    .post(`/startinterview`, fd1, { processData: false, contentType: false })
+    .post(`/startinterview`, fd, { processData: false, contentType: false })
     .done(response => {
       callback()
-      checkAppearance()
     })
     .fail(xhr => {
       apiCallAgain(
         counters,
         'startIntCount',
         () => {
-          startInterviewApi(clipId, callback)
+          startInterviewApi(params, callback)
         },
         1000,
         10,
@@ -103,12 +104,12 @@ export function startInterviewApi(clipId, callback) {
 }
 
 export function checkAppearance() {
-  let fd1 = new FormData()
-  fd1.append('interview_key', store.getState().appIntKey.key)
+  let fd = new FormData()
+  fd.append('interview_key', store.getState().appIntKey.key)
 
   api
     .service('ep')
-    .post(`/checkappearance`, fd1, { processData: false, contentType: false })
+    .post(`/checkappearance`, fd, { processData: false, contentType: false })
     .done(response => {
       //success
     })
@@ -132,12 +133,13 @@ export function checkAppearance() {
     })
 }
 
-export function submitTranscriptApi(transcript, onSuccessTranscript) {
-  let fd1 = new FormData()
-  fd1.append('transcript', transcript)
-  fd1.append('is_original', 1)
-  fd1.append('interview_key', store.getState().appIntKey.key)
-  fd1.append(
+export function submitTranscriptApi(params, onSuccessTranscript) {
+  let fd = new FormData()
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
+
+  fd.append(
     'name',
     store.getState().user.data.firstName +
       ' ' +
@@ -146,8 +148,8 @@ export function submitTranscriptApi(transcript, onSuccessTranscript) {
 
   api
     .service('ep')
-    .post(`/savetranscript`, fd1, { processData: false, contentType: false })
-    .done(data => {
+    .post(`/savetranscript`, fd, { processData: false, contentType: false })
+    .done(res => {
       onSuccessTranscript()
     })
     .fail(xhr => {
@@ -155,7 +157,7 @@ export function submitTranscriptApi(transcript, onSuccessTranscript) {
         counters,
         'saveTranscriptApiCount',
         () => {
-          submitTranscriptApi(transcript, onSuccessTranscript)
+          submitTranscriptApi(params, onSuccessTranscript)
         },
         1000,
         10,
@@ -170,20 +172,23 @@ export function submitTranscriptApi(transcript, onSuccessTranscript) {
     })
 }
 
-export function saveAudioAPI(data, onSaveAudioAPISuccess) {
+export function saveAudioAPI(params, onSaveAudioAPISuccess) {
   let fd = new FormData()
-  fd.append('audio', data.audio)
-  fd.append('interview_key', data.intKey)
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
+
   fd.append(
     'name',
     store.getState().user.data.firstName +
       ' ' +
       store.getState().user.data.lastName
   )
+
   api
     .service('ep')
     .post(`/saveaudio`, fd, { processData: false, contentType: false })
-    .done(data => {
+    .done(res => {
       onSaveAudioAPISuccess()
     })
     .fail(xhr => {
@@ -191,7 +196,7 @@ export function saveAudioAPI(data, onSaveAudioAPISuccess) {
         counters,
         'saveAudioCount',
         () => {
-          saveAudioAPI(data, onSaveAudioAPISuccess)
+          saveAudioAPI(params, onSaveAudioAPISuccess)
         },
         2000,
         10,
@@ -201,11 +206,11 @@ export function saveAudioAPI(data, onSaveAudioAPISuccess) {
     })
 }
 
-export function processresults(props, time) {
-  log('processresults', '', '')
+export function processresults(props, params) {
   let fd = new FormData()
-  fd.append('interview_key', store.getState().appIntKey.key)
-  fd.append('duration_interview', time)
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
 
   api
     .service('ep')
@@ -218,7 +223,7 @@ export function processresults(props, time) {
         changeInterviewToSuccess()
         checkIntResultsFirst(props)
       } else {
-        processresults(props, time)
+        processresults(props, params)
       }
     })
     .fail(xhr => {
@@ -226,7 +231,7 @@ export function processresults(props, time) {
         counters,
         'processresultsCount',
         () => {
-          processresults(props, time)
+          processresults(props, params)
         },
         2000,
         10,
@@ -383,7 +388,7 @@ export function changeInterviewToSuccess() {
       processData: false,
       contentType: false,
     })
-    .done(data => {
+    .done(res => {
       //success
     })
     .fail(xhr => {
@@ -393,7 +398,7 @@ export function changeInterviewToSuccess() {
         () => {
           changeInterviewToSuccess()
         },
-        2000,
+        1000,
         5,
         xhr
       )
@@ -406,18 +411,20 @@ export function changeInterviewToSuccess() {
     })
 }
 
-export function sendNoOfVideoClips(totalClips, intDuration) {
+export function sendNoOfVideoClips(params, intDuration) {
   let fd = new FormData()
-  fd.append('total_clips', totalClips)
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
   fd.append('interview_key', store.getState().appIntKey.key)
-  fd.append('duration_interview', intDuration)
+
   api
     .service('ep')
     .post(`/updateclipcount`, fd, {
       processData: false,
       contentType: false,
     })
-    .done(data => {
+    .done(res => {
       //success of sendNoOfVideoClips
     })
     .fail(xhr => {
@@ -425,7 +432,7 @@ export function sendNoOfVideoClips(totalClips, intDuration) {
         counters,
         'sendNoOfVideoClipsCount',
         () => {
-          sendNoOfVideoClips(totalClips, intDuration)
+          sendNoOfVideoClips(params, intDuration)
         },
         1000,
         5,
@@ -476,25 +483,19 @@ export function sendAudioData(index, state) {
     })
 }
 
-export function uploadVideoAPI(
-  id,
-  blob,
-  interviewKey,
-  onUploadVideoSuccess,
-  onFailure
-) {
+export function uploadVideoAPI(params, onUploadVideoSuccess, onFailure) {
   let fd = new FormData()
-  fd.append('clip', blob, 'clip')
-  fd.append('id', id)
-  fd.append('interview_key', interviewKey)
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
 
   api
     .service('ep')
     .post(`/processclip`, fd, { processData: false, contentType: false })
     .done(() => {
-      onUploadVideoSuccess(id)
+      onUploadVideoSuccess(params.id)
     })
     .fail(xhr => {
-      onFailure(id, blob, interviewKey, onUploadVideoSuccess, onFailure, xhr)
+      onFailure(params, onUploadVideoSuccess, onFailure, xhr)
     })
 }

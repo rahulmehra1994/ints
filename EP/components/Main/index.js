@@ -277,7 +277,7 @@ const mapStateToProps = state => {
     userInfo: state.user ? state.user.data : null,
     punctResults: state.punctuatorResults,
     gentleResults: state.gentleResults,
-    throughInt: state.throughInt,
+
     statuses: state.statuses,
     userInfoEP: state.userInfoEP,
     customizationsEP: state.epCustomizations,

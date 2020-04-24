@@ -31,7 +31,7 @@ import {
 import ReactHtmlParser from 'react-html-parser'
 import anime from 'animejs/lib/anime'
 import SystemCheck from './../popups/SystemCheck'
-import Interview from './Interview'
+import InterviewContainer from './InterviewContainer'
 
 const leftArrowBlack =
   process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-white.svg'
@@ -791,7 +791,10 @@ class Calibration extends Component {
       return this.IntGuidlinesPopupUI()
     } else if (displayInterview) {
       return (
-        <Interview interviewKey={this.state.interviewKey} {...this.props} />
+        <InterviewContainer
+          interviewKey={this.state.interviewKey}
+          {...this.props}
+        />
       )
     }
 

@@ -98,15 +98,6 @@ export const userInfoEP = (
   }
 }
 
-export const throughInterview = (state = false, action) => {
-  switch (action.type) {
-    case 'THROUGH_INTERVIEW':
-      return action.payload
-    default:
-      return state
-  }
-}
-
 export const improveArticles = (state = [], action) => {
   switch (action.type) {
     case 'IMPROVE_ARTICLES':
@@ -287,7 +278,7 @@ const combined = {
   concatenateResults: concatenateResults,
   gentleResults: gentleResults,
   punctuatorResults: punctuatorResults,
-  throughInt: throughInterview,
+
   improveArticles: improveArticles,
   userInfoEP: userInfoEP,
   interviewKeys,
