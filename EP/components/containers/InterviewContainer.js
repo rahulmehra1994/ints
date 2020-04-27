@@ -19,54 +19,20 @@ import { mutuals } from './../../actions/commonActions'
 import Interview from './Interview'
 import InterviewCountdown from './InterviewCountdown'
 
-let questionsArr = [
-  {
-    question_id: 1,
-    order_id: 1,
-    question_content: 'Please tell me something about yourself',
-    question_duration: 120,
-  },
-  {
-    question_id: 2,
-    order_id: 2,
-    question_content: 'What is your class ?',
-    question_duration: 120,
-  },
-  {
-    question_id: 3,
-    order_id: 3,
-    question_content: 'Where do you live ?',
-    question_duration: 120,
-  },
-]
-
 class InterviewContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentQues: questionsArr[0],
+      currentQues: this.props.questionsArr[0],
       currentIndex: 0,
       displayCountdown: true,
+      showProcessing: false,
     }
   }
 
   componentDidMount() {}
 
-  questionCompleted = suppliedIndex => {
-    let temp = questionsArr.map((item, index) => {
-      if (suppliedIndex === this.state.currentIndex) {
-        item.status = 'skipped'
-      }
-      return item
-    })
-
-    questionsArr = temp
-
-    this.setState({
-      currentQues: questionsArr[suppliedIndex + 1],
-      currentIndex: suppliedIndex + 1,
-    })
-  }
+  questionCompleted = suppliedIndex => {}
 
   questionSkipped = () => {}
 
@@ -76,8 +42,25 @@ class InterviewContainer extends Component {
     this.setState({ displayCountdown: false })
   }
 
+  enableInterviewProcessingModule = () => {
+    this.setState({ showProcessing: true })
+  }
+
+  updateInterviewProcessingData = (totalSent, totalProcessed) => {
+    this.setState({ totalSent, totalProcessed })
+  }
+
   render() {
     let { currentQues } = this.state
+
+    if (this.state.showProcessing)
+      return (
+        <InterviewProcessing
+          totalSent={this.state.totalSent}
+          totalProcessed={this.state.totalProcessed}
+          showProcessing={this.state.showProcessing}
+        />
+      )
 
     if (this.state.displayCountdown)
       return <InterviewCountdown hideDisplayCounter={this.hideDisplayCounter} />
@@ -90,6 +73,10 @@ class InterviewContainer extends Component {
         questionCompleted={this.questionCompleted}
         questionSkipped={this.questionSkipped}
         interviewEnded={this.interviewEnded}
+        enableInterviewProcessingModule={
+          this.props.enableInterviewProcessingModule
+        }
+        updateInterviewProcessingData={this.props.updateInterviewProcessingData}
       />
     )
   }

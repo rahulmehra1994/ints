@@ -296,8 +296,8 @@ class VideoAnalysis extends Component {
 
         <InterviewProcessing
           status="pending"
-          noOfVideoSent={this.props.totalsent}
-          noOfVideoProcessed={this.props.totalprocessed}
+          noOfVideoSent={this.props.totalSent}
+          noOfVideoProcessed={this.props.totalProcessed}
         />
       </div>
     )
@@ -316,7 +316,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoAnalysis)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoAnalysis)

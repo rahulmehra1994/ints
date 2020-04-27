@@ -27,11 +27,13 @@ import {
   checkAppearance,
   saveAudioAPI,
   processresults,
+  updateInterviewStatus,
   getIntResults,
   sendNoOfVideoClips,
   uploadVideoAPI,
   submitTranscriptApi,
 } from './../../actions/interviewActions'
+
 import {
   highContrast,
   log,
@@ -70,8 +72,8 @@ class Interview extends Component {
       voiceStart: false,
       voiceStop: false,
       transcript: null,
-      totalsent: 0,
-      totalprocessed: 0,
+      totalSent: 0,
+      totalProcessed: 0,
       audioSaved: false, //true when audio is saved
       transcriptSaved: false, //true when transcript is saved
       curr_id: 0,
@@ -113,7 +115,8 @@ class Interview extends Component {
     this.checkAllIntDataSentSuccessfully = this.checkAllIntDataSentSuccessfully.bind(
       this
     )
-    this.onUploadVideoFailure = this.onUploadVideoFailure.bind(this)
+
+    this.onProcessResultsSuccess = this.onProcessResultsSuccess.bind(this)
     this.setAppIntKey()
   }
 
@@ -136,22 +139,39 @@ class Interview extends Component {
       curr_page: mutuals.urlEnds['interview'],
       event_type: 'mount',
     })
-
+    this.temp()
     this.initRun()
   }
 
-  static getDerivedStateFromProps(newProps, state) {
-    // if (
-    //   newProps.currentQuestion.question_id !==
-    //   this.props.currentQuestion.question_id
-    // ) {
-    //   let currentQuestion = mutuals.deepCopy(newProps.currentQuestion)
-    //   this.setState({
-    //     instructions: currentQuestion.question_content,
-    //     ariaLabel: currentQuestion.question_content,
-    //     currentQuestion,
-    //   })
-    // }
+  temp() {
+    let currentQuestion = mutuals.deepCopy(this.props.currentQuestion)
+    this.setState({
+      instructions: currentQuestion.question_content,
+      ariaLabel: currentQuestion.question_content,
+      currentQuestion,
+    })
+  }
+
+  // static getDerivedStateFromProps(newProps, state) {
+  //   if (
+  //     newProps.currentQuestion.question_id !==
+  //     this.props.currentQuestion.question_id
+  //   ) {
+  //     let currentQuestion = mutuals.deepCopy(newProps.currentQuestion)
+  //     this.setState({
+  //       instructions: currentQuestion.question_content,
+  //       ariaLabel: currentQuestion.question_content,
+  //       currentQuestion,
+  //     })
+  //   }
+  // }
+
+  UNSAFE_componentWillReceiveProps(newProps) {
+    this.continouslyCheckToMoveToSummary(newProps)
+    this.props.updateInterviewProcessingData(
+      this.state.totalSent,
+      this.state.totalProcessed
+    )
   }
 
   adminsFunctionalityActivation() {
@@ -195,6 +215,10 @@ class Interview extends Component {
   intCreated() {
     checkAppearance()
     this.readyToStartInt()
+    this.interviewProcessingDataFetch()
+  }
+
+  interviewProcessingDataFetch() {
     fetchFacePointsImg()
     fetchUserfacePoints()
   }
@@ -290,54 +314,36 @@ class Interview extends Component {
       return
     }
 
+    this.uploadVideoAPIDataCreator(id, blob)
+  }
+
+  uploadVideoAPIDataCreator(id, blob) {
     let params = {
-      clip: blob,
       id: id,
+      clip: blob,
       interview_key: this.state.interviewKey,
       question_id: this.props.currentQuestion.question_id,
     }
-    uploadVideoAPI(params, this.onUploadVideoSuccess, this.onUploadVideoFailure)
-  }
-
-  onUploadVideoFailure(
-    id,
-    blob,
-    interviewKey,
-    onUploadVideoSuccess,
-    onFailure,
-    xhr
-  ) {
-    apiCallAgain(
-      counters.sendClip,
-      id,
-      () => {
-        uploadVideoAPI(id, blob, interviewKey, onUploadVideoSuccess, onFailure)
-      },
-      2000,
-      10,
-      xhr
-    )
-
-    log('%c Api faliure /processclip', 'background: red; color: white', xhr)
+    uploadVideoAPI(params, this.onUploadVideoSuccess)
   }
 
   onUploadVideoSuccess(id) {
     this.checkParallelUpload(id)
-    let totalprocessed = this.state.totalprocessed + 1
-    this.state.totalprocessed = totalprocessed
-    if (this.state.totalsent === totalprocessed && this.state.interviewEnded) {
+    let totalProcessed = this.state.totalProcessed + 1
+    this.state.totalProcessed = totalProcessed
+    if (this.state.totalSent === totalProcessed && this.state.interviewEnded) {
       this.updateClipCounts()
       this.checkAllIntDataSentSuccessfully()
     }
 
-    log('Total Sent Clips after success of api call', '', this.state.totalsent)
-    log('Total Processed Clips after success of api call', '', totalprocessed)
+    log('Total Sent Clips after success of api call', '', this.state.totalSent)
+    log('Total Processed Clips after success of api call', '', totalProcessed)
   }
 
   storeClip = (id, blob) => {
     let storageItem = { id, blob, status: '' }
-    log('totalsent before api call', this.state.totalsent)
-    log('totalprocessed before api call', this.state.totalprocessed)
+    log('totalSent before api call', this.state.totalSent)
+    log('totalProcessed before api call', this.state.totalProcessed)
     this.incrementRecordedClipsCount()
     storageQueue.push(storageItem)
     allClipsQueue.push(storageItem)
@@ -345,7 +351,7 @@ class Interview extends Component {
   }
 
   incrementRecordedClipsCount() {
-    this.setState({ totalsent: this.state.totalsent + 1 }, () => {
+    this.setState({ totalSent: this.state.totalSent + 1 }, () => {
       if (this.state.interviewEnded) this.updateClipCounts()
     })
   }
@@ -366,7 +372,7 @@ class Interview extends Component {
 
   updateClipCounts() {
     let data = {
-      total_clips: this.state.totalsent,
+      total_clips: this.state.totalSent,
       duration_interview: this.intTimePeriod,
       question_id: this.props.currentQuestion.question_id,
     }
@@ -386,7 +392,7 @@ class Interview extends Component {
     if (
       this.state.audioSaved === true &&
       this.state.transcriptSaved === true &&
-      this.state.totalsent === this.state.totalprocessed &&
+      this.state.totalSent === this.state.totalProcessed &&
       this.state.interviewEnded
     ) {
       let params = {
@@ -395,7 +401,26 @@ class Interview extends Component {
         duration_interview: this.intTimePeriod,
       }
 
-      processresults(this.props, params)
+      processresults(params, this.onProcessResultsSuccess)
+    }
+  }
+
+  onProcessResultsSuccess = res => {
+    if (res.status === 'success') {
+      updateInterviewStatus()
+      // Interviews single question finished move to next question
+      this.props.questionCompleted()
+    } else {
+      this.checkAllIntDataSentSuccessfully()
+    }
+  }
+
+  continouslyCheckToMoveToSummary(newProps) {
+    let newConcatStatus = newProps.statuses.concatenate
+    let oldConcatStatus = this.props.statuses.concatenate
+
+    if (newConcatStatus !== oldConcatStatus && newConcatStatus === 'success') {
+      this.props.history.push(`/${this.state.interviewKey}/results/summary`)
     }
   }
 
@@ -649,40 +674,13 @@ class Interview extends Component {
   }
 
   endInterview = () => {
-    getIntResults()
-
     mutuals.socketTracking({
       event_type: 'click',
       event_description: 'stop interview button',
     })
-
-    mutuals.socketTracking({
-      curr_page: '/start-processing',
-      event_type: 'click',
-    })
-
-    localStorage.setItem('interviewDuration', this.totalTime - this.state.time)
+    getIntResults()
     this.intTimePeriod = this.totalTime - this.state.time
-
-    let instruction = `${
-      this.props.userInfo
-        ? `Thank you ${this.props.userInfo.firstName} ${this.props.userInfo.lastName}. We will provide your feedback in a moment.`
-        : 'We will provide your feedback in a moment.'
-    }`
-
-    let ariaLabel =
-      instruction +
-      ' please do not close the tab before the interview is uploaded. we will automatically redirect to interview summary page'
-
-    this.setState(
-      { showProcessing: true, instructions: instruction, ariaLabel: ariaLabel },
-      () => {
-        setTimeout(() => {
-          this.refs.thankYouContainer.focus()
-        }, 500)
-      }
-    )
-
+    this.enableInterviewProcessing()
     this.stopRecord()
     this.stopVoice()
 
@@ -693,6 +691,12 @@ class Interview extends Component {
         })
       }
     }, 2500)
+  }
+
+  enableInterviewProcessing() {
+    this.setState({ showProcessing: true })
+    //
+    this.props.enableInterviewProcessingModule()
   }
 
   fitFontSize = _.once(() => {
@@ -819,8 +823,8 @@ class Interview extends Component {
                   <ProcessingJazz
                     animState={this.state.showProcessing}
                     status="pending"
-                    noOfVideoSent={this.state.totalsent}
-                    noOfVideoProcessed={this.state.totalprocessed}
+                    noOfVideoSent={this.state.totalSent}
+                    noOfVideoProcessed={this.state.totalProcessed}
                     tabIndex={tabIndex}
                   />
                 </div>
@@ -880,12 +884,12 @@ class Interview extends Component {
 
 const mapStateToProps = state => {
   return {
-    userInfo: !_.isEmpty(state.user.data) ? state.user.data : null,
     concatResults: state.concatenateResults,
     finalCalibrationId: state.calibration.finalCalibrationId,
     questionData: state.userInfoEP.questionData,
     epCustomizations: state.epCustomizations,
     appUrls: state.appUrls,
+    statuses: state.statuses,
   }
 }
 

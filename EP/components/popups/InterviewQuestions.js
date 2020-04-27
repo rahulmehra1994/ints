@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import _ from 'underscore'
 import { log, mutuals } from './../../actions/commonActions'
 import { updateUserInfo, getUserInfo } from './../../actions/apiActions'
-import { createInterview2 } from './../../actions/interviewActions'
+import { createInterview } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
 import $ from 'jquery'
 const trackingDebounceSmall = _.debounce(
@@ -60,7 +60,7 @@ class InterviewQuestions extends Component {
 
     let fd = new FormData()
     fd.append('question_id', selectedQues.question_id)
-    createInterview2(this.onSuccess, fd)
+    createInterview(this.onSuccess, fd)
   }
 
   onSuccess(data) {
@@ -476,7 +476,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InterviewQuestions)
+export default connect(mapStateToProps, mapDispatchToProps)(InterviewQuestions)

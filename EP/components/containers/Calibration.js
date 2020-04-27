@@ -14,7 +14,7 @@ import {
 } from './../../actions/apiActions'
 import { mutuals, log, common } from './../../actions/commonActions'
 import { calibrationAPIStage1 } from './../../actions/calibrationActions'
-import { createInterview2 } from './../../actions/interviewActions'
+import { createInterview } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
 import _ from 'underscore'
 import {
@@ -64,6 +64,28 @@ const hasGetUserMedia =
   navigator.msGetUserMedia
 
 const CALIB_CLIPS_REFRESH_NO = 20
+
+let questionsArr = [
+  {
+    question_id: 1,
+    order_id: 1,
+    question_content: 'Please tell me something about yourself',
+    question_duration: 120,
+  },
+  // {
+  //   question_id: 2,
+  //   order_id: 2,
+  //   question_content: 'What accomplishment are you most proud of?',
+  //   question_duration: 120,
+  // },
+  // {
+  //   question_id: 3,
+  //   order_id: 3,
+  //   question_content: 'What are your strengths and weaknesses?',
+  //   question_duration: 120,
+  // },
+]
+
 class Calibration extends Component {
   constructor(props) {
     super(props)
@@ -185,13 +207,16 @@ class Calibration extends Component {
   furtherProceed() {
     if (this.state.oneTabAlert === false && this.isUserRegistered) {
       let fd = new FormData()
-      if (
-        this.props.latestQuestion !== null &&
-        this.props.latestQuestion.question_id !== -1 &&
-        mutuals.multipleQuesEnabled(this.props)
-      )
-        fd.append('question_id', this.props.latestQuestion.question_id)
-      createInterview2(this.onSuccessOfCreateInt, fd)
+      // if (
+      //   this.props.latestQuestion !== null &&
+      //   this.props.latestQuestion.question_id !== -1 &&
+      //   mutuals.multipleQuesEnabled(this.props)
+      // )
+      //   fd.append('question_id', this.props.latestQuestion.question_id)
+
+      fd.append('question_ids', JSON.stringify(questionsArr))
+
+      createInterview(this.onSuccessOfCreateInt, fd)
     }
   }
 
@@ -793,6 +818,7 @@ class Calibration extends Component {
       return (
         <InterviewContainer
           interviewKey={this.state.interviewKey}
+          questionsArr={questionsArr}
           {...this.props}
         />
       )
