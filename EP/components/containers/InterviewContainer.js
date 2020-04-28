@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import _ from 'underscore'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { getIntResults } from './../../actions/interviewActions'
+import {
+  getIntResults,
+  updateInterviewStatus,
+} from './../../actions/interviewActions'
 import { setAppUrls } from './../../actions/actions'
 import { appIntKey } from './../../actions/resultsActions'
 import {
@@ -15,9 +18,10 @@ import {
   fetchImproveArticles,
   intKeyIsValid,
 } from './../../actions/apiActions'
-import { mutuals } from './../../actions/commonActions'
+import { mutuals, log } from './../../actions/commonActions'
 import Interview from './Interview'
 import InterviewCountdown from './InterviewCountdown'
+import InterviewProcessing from './InterviewProcessing'
 
 class InterviewContainer extends Component {
   constructor(props) {
@@ -27,12 +31,37 @@ class InterviewContainer extends Component {
       currentIndex: 0,
       displayCountdown: true,
       showProcessing: false,
+      totalSent: 0,
+      totalProcessed: 0,
+    }
+    this.enableCheckingOfConcatResults = false
+  }
+
+  UNSAFE_componentWillReceiveProps(newProps) {
+    // this.continouslyCheckToMoveToSummary(newProps)
+  }
+
+  questionCompleted = () => {
+    if (this.state.currentIndex === this.props.questionsArr.length - 1) {
+      this.enableInterviewProcessing()
+    } else {
+      this.setState({ currentIndex: this.state.currentIndex + 1 })
     }
   }
 
-  componentDidMount() {}
+  continouslyCheckToMoveToSummary(newProps) {
+    if (this.enableCheckingOfConcatResults) {
+      let newConcatStatus = newProps.statuses.concatenate
+      let oldConcatStatus = this.props.statuses.concatenate
 
-  questionCompleted = suppliedIndex => {}
+      if (
+        newConcatStatus !== oldConcatStatus &&
+        newConcatStatus === 'success'
+      ) {
+        this.props.history.push(`/${this.props.interviewKey}/results/summary`)
+      }
+    }
+  }
 
   questionSkipped = () => {}
 
@@ -42,12 +71,19 @@ class InterviewContainer extends Component {
     this.setState({ displayCountdown: false })
   }
 
-  enableInterviewProcessingModule = () => {
-    this.setState({ showProcessing: true })
+  updateTotalVideoClipsUpload = () => {
+    this.setState({ totalSent: this.state.totalSent + 1 })
   }
 
-  updateInterviewProcessingData = (totalSent, totalProcessed) => {
-    this.setState({ totalSent, totalProcessed })
+  updateTotalProcessedVideoClipsUpload = () => {
+    this.setState({ totalProcessed: this.state.totalProcessed + 1 })
+  }
+
+  enableInterviewProcessing() {
+    this.setState({ showProcessing: true })
+    getIntResults()
+    this.enableCheckingOfConcatResults = true
+    log('interview container state => ', this.state)
   }
 
   render() {
@@ -73,10 +109,10 @@ class InterviewContainer extends Component {
         questionCompleted={this.questionCompleted}
         questionSkipped={this.questionSkipped}
         interviewEnded={this.interviewEnded}
-        enableInterviewProcessingModule={
-          this.props.enableInterviewProcessingModule
+        updateTotalVideoClipsUpload={this.updateTotalVideoClipsUpload}
+        updateTotalProcessedVideoClipsUpload={
+          this.updateTotalProcessedVideoClipsUpload
         }
-        updateInterviewProcessingData={this.props.updateInterviewProcessingData}
       />
     )
   }

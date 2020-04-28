@@ -28,12 +28,10 @@ import {
   saveAudioAPI,
   processresults,
   updateInterviewStatus,
-  getIntResults,
   sendNoOfVideoClips,
   uploadVideoAPI,
   submitTranscriptApi,
 } from './../../actions/interviewActions'
-
 import {
   highContrast,
   log,
@@ -51,7 +49,6 @@ var fullStream = ''
 var audioStream = ''
 
 let storageQueue = []
-let allClipsQueue = []
 let countOfParallelUpload = 0
 
 class Interview extends Component {
@@ -65,34 +62,33 @@ class Interview extends Component {
     }
 
     this.state = {
-      recordAudio: null,
-      src: null,
-      time: this.props.epCustomizations.interview_duration,
-      interviewEnded: null,
       voiceStart: false,
       voiceStop: false,
-      transcript: null,
-      totalSent: 0,
-      totalProcessed: 0,
-      audioSaved: false, //true when audio is saved
-      transcriptSaved: false, //true when transcript is saved
-      curr_id: 0,
-      showProcessing: false,
-      cancelsaveinterview: false,
       shouldMount: false,
-      interviewKey: this.props.interviewKey,
-      finalRecognitionStop: false,
       tabIndex: common.tabIndexes.interview,
       instructions: temp(),
       ariaLabel: temp(),
       dynamicFontSize: null,
       limitOfParallelUpload: 2,
       enableParallelUploadTweeking: false,
+      countDownTimeStr: '',
     }
 
+    this.curr_id = 0
+    this.src = null
+    this.transcript = null
+    this.transcriptSaved = false
+    this.finalRecognitionStop = false
+    this.interviewEnded = null
+    this.audioSaved = false
+    this.totalSent = 0
+    this.totalProcessed = 0
     this.chunkDuration = 5000
     this.intTimePeriod = 0
-    this.totalTime = this.props.epCustomizations.interview_duration
+    this.time = mutuals.deepCopy(this.props.epCustomizations.interview_duration)
+    this.totalTime = mutuals.deepCopy(
+      this.props.epCustomizations.interview_duration
+    )
     this.audioRecorder = null
     this.mediaRecorder = null
     this.recordedBlobs = []
@@ -115,9 +111,7 @@ class Interview extends Component {
     this.checkAllIntDataSentSuccessfully = this.checkAllIntDataSentSuccessfully.bind(
       this
     )
-
     this.onProcessResultsSuccess = this.onProcessResultsSuccess.bind(this)
-    this.setAppIntKey()
   }
 
   componentWillUnmount() {
@@ -152,28 +146,6 @@ class Interview extends Component {
     })
   }
 
-  // static getDerivedStateFromProps(newProps, state) {
-  //   if (
-  //     newProps.currentQuestion.question_id !==
-  //     this.props.currentQuestion.question_id
-  //   ) {
-  //     let currentQuestion = mutuals.deepCopy(newProps.currentQuestion)
-  //     this.setState({
-  //       instructions: currentQuestion.question_content,
-  //       ariaLabel: currentQuestion.question_content,
-  //       currentQuestion,
-  //     })
-  //   }
-  // }
-
-  UNSAFE_componentWillReceiveProps(newProps) {
-    this.continouslyCheckToMoveToSummary(newProps)
-    this.props.updateInterviewProcessingData(
-      this.state.totalSent,
-      this.state.totalProcessed
-    )
-  }
-
   adminsFunctionalityActivation() {
     if (this.props.epCustomizations.user_type === 'admin')
       this.setState({ enableParallelUploadTweeking: true })
@@ -186,7 +158,7 @@ class Interview extends Component {
 
     captureUserMediaWithAudio(stream => {
       fullStream = stream
-      this.setState({ src: stream })
+      this.src = stream
       this.initializeMediaRecorder()
     })
   }
@@ -200,7 +172,7 @@ class Interview extends Component {
   }
 
   initRun() {
-    this.initializeStore()
+    this.initializeStore() // no need try to remove in future
 
     if (this.props.finalCalibrationId !== -1) {
       let data = {
@@ -240,14 +212,14 @@ class Interview extends Component {
         ''
       )
 
-      if (this.state.transcript) {
-        this.setState({ transcript: this.state.transcript + finalTranscript })
+      if (this.transcript) {
+        this.transcript = this.transcript + finalTranscript
       } else {
-        this.setState({ transcript: finalTranscript })
+        this.transcript = finalTranscript
       }
 
       log(
-        '%c Transcript from onVoiceResult: ' + this.state.transcript,
+        '%c Transcript from onVoiceResult: ' + this.transcript,
         'background: yellow; color: black',
         ''
       )
@@ -256,12 +228,12 @@ class Interview extends Component {
 
   onError(error) {
     log('%c VOICE RECOGINTION ERROR: ', 'background: cyan; color: black', error)
-    //below code to restart voice recogintion
   }
 
   onEnd() {
+    //below code to restart voice recogintion
     log('%c ON VOICE RECOGINTION END: ', 'background: cyan; color: black', '')
-    if (this.state.finalRecognitionStop === false) {
+    if (this.finalRecognitionStop === false) {
       this.setState({ voiceStart: false }, () => {
         this.setState({ voiceStart: true })
       })
@@ -269,13 +241,8 @@ class Interview extends Component {
   }
 
   stopVoice() {
-    this.setState({ voiceStop: true, finalRecognitionStop: true })
-  }
-
-  setAppIntKey() {
-    let intKey = this.props.interviewKey
-    this.props.setAppIntKey(intKey)
-    setAppUrls('/' + intKey)
+    this.finalRecognitionStop = true
+    this.setState({ voiceStop: true })
   }
 
   requestUserMedia = () => {
@@ -306,7 +273,7 @@ class Interview extends Component {
     log('In ​sendClip function blob => ', blob)
     if (
       (_.isNull(blob) || _.isUndefined(blob)) &&
-      this.state.interviewEnded === false
+      this.interviewEnded === false
     ) {
       this.showPopup(() => {
         this.props.history.push(this.props.appUrls.calibration)
@@ -321,39 +288,38 @@ class Interview extends Component {
     let params = {
       id: id,
       clip: blob,
-      interview_key: this.state.interviewKey,
+      interview_key: this.props.interviewKey,
       question_id: this.props.currentQuestion.question_id,
     }
     uploadVideoAPI(params, this.onUploadVideoSuccess)
   }
 
   onUploadVideoSuccess(id) {
+    this.totalProcessed = this.totalProcessed + 1
+    this.props.updateTotalProcessedVideoClipsUpload()
     this.checkParallelUpload(id)
-    let totalProcessed = this.state.totalProcessed + 1
-    this.state.totalProcessed = totalProcessed
-    if (this.state.totalSent === totalProcessed && this.state.interviewEnded) {
+    if (this.totalSent === this.totalProcessed && this.interviewEnded) {
       this.updateClipCounts()
       this.checkAllIntDataSentSuccessfully()
     }
 
-    log('Total Sent Clips after success of api call', '', this.state.totalSent)
-    log('Total Processed Clips after success of api call', '', totalProcessed)
+    log('Total Sent Clips after success of api call', this.totalSent)
+    log('Total Processed Clips after success of api call', this.totalProcessed)
   }
 
   storeClip = (id, blob) => {
     let storageItem = { id, blob, status: '' }
-    log('totalSent before api call', this.state.totalSent)
-    log('totalProcessed before api call', this.state.totalProcessed)
+    log('totalSent before api call', this.totalSent)
+    log('totalProcessed before api call', this.totalProcessed)
     this.incrementRecordedClipsCount()
     storageQueue.push(storageItem)
-    allClipsQueue.push(storageItem)
     this.checkStorageQueueIsNotEmpty()
   }
 
   incrementRecordedClipsCount() {
-    this.setState({ totalSent: this.state.totalSent + 1 }, () => {
-      if (this.state.interviewEnded) this.updateClipCounts()
-    })
+    this.totalSent = this.totalSent + 1
+    if (this.interviewEnded) this.updateClipCounts()
+    this.props.updateTotalVideoClipsUpload()
   }
 
   checkStorageQueueIsNotEmpty() {
@@ -372,31 +338,27 @@ class Interview extends Component {
 
   updateClipCounts() {
     let data = {
-      total_clips: this.state.totalSent,
+      total_clips: this.totalSent,
       duration_interview: this.intTimePeriod,
       question_id: this.props.currentQuestion.question_id,
     }
     sendNoOfVideoClips(data)
-    log('all video clips =>', allClipsQueue)
   }
 
   checkParallelUpload(id) {
     countOfParallelUpload -= 1
     this.checkStorageQueueIsNotEmpty()
-    allClipsQueue.forEach((item, index) => {
-      if (item.id === id) item.status = 'success'
-    })
   }
 
   checkAllIntDataSentSuccessfully() {
     if (
-      this.state.audioSaved === true &&
-      this.state.transcriptSaved === true &&
-      this.state.totalSent === this.state.totalProcessed &&
-      this.state.interviewEnded
+      this.audioSaved === true &&
+      this.transcriptSaved === true &&
+      this.totalSent === this.totalProcessed &&
+      this.interviewEnded
     ) {
       let params = {
-        interview_key: this.state.interviewKey,
+        interview_key: this.props.interviewKey,
         question_id: this.props.currentQuestion.question_id,
         duration_interview: this.intTimePeriod,
       }
@@ -407,30 +369,19 @@ class Interview extends Component {
 
   onProcessResultsSuccess = res => {
     if (res.status === 'success') {
-      updateInterviewStatus()
-      // Interviews single question finished move to next question
+      // Interview's single question finished move to next question
       this.props.questionCompleted()
     } else {
       this.checkAllIntDataSentSuccessfully()
     }
   }
 
-  continouslyCheckToMoveToSummary(newProps) {
-    let newConcatStatus = newProps.statuses.concatenate
-    let oldConcatStatus = this.props.statuses.concatenate
-
-    if (newConcatStatus !== oldConcatStatus && newConcatStatus === 'success') {
-      this.props.history.push(`/${this.state.interviewKey}/results/summary`)
-    }
-  }
-
   saveTranscript = () => {
-    let transcript =
-      this.state.transcript === null ? null : this.state.transcript.trim()
+    let transcript = this.transcript === null ? null : this.transcript.trim()
 
     let params = {
       transcript: transcript,
-      interview_key: this.state.interviewKey,
+      interview_key: this.props.interviewKey,
       question_id: this.props.currentQuestion.question_id,
       is_original: 1,
     }
@@ -439,9 +390,8 @@ class Interview extends Component {
   }
 
   onSuccessTranscript() {
-    this.setState({ transcriptSaved: true }, () => {
-      this.checkAllIntDataSentSuccessfully()
-    })
+    this.transcriptSaved = true
+    this.checkAllIntDataSentSuccessfully()
   }
 
   getAudio = () => {
@@ -453,7 +403,7 @@ class Interview extends Component {
   saveAudio(audioBlob) {
     let params = {
       audio: audioBlob,
-      interview_key: this.state.interviewKey,
+      interview_key: this.props.interviewKey,
       question_id: this.props.currentQuestion.question_id,
     }
 
@@ -461,39 +411,26 @@ class Interview extends Component {
   }
 
   onSaveAudioAPISuccess() {
-    this.setState(
-      {
-        audioSaved: true,
-      },
-      () => {
-        this.checkAllIntDataSentSuccessfully()
-      }
-    )
+    this.audioSaved = true
+    this.checkAllIntDataSentSuccessfully()
     this.releaseCameraAndAudioStream()
   }
 
   startInterview() {
     this.beginRecording()
     var timer = setInterval(() => {
-      if (this.state.interviewEnded) {
+      if (this.interviewEnded) {
         clearInterval(timer)
       } else {
-        let time = this.state.time - 1
-        if (time <= 0) {
-          if (this.state.interviewEnded === false) this.endInterview()
+        this.time = this.time - 1
+        if (this.time <= 0) {
+          this.endInterview()
           clearInterval(timer)
         }
-        log(
-          '%cInterview time',
-          'background: green; color: white',
-          this.totalTime - this.state.time
-        )
-        this.setState({ time: time })
-        if (this.state.interviewEnded === false) {
-          if (this.refs.timeremaining)
-            this.refs.timeremaining.innerHTML =
-              pad(Math.floor(time / 60), 2) + ' : ' + pad(time % 60, 2)
-        }
+
+        let countDownTimeStr =
+          pad(Math.floor(this.time / 60), 2) + ' : ' + pad(this.time % 60, 2)
+        this.setState({ countDownTimeStr })
       }
     }, 1000)
   }
@@ -541,7 +478,7 @@ class Interview extends Component {
     // Raise a dataavailable event containing the Blob of data that has been gathered.
     // Raise a stop event.
 
-    if (this.state.interviewEnded === false) {
+    if (this.interviewEnded === false) {
       this.mediaRecorder.start()
     }
 
@@ -609,7 +546,8 @@ class Interview extends Component {
   }
 
   beginRecording() {
-    this.setState({ interviewEnded: false, voiceStart: true })
+    this.interviewEnded = false
+    this.setState({ voiceStart: true })
     this.mediaRecorder.start() //started recording video with audio
     this.startToRecordAudio() //started recording audio only
     this.videoPlaybackOnScreen()
@@ -618,10 +556,10 @@ class Interview extends Component {
 
   recordChunk(id) {
     setTimeout(() => {
-      if (this.state.interviewEnded === false) {
+      if (this.interviewEnded === false) {
         this.recordChunk(id + 1)
         this.handleBlob(id)
-        this.setState({ curr_id: id + 1 })
+        this.curr_id = id + 1
       }
     }, this.chunkDuration)
   }
@@ -639,7 +577,7 @@ class Interview extends Component {
     let playPromise
     try {
       this.setState({ shouldMount: true }, () => {
-        this.refs.interviewVideo.srcObject = this.state.src
+        this.refs.interviewVideo.srcObject = this.src
         playPromise = this.refs.interviewVideo.play()
       })
 
@@ -666,10 +604,7 @@ class Interview extends Component {
   }
 
   stopRecord() {
-    this.setState({ interviewEnded: true }, () => {
-      this.handleBlob(this.state.curr_id)
-    })
-
+    this.handleBlob(this.curr_id)
     this.getAudio()
   }
 
@@ -678,25 +613,26 @@ class Interview extends Component {
       event_type: 'click',
       event_description: 'stop interview button',
     })
-    getIntResults()
-    this.intTimePeriod = this.totalTime - this.state.time
-    this.enableInterviewProcessing()
-    this.stopRecord()
-    this.stopVoice()
+    //getIntResults() // combined results will be called at the end of last question
+    this.intTimePeriod = this.totalTime - this.time
 
+    updateInterviewStatus() // yeh update karta hai ki dusra interview de sakte hain ab
+    this.currentQuesBeingSaved()
+    this.interviewEnded = true
+    this.stopRecord()
+    //show overlay where present question is being saved info is shown
+    this.stopVoice() //voice recognition se jo transcript ayegi that will be uploaded by below saveTranscript
     setTimeout(() => {
-      if (this.state.cancelsaveinterview === false) {
-        this.setState({ cancelsaveinterview: true }, () => {
-          this.saveTranscript()
-        })
-      }
+      this.saveTranscript() //let the transcript be saved
     }, 2500)
   }
 
-  enableInterviewProcessing() {
-    this.setState({ showProcessing: true })
-    //
-    this.props.enableInterviewProcessingModule()
+  currentQuesBeingSaved() {
+    //take 5 secs and then go to next question
+    setTimeout(() => {
+      //hide button
+      this.setState({ hideStopButton: true })
+    }, 5000)
   }
 
   fitFontSize = _.once(() => {
@@ -756,39 +692,41 @@ class Interview extends Component {
           <div id="interviewPage">
             <div id="interview-body">
               <div id="interview-box">
-                {!this.state.showProcessing ? (
-                  <div className="interviewer">
-                    <video
-                      id="interview-video"
-                      ref="interviewVideo"
-                      muted
-                      type="video/webm"
-                    />
+                <div className="interviewer">
+                  <video
+                    id="interview-video"
+                    ref="interviewVideo"
+                    muted
+                    type="video/webm"
+                  />
+                  <div
+                    className="interviewer-container-old"
+                    style={{ backgroundImage: `url(${interviewerImage})` }}
+                  />
+                  <div className="clock">
                     <div
-                      className="interviewer-container-old"
-                      style={{ backgroundImage: `url(${interviewerImage})` }}
+                      id="clock-logo"
+                      style={{ backgroundImage: `url(${clock})` }}
                     />
-                    <div className="clock">
-                      <div
-                        id="clock-logo"
-                        style={{ backgroundImage: `url(${clock})` }}
-                      />
 
-                      <div id="time">
-                        <div id="time-remaining" ref="timeremaining" />
+                    <div id="time">
+                      <div id="time-remaining">
+                        {this.state.countDownTimeStr}
                       </div>
                     </div>
+                  </div>
 
-                    <div className="ints">
-                      <div
-                        id="question-container"
-                        tabIndex={tabIndex}
-                        aria-label={ariaLabel}
-                        style={{ fontSize: this.state.dynamicfontSize }}>
-                        {instructions}
-                      </div>
-                      {this.fitFontSize()}
+                  <div className="ints">
+                    <div
+                      id="question-container"
+                      tabIndex={tabIndex}
+                      aria-label={ariaLabel}
+                      style={{ fontSize: this.state.dynamicfontSize }}>
+                      {instructions}
+                    </div>
+                    {this.fitFontSize()}
 
+                    {this.state.hideStopButton ? null : (
                       <button
                         type="button"
                         className="b1"
@@ -804,29 +742,8 @@ class Interview extends Component {
                           Stop
                         </div>
                       </button>
-                    </div>
+                    )}
                   </div>
-                ) : (
-                  <h1
-                    className="thankYouContainer"
-                    ref="thankYouContainer"
-                    tabIndex={tabIndex}
-                    aria-label={ariaLabel}>
-                    {instructions}
-                  </h1>
-                )}
-
-                <div
-                  className={classNames({
-                    hidden: !this.state.showProcessing,
-                  })}>
-                  <ProcessingJazz
-                    animState={this.state.showProcessing}
-                    status="pending"
-                    noOfVideoSent={this.state.totalSent}
-                    noOfVideoProcessed={this.state.totalProcessed}
-                    tabIndex={tabIndex}
-                  />
                 </div>
               </div>
             </div>
@@ -906,9 +823,6 @@ const mapDispatchToProps = dispatch => {
     },
     initializeEpResults: () => {
       dispatch(initializeEpResults())
-    },
-    setAppIntKey: key => {
-      dispatch(appIntKey(key))
     },
   }
 }
