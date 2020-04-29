@@ -72,12 +72,12 @@ let questionsArr = [
     question_content: 'Please tell me something about yourself',
     question_duration: 120,
   },
-  // {
-  //   question_id: 2,
-  //   order_id: 2,
-  //   question_content: 'What accomplishment are you most proud of?',
-  //   question_duration: 120,
-  // },
+  {
+    question_id: 2,
+    order_id: 2,
+    question_content: 'What accomplishment are you most proud of?',
+    question_duration: 120,
+  },
   // {
   //   question_id: 3,
   //   order_id: 3,

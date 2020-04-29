@@ -332,6 +332,93 @@ export function getIntResults() {
     })
 }
 
+function fetchAgainAllQuestionsStatus(data) {
+  let arr = []
+  _.each(data, (val, key) => {
+    arr.push(againFetchIntStatuses(val))
+  })
+
+  let flag = false
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === true) {
+      flag = true
+      break
+    }
+  }
+
+  return flag
+}
+
+export function getAllQuestionsResults() {
+  let fd = new FormData()
+  fd.append('interview_key', store.getState().appIntKey.key)
+  api
+    .service('ep')
+    .post(`/get-all-results-status`, fd, {
+      processData: false,
+      contentType: false,
+    })
+    .done(data => {
+      if (fetchAgainAllQuestionsStatus(data)) {
+        setTimeout(() => {
+          getAllQuestionsResults()
+        }, 1000)
+      }
+
+      if (
+        data.concatenate === 'success' &&
+        data.post_gentle_praat === 'success' &&
+        data.categories === 'success' &&
+        data.gentle === 'success' &&
+        data.praat === 'success'
+      ) {
+        fetchTotalResult()
+      }
+
+      store.dispatch(setStatuses(data))
+
+      if (data.categories === 'success' && punctuatorCount === 0) {
+        punctuatorCount += 1
+        fetchPunctuator()
+      }
+      if (data.post_gentle_praat === 'success' && gentleCount === 0) {
+        gentleCount += 1
+        newGentle()
+        fetchUserSpeechSubtitles()
+      }
+      if (data.concatenate === 'success' && concatenateCount === 0) {
+        concatenateCount += 1
+        fetchConcatenateResults()
+      }
+      if (data.convert_video === 'success' && reCallImgVideoCount === 0) {
+        reCallImgVideoCount += 1
+        reCallImgVideo()
+        store.dispatch(setConvertVideo(true))
+      }
+
+      setVideoProcessedPercent(data.video_clips_processed_percentage)
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'getresultstatusCount',
+        () => {
+          getIntResults()
+        },
+        2000,
+        10,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /getresultstatus',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
 export function updateInterviewStatus() {
   let fd = new FormData()
   api

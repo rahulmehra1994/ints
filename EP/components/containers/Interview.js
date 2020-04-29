@@ -370,7 +370,6 @@ class Interview extends Component {
   onProcessResultsSuccess = res => {
     if (res.status === 'success') {
       // Interview's single question finished move to next question
-      this.props.questionCompleted()
     } else {
       this.checkAllIntDataSentSuccessfully()
     }
@@ -613,9 +612,7 @@ class Interview extends Component {
       event_type: 'click',
       event_description: 'stop interview button',
     })
-    //getIntResults() // combined results will be called at the end of last question
     this.intTimePeriod = this.totalTime - this.time
-
     updateInterviewStatus() // yeh update karta hai ki dusra interview de sakte hain ab
     this.currentQuesBeingSaved()
     this.interviewEnded = true
@@ -629,9 +626,9 @@ class Interview extends Component {
 
   currentQuesBeingSaved() {
     //take 5 secs and then go to next question
+    this.setState({ hideStopButton: true })
     setTimeout(() => {
-      //hide button
-      this.setState({ hideStopButton: true })
+      this.props.questionCompleted()
     }, 5000)
   }
 

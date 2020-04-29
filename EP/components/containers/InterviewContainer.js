@@ -29,10 +29,11 @@ class InterviewContainer extends Component {
     this.state = {
       currentQues: this.props.questionsArr[0],
       currentIndex: 0,
-      displayCountdown: true,
       showProcessing: false,
       totalSent: 0,
       totalProcessed: 0,
+      displayCountdown: true,
+      displayInterview: false,
     }
     this.enableCheckingOfConcatResults = false
   }
@@ -41,12 +42,26 @@ class InterviewContainer extends Component {
     // this.continouslyCheckToMoveToSummary(newProps)
   }
 
+  componentDidMount() {
+    log('the question arr => ', this.props.questionsArr)
+  }
+
   questionCompleted = () => {
     if (this.state.currentIndex === this.props.questionsArr.length - 1) {
       this.enableInterviewProcessing()
     } else {
-      this.setState({ currentIndex: this.state.currentIndex + 1 })
+      this.takeNextQuestion()
     }
+  }
+
+  takeNextQuestion() {
+    let index = this.state.currentIndex + 1
+    this.setState({
+      currentIndex: index,
+      currentQues: this.props.questionsArr[index],
+      displayCountdown: true,
+      displayInterview: false,
+    })
   }
 
   continouslyCheckToMoveToSummary(newProps) {
@@ -68,7 +83,7 @@ class InterviewContainer extends Component {
   interviewEnded = () => {}
 
   hideDisplayCounter = () => {
-    this.setState({ displayCountdown: false })
+    this.setState({ displayCountdown: false, displayInterview: true })
   }
 
   updateTotalVideoClipsUpload = () => {
@@ -101,20 +116,23 @@ class InterviewContainer extends Component {
     if (this.state.displayCountdown)
       return <InterviewCountdown hideDisplayCounter={this.hideDisplayCounter} />
 
-    return (
-      <Interview
-        {...this.props}
-        currentQuestion={currentQues}
-        currentIndex={this.state.currentIndex}
-        questionCompleted={this.questionCompleted}
-        questionSkipped={this.questionSkipped}
-        interviewEnded={this.interviewEnded}
-        updateTotalVideoClipsUpload={this.updateTotalVideoClipsUpload}
-        updateTotalProcessedVideoClipsUpload={
-          this.updateTotalProcessedVideoClipsUpload
-        }
-      />
-    )
+    if (this.state.displayInterview)
+      return (
+        <Interview
+          {...this.props}
+          currentQuestion={currentQues}
+          currentIndex={this.state.currentIndex}
+          questionCompleted={this.questionCompleted}
+          questionSkipped={this.questionSkipped}
+          interviewEnded={this.interviewEnded}
+          updateTotalVideoClipsUpload={this.updateTotalVideoClipsUpload}
+          updateTotalProcessedVideoClipsUpload={
+            this.updateTotalProcessedVideoClipsUpload
+          }
+        />
+      )
+
+    return null
   }
 }
 
