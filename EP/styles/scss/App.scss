@@ -3336,4 +3336,46 @@ body:not(.using-mouse) .btn-primary:focus {
   .articles-scroll::-webkit-scrollbar-thumb {
     background-color: lightgrey;
   }
+  .left-border-ball-ends {
+    border-left: 1px solid $light-grey;
+    position: relative;
+  }
+  .left-border-ball-ends::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -3.6px;
+    height: 6px;
+    width: 6px;
+    border-radius: 100%;
+    background: $light-grey;
+  }
+  .left-border-ball-ends::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: -3.6px;
+    height: 6px;
+    width: 6px;
+    border-radius: 100%;
+    background: $light-grey;
+  }
+
+  .capsule-status-icon {
+    border-radius: 14px;
+    border: solid 1px $light-grey;
+    padding: 2.5px 5px;
+    padding-right: 8px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .capsule-status-icon-danger-active {
+    color: red;
+    background: $light-red;
+    border: solid 1px $red;
+  }
 }

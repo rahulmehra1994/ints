@@ -11,6 +11,8 @@ import BodyCombined from './../BodyComponents/bodyCombined'
 import AppearanceCombined from './../AppearanceComponents/appearanceCombined'
 import WordUsage from '../ContentComponents/WordUsage'
 import Sentence from '../ContentComponents/Sentence'
+import Competency from '../ContentComponents/Competency'
+
 import VideoSummary from './../details/VideoSummary'
 import InsightsAllSection from '../insights/InsightsAllSection'
 import NoContent from './../ContentComponents/NoContent'
@@ -65,6 +67,12 @@ class InformationComponent extends Component {
         <PropsRoute exact path={appUrls.word} RouteComponent={WordUsage} />
 
         <PropsRoute exact path={appUrls.sentence} RouteComponent={Sentence} />
+
+        <PropsRoute
+          exact
+          path={appUrls.competency}
+          RouteComponent={Competency}
+        />
 
         <PropsRoute exact path={appUrls.vocal} RouteComponent={VocalFeatures} />
 

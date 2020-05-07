@@ -21,5 +21,6 @@ export function defaultUrls(intkey) {
     modulation: `${intkey}/results/detailed${urlEnds.modulation}`,
     videosummary: `${intkey}/results/detailed${urlEnds.videosummary}`,
     noContent: `${intkey}/results/detailed${urlEnds.noContent}`,
+    competency: `${intkey}/results/detailed${urlEnds.competency}`,
   }
 }

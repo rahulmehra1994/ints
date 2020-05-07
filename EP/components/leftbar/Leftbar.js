@@ -79,6 +79,14 @@ const data = {
     route: 'sentence',
     icon: 'ep-icon-sentence-analysis',
   },
+  competency: {
+    label: 'Competency',
+    resultKey: 'sentenceCombinedVal',
+    index: 9,
+    type: 'sentence_analysis',
+    route: 'competency',
+    icon: 'ep-icon-sentence-analysis',
+  },
   vocal: {
     label: 'Vocal Features',
     resultKey: 'vocalCombinedVal',

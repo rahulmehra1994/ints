@@ -606,7 +606,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineVideos)
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineVideos)

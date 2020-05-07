@@ -26,6 +26,7 @@ export const urlEnds = {
   modulation: `/speech-modulation`,
   videosummary: `/videosummary`,
   noContent: '/no-content',
+  competency: '/competency',
 }
 
 const socketEP = io(process.env.SOCKET_URL_EP, {

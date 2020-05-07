@@ -9,11 +9,12 @@ import {
 } from '../../actions/commonActions'
 import { mutualLogics } from '../../actions/mutualLogics'
 import { sentenceMsgs } from '../messages/messages'
-import RevaluateContent from '../Revaluation/RevaluateContent'
-import SentenceSamples from '../popups/SentenceSamples'
+import CompetencySamples from '../popups/CompetencySamples'
 import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { highContrast } from '../../actions/commonActions'
 import { DetailInfoHeader } from '../commons/DetailHeader'
+import CapsulesSystem from './../commons/CapsulesSystem'
+
 const sentenceAnalysisBig =
   process.env.APP_BASE_URL +
   '/dist/images/new/icons-big/sentence-analysis-big.svg'
@@ -148,7 +149,7 @@ var ViewSampleButton = props => {
   )
 }
 
-class Sentence extends Component {
+class Competency extends Component {
   constructor(...args) {
     super(...args)
     this.state = {
@@ -349,6 +350,21 @@ class Sentence extends Component {
       <div>
         {combinedRes !== null && safeToRender ? (
           <div>
+            <CapsulesSystem
+              expandOrCollapse={this.state.capsulesExpandOrCollapse}
+            />
+
+            <button
+              className="brand-blue-color"
+              onClick={() => {
+                this.setState({
+                  capsulesExpandOrCollapse: !this.state
+                    .capsulesExpandOrCollapse,
+                })
+              }}>
+              click me
+            </button>
+
             <NoDetectionAlert
               info={'No speech was detected in the interview.'}
               section={'verbals'}
@@ -382,13 +398,13 @@ class Sentence extends Component {
                 tabIndex === -1 ? 'Select to continue further' : ''
               }`}>
               <DetailInfoHeader
-                label={'Sentence Analysis'}
+                label={'Competency'}
                 img={sentenceAnalysisBig}
-                alt={'sentence analysis info'}
+                alt={'competency info'}
                 color={sectionColor[combinedRes.sentenceCombinedVal]}
                 ariaLabel={`${
                   sectionStatus[combinedRes.sentenceCombinedVal]
-                } in sentence analysis.`}
+                } in competency.`}
                 status={sectionStatus[combinedRes.sentenceCombinedVal]}
                 underMsg={sentenceMsgs[combinedRes.sentenceCombinedVal]}
               />
@@ -445,28 +461,8 @@ class Sentence extends Component {
                 </div>
               ) : null}
 
-              <div className="grid-2-cols mt-12" style={{ gridGap: 6 }}>
-                <div className="border-gray p-8 text-center">
-                  <RevaluateContent tabIndex={tabIndex} />
-                </div>
-
-                <div className="border-gray p-8 text-center">
-                  <p className="hintColor">
-                    View sample sentence within each category to improve your
-                    performance
-                  </p>
-
-                  <div className="mt-6">
-                    <ViewSampleButton
-                      tabIndex={tabIndex}
-                      sentenceSamplesToggle={this.sentenceSamplesToggle}
-                    />
-                  </div>
-                </div>
-              </div>
-
               {sentenceSamplesToggle ? (
-                <SentenceSamples
+                <CompetencySamples
                   sentenceSamplesToggle={this.sentenceSamplesToggle}
                   epCustomizations={this.props.metaData}
                   type={this.state.type}
@@ -522,4 +518,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sentence)
+export default connect(mapStateToProps, mapDispatchToProps)(Competency)

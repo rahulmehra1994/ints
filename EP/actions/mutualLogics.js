@@ -60,6 +60,17 @@ export function sentCal(punctVals) {
   let gratitudeArray = []
   let porArray = []
 
+  let greetingObject = { arr: [] }
+  let nameObject = []
+  let personalObject = []
+  let educationObject = []
+  let workexpObject = []
+  let acheivementObject = []
+  let interestObject = []
+  let hobbyObject = []
+  let gratitudeObject = []
+  let porObject = []
+
   if (punctVals) {
     if (punctVals.constructor === Array) {
       for (var i = 0; i < punctVals.length; i++) {
