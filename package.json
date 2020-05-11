@@ -19,7 +19,7 @@
     "dev": "webpack -d --watch"
   },
   "dependencies": {
-    "@vmockinc/dashboard": "git+ssh://git@github.com:vmockinc/dashboard-ui.git",
+    "@vmockinc/dashboard": "git+ssh://git@github.com/ysdinesh31/dashboard-ui.git#nf-2.0",
     "animejs": "^3.1.0",
     "bootstrap": "^3.4.1",
     "bootstrap-sass": "^3.3.7",
@@ -98,7 +98,7 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-gyp": "^6.0.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.1",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "react-focus-lock": "^1.7.0",

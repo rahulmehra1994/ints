@@ -11,6 +11,7 @@ import { modifyInterview, intKeyIsValid } from '../../actions/apiActions'
 import _ from 'underscore'
 import RenameInterivew from './../popups/RenameInterview'
 import { notify } from '@vmockinc/dashboard/services/helpers'
+import NetworkFeedback from '@vmockinc/dashboard/NetworkFeedback'
 
 var goto = function (data) {
   mutuals.socketTracking({
@@ -38,6 +39,7 @@ class SubNavbar extends Component {
 
   componentDidMount() {
     this.deactivateButtonForAdmin()
+    log('inteview details', this.props.intDetails)
   }
 
   deactivateButtonForAdmin() {
@@ -271,6 +273,19 @@ class SubNavbar extends Component {
             {this.isVideoSummDisabled() ? (
               <div className="deactivate"></div>
             ) : null}
+          </div>
+
+          <div className="float-right">
+            <NetworkFeedback
+              role="in-app"
+              placement="button"
+              product="interview"
+              interviewName={this.props.intDetails.intName}
+              interview_id={this.props.appIntKey}
+              score={5}
+              className="button white-button"
+              text="Network Feedback"
+            />
           </div>
 
           <a

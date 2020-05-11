@@ -6,10 +6,11 @@ import _ from 'underscore'
 import * as cookie from 'js-cookie'
 import Main from './components/Main'
 import {
-  fetchUserCustomizations,
+  // fetchUserCustomizations,
   userCustomizationsEP,
 } from './actions/apiActions'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
+import { fetchUserCustomizations } from '@vmockinc/dashboard/Dashboard/actions/UserCustomizations'
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class App extends Component {
   customizeHasResult() {
     if (process.env.APP_ENV === 'dev') return true
 
-    let customizations = this.props.userCustomizations
+    let customizations = this.props.userCustomizations.data
     if (customizations !== null && !_.isEmpty(customizations)) {
       return this.customizeHasKeys(customizations)
     } else {
@@ -92,7 +93,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(App))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))
