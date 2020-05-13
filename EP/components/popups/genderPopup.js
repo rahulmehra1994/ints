@@ -357,7 +357,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GenderPopup)
+export default connect(mapStateToProps, mapDispatchToProps)(GenderPopup)

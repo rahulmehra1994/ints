@@ -486,6 +486,42 @@ export function sendNoOfVideoClips(params, intDuration) {
     })
 }
 
+export function skipQuestionsApi(params, callback) {
+  let fd = new FormData()
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
+  fd.append('interview_key', store.getState().appIntKey.key)
+
+  api
+    .service('ep')
+    .post(`/skip-questions`, fd, {
+      processData: false,
+      contentType: false,
+    })
+    .done(res => {
+      callback()
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'sendNoOfVideoClipsCount',
+        () => {
+          skipQuestionsApi(params, callback)
+        },
+        1000,
+        5,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /sendNoOfVideoClips',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
 export function sendAudioData(index, state) {
   let data = state.audiosArray[index]
   let fd = new FormData()

@@ -178,6 +178,10 @@ body:not(.using-mouse) .btn-primary:focus {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   }
 
+  .left-grey-border {
+    border-left: solid 1px $light-grey;
+  }
+
   .switch {
     position: relative;
     display: inline-block;
@@ -1215,11 +1219,6 @@ body:not(.using-mouse) .btn-primary:focus {
     right: 5px;
   }
 
-  .basicDetailsButt {
-    @extend .rounded-sm;
-    margin-top: 30px;
-  }
-
   .blueColor:before {
     color: $cerulean;
   }
@@ -1670,26 +1669,68 @@ body:not(.using-mouse) .btn-primary:focus {
     @extend .pl-2;
   }
 
-  .video-trail-wrap {
+  .interview-container {
     position: relative;
-    width: 900px;
-    background: $white;
-    height: calc(100vh - 50px);
-    margin: 0 auto;
-    margin-top: 10px;
-    padding: 0 30px;
-    padding-top: 20px;
+    height: calc(100vh - 40px);
+    min-height: calc(536px + 236px - 40px);
+    max-height: 1080px;
+    display: grid;
+    grid-template-rows: calc(100vh - 276px) 236px;
   }
 
-  .video-trail-wrap .hugger {
+  .video-stream-panel {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    height: calc(100% - 236px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .interview-control-panel {
+    position: absolute;
+    background: white;
+    width: 100%;
+    bottom: 0px;
+    height: 236px;
+    box-shadow: 0 -7px 10px 0 rgba(0, 0, 0, 0.07);
+    display: grid;
+    grid-template-rows: 190px 46px;
+  }
+
+  .sticky-int-controls-bar {
+    background: $background-color;
+    display: grid;
+    grid-template-columns: 1fr 640px 1fr;
+  }
+
+  .question-position-cue-visited {
+    width: 27px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #222222;
+    margin-right: 8px;
+    display: inline-block;
+  }
+
+  .question-position-cue {
+    width: 27px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #dddddd;
+    margin-right: 8px;
+    display: inline-block;
+  }
+
+  .video-trail-wrap {
     position: relative;
-    width: 840px;
-    min-height: 630px;
-    margin: 0 auto;
+    margin: 20px 0;
   }
 
   .video-trail-wrap video {
-    width: 100%;
+    width: 640px;
+    height: 480px;
     transform: rotateY(180deg);
   }
 
@@ -1707,6 +1748,7 @@ body:not(.using-mouse) .btn-primary:focus {
     right: 0;
     left: 0;
     bottom: 0;
+    z-index: 998;//one less than customer support
   }
 
   .calib-status {
@@ -2349,15 +2391,20 @@ body:not(.using-mouse) .btn-primary:focus {
     padding-right: 20px;
   }
 
-  .calibrationMsgsWrap {
+  .basic-setups {
+    width: 90px;
+    float: left;
+  }
+
+  .calibration-msgs-wrap {
+    float: left;
     position: relative;
-    width: 100%;
+    width: calc(100% - 90px);
     min-height: 95px;
     background: $white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-bottom: 20px;
+    text-align: left;
   }
 
   .calibTransparent {
@@ -2556,12 +2603,20 @@ body:not(.using-mouse) .btn-primary:focus {
     flex-wrap: wrap;
     font-size: 20px;
     color: $white;
-    z-index: 1000;
+    z-index: 995;// less than fullscreen-loader[998] and customer-support[999]
   }
 
   .intStartCounter .counter {
-    margin-top: 10px;
-    font-size: 100px;
+    margin-top: 20px;
+    font-size: 44px;
+    font-weight: bold;
+    border-radius: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    height: 120px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .intProcess {

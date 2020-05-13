@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import VoiceRecognition from './../interview/VoiceRecognition'
-import ProcessingJazz from './../videoJazz/ProcessingJazz'
 import _ from 'underscore'
 import { connect } from 'react-redux'
 import {
@@ -42,7 +41,8 @@ import { notify } from '@vmockinc/dashboard/services/helpers'
 import CenterLoading from './../CenterLoading/index'
 
 const clock = process.env.APP_BASE_URL + '/dist/images/ic-timer-black-24-px.svg'
-const interviewerImage = process.env.APP_BASE_URL + '/dist/images/group-3.svg'
+const interviewerImage =
+  process.env.APP_BASE_URL + '/dist/images/interviewer-image.svg'
 
 var classNames = require('classnames')
 var fullStream = ''

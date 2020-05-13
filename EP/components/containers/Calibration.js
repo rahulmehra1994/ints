@@ -808,6 +808,14 @@ class Calibration extends Component {
         </div>
       )
 
+    // return (
+    //   <InterviewContainer
+    //     interviewKey={this.state.interviewKey}
+    //     questionsArr={questionsArr}
+    //     {...this.props}
+    //   />
+    // )
+
     if (oneTabAlert) {
       return this.OneTabShouldBeVisibleAtOneTimeUI()
     } else if (oneTabAlert === false && shouldMount && showIntSetup === false) {
@@ -920,50 +928,67 @@ class Calibration extends Component {
 
             <div ref="calibBox" id="calibration-box">
               <div className="calibration-video-container">
-                <div
-                  tabIndex={tabIndex}
-                  className="calibrationMsgsWrap"
-                  aria-live={this.state.calibInstructions}>
+                <div className="clearfix flex items-center pb-3">
                   <div
-                    ref="calibInstructions"
-                    className="calibInstructions subHeadLight">
-                    {this.state.greenOverlayVisible ? (
-                      <span className="calib-process-visual-cue-img mr-6">
-                        <SuccessTick />
-                      </span>
-                    ) : null}
+                    tabIndex={tabIndex}
+                    className="calibration-msgs-wrap"
+                    aria-live={this.state.calibInstructions}>
+                    <div
+                      ref="calibInstructions"
+                      className="calibInstructions subHeadLight">
+                      {this.state.greenOverlayVisible ? (
+                        <span className="calib-process-visual-cue-img mr-6">
+                          <SuccessTick />
+                        </span>
+                      ) : null}
 
-                    {this.state.analyzingAnim ? (
-                      <span className="calib-process-visual-cue-img mr-6">
-                        <AnalyzeAnim />
-                      </span>
-                    ) : null}
+                      {this.state.analyzingAnim ? (
+                        <span className="calib-process-visual-cue-img mr-6">
+                          <AnalyzeAnim />
+                        </span>
+                      ) : null}
 
-                    {this.state.redOverlayVisible ? (
-                      <span className="calib-process-visual-cue-img mr-6">
-                        <ErrorExclam />
-                      </span>
-                    ) : null}
+                      {this.state.redOverlayVisible ? (
+                        <span className="calib-process-visual-cue-img mr-6">
+                          <ErrorExclam />
+                        </span>
+                      ) : null}
 
-                    {ReactHtmlParser(this.state.calibInstructions)}
+                      {ReactHtmlParser(this.state.calibInstructions)}
+                    </div>
+
+                    {calibStatusVisible ? (
+                      <div className="calib-status">
+                        <div
+                          className="status-bar"
+                          style={{ background: stage1Color }}
+                        />
+                        <div
+                          className="status-bar"
+                          style={{ background: stage2Color }}
+                        />
+                        <div
+                          className="status-bar"
+                          style={{ background: stage3Color }}
+                        />
+                      </div>
+                    ) : null}
                   </div>
 
-                  {calibStatusVisible ? (
-                    <div className="calib-status">
-                      <div
-                        className="status-bar"
-                        style={{ background: stage1Color }}
-                      />
-                      <div
-                        className="status-bar"
-                        style={{ background: stage2Color }}
-                      />
-                      <div
-                        className="status-bar"
-                        style={{ background: stage3Color }}
-                      />
-                    </div>
-                  ) : null}
+                  <div className="basic-setups brand-blue-color flex items-center justify-end">
+                    <span className="ep-icon-setting text-18-normal" />
+                    <button
+                      className="text-16-demi ml-4"
+                      onClick={this.openPopup}
+                      tabIndex={tabIndex}
+                      aria-label={
+                        mutuals.multipleQuesEnabled(this.props)
+                          ? 'Change your question and basic details'
+                          : 'Check your hardware or modify your details'
+                      }>
+                      Setup
+                    </button>
+                  </div>
                 </div>
 
                 <div className="relative" style={{ minHeight: 368 }}>
@@ -1028,28 +1053,6 @@ class Calibration extends Component {
                   {this.state.greenOverlayVisible ? (
                     <OverlayMaskGreen className="calibTransparent" />
                   ) : null}
-                </div>
-                <div
-                  className="text-center"
-                  style={{ width: '100%', bottom: 10 }}>
-                  <div className="basicDetailsButt">
-                    <div style={{ color: '#444444' }}>
-                      {mutuals.multipleQuesEnabled(this.props)
-                        ? 'Change your question and basic details'
-                        : 'Check your hardware or modify your details'}
-                    </div>
-                    <button
-                      className="mt-3 bold bluePrimaryTxt font-semibold"
-                      onClick={this.openPopup}
-                      tabIndex={tabIndex}
-                      aria-label={
-                        mutuals.multipleQuesEnabled(this.props)
-                          ? 'Change your question and basic details'
-                          : 'Check your hardware or modify your details'
-                      }>
-                      Setup
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>

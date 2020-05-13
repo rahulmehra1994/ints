@@ -16,16 +16,20 @@ import {
   captureUserMediaAudio,
   pad,
 } from './../utilities/AppUtils'
+;('')
+// const COUNTDOWN_TIME = highContrast ? 20 : 5
+const COUNTDOWN_TIME = 10
 
 class CountdownTimer extends Component {
   constructor(props) {
     super(props)
     this.fullStream = null
     this.state = {
-      jazzCount: highContrast ? 20 : 5,
+      jazzCount: COUNTDOWN_TIME,
       isCountdownVisible: false,
       tabIndex: common.tabIndexes.interview,
     }
+    this.countdownSetInterval = null
   }
 
   componentDidMount() {
@@ -43,6 +47,29 @@ class CountdownTimer extends Component {
 
   componentWillUnmount() {
     this.releaseCameraAndAudioStream()
+    this.clearCountdownSetInterval()
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (
+      this.props.resetCountdown !== newProps.resetCountdown &&
+      newProps.resetCountdown
+    ) {
+      this.setState({ jazzCount: COUNTDOWN_TIME }, () => {
+        this.startCounter()
+      })
+    }
+
+    if (
+      this.props.pauseCountdown !== newProps.pauseCountdown &&
+      newProps.pauseCountdown
+    ) {
+      this.clearCountdownSetInterval()
+    }
+  }
+
+  clearCountdownSetInterval() {
+    clearInterval(this.countdownSetInterval)
   }
 
   releaseCameraAndAudioStream() {
@@ -57,7 +84,7 @@ class CountdownTimer extends Component {
         },
         () => {
           this.focusFullScreenCenterText()
-          this.jazzCounter()
+          this.startCounter()
         }
       )
     }, 300)
@@ -69,54 +96,47 @@ class CountdownTimer extends Component {
     }, 500)
   })
 
-  jazzCounter() {
-    setTimeout(() => {
+  startCounter() {
+    this.countdownSetInterval = setInterval(() => {
       if (this.state.jazzCount > 1) {
-        this.setState({ jazzCount: --this.state.jazzCount }, () => {
-          this.jazzCounter()
-        })
+        this.setState({ jazzCount: --this.state.jazzCount })
       } else {
         this.setState({ isCountdownVisible: false }, () => {
           //show interview component
-          this.props.hideDisplayCounter()
+          // this.props.hideDisplayCounter()
         })
       }
+      log('countdown timer still running')
     }, 1000)
   }
 
   render() {
     let { tabIndex, jazzCount, isCountdownVisible } = this.state
     return (
-      <React.Fragment>
-        <div className="fullscreen-loader">
-          <CenterLoading />
-        </div>
-        <div style={{ opacity: isCountdownVisible ? 1 : 0 }}>
-          <div className="video-trail-wrap">
-            <div className="hugger">
-              <video ref="videoTrailer" muted />
-              <div className="overlay-mask">
-                <OverlayMask className="calibTransparent" />
-                <div
-                  ref="intStartCounter"
-                  className="intStartCounter"
-                  tabIndex={tabIndex}>
-                  <h1
-                    className="header"
-                    style={{ marginTop: 200 }}
-                    aria-label={'Please be ready with your pitch'}>
-                    Please be ready with your pitch
-                  </h1>
+      <div
+        className="video-trail-wrap"
+        style={{ opacity: isCountdownVisible ? 1 : 0 }}>
+        <video ref="videoTrailer" muted />
+        <div className="overlay-mask">
+          <OverlayMask className="calibTransparent" />
+          <div
+            ref="intStartCounter"
+            className="intStartCounter"
+            tabIndex={tabIndex}>
+            <h1
+              className="text-18-demi"
+              style={{ marginTop: 200 }}
+              aria-label={'Please be ready with your pitch'}>
+              Recording starts in
+            </h1>
 
-                  <h1 className="counter" aria-live={jazzCount}>
-                    {jazzCount}
-                  </h1>
-                </div>
-              </div>
-            </div>
+            <h1 className="counter" aria-live={jazzCount}>
+              <span>{jazzCount}</span>
+            </h1>
           </div>
+          {this.props.children()}
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 }
