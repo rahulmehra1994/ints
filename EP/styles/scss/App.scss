@@ -110,6 +110,11 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: 600;
   }
 
+  .text-18-bold {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
   .text-18-med {
     font-size: 18px;
     font-weight: 500;
@@ -1748,7 +1753,7 @@ body:not(.using-mouse) .btn-primary:focus {
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 998;//one less than customer support
+    z-index: 998; //one less than customer support
   }
 
   .calib-status {
@@ -2416,74 +2421,31 @@ body:not(.using-mouse) .btn-primary:focus {
     top: 0;
   }
 
-  #interview-body {
-    position: relative;
-    width: 100%;
-    background-color: #f0f0f0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  #interview-box {
-    margin: 0 auto;
-    width: 900px;
-    height: 100%;
-    border-radius: 2px;
-    background-color: $white;
-    border: solid 1px #dadada;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-
-  .interviewer-container-old {
+  .interviewer-small-img {
     position: absolute;
-    margin-top: 16px;
-    margin-left: 16px;
-    width: 256px;
-    height: 144px;
+    top: 12px;
+    left: 12px;
+    width: 115px;
+    height: 86px;
     object-fit: contain;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     z-index: 10;
   }
 
-  .clock {
+  .time-remaining {
     position: absolute;
-    margin-top: 16px;
-    right: 1.7%;
-    width: 9.5em;
-    height: 36px;
-    border-radius: 2px;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10;
-  }
-
-  #time-remaining {
-    position: relative;
-    font-size: 20px;
-    font-weight: 300;
-    text-align: center;
+    top: 12px;
+    right: 12px;
+    width: 94px;
+    height: 33px;
+    background-color: rgba(34, 34, 34, 0.5);
+    border-radius: 17px;
     color: $white;
-  }
-
-  #time {
-    position: absolute;
-    width: 84px;
-    height: 27px;
-    left: 40px;
-    top: 5px;
-  }
-
-  #clock-logo {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    left: 8px;
-    top: 6px;
-    object-fit: contain;
-    background-repeat: no-repeat;
-    background-position-x: 3px;
-    background-position-y: 1px;
+    @extend .text-18-demi;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .interviewer {
@@ -2495,29 +2457,31 @@ body:not(.using-mouse) .btn-primary:focus {
   }
 
   .ints {
-    position: relative;
     width: 100%;
-    height: 192px;
-    background: rgba(0, 0, 0, 0.5);
+    height: 77px;
+    background: $white;
     position: absolute;
-    bottom: 0;
+    bottom: -72px;
     left: 0;
     right: 0;
     z-index: 100;
-  }
-
-  #question-container {
-    position: relative;
-    margin: 0 auto;
-    font-size: 36px;
-    font-weight: 600;
-    color: $white;
-    width: 840px;
-    height: 130px;
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.11);
+    border-radius: 4px;
+  }
+
+  .ints .question-indicator {
+    height: 41px;
+    bottom: -41px;
+    @extend .absolute,
+      .w-full,
+      .pin-b,
+      .flex,
+      .justify-center,
+      .items-center,
+      .text-14-demi;
   }
 
   .thankYouContainer {
@@ -2530,30 +2494,6 @@ body:not(.using-mouse) .btn-primary:focus {
     margin-top: 24px;
     margin-bottom: 24px;
     width: 640px;
-  }
-
-  .b1 {
-    position: absolute;
-    display: block;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20%;
-    height: 30px;
-    border-radius: 4px;
-    background-color: $red;
-    z-index: 10;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    color: $white;
-  }
-
-  video#interview-video {
-    position: absolute;
-    width: 840px;
-    z-index: 10;
-    transform: rotateY(180deg);
   }
 
   #processing {
@@ -2577,19 +2517,6 @@ body:not(.using-mouse) .btn-primary:focus {
     color: $white;
   }
 
-  @media all and (max-width: 980px) {
-    #interview-box {
-      position: relative;
-      top: 24px;
-      left: 2.5%;
-      width: 95%;
-      height: 866px;
-      border-radius: 2px;
-      background-color: $white;
-      border: solid 1px #dadada;
-    }
-  }
-
   .intStartCounter {
     position: absolute;
     right: 20px;
@@ -2603,7 +2530,7 @@ body:not(.using-mouse) .btn-primary:focus {
     flex-wrap: wrap;
     font-size: 20px;
     color: $white;
-    z-index: 995;// less than fullscreen-loader[998] and customer-support[999]
+    z-index: 995; // less than fullscreen-loader[998] and customer-support[999]
   }
 
   .intStartCounter .counter {

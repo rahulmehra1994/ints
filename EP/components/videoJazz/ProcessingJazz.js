@@ -4,7 +4,6 @@ import { log } from './../../actions/commonActions'
 import _ from 'underscore'
 import * as d3 from 'd3'
 import InterviewProcessing from './../interview/Interview_processing'
-import { notify } from '@vmockinc/dashboard/services/helpers'
 
 var classNames = require('classnames')
 
@@ -47,29 +46,13 @@ class VideoAnalysis extends Component {
       this.props.facePoints !== null
     ) {
       this.count += 1
-
       setTimeout(() => {
         this.create()
       }, 1000)
       setTimeout(() => {
         this.setState({ isBlackInfoStripVisible: true })
-        this.showPopup()
       }, 4000)
     }
-  }
-
-  showPopup() {
-    this.state.notifi = notify(
-      'Please do not close the tab before the interview is uploaded.',
-      'warning',
-      {
-        layout: 'topRight',
-        timeout: false,
-        callback: {
-          onClose: () => {},
-        },
-      }
-    )
   }
 
   componentWillUnmount() {
@@ -304,7 +287,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoAnalysis)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoAnalysis)

@@ -716,6 +716,7 @@ function appearImgPath(data) {
 export function fetchFacePointsImg() {
   let fd = new FormData()
   fd.append('interview_key', store.getState().appIntKey.key)
+
   let url = '/processing_frame'
   api
     .service('ep')
@@ -745,12 +746,12 @@ export function fetchFacePointsImg() {
 }
 
 export function fetchUserfacePoints() {
-  let fd1 = new FormData()
-  fd1.append('interview_key', store.getState().appIntKey.key)
+  let fd = new FormData()
+  fd.append('interview_key', store.getState().appIntKey.key)
 
   api
     .service('ep')
-    .post(`/processing_frame_face_points`, fd1, {
+    .post(`/processing_frame_face_points`, fd, {
       processData: false,
       contentType: false,
     })

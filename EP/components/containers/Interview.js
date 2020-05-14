@@ -28,7 +28,7 @@ import {
   processresults,
   updateInterviewStatus,
   sendNoOfVideoClips,
-  uploadVideoAPI,
+  // uploadVideoAPI,
   submitTranscriptApi,
 } from './../../actions/interviewActions'
 import {
@@ -40,9 +40,8 @@ import {
 import { notify } from '@vmockinc/dashboard/services/helpers'
 import CenterLoading from './../CenterLoading/index'
 
-const clock = process.env.APP_BASE_URL + '/dist/images/ic-timer-black-24-px.svg'
 const interviewerImage =
-  process.env.APP_BASE_URL + '/dist/images/interviewer-image.svg'
+  process.env.APP_BASE_URL + '/dist/images/interviewer.svg'
 
 var classNames = require('classnames')
 var fullStream = ''
@@ -85,16 +84,16 @@ class Interview extends Component {
     this.totalProcessed = 0
     this.chunkDuration = 5000
     this.intTimePeriod = 0
-    this.time = mutuals.deepCopy(this.props.epCustomizations.interview_duration)
+
+    this.time = mutuals.deepCopy(this.props.currentQuestion).question_duration
     this.totalTime = mutuals.deepCopy(
-      this.props.epCustomizations.interview_duration
-    )
+      this.props.currentQuestion
+    ).question_duration
     this.audioRecorder = null
     this.mediaRecorder = null
     this.recordedBlobs = []
     this.recordedBlobsAudio = []
     this.startInterview = this.startInterview.bind(this)
-    this.requestUserMedia = this.requestUserMedia.bind(this)
     this.handleBlob = this.handleBlob.bind(this)
     this.beginRecording = this.beginRecording.bind(this)
     this.recordChunk = this.recordChunk.bind(this)
@@ -133,6 +132,7 @@ class Interview extends Component {
       curr_page: mutuals.urlEnds['interview'],
       event_type: 'mount',
     })
+
     this.temp()
     this.initRun()
   }
@@ -186,17 +186,13 @@ class Interview extends Component {
 
   intCreated() {
     checkAppearance()
-    this.readyToStartInt()
+    this.startInterview()
     this.interviewProcessingDataFetch()
   }
 
   interviewProcessingDataFetch() {
     fetchFacePointsImg()
     fetchUserfacePoints()
-  }
-
-  readyToStartInt() {
-    this.requestUserMedia()
   }
 
   onVoiceEnd() {
@@ -245,14 +241,6 @@ class Interview extends Component {
     this.setState({ voiceStop: true })
   }
 
-  requestUserMedia = () => {
-    try {
-      this.startInterview()
-    } catch (e) {
-      console.error('Error in getting stream from request user media', e)
-    }
-  }
-
   showPopup(callback) {
     notify(
       'Video recording library is not working properly. Please try again.',
@@ -291,7 +279,7 @@ class Interview extends Component {
       interview_key: this.props.interviewKey,
       question_id: this.props.currentQuestion.question_id,
     }
-    uploadVideoAPI(params, this.onUploadVideoSuccess)
+    // uploadVideoAPI(params, this.onUploadVideoSuccess) // uncomment this temp
   }
 
   onUploadVideoSuccess(id) {
@@ -545,11 +533,12 @@ class Interview extends Component {
   }
 
   beginRecording() {
+    this.videoPlaybackOnScreen()
+    // return
     this.interviewEnded = false
     this.setState({ voiceStart: true })
     this.mediaRecorder.start() //started recording video with audio
     this.startToRecordAudio() //started recording audio only
-    this.videoPlaybackOnScreen()
     this.recordChunk(0)
   }
 
@@ -686,77 +675,59 @@ class Interview extends Component {
     if (this.state.shouldMount) {
       return (
         <div>
-          <div id="interviewPage">
-            <div id="interview-body">
-              <div id="interview-box">
-                <div className="interviewer">
-                  <video
-                    id="interview-video"
-                    ref="interviewVideo"
-                    muted
-                    type="video/webm"
-                  />
-                  <div
-                    className="interviewer-container-old"
-                    style={{ backgroundImage: `url(${interviewerImage})` }}
-                  />
-                  <div className="clock">
-                    <div
-                      id="clock-logo"
-                      style={{ backgroundImage: `url(${clock})` }}
-                    />
+          <div className="video-trail-wrap">
+            {this.props.children()}
+            <video ref="interviewVideo" muted type="video/webm" />
+            <div
+              className="interviewer-small-img"
+              style={{ backgroundImage: `url(${interviewerImage})` }}
+            />
 
-                    <div id="time">
-                      <div id="time-remaining">
-                        {this.state.countDownTimeStr}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ints">
-                    <div
-                      id="question-container"
-                      tabIndex={tabIndex}
-                      aria-label={ariaLabel}
-                      style={{ fontSize: this.state.dynamicfontSize }}>
-                      {instructions}
-                    </div>
-                    {this.fitFontSize()}
-
-                    {this.state.hideStopButton ? null : (
-                      <button
-                        type="button"
-                        className="b1"
-                        onClick={this.endInterview}
-                        id="start-of-content"
-                        tabIndex={tabIndex}
-                        aria-label={`Click here to stop the interview`}>
-                        <div
-                          className={classNames({
-                            accessiblityRedBg: highContrast,
-                            [`redBg`]: !highContrast,
-                          })}>
-                          Stop
-                        </div>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+            <div className="time-remaining">
+              <span>{this.state.countDownTimeStr}</span>
             </div>
 
-            {this.state.voiceStart && (
-              <VoiceRecognition
-                onStart={this.start}
-                onEnd={this.onEnd}
-                onResult={this.onVoiceResult}
-                stop={this.state.voiceStop}
-                onError={this.onError.bind(this)}
-              />
-            )}
+            <div className="ints">
+              {this.fitFontSize()}
+              {this.state.hideStopButton ? null : (
+                <button
+                  type="button"
+                  className="flex items-center justify-center"
+                  onClick={this.endInterview}
+                  id="start-of-content"
+                  tabIndex={tabIndex}
+                  aria-label={`Click here to stop the interview`}>
+                  <span
+                    className="ep-icon-stop-filled"
+                    style={{ color: common.sectionColor[2], fontSize: 34 }}
+                  />
+                  <span className="ml-5 text-20-demi">Stop Recording</span>
+                </button>
+              )}
 
-            {this.ParallelUploadBlock()}
+              <div
+                className="question-indicator"
+                style={{ background: common.lightBgColor[2] }}>
+                <span
+                  className="text-14-demi"
+                  style={{ color: common.darkColor[2] }}>
+                  Recording Question {this.props.currentIndex + 1}
+                </span>
+              </div>
+            </div>
           </div>
+
+          {this.state.voiceStart && (
+            <VoiceRecognition
+              onStart={this.start}
+              onEnd={this.onEnd}
+              onResult={this.onVoiceResult}
+              stop={this.state.voiceStop}
+              onError={this.onError.bind(this)}
+            />
+          )}
+
+          {this.ParallelUploadBlock()}
         </div>
       )
     }

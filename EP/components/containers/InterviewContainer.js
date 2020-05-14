@@ -18,6 +18,12 @@ import {
   fetchImproveArticles,
   intKeyIsValid,
 } from './../../actions/interviewActions'
+import {
+  counters,
+  apiCallAgain,
+  fetchFacePointsImg,
+  fetchUserfacePoints,
+} from './../../actions/apiActions'
 import { mutuals, log } from './../../actions/commonActions'
 import Interview from './Interview'
 import InterviewCountdown from './InterviewCountdown'
@@ -51,6 +57,11 @@ class InterviewContainer extends Component {
 
   componentDidMount() {
     log('the question arr => ', this.props.questionsArr)
+  }
+
+  interviewProcessingDataFetch() {
+    fetchFacePointsImg()
+    fetchUserfacePoints()
   }
 
   questionCompleted = () => {
@@ -159,7 +170,6 @@ class InterviewContainer extends Component {
               hideDisplayCounter={this.hideDisplayCounter}
               resetCountdown={this.state.resetCountdown}
               pauseCountdown={this.state.pauseCountdown}
-              children={this.inteviewerBlock.bind(this)}
             />
           </div>
 
@@ -237,18 +247,23 @@ class InterviewContainer extends Component {
   }
   InterviewBlock() {
     return (
-      <Interview
-        {...this.props}
-        currentQuestion={this.state.currentQues}
-        currentIndex={this.state.currentIndex}
-        questionCompleted={this.questionCompleted}
-        questionSkipped={this.questionSkipped}
-        interviewEnded={this.interviewEnded}
-        updateTotalVideoClipsUpload={this.updateTotalVideoClipsUpload}
-        updateTotalProcessedVideoClipsUpload={
-          this.updateTotalProcessedVideoClipsUpload
-        }
-      />
+      <div className="interview-container">
+        <div className="video-stream-panel">
+          <Interview
+            {...this.props}
+            currentQuestion={this.state.currentQues}
+            currentIndex={this.state.currentIndex}
+            questionCompleted={this.questionCompleted}
+            questionSkipped={this.questionSkipped}
+            interviewEnded={this.interviewEnded}
+            updateTotalVideoClipsUpload={this.updateTotalVideoClipsUpload}
+            updateTotalProcessedVideoClipsUpload={
+              this.updateTotalProcessedVideoClipsUpload
+            }
+            children={this.inteviewerBlock.bind(this)}
+          />
+        </div>
+      </div>
     )
   }
 
@@ -264,7 +279,7 @@ class InterviewContainer extends Component {
 
     if (this.state.displayCountdown) return this.CountdownBlock()
 
-    if (this.state.displayInterview) this.InterviewBlock()
+    if (this.state.displayInterview) return this.InterviewBlock()
 
     return null
   }

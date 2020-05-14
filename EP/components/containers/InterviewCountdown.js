@@ -16,7 +16,7 @@ import {
   captureUserMediaAudio,
   pad,
 } from './../utilities/AppUtils'
-;('')
+
 // const COUNTDOWN_TIME = highContrast ? 20 : 5
 const COUNTDOWN_TIME = 10
 
@@ -103,7 +103,7 @@ class CountdownTimer extends Component {
       } else {
         this.setState({ isCountdownVisible: false }, () => {
           //show interview component
-          // this.props.hideDisplayCounter()
+          this.props.hideDisplayCounter()
         })
       }
       log('countdown timer still running')
@@ -134,7 +134,6 @@ class CountdownTimer extends Component {
               <span>{jazzCount}</span>
             </h1>
           </div>
-          {this.props.children()}
         </div>
       </div>
     )
