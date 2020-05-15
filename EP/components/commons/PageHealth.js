@@ -144,7 +144,7 @@ export let pageHealthData = {
     needsWorkState: {
       colorType: 2,
       heading: 'Next steps: <span class="font-normal">Motivate Yourself</span>',
-      underText: `According to research by Holler and Beattie, (I would recommend adding the source here) hand gestures increase the value of a verbal message by 60%! They enable the speaker to express emotions and create emphasis as needed. <div class='mt-4'/>
+      underText: `According to research by Holler and Beattie, hand gestures increase the value of a verbal message by 60%! They enable the speaker to express emotions and create emphasis as needed. <div class='mt-4'/>
   However, there are certain must-avoid gestures which should not be used in a formal setting:`,
       bullets: [
         `Pointing- This can seem accusatory or invasive and immediately put interviewers on their guard.`,
