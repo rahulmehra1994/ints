@@ -165,6 +165,10 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: 400;
   }
 
+  .border-radius-3 {
+    border-radius: 3px;
+  }
+
   .app-text-font {
     font-family: $app-font;
   }

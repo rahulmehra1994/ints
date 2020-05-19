@@ -5,6 +5,7 @@ import ReactHtmlParser from 'react-html-parser'
 import ModalHOC from './../hoc/ModalHOC'
 import { mutuals, log } from './../../actions/commonActions'
 import AsyncImage from './../Loading/asyncImage'
+import ContentLoader from 'react-content-loader'
 
 const FocusTrap = require('focus-trap-react')
 var Loader = require('react-loaders').Loader
@@ -229,25 +230,50 @@ class Improvement extends Component {
                 tabIndex={tabIndexes[category]}
                 aria-label={`${item.title}. click to read more.`}
                 onKeyPress={e => {
-                  if (e.key === 'Enter') {
-                    this.modalOpener(index, item)
-                  }
+                  if (e.key === 'Enter') this.modalOpener(index, item)
                 }}>
                 <div
-                  className="clearfix relative mt-4 cursor-pointer"
+                  className="grid mt-4 cursor-pointer"
+                  style={{ gridTemplateColumns: '60px 1fr' }}
                   onClick={() => {
                     this.modalOpener(index, item)
                   }}>
-                  <span className="float-left w-1/5 text-center">
-                    <AsyncImage
+                  <div className="mt-1 relative">
+                    <ContentLoader
+                      speed={2}
+                      width={96}
+                      height={54}
+                      viewBox="0 0 96 54"
+                      backgroundColor="#dedede"
+                      foregroundColor="#b7b7b7">
+                      <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
+                      <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
+                      <rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
+                      <rect
+                        x="92"
+                        y="50"
+                        rx="0"
+                        ry="0"
+                        width="61"
+                        height="39"
+                      />
+                      <rect
+                        x="11"
+                        y="0"
+                        rx="0"
+                        ry="0"
+                        width="223"
+                        height="141"
+                      />
+                    </ContentLoader>
+
+                    <img
+                      className="border-radius-3 w-100 absolute pin z-100"
                       src={item.thumbnails}
-                      width={60}
-                      height={38}
-                      loaderSize={0.4}
-                      alt={item.title}
                     />
-                  </span>
-                  <div className="float-left w-4/5 pl-6">
+                  </div>
+
+                  <div className="pl-4   overflow-auto">
                     <div className="paraHead elipsis">{item.title}</div>
 
                     <div className="hint elipsis">{item.summary}</div>
