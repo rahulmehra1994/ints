@@ -1228,23 +1228,6 @@ body:not(.using-mouse) .btn-primary:focus {
     color: #4a4a4a;
   }
 
-  .notFoundBar {
-    height: 60px;
-    background: #4d4d52;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 150px;
-    padding-right: 150px;
-    margin: 0 auto;
-    img {
-      height: 40px;
-      width: 94px;
-    }
-  }
-  .notFoundInfo {
-    height: calc(100vh - 60px);
-  }
-
   .eyeGazeImages svg {
     width: 100%;
     height: auto;
