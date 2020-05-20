@@ -1214,16 +1214,16 @@ class Calibration extends Component {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="text-center mt-12">
-            <button
-              onClick={this.showCalibModule}
-              className="button blueButton"
-              style={{ padding: '10px 100px' }}
-              tabIndex={tabIndex}
-              aria-label={'next button click to goto calibration page'}>
-              Next
-            </button>
+            <div className="text-center my-12">
+              <button
+                onClick={this.showCalibModule}
+                className="button blueButton"
+                style={{ padding: '10px 100px' }}
+                tabIndex={tabIndex}
+                aria-label={'next button click to goto calibration page'}>
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
