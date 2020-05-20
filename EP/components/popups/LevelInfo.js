@@ -271,7 +271,7 @@ class LevelInfo extends Component {
           <div id="scrollerer">
             <button
               className="epModalClose"
-              style={{ right: -470 }}
+              style={{ right: -478 }}
               onClick={() => {
                 this.modalToggler()
               }}

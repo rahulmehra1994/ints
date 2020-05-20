@@ -726,20 +726,17 @@ class VideoCheck extends Component {
 
   micNotWorkingBlock(children) {
     return (
-      <div className="mt-6 clearfix text-left">
-        <img
-          className="float-left"
-          style={{ width: 25 }}
-          src={warning}
-          alt={'warning'}
-        />
-
-        <div className="float-left ml-5">
-          <div className="mainHead" style={{ fontSize: 20 }}>
-            Microphone facing problems
-          </div>{' '}
-          {children}
+      <div className="mt-6 text-left">
+        <div className="clearfix flex justify-start items-center">
+          <img
+            className=""
+            style={{ width: 25 }}
+            src={warning}
+            alt={'warning'}
+          />
+          <div className="text-20-demi ml-5">Microphone facing problems</div>{' '}
         </div>
+        {children}
       </div>
     )
   }
