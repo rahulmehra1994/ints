@@ -1168,7 +1168,7 @@ class Calibration extends Component {
                 </div>
               </div>
             </div>
-            <div className="text-center mt-12">
+            <div className="text-center my-12">
               <button
                 onClick={this.showCalibModule}
                 className="button blueButton"
