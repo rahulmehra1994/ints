@@ -85,6 +85,7 @@ export var counters = {
   updateChecksDoneCount: 0,
   getUserInfoCount: 0,
   modifyInterviewCount: 0,
+  getAllResultStatusCount: 0
 }
 
 export function apiCallAgain(

@@ -1,26 +1,14 @@
 import React, { Component } from 'react'
 import _ from 'underscore'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
 import {
   getIntResults,
   skipQuestionsApi,
 } from './../../actions/interviewActions'
 import { setAppUrls } from './../../actions/actions'
 import { appIntKey } from './../../actions/resultsActions'
+import { getAllQuestionsResults } from './../../actions/interviewActions'
 import {
-  fetchInterviews,
-  newGentle,
-  reCallImgVideo,
-  fetchTranscript,
-  fetchIllustrationData,
-  fetchUserSpeechSubtitles,
-  fetchImproveArticles,
-  intKeyIsValid,
-} from './../../actions/interviewActions'
-import {
-  counters,
-  apiCallAgain,
   fetchFacePointsImg,
   fetchUserfacePoints,
 } from './../../actions/apiActions'
@@ -35,8 +23,10 @@ const interviewerImage =
 class InterviewContainer extends Component {
   constructor(props) {
     super(props)
+    let questions = mutuals.deepCopy(this.props.questionsArr)
     this.state = {
-      currentQues: this.props.questionsArr[0],
+      questionsCopy: questions,
+      currentQues: questions[0],
       currentIndex: 0,
       showProcessing: false,
       totalSent: 0,
@@ -55,9 +45,7 @@ class InterviewContainer extends Component {
     // this.continouslyCheckToMoveToSummary(newProps)
   }
 
-  componentDidMount() {
-    log('the question arr => ', this.props.questionsArr)
-  }
+  componentDidMount() {}
 
   interviewProcessingDataFetch() {
     fetchFacePointsImg()
@@ -65,7 +53,7 @@ class InterviewContainer extends Component {
   }
 
   questionCompleted = () => {
-    if (this.state.currentIndex === this.props.questionsArr.length - 1) {
+    if (this.state.currentIndex === this.props.questionsCopy.length - 1) {
       this.enableInterviewProcessing()
     } else {
       this.takeNextQuestion()
@@ -76,7 +64,7 @@ class InterviewContainer extends Component {
     let index = this.state.currentIndex + 1
     this.setState({
       currentIndex: index,
-      currentQues: this.props.questionsArr[index],
+      currentQues: this.props.questionsCopy[index],
       displayCountdown: true,
       displayInterview: false,
     })
@@ -101,15 +89,27 @@ class InterviewContainer extends Component {
     let data = {
       question_ids: JSON.stringify([this.state.currentQues.question_id]),
     }
+
     this.setState({ fullscreenDisable: true, pauseCountdown: true })
-    skipQuestionsApi(data, this.onSkipQuestionSuccess)
+  }
+
+  traverseQuestions() {
+    let temp = mutuals.deepCopy(this.state.questions)
+    let questions = temp.map((item, index) => {
+      if (this.state.currentIndex === index) item.skipped = true
+
+      return item
+    })
+    this.setState({ questionsCopy: questions }, () => {
+      skipQuestionsApi(data, this.onSkipQuestionSuccess)
+    })
   }
 
   onSkipQuestionSuccess = () => {
     let index = this.state.currentIndex + 1
     this.setState({
       currentIndex: index,
-      currentQues: this.props.questionsArr[index],
+      currentQues: this.state.questionsCopy[index],
       resetCountdown: true,
       fullscreenDisable: false,
       pauseCountdown: false,
@@ -117,7 +117,7 @@ class InterviewContainer extends Component {
   }
 
   onTheLastQuestion() {
-    if (this.state.currentIndex === this.props.questionsArr.length - 1)
+    if (this.state.currentIndex === this.state.questionsCopy.length - 1)
       return true
     else return false
   }
@@ -138,8 +138,8 @@ class InterviewContainer extends Component {
 
   enableInterviewProcessing() {
     this.setState({ showProcessing: true })
-    getIntResults()
-    // getAllQuestionsResults()
+    // getIntResults()
+    getAllQuestionsResults()
     this.enableCheckingOfConcatResults = true
     log('interview container state => ', this.state)
   }
@@ -183,7 +183,7 @@ class InterviewContainer extends Component {
               </div>
               <div className="absolute w-100 pin-b flex justify-center">
                 <section>
-                  {this.props.questionsArr.map((item, index) => {
+                  {this.props.questionsCopy.map((item, index) => {
                     if (index <= this.state.currentIndex)
                       return <div className="question-position-cue-visited" />
                     else return <div className="question-position-cue" />

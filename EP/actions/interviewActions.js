@@ -350,9 +350,56 @@ function fetchAgainAllQuestionsStatus(data) {
   return flag
 }
 
+let testData = {
+  '1': {
+    categories: 'not_started',
+    concatenate: 'not_started',
+    convert_video: 'not_started',
+    gentle: 'not_started',
+    post_gentle_praat: 'not_started',
+    praat: 'not_started',
+    punctuator: 'not_started',
+    video_clips_processed_percentage: 0.0,
+  },
+  '2': {
+    categories: 'not_started',
+    concatenate: 'not_started',
+    convert_video: 'not_started',
+    gentle: 'not_started',
+    post_gentle_praat: 'not_started',
+    praat: 'not_started',
+    punctuator: 'not_started',
+    video_clips_processed_percentage: 0.0,
+  },
+  '3': {
+    categories: 'not_started',
+    concatenate: 'not_started',
+    convert_video: 'not_started',
+    gentle: 'not_started',
+    post_gentle_praat: 'not_started',
+    praat: 'not_started',
+    punctuator: 'not_started',
+    video_clips_processed_percentage: 0.0,
+  },
+}
+
+function testCall() {
+  let data = testData
+  let temp = fetchAgainAllQuestionsStatus(data)
+  return
+  if (fetchAgainAllQuestionsStatus(data)) {
+    setTimeout(() => {
+      getAllQuestionsResults()
+    }, 1000)
+  }
+}
+
+testCall()
+
 export function getAllQuestionsResults() {
   let fd = new FormData()
   fd.append('interview_key', store.getState().appIntKey.key)
+  fd.append('question_ids', JSON.stringify([1, 2, 3]))
   api
     .service('ep')
     .post(`/get-all-results-status`, fd, {
@@ -360,51 +407,47 @@ export function getAllQuestionsResults() {
       contentType: false,
     })
     .done(data => {
-      if (fetchAgainAllQuestionsStatus(data)) {
-        setTimeout(() => {
-          getAllQuestionsResults()
-        }, 1000)
-      }
-
-      if (
-        data.concatenate === 'success' &&
-        data.post_gentle_praat === 'success' &&
-        data.categories === 'success' &&
-        data.gentle === 'success' &&
-        data.praat === 'success'
-      ) {
-        fetchTotalResult()
-      }
-
-      store.dispatch(setStatuses(data))
-
-      if (data.categories === 'success' && punctuatorCount === 0) {
-        punctuatorCount += 1
-        fetchPunctuator()
-      }
-      if (data.post_gentle_praat === 'success' && gentleCount === 0) {
-        gentleCount += 1
-        newGentle()
-        fetchUserSpeechSubtitles()
-      }
-      if (data.concatenate === 'success' && concatenateCount === 0) {
-        concatenateCount += 1
-        fetchConcatenateResults()
-      }
-      if (data.convert_video === 'success' && reCallImgVideoCount === 0) {
-        reCallImgVideoCount += 1
-        reCallImgVideo()
-        store.dispatch(setConvertVideo(true))
-      }
-
-      setVideoProcessedPercent(data.video_clips_processed_percentage)
+      // if (fetchAgainAllQuestionsStatus(data)) {
+      //   setTimeout(() => {
+      //     getAllQuestionsResults()
+      //   }, 1000)
+      // }
+      // if (
+      //   data.concatenate === 'success' &&
+      //   data.post_gentle_praat === 'success' &&
+      //   data.categories === 'success' &&
+      //   data.gentle === 'success' &&
+      //   data.praat === 'success'
+      // ) {
+      //   fetchTotalResult()
+      // }
+      // store.dispatch(setStatuses(data))
+      // if (data.categories === 'success' && punctuatorCount === 0) {
+      //   punctuatorCount += 1
+      //   fetchPunctuator()
+      // }
+      // if (data.post_gentle_praat === 'success' && gentleCount === 0) {
+      //   gentleCount += 1
+      //   newGentle()
+      //   fetchUserSpeechSubtitles()
+      // }
+      // if (data.concatenate === 'success' && concatenateCount === 0) {
+      //   concatenateCount += 1
+      //   fetchConcatenateResults()
+      // }
+      // if (data.convert_video === 'success' && reCallImgVideoCount === 0) {
+      //   reCallImgVideoCount += 1
+      //   reCallImgVideo()
+      //   store.dispatch(setConvertVideo(true))
+      // }
+      // setVideoProcessedPercent(data.video_clips_processed_percentage)
     })
     .fail(xhr => {
       apiCallAgain(
         counters,
-        'getresultstatusCount',
+        'getAllResultStatusCount',
         () => {
-          getIntResults()
+          getAllQuestionsResults()
         },
         2000,
         10,

@@ -78,12 +78,12 @@ let questionsArr = [
     question_content: 'What accomplishment are you most proud of?',
     question_duration: 120,
   },
-  // {
-  //   question_id: 3,
-  //   order_id: 3,
-  //   question_content: 'What are your strengths and weaknesses?',
-  //   question_duration: 120,
-  // },
+  {
+    question_id: 3,
+    order_id: 3,
+    question_content: 'What are your strengths and weaknesses?',
+    question_duration: 120,
+  },
 ]
 
 class Calibration extends Component {
