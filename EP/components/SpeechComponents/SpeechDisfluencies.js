@@ -315,6 +315,7 @@ const mapStateToProps = state => {
     fillersArray: uniqArray,
     gentleRes: !_.isEmpty(state.gentleResults) ? state.gentleResults : null,
     transcript: state.transcript,
+    epCustomizations: state.epCustomizations,
   }
 }
 
@@ -322,7 +323,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechDisfluencies)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechDisfluencies)

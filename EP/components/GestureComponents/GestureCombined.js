@@ -201,6 +201,7 @@ const mapStateToProps = state => {
     concatData: !_.isEmpty(state.concatenateResults)
       ? state.concatenateResults
       : null,
+    epCustomizations: state.epCustomizations,
   }
 }
 
@@ -208,7 +209,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GestureRighthand)
+export default connect(mapStateToProps, mapDispatchToProps)(GestureRighthand)
