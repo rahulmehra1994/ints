@@ -1,36 +1,30 @@
 import $ from 'jquery'
 import { handleActions } from 'redux-actions'
-import {
-  VIDEO_PROCESSED_PERCENT,
-  INTERVIEW_DURATION,
-  INTERVIEW_NAME,
-  INTERVIEW_QUESTION_ID,
-  INTERVIEW_FAVOURITE_STATUS,
-} from './../actions/interviewActions'
+import { actionLabels } from './../actions/ActionLabels'
 
 export const interviewEP = handleActions(
   {
-    [VIDEO_PROCESSED_PERCENT]: (state, action) => {
+    [actionLabels.VIDEO_PROCESSED_PERCENT]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.videoProcessedPercent = action.payload
       return newState
     },
-    [INTERVIEW_DURATION]: (state, action) => {
+    [actionLabels.INTERVIEW_DURATION]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.intDuration = action.payload
       return newState
     },
-    [INTERVIEW_NAME]: (state, action) => {
+    [actionLabels.INTERVIEW_NAME]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.intName = action.payload
       return newState
     },
-    [INTERVIEW_QUESTION_ID]: (state, action) => {
+    [actionLabels.INTERVIEW_QUESTION_ID]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.intQuestionId = action.payload
       return newState
     },
-    [INTERVIEW_FAVOURITE_STATUS]: (state, action) => {
+    [actionLabels.INTERVIEW_FAVOURITE_STATUS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.isFavourite = action.payload
       return newState

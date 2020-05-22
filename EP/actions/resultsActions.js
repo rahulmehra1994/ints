@@ -1,3 +1,8 @@
+import { PREFIX } from './../actions/actions'
+import { createAction } from 'redux-actions'
+
+export const MULTIPLE_GENTLE_RESULTS = PREFIX + 'MULTIPLE_GENTLE_RESULTS'
+
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 export function concatenateResults(results) {
@@ -14,6 +19,14 @@ export function gentleResults(results) {
     results: results,
   }
 }
+
+export function multipleGentleResultsAction(results) {
+  return {
+    type: 'MULTIPLE_GENTLE_RESULTS',
+    results: results,
+  }
+}
+
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 export function punctuatorResults(results) {

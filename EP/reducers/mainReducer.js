@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions'
 import State from '@vmockinc/dashboard/services/State'
-
 import {
   epResults,
   convertVideoRes,
@@ -10,18 +9,7 @@ import {
 } from './resultsReducer'
 import { interviewEP } from './interviewReducer'
 import { calibration } from './calibrationReducer'
-import {
-  SET_APP_URLS,
-  SET_VIDEO_TYPE,
-  VIDEO_FLOATING,
-  REGULAR_VIDEO_STATE,
-  FlOATING_VIDEO_STATE,
-  VIDEO_FLOATING_PLAYING,
-  VIDEO_CHUNKS_STATE,
-  TAB_INDEX,
-  EP_CUSTOMIZATIONS,
-  INFOBARS_ANIMATION_STATE,
-} from './../actions/actions'
+import { actionLabels } from './../actions/ActionLabels'
 import $ from 'jquery'
 import { common, highContrast } from './../actions/commonActions'
 
@@ -55,6 +43,27 @@ export const gentleResults = (state = {}, action) => {
       return state
   }
 }
+
+export const gentleResults = (state = {}, action) => {
+  switch (action.type) {
+    case 'GENTLE_RESULTS':
+      return Object.assign({}, state, action.results)
+
+    default:
+      return state
+  }
+}
+
+export const animations = handleActions(
+  {
+    [actionLabels.INFOBARS_ANIMATION_STATE]: (state, action) => {
+      let newState = $.extend(true, {}, state)
+      newState.infobar = action.payload
+      return newState
+    },
+  },
+  { infobar: {} }
+)
 
 export const punctuatorResults = (state = {}, action) => {
   switch (action.type) {
@@ -142,7 +151,7 @@ export const appIntKey = (state = null, action) => {
 
 export const appUrls = handleActions(
   {
-    [SET_APP_URLS]: (state, action) => {
+    [actionLabels.SET_APP_URLS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState = action.payload
       return newState
@@ -153,7 +162,7 @@ export const appUrls = handleActions(
 
 export const tabIndex = handleActions(
   {
-    [TAB_INDEX]: (state, action) => {
+    [actionLabels.TAB_INDEX]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.currentTabIndex = action.payload
       return newState
@@ -193,32 +202,32 @@ export const epPaths = (state = {}, action) => {
 
 export const videoInfo = handleActions(
   {
-    [SET_VIDEO_TYPE]: (state, action) => {
+    [actionLabels.SET_VIDEO_TYPE]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.isVideoNormal = action.payload
       return newState
     },
-    [VIDEO_FLOATING]: (state, action) => {
+    [actionLabels.VIDEO_FLOATING]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.videoFloating = action.payload
       return newState
     },
-    [REGULAR_VIDEO_STATE]: (state, action) => {
+    [actionLabels.REGULAR_VIDEO_STATE]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.regularVideoState = action.payload
       return newState
     },
-    [FlOATING_VIDEO_STATE]: (state, action) => {
+    [actionLabels.FlOATING_VIDEO_STATE]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.floatingVideoState = action.payload
       return newState
     },
-    [VIDEO_FLOATING_PLAYING]: (state, action) => {
+    [actionLabels.VIDEO_FLOATING_PLAYING]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.videoFloatingPlaying = action.payload
       return newState
     },
-    [VIDEO_CHUNKS_STATE]: (state, action) => {
+    [actionLabels.VIDEO_CHUNKS_STATE]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.videoChunksState = action.payload
       return newState
@@ -248,7 +257,7 @@ export const userCustomizations = (state = null, action) => {
 
 export const epCustomizations = handleActions(
   {
-    [EP_CUSTOMIZATIONS]: (state, action) => {
+    [actionLabels.EP_CUSTOMIZATIONS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState = action.payload
       return newState
@@ -259,7 +268,7 @@ export const epCustomizations = handleActions(
 
 export const animations = handleActions(
   {
-    [INFOBARS_ANIMATION_STATE]: (state, action) => {
+    [actionLabels.INFOBARS_ANIMATION_STATE]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.infobar = action.payload
       return newState
@@ -278,7 +287,6 @@ const combined = {
   concatenateResults: concatenateResults,
   gentleResults: gentleResults,
   punctuatorResults: punctuatorResults,
-
   improveArticles: improveArticles,
   userInfoEP: userInfoEP,
   interviewKeys,
@@ -294,6 +302,7 @@ const combined = {
   illustrationData,
   tabIndex,
   epCustomizations,
+  multipleGentleResults,
 }
 
 export default combined

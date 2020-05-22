@@ -1,28 +1,6 @@
 import $ from 'jquery'
 import { handleActions } from 'redux-actions'
-import {
-  EYE_RESULTS,
-  FACE_RESULTS,
-  HAND_RESULTS,
-  BODY_RESULTS,
-  APPEAR_RESULTS,
-  SENTENCE_RESULTS,
-  WORD_RESULTS,
-  VOCAL_RESULTS,
-  PAUSES_RESULTS,
-  DISFLUENCY_RESULTS,
-  MODULATION_RESULTS,
-  STORE_INTERVIEW_KEYS,
-  INITIALIZE_RESULTS,
-  STORE_SAVE_AUDIO_RESULTS,
-  CONVERT_VIDEO_RESULTS,
-  STATUSES,
-  SET_TRANSCRIPT,
-  TOTAL_RESULT,
-  VERBAL_TOAST,
-  NONVERBAL_TOAST,
-  FETCH_ILLUSTRATION_DATA,
-} from './../actions/actions'
+import { actionLabels } from './../actions/ActionLabels'
 
 var intialRes = {
   eyeResults: null,
@@ -42,65 +20,65 @@ var intialRes = {
 
 export const epResults = handleActions(
   {
-    [EYE_RESULTS]: (state, action) => {
+    [actionLabels.EYE_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.eyeResults = action.payload
       return newState
     },
-    [FACE_RESULTS]: (state, action) => {
+    [actionLabels.FACE_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.faceResults = action.payload
       return newState
     },
-    [HAND_RESULTS]: (state, action) => {
+    [actionLabels.HAND_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.handResults = action.payload
       return newState
     },
-    [BODY_RESULTS]: (state, action) => {
+    [actionLabels.BODY_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.bodyResults = action.payload
       return newState
     },
-    [APPEAR_RESULTS]: (state, action) => {
+    [actionLabels.APPEAR_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.appearanceResults = action.payload
       return newState
     },
-    [SENTENCE_RESULTS]: (state, action) => {
+    [actionLabels.SENTENCE_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.sentenceResults = action.payload
       return newState
     },
-    [WORD_RESULTS]: (state, action) => {
+    [actionLabels.WORD_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.wordResults = action.payload
       return newState
     },
-    [VOCAL_RESULTS]: (state, action) => {
+    [actionLabels.VOCAL_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.vocalResults = action.payload
       return newState
     },
-    [PAUSES_RESULTS]: (state, action) => {
+    [actionLabels.PAUSES_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.pauseResults = action.payload
       return newState
     },
-    [DISFLUENCY_RESULTS]: (state, action) => {
+    [actionLabels.DISFLUENCY_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.disfluencyResults = action.payload
       return newState
     },
-    [MODULATION_RESULTS]: (state, action) => {
+    [actionLabels.MODULATION_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.modulationResults = action.payload
       return newState
     },
-    [INITIALIZE_RESULTS]: (state, action) => {
+    [actionLabels.INITIALIZE_RESULTS]: (state, action) => {
       return intialRes
     },
-    [TOTAL_RESULT]: (state, action) => {
+    [actionLabels.TOTAL_RESULT]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.totalResult = action.payload.result
       newState.performanceInfo = action.payload
@@ -112,7 +90,7 @@ export const epResults = handleActions(
 
 export const convertVideoRes = handleActions(
   {
-    [CONVERT_VIDEO_RESULTS]: (state, action) => {
+    [actionLabels.CONVERT_VIDEO_RESULTS]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.status = action.payload
       return newState
@@ -123,7 +101,7 @@ export const convertVideoRes = handleActions(
 
 export const statuses = handleActions(
   {
-    [STATUSES]: (state, action) => {
+    [actionLabels.STATUSES]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState = action.payload
       return newState
@@ -143,7 +121,7 @@ export const statuses = handleActions(
 
 export const transcript = handleActions(
   {
-    [SET_TRANSCRIPT]: (state, action) => {
+    [actionLabels.SET_TRANSCRIPT]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState.transcript = action.payload.transcript
       newState.status = action.payload.status
@@ -168,7 +146,7 @@ export const transcript = handleActions(
 
 export const illustrationData = handleActions(
   {
-    [FETCH_ILLUSTRATION_DATA]: (state, action) => {
+    [actionLabels.FETCH_ILLUSTRATION_DATA]: (state, action) => {
       let newState = $.extend(true, {}, state)
       newState = action.payload
       return newState

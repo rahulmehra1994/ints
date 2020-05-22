@@ -85,7 +85,8 @@ export var counters = {
   updateChecksDoneCount: 0,
   getUserInfoCount: 0,
   modifyInterviewCount: 0,
-  getAllResultStatusCount: 0
+  getAllResultStatusCount: 0,
+  multipleGentleProcessedApiCount: 0,
 }
 
 export function apiCallAgain(
@@ -448,6 +449,43 @@ export function newGentle() {
     })
 }
 
+export function multipleGentleResults(params) {
+  let formData = new FormData()
+  formData.append('interview_key', store.getState().appIntKey.key)
+  _.each(params, (value, key) => {
+    formData.append(key, value)
+  })
+  api
+    .service('ep')
+    .post(`/get-all-gentle-processed-results`, formData, {
+      processData: false,
+      contentType: false,
+    })
+    .done(res => {
+      counters['multipleGentleProcessedApiCount'] = 0
+
+      storeMultipleGentleData(res)
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'multipleGentleProcessedApiCount',
+        () => {
+          multipleGentleResults(params)
+        },
+        1000,
+        5,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /get-all-gentle-processed-results',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
 export function fetchGentleAfterRevaluation() {
   let formData = new FormData()
   formData.append('interview_key', store.getState().appIntKey.key)
@@ -483,6 +521,29 @@ export function fetchGentleAfterRevaluation() {
 }
 
 export function genlteDataToStore(data) {
+  //send gentle data to store
+  store.dispatch(gentleResults(data))
+
+  if (data.pause.pause_results_overall !== null) {
+    store.dispatch(pausesResults(data.pause.pause_results_overall))
+  }
+
+  if (data.sound_results) {
+    store.dispatch(vocalResults(data['sound_results']['sound_results_overall']))
+  }
+
+  if (data.fillers) {
+    store.dispatch(disfluencyResults(data.fillers.filler_results_overall))
+  }
+
+  if (data.articulation) {
+    store.dispatch(
+      modulationResults(data.articulation.articulation_results_overall)
+    )
+  }
+}
+
+export function storeMultipleGentleData(data) {
   //send gentle data to store
   store.dispatch(gentleResults(data))
 
@@ -585,6 +646,35 @@ export function fetchUserVideoPath() {
 }
 
 export function fetchUserSpeechSubtitles() {
+  let url = '/usersubtitles?key=' + store.getState().appIntKey.key
+  api
+    .service('ep')
+    .get(url)
+    .done(data => {
+      counters['fetchUserSpeechSubtitlesCount'] = 0
+      store.dispatch(setVideoSubtitlePath(data.url))
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'fetchUserSpeechSubtitlesCount',
+        () => {
+          fetchUserSpeechSubtitles()
+        },
+        2000,
+        5,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /fetchUserSpeechSubtitles',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
+export function getMultipleUserSpeechSubtitles() {
   let url = '/usersubtitles?key=' + store.getState().appIntKey.key
   api
     .service('ep')

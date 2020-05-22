@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions'
-// import api from './../modules/services/api'
 import api from '@vmockinc/dashboard/services/api'
 import store from './../../store/configureStore'
 import _ from 'underscore'
@@ -12,34 +11,31 @@ import {
   reCallImgVideo,
   fetchTotalResult,
   fetchUserSpeechSubtitles,
+  multipleGentleResults,
+  getMultipleUserSpeechSubtitles,
 } from './../actions/apiActions'
 import { log } from './../actions/commonActions'
-import { PREFIX, setConvertVideo, setStatuses } from './../actions/actions'
-
-export const VIDEO_PROCESSED_PERCENT = PREFIX + 'VIDEO_PROCESSED_PERCENT'
-export const INTERVIEW_DURATION = PREFIX + 'INTERVIEW_DURATION'
-export const INTERVIEW_NAME = PREFIX + 'INTERVIEW_NAME'
-export const INTERVIEW_QUESTION_ID = PREFIX + 'INTERVIEW_QUESTION_ID'
-export const INTERVIEW_FAVOURITE_STATUS = PREFIX + 'INTERVIEW_FAVOURITE_STATUS'
+import { setConvertVideo, setStatuses } from './../actions/actions'
+import { actionLabels } from './../actions/ActionLabels'
 
 export function setVideoProcessedPercent(percentage) {
-  store.dispatch(createAction(VIDEO_PROCESSED_PERCENT)(percentage))
+  store.dispatch(createAction(actionLabels.VIDEO_PROCESSED_PERCENT)(percentage))
 }
 
 export function setInterviewDuration(duration) {
-  store.dispatch(createAction(INTERVIEW_DURATION)(duration))
+  store.dispatch(createAction(actionLabels.INTERVIEW_DURATION)(duration))
 }
 
 export function setInterviewName(payload) {
-  store.dispatch(createAction(INTERVIEW_NAME)(payload))
+  store.dispatch(createAction(actionLabels.INTERVIEW_NAME)(payload))
 }
 
 export function setInterviewQuestion(payload) {
-  store.dispatch(createAction(INTERVIEW_QUESTION_ID)(payload))
+  store.dispatch(createAction(actionLabels.INTERVIEW_QUESTION_ID)(payload))
 }
 
 export function setIsInterviewFavourite(payload) {
-  store.dispatch(createAction(INTERVIEW_FAVOURITE_STATUS)(payload))
+  store.dispatch(createAction(actionLabels.INTERVIEW_FAVOURITE_STATUS)(payload))
 }
 
 export function createInterview(callback, fd) {
@@ -396,10 +392,63 @@ function testCall() {
 
 testCall()
 
-export function getAllQuestionsResults() {
+function moveToFeedback(res) {
+  for (let key in res) {
+    if (res[key].concatenate === 'success') {
+      //move to multiple feedback
+      break
+    }
+  }
+}
+
+function anyCategoriesSuccess(res) {
+  for (let key in res) {
+    if (res[key].categories !== 'success') {
+      //fetch punctuator-multiple
+      break
+    }
+  }
+}
+
+function anyGentleSuccess(res, params) {
+  for (let key in res) {
+    if (res[key].post_gentle_praat !== 'success') {
+      multipleGentleResults(params)
+      getMultipleUserSpeechSubtitles(params)
+      break
+    }
+  }
+}
+
+function anyConcatenateSuccess(res) {
+  for (let key in res) {
+    if (res[key].concatenate !== 'success') {
+      //fetch
+      //   fetchConcatenateResults()//mutiple one
+      break
+    }
+  }
+}
+
+function anyConvertVideoSuccess(res) {
+  for (let key in res) {
+    if (res[key].concatenate !== 'success') {
+      //fetch
+      //   reCallImgVideo() //multiple
+      //   store.dispatch(setConvertVideo(true)) //multiple
+      break
+    }
+  }
+}
+
+export function getAllQuestionsResults(params) {
   let fd = new FormData()
   fd.append('interview_key', store.getState().appIntKey.key)
-  fd.append('question_ids', JSON.stringify([1, 2, 3]))
+
+  _.each(params, (value, key) => {
+    fd.append(key, value)
+  })
+
   api
     .service('ep')
     .post(`/get-all-results-status`, fd, {
@@ -407,11 +456,14 @@ export function getAllQuestionsResults() {
       contentType: false,
     })
     .done(data => {
+      moveToFeedback(data)
+
       // if (fetchAgainAllQuestionsStatus(data)) {
       //   setTimeout(() => {
-      //     getAllQuestionsResults()
+      //     getAllQuestionsResults(params)
       //   }, 1000)
       // }
+
       // if (
       //   data.concatenate === 'success' &&
       //   data.post_gentle_praat === 'success' &&
@@ -421,25 +473,31 @@ export function getAllQuestionsResults() {
       // ) {
       //   fetchTotalResult()
       // }
+
       // store.dispatch(setStatuses(data))
+
       // if (data.categories === 'success' && punctuatorCount === 0) {
       //   punctuatorCount += 1
       //   fetchPunctuator()
       // }
+
       // if (data.post_gentle_praat === 'success' && gentleCount === 0) {
       //   gentleCount += 1
       //   newGentle()
       //   fetchUserSpeechSubtitles()
       // }
+
       // if (data.concatenate === 'success' && concatenateCount === 0) {
       //   concatenateCount += 1
       //   fetchConcatenateResults()
       // }
+
       // if (data.convert_video === 'success' && reCallImgVideoCount === 0) {
       //   reCallImgVideoCount += 1
       //   reCallImgVideo()
       //   store.dispatch(setConvertVideo(true))
       // }
+
       // setVideoProcessedPercent(data.video_clips_processed_percentage)
     })
     .fail(xhr => {
@@ -447,7 +505,7 @@ export function getAllQuestionsResults() {
         counters,
         'getAllResultStatusCount',
         () => {
-          getAllQuestionsResults()
+          getAllQuestionsResults(params)
         },
         2000,
         10,

@@ -45,7 +45,20 @@ class InterviewContainer extends Component {
     // this.continouslyCheckToMoveToSummary(newProps)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.modifyQuestions()
+  }
+
+  modifyQuestions() {
+    let questions = mutuals.deepCopy(this.state.questionsCopy)
+    let temp = questions.map((item, index) => {
+      item.skipped = false
+      return item
+    })
+    this.setState({
+      questionsCopy: temp,
+    })
+  }
 
   interviewProcessingDataFetch() {
     fetchFacePointsImg()
@@ -53,7 +66,7 @@ class InterviewContainer extends Component {
   }
 
   questionCompleted = () => {
-    if (this.state.currentIndex === this.props.questionsCopy.length - 1) {
+    if (this.state.currentIndex === this.state.questionsCopy.length - 1) {
       this.enableInterviewProcessing()
     } else {
       this.takeNextQuestion()
@@ -64,7 +77,7 @@ class InterviewContainer extends Component {
     let index = this.state.currentIndex + 1
     this.setState({
       currentIndex: index,
-      currentQues: this.props.questionsCopy[index],
+      currentQues: this.state.questionsCopy[index],
       displayCountdown: true,
       displayInterview: false,
     })
@@ -86,23 +99,26 @@ class InterviewContainer extends Component {
 
   skipQuestion = () => {
     if (this.onTheLastQuestion()) return
-    let data = {
-      question_ids: JSON.stringify([this.state.currentQues.question_id]),
-    }
-
     this.setState({ fullscreenDisable: true, pauseCountdown: true })
+    this.traverseQuestionsAndMarkSkipped()
   }
 
-  traverseQuestions() {
+  traverseQuestionsAndMarkSkipped() {
     let temp = mutuals.deepCopy(this.state.questions)
     let questions = temp.map((item, index) => {
       if (this.state.currentIndex === index) item.skipped = true
-
       return item
     })
     this.setState({ questionsCopy: questions }, () => {
-      skipQuestionsApi(data, this.onSkipQuestionSuccess)
+      this.callSkipAPI()
     })
+  }
+
+  callSkipAPI() {
+    let data = {
+      question_ids: JSON.stringify([this.state.currentQues.question_id]),
+    }
+    skipQuestionsApi(data, this.onSkipQuestionSuccess)
   }
 
   onSkipQuestionSuccess = () => {
@@ -139,9 +155,21 @@ class InterviewContainer extends Component {
   enableInterviewProcessing() {
     this.setState({ showProcessing: true })
     // getIntResults()
-    getAllQuestionsResults()
+
+    let data = { question_ids: JSON.stringify(this.getAllUnSkippedQuestions()) }
+    getAllQuestionsResults(data)
     this.enableCheckingOfConcatResults = true
     log('interview container state => ', this.state)
+  }
+
+  getAllUnSkippedQuestions() {
+    let questions = mutuals.deepCopy(this.state.questionsCopy)
+
+    let results = questions.filter((item, index) => {
+      return item.skipped === false
+    })
+
+    return results
   }
 
   hideMyFace = () => {
@@ -183,7 +211,7 @@ class InterviewContainer extends Component {
               </div>
               <div className="absolute w-100 pin-b flex justify-center">
                 <section>
-                  {this.props.questionsCopy.map((item, index) => {
+                  {this.state.questionsCopy.map((item, index) => {
                     if (index <= this.state.currentIndex)
                       return <div className="question-position-cue-visited" />
                     else return <div className="question-position-cue" />
