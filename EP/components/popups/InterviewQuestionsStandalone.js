@@ -14,22 +14,32 @@ class InterviewQuestionsStandalone extends Component {
   }
 
   render() {
+    let { customizations, latestQuestion } = this.props
+
+    if (!this.props.multipleQuestionEnabled) return null
+
+    if (this.props.firstTimeUser) return null
+
     return (
       <div
         className="px-4 text-left bg-white absolute pin-t shadow-1"
         style={{ width: 300, right: -300 }}>
         <div className="mt-4">
           <span className="text-16-demi">Question</span>
-          <div className="float-right px-2 border rounded-lg flex items-center">
-            <span
-              className="ep-icon-right-rounded text-16-normal"
-              style={{ color: common.sectionColor[0] }}
-            />
-            <span className="ml-2">Content Strength</span>
-          </div>
+
+          {customizations.question_id_mapping[latestQuestion.question_id]
+            .is_content_strength_enabled ? (
+            <div className="float-right px-2 border rounded-lg flex items-center">
+              <span
+                className="ep-icon-right-rounded text-16-normal"
+                style={{ color: common.sectionColor[0] }}
+              />
+              <span className="ml-2">Content Strength</span>
+            </div>
+          ) : null}
         </div>
 
-        <div className="mt-3">{this.props.latestQuestion.question_content}</div>
+        <div className="mt-3">{latestQuestion.question_content}</div>
 
         <div className="hr mt-4" />
 
@@ -51,6 +61,7 @@ class InterviewQuestionsStandalone extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     latestQuestion: state.userInfoEP['questionData'],
+    customizations: state.epCustomizations,
   }
 }
 

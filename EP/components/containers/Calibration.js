@@ -875,12 +875,14 @@ class Calibration extends Component {
               </div>
 
               <div ref="calibBox" id="calibration-box">
-                {this.state.firstTimeUser ? null : (
-                  <InterviewQuestionsStandalone
-                    tabIndex={tabIndex}
-                    openPopup={this.openPopup}
-                  />
-                )}
+                <InterviewQuestionsStandalone
+                  tabIndex={tabIndex}
+                  openPopup={this.openPopup}
+                  firstTimeUser={this.state.firstTimeUser}
+                  multipleQuestionEnabled={mutuals.multipleQuesEnabled(
+                    this.props
+                  )}
+                />
 
                 <div className="calibration-video-container">
                   <div
