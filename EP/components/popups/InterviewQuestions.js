@@ -476,7 +476,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InterviewQuestions)
+export default connect(mapStateToProps, mapDispatchToProps)(InterviewQuestions)

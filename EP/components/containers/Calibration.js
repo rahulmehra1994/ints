@@ -31,6 +31,7 @@ import {
 import ReactHtmlParser from 'react-html-parser'
 import anime from 'animejs/lib/anime'
 import SystemCheck from './../popups/SystemCheck'
+import InterviewQuestionsStandalone from './../popups/InterviewQuestionsStandalone'
 
 const leftArrowBlack =
   process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-white.svg'
@@ -349,12 +350,14 @@ class Calibration extends Component {
     })
   }
 
-  openPopup() {
-    this.resetAnimation()
-    window.removeEventListener('resize', this.keepInPosition)
-    this.stopCalibProcess({
-      basicDetailsVisible: true,
-      isSystemCheckOpen: true,
+  openPopup(type) {
+    this.setState({ modalOpenType: type }, () => {
+      this.resetAnimation()
+      window.removeEventListener('resize', this.keepInPosition)
+      this.stopCalibProcess({
+        basicDetailsVisible: true,
+        isSystemCheckOpen: true,
+      })
     })
   }
 
@@ -863,6 +866,7 @@ class Calibration extends Component {
                   firstTimeUser={this.state.firstTimeUser}
                   tabIndex={tabIndex}
                   onSuccessOfCreateInt={this.onSuccessOfCreateInt}
+                  modalOpenType={this.state.modalOpenType}
                 />
               ) : null}
 
@@ -871,6 +875,13 @@ class Calibration extends Component {
               </div>
 
               <div ref="calibBox" id="calibration-box">
+                {this.state.firstTimeUser ? null : (
+                  <InterviewQuestionsStandalone
+                    tabIndex={tabIndex}
+                    openPopup={this.openPopup}
+                  />
+                )}
+
                 <div className="calibration-video-container">
                   <div
                     tabIndex={tabIndex}
