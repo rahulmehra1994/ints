@@ -20,6 +20,8 @@ class InterviewQuestionsStandalone extends Component {
 
     if (this.props.firstTimeUser) return null
 
+    if (latestQuestion.question_id === -1) return null
+
     return (
       <div
         className="px-4 text-left bg-white absolute pin-t shadow-1"
