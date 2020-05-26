@@ -161,12 +161,14 @@ class SpeechModulation extends Component {
                   value={pitchRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
+                  description={'this is descrition'}
                 />
                 <IsThereOrNotBox
                   head="Pauses Modulation"
                   value={pauseRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
+                  description={'this is descrition'}
                 />
               </div>
 
@@ -212,7 +214,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechModulation)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechModulation)

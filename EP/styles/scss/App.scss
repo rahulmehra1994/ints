@@ -187,6 +187,10 @@ body:not(.using-mouse) .btn-primary:focus {
     position: absolute;
   }
 
+  .hover-wrap {
+    position: relative;
+  }
+
   .hover-wrap:hover .hover-elm {
     visibility: visible;
   }

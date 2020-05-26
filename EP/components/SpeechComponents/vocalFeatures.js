@@ -179,6 +179,7 @@ class SpeechPitch extends Component {
                 unit={'Db'}
                 category={'verbals'}
                 barEnds={{ left: 'Soft voice', right: 'Loud voice' }}
+                description={'this is descrition'}
               />
 
               {this.speechRateMount()}
@@ -203,6 +204,7 @@ class SpeechPitch extends Component {
                   unit={'wpm'}
                   category={'verbals'}
                   barEnds={{ left: 'Slow speed', right: 'Fast speed' }}
+                  description={'this is descrition'}
                 />
               ) : null}
 
@@ -228,6 +230,7 @@ class SpeechPitch extends Component {
                   unit={'Hz'}
                   category={'verbals'}
                   barEnds={{ left: 'Deep voice', right: 'Shrill voice' }}
+                  description={'this is descrition'}
                 />
               ) : null}
 
@@ -273,7 +276,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechPitch)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechPitch)

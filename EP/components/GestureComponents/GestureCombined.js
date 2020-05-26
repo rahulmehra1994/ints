@@ -12,7 +12,7 @@ import { PageHealth, pageHealthData } from './../commons/PageHealth'
 const handGestureBig =
   process.env.APP_BASE_URL + '/dist/images/new/icons-big/hand-gestures-big.svg'
 var Loader = require('react-loaders').Loader
-var thresholdGoodState = 15
+var thresholdGoodState = 0
 class GestureRighthand extends Component {
   constructor(...args) {
     super(...args)
@@ -48,6 +48,9 @@ class GestureRighthand extends Component {
       curr_page: mutuals.urlEnds['gesture'],
       event_type: 'mount',
     })
+
+    thresholdGoodState = this.props.epCustomizations.parameter_thresholds
+      .gestures.hand_gesture
   }
 
   trackFromRender = _.once((res, handVals) => {
