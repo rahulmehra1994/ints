@@ -25,18 +25,27 @@ class InterviewQuestionsStandalone extends Component {
     return (
       <div
         className="px-4 text-left bg-white absolute pin-t shadow-1"
-        style={{ width: 300, right: -300 }}>
+        style={{ width: 300, right: -310 }}>
         <div className="mt-4">
           <span className="text-16-demi">Question</span>
 
           {customizations.question_id_mapping[latestQuestion.question_id]
             .is_content_strength_enabled ? (
-            <div className="float-right px-2 border rounded-lg flex items-center">
+            <div className="relative float-right px-2 border rounded-lg flex items-center hover-wrap">
               <span
                 className="ep-icon-right-rounded text-16-normal"
                 style={{ color: common.sectionColor[0] }}
               />
               <span className="ml-2">Content Strength</span>
+
+              <div
+                className="hover-elm bg-white p-4 shadow-1 pin-r"
+                style={{ width: 220, top: 22 }}>
+                <div className="text-14-demi">Content Strength Available</div>
+                <div className="mt-3 grey-color">
+                  Feedback on content is available for this question
+                </div>
+              </div>
             </div>
           ) : null}
         </div>
