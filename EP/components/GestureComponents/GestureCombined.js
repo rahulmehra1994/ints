@@ -49,7 +49,7 @@ class GestureRighthand extends Component {
     })
 
     thresholdGoodState = this.props.epCustomizations.parameter_thresholds
-      .gestures.hand_gesture
+      .gestures.hand_gesture_good_job
   }
 
   trackFromRender = _.once((res, handVals) => {

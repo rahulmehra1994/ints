@@ -224,7 +224,7 @@ class SpeechDisfluencies extends Component {
               data: [
                 {
                   value: this.props.epCustomizations.parameter_thresholds
-                    .speech_fluency.ah_um_counter,
+                    .speech_fluency.ah_um_counter_good_job,
                 },
               ],
               underLabel: 'Max Allowed',
@@ -257,7 +257,7 @@ class SpeechDisfluencies extends Component {
                 data: [
                   {
                     value: this.props.epCustomizations.parameter_thresholds
-                      .speech_fluency.elongation_counter,
+                      .speech_fluency.elongation_counter_good_job,
                   },
                 ],
                 underLabel: 'Max Allowed',
