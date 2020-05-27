@@ -52,7 +52,7 @@ class EyeContactCenter extends Component {
       return
     }
 
-    if (concatData.eye_contact_results[0].center < 90) {
+    if (concatData.eye_contact_results[0].center < 50) {
       this.setState({ pageHealthType: 'needsWorkState' })
       return
     }

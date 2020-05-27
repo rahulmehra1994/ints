@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   intializeHighContrastCookie() {
-    if (cookie.get('accessible_styles') === true) {
+    if (cookie.get('accessible_styles') === 'true') {
       cookie.set('accessible_styles', 'true')
     } else {
       cookie.set('accessible_styles', 'false')
