@@ -275,31 +275,35 @@ class SubNavbar extends Component {
             ) : null}
           </div>
 
-          <div className="float-right">
-            <NetworkFeedback
-              role="in-app"
-              placement="button"
-              product="interview"
-              interviewName={this.props.intDetails.intName}
-              interview_id={this.props.appIntKey}
-              score={5}
-              className="button white-button"
-              text="Network Feedback"
-            />
-          </div>
+          <div style={{ position: 'absolute', right: 20 }}>
+            {this.props.performanceInfo !== null ? (
+              <div className="inline-block">
+                <NetworkFeedback
+                  role="in-app"
+                  placement="button"
+                  product="interview"
+                  interviewName={this.props.intDetails.intName}
+                  interview_id={this.props.appIntKey}
+                  score={Number(this.props.performanceInfo.op_index.toFixed(2))}
+                  className="blueButton px-4 py-1 cursor-pointer rounded mr-2 text-14-normal"
+                  text="Network Feedback"
+                  imgUrl={this.props.videoProcessedThumb}
+                />
+              </div>
+            ) : null}
 
-          <a
-            style={{ position: 'absolute', right: 20 }}
-            tabIndex={this.props.tabIndex}
-            aria-label={`calibration page`}
-            href={props.appUrls.calibration}
-            onClick={() => {
-              goto('take_another_interview')
-            }}>
-            <button className="float-right button blueButton">
-              + New Interview
-            </button>
-          </a>
+            <a
+              tabIndex={this.props.tabIndex}
+              aria-label={`calibration page`}
+              href={props.appUrls.calibration}
+              onClick={() => {
+                goto('take_another_interview')
+              }}>
+              <button className="float-right button blueButton">
+                + New Interview
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     )
@@ -318,6 +322,8 @@ const mapStateToProps = state => {
       : null,
     intDetails: state.interviewEP,
     epCustomizations: state.epCustomizations,
+    videoProcessedThumb: state.epPaths.userVideoProcessedThumb,
+    performanceInfo: state.results.performanceInfo,
   }
 }
 
