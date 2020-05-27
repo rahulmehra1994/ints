@@ -246,15 +246,6 @@ export const videoInfo = handleActions(
   }
 )
 
-export const userCustomizations = (state = null, action) => {
-  switch (action.type) {
-    case 'FETCH_USER_CUSTOMIZATIONS':
-      return action.payload
-    default:
-      return state
-  }
-}
-
 export const epCustomizations = handleActions(
   {
     [EP_CUSTOMIZATIONS]: (state, action) => {
@@ -295,7 +286,6 @@ const combined = {
   anotherIntReady: anotherIntReady,
   epPaths: epPaths,
   interviewEP: interviewEP,
-  userCustomizations,
   convertVideoRes,
   statuses,
   transcript,
