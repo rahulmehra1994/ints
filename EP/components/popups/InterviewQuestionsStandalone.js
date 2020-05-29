@@ -25,7 +25,7 @@ class InterviewQuestionsStandalone extends Component {
     return (
       <div
         className="px-4 text-left bg-white absolute pin-t shadow-1"
-        style={{ width: 300, right: -310 }}>
+        style={{ width: 300, right: -310, zIndex: 501 }}>
         <div className="mt-4">
           <span className="text-16-demi">Question</span>
 
