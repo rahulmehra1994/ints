@@ -37,7 +37,7 @@ class IsThereOrNotBox extends React.Component {
 
               <div
                 className={`hover-elm bg-white shadow-1 rounded-lg p-4 text-14-med ${this.props.description.position}`}
-                style={{ width: 200 }}>
+                style={{ width: 300 }}>
                 {this.props.description.text}
               </div>
             </span>

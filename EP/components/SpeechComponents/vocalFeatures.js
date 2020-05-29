@@ -179,7 +179,9 @@ class SpeechPitch extends Component {
                 unit={'Db'}
                 category={'verbals'}
                 barEnds={{ left: 'Soft voice', right: 'Loud voice' }}
-                description={'this is descrition'}
+                description={
+                  'Intensity refers to how loud or soft a sound seems to a listener. The loudness of sound is determined by intensity, in sound waves, measure in decibel (dB).'
+                }
               />
 
               {this.speechRateMount()}
@@ -204,7 +206,9 @@ class SpeechPitch extends Component {
                   unit={'wpm'}
                   category={'verbals'}
                   barEnds={{ left: 'Slow speed', right: 'Fast speed' }}
-                  description={'this is descrition'}
+                  description={
+                    'Speech rate refer to the speed at which you speak and is often expressed in words per minute (wpm).'
+                  }
                 />
               ) : null}
 
@@ -230,7 +234,9 @@ class SpeechPitch extends Component {
                   unit={'Hz'}
                   category={'verbals'}
                   barEnds={{ left: 'Deep voice', right: 'Shrill voice' }}
-                  description={'this is descrition'}
+                  description={
+                    'Pitch is the degree of highness or lowness of a tone. Pitch of a sound is measure in Hertz (Hz).'
+                  }
                 />
               ) : null}
 

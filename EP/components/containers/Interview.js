@@ -755,7 +755,7 @@ class Interview extends Component {
           this.saveTranscript()
         })
       }
-    }, 2500)
+    }, 5000)
   }
 
   focusFullScreenCenterText = _.once(() => {

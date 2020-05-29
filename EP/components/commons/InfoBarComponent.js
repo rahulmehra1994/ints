@@ -242,7 +242,7 @@ class InfoBarComponent extends React.Component {
 
                 <div
                   className="hover-elm pin-l bg-white shadow-1 rounded-lg p-4 text-14-med"
-                  style={{ width: 200 }}>
+                  style={{ width: 300 }}>
                   {this.props.description}
                 </div>
               </span>
