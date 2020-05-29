@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.props.fetchUserCustomizations()
-    userCustomizationsEP()
+    userCustomizationsEP(this.sendToDashboard)
     this.intializeHighContrastCookie()
   }
 
@@ -51,7 +51,7 @@ class App extends Component {
     }
   }
 
-  sendToDashboard() {
+  sendToDashboard = () => {
     window.location.href = '/dashboard'
     return false
   }

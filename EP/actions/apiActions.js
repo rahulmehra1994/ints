@@ -1087,7 +1087,7 @@ export function updateFeedback(data, onSuccess, onFailure) {
     })
 }
 
-export function userCustomizationsEP() {
+export function userCustomizationsEP(callback) {
   let fd = new FormData()
 
   api
@@ -1099,6 +1099,10 @@ export function userCustomizationsEP() {
       store.dispatch(setEPCustomizations(data))
     })
     .fail(xhr => {
+      if (xhr.status === 401 || xhr.status === 403) {
+        callback()
+        return
+      }
       apiCallAgain(
         counters,
         'userCustomizationsEPCount',
