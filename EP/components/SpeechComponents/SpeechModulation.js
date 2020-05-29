@@ -161,14 +161,20 @@ class SpeechModulation extends Component {
                   value={pitchRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
-                  description={'this is descrition'}
+                  description={{
+                    text: 'this is description',
+                    position: 'pin-l',
+                  }}
                 />
                 <IsThereOrNotBox
                   head="Pauses Modulation"
                   value={pauseRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
-                  description={'this is descrition'}
+                  description={{
+                    text: 'this is description',
+                    position: 'pin-r',
+                  }}
                 />
               </div>
 
