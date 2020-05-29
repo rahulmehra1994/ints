@@ -185,6 +185,7 @@ body:not(.using-mouse) .btn-primary:focus {
   .hover-elm {
     visibility: hidden;
     position: absolute;
+    z-index: 10;
   }
 
   .hover-wrap {
