@@ -163,7 +163,7 @@ class SpeechModulation extends Component {
                   callback={mutuals.findAbsentOrPresent}
                   description={{
                     text:
-                      'Pitch modulation refers to how much you emphasize words by modulating your tone across words',
+                      'Pitch modulation refers to how much you emphasize words by modulating your tone across words.',
                     position: 'pin-l',
                   }}
                 />
