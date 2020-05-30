@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { log, mutuals } from './../../actions/commonActions'
+import {
+  log,
+  mutuals,
+  ContentStrengthBlock,
+} from './../../actions/commonActions'
 import { updateUserInfo, getUserInfo } from './../../actions/apiActions'
 import { createInterview2 } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
@@ -402,13 +406,8 @@ class InterviewQuestions extends Component {
                               {customizations.question_id_mapping[
                                 item2.question_id
                               ].is_content_strength_enabled ? (
-                                <span
-                                  className="bg-white rounded-lg float-right px-2 py-1 cs-control text-12-demi rounded-full"
-                                  style={{
-                                    border: 'solid 1px #dddddd',
-                                    color: '#666666',
-                                  }}>
-                                  C
+                                <span className="float-right cs-control">
+                                  {ContentStrengthBlock()}
                                   <div className="absolute cs-control-hover">
                                     <div className="text-14-normal text-grey-darkest">
                                       Feedback on content is available for this

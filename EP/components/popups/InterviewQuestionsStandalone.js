@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { mutuals, log, common } from './../../actions/commonActions'
+import {
+  mutuals,
+  log,
+  common,
+  ContentStrengthBlock,
+} from './../../actions/commonActions'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import InterviewQuestions from './InterviewQuestions'
@@ -52,11 +57,7 @@ class InterviewQuestionsStandalone extends Component {
             <div
               className="relative float-right px-2 border flex items-center hover-wrap"
               style={{ background: '#fafafa', borderRadius: 10 }}>
-              <span
-                className="px-2 border rounded-lg text-white text-12-normal"
-                style={{ fontSize: 9, background: common.sectionColor[0] }}>
-                C.S.
-              </span>
+              {ContentStrengthBlock()}
               <span className="ml-2">Content Strength</span>
 
               <div
