@@ -163,7 +163,7 @@ class SpeechModulation extends Component {
                   callback={mutuals.findAbsentOrPresent}
                   description={{
                     text:
-                      'Pitch modulation refers to how much you emphasize words by modulating your tone across words.',
+                      'Pitch modulation refers to the extent of emphasis imparted on words by modulating your tone across words.',
                     position: 'pin-l',
                   }}
                 />
@@ -174,7 +174,7 @@ class SpeechModulation extends Component {
                   callback={mutuals.findAbsentOrPresent}
                   description={{
                     text:
-                      'Pause modulation refers to how much you emphasize keywords by changing your tempo or by taking slightly more/less pause than your normal speech style.',
+                      'Pause modulation refers to the emphasis imparted on keywords through variations in tone or by introducing more/fewer pauses than your normal speech style.',
                     position: 'pin-r',
                   }}
                 />
