@@ -11,6 +11,24 @@ class InterviewQuestionsStandalone extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.contentLimit = 95
+  }
+
+  truncateQuestionContent() {
+    return this.props.latestQuestion.question_content.length > this.contentLimit
+  }
+
+  questionElipses() {
+    if (this.truncateQuestionContent()) {
+      return (
+        this.props.latestQuestion.question_content.substring(
+          0,
+          this.contentLimit
+        ) + '...'
+      )
+    } else {
+      return this.props.latestQuestion.question_content
+    }
   }
 
   render() {
@@ -31,11 +49,14 @@ class InterviewQuestionsStandalone extends Component {
 
           {customizations.question_id_mapping[latestQuestion.question_id]
             .is_content_strength_enabled ? (
-            <div className="relative float-right px-2 border rounded-lg flex items-center hover-wrap">
+            <div
+              className="relative float-right px-2 border flex items-center hover-wrap"
+              style={{ background: '#fafafa', borderRadius: 10 }}>
               <span
-                className="ep-icon-right-rounded text-16-normal"
-                style={{ color: common.sectionColor[0] }}
-              />
+                className="px-2 border rounded-lg text-white text-12-normal"
+                style={{ fontSize: 9, background: common.sectionColor[0] }}>
+                C.S.
+              </span>
               <span className="ml-2">Content Strength</span>
 
               <div
@@ -43,24 +64,37 @@ class InterviewQuestionsStandalone extends Component {
                 style={{ width: 220, top: 22 }}>
                 <div className="text-14-demi">Content Strength Available</div>
                 <div className="mt-3 grey-color">
-                  Feedback on content is available for this question
+                  Feedback on content is available for this question.
                 </div>
               </div>
             </div>
           ) : null}
         </div>
 
-        <div className="mt-3">{latestQuestion.question_content}</div>
+        <div
+          className={classNames('mt-2 relative', {
+            'hover-wrap': this.truncateQuestionContent(),
+          })}>
+          {this.questionElipses()}
 
-        <div className="hr mt-4" />
+          <div
+            className="hover-elm bg-black rounded p-4 shadow-1 pin-l"
+            style={{ top: 24 }}>
+            <span
+              className="ep-icon-marker absolute"
+              style={{ top: -8, left: '50%', transform: 'translateX(-50%)' }}
+            />
+            <div className="text-white">{latestQuestion.question_content}</div>
+          </div>
+        </div>
 
         <div className="p-4 flex justify-center">
           <button
-            className="brand-blue-color "
+            className="brand-blue-color flex justify-center items-center"
             onClick={() => {
               this.props.openPopup('questions-panel')
             }}>
-            <span className="ep-icon-replay font-bold" />
+            <span className="ep-icon-change text-16-demi" />
             <span className="ml-4 text-14-demi">Change Question</span>
           </button>
         </div>
