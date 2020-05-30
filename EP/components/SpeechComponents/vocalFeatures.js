@@ -176,7 +176,7 @@ class SpeechPitch extends Component {
                     color: sectionColor[intensityRes],
                   },
                 ]}
-                unit={'Db'}
+                unit={'dB'}
                 category={'verbals'}
                 barEnds={{ left: 'Soft voice', right: 'Loud voice' }}
                 description={
