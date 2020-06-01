@@ -5,22 +5,20 @@ import { withRouter } from 'react-router-dom'
 import _ from 'underscore'
 import * as cookie from 'js-cookie'
 import Main from './components/Main'
-import {
-  fetchUserCustomizations,
-  userCustomizationsEP,
-} from './actions/apiActions'
+import { userCustomizationsEP } from './actions/apiActions'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
+import { fetchUserCustomizations } from '@vmockinc/dashboard/Dashboard/actions/UserCustomizations'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.props.fetchUserCustomizations()
-    userCustomizationsEP()
+    userCustomizationsEP(this.sendToDashboard)
     this.intializeHighContrastCookie()
   }
 
   intializeHighContrastCookie() {
-    if (cookie.get('accessible_styles') === true) {
+    if (cookie.get('accessible_styles') === 'true') {
       cookie.set('accessible_styles', 'true')
     } else {
       cookie.set('accessible_styles', 'false')
@@ -30,7 +28,7 @@ class App extends Component {
   customizeHasResult() {
     if (process.env.APP_ENV === 'dev') return true
 
-    let customizations = this.props.userCustomizations
+    let customizations = this.props.userCustomizations.data
     if (customizations !== null && !_.isEmpty(customizations)) {
       return this.customizeHasKeys(customizations)
     } else {
@@ -53,7 +51,7 @@ class App extends Component {
     }
   }
 
-  sendToDashboard() {
+  sendToDashboard = () => {
     window.location.href = '/dashboard'
     return false
   }
@@ -92,7 +90,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(App))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))

@@ -12,7 +12,7 @@ import { PageHealth, pageHealthData } from './../commons/PageHealth'
 const handGestureBig =
   process.env.APP_BASE_URL + '/dist/images/new/icons-big/hand-gestures-big.svg'
 var Loader = require('react-loaders').Loader
-var thresholdGoodState = 15
+var thresholdGoodState = 0
 class GestureRighthand extends Component {
   constructor(...args) {
     super(...args)
@@ -25,19 +25,18 @@ class GestureRighthand extends Component {
 
   pageHealthShowLogic() {
     let { concatData, combinedRes } = this.props
-    let handVals = concatData.hand_gesture_results[0]
 
     if (concatData.face_not_detected_percent >= 10) {
       this.setState({ pageHealthType: 'notDetected' })
       return
     }
 
-    if (handVals.either_hand_detected > thresholdGoodState) {
+    if (combinedRes.gestCombinedVal === 0) {
       this.setState({ pageHealthType: 'goodJobState' })
       return
     }
 
-    if (handVals.either_hand_detected < 5) {
+    if (combinedRes.gestCombinedVal === 2) {
       this.setState({ pageHealthType: 'needsWorkState' })
       return
     }
@@ -48,6 +47,9 @@ class GestureRighthand extends Component {
       curr_page: mutuals.urlEnds['gesture'],
       event_type: 'mount',
     })
+
+    thresholdGoodState = this.props.epCustomizations.parameter_thresholds
+      .gestures.hand_gesture_good_job
   }
 
   trackFromRender = _.once((res, handVals) => {
@@ -201,6 +203,7 @@ const mapStateToProps = state => {
     concatData: !_.isEmpty(state.concatenateResults)
       ? state.concatenateResults
       : null,
+    epCustomizations: state.epCustomizations,
   }
 }
 
@@ -208,7 +211,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GestureRighthand)
+export default connect(mapStateToProps, mapDispatchToProps)(GestureRighthand)

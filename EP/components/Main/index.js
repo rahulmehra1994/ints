@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import $ from 'jquery'
 import Navbar from '@vmockinc/dashboard/Navbar'
 import { connect } from 'react-redux'
-import NotFound from './../containers/notFound'
 import {
   fetchImproveArticles,
   getUserInfo,
@@ -19,6 +18,7 @@ import { defaultUrls } from './../../services/services'
 import CenterLoading from './../CenterLoading/index'
 import Loadable from 'react-loadable'
 import _ from 'underscore'
+import Error404 from '@vmockinc/dashboard/Pages/components/Error404'
 
 const Calib = Loadable({
   loader: () => import('./../containers/Calibration'),
@@ -110,10 +110,10 @@ class Main extends React.PureComponent {
 
   applyUsingMouseClassFunctionality() {
     document.body.classList.add('using-mouse')
-    document.body.addEventListener('mousedown', function() {
+    document.body.addEventListener('mousedown', function () {
       document.body.classList.add('using-mouse')
     })
-    document.body.addEventListener('keydown', function() {
+    document.body.addEventListener('keydown', function () {
       document.body.classList.remove('using-mouse')
     })
   }
@@ -200,7 +200,7 @@ class Main extends React.PureComponent {
   }
 
   cancelAllAjax = callback => {
-    $.each(xhrPool, function(idx, xhr) {
+    $.each(xhrPool, function (idx, xhr) {
       xhr.abort()
     })
     callback()
@@ -222,7 +222,7 @@ class Main extends React.PureComponent {
     }
 
     if (this.state.notFound) {
-      return <NotFound />
+      return <Error404 />
     }
 
     if (this.state.notFound === false && this.state.mountRoutesComp) {
@@ -285,7 +285,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main)
+export default connect(mapStateToProps, mapDispatchToProps)(Main)

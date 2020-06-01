@@ -57,6 +57,11 @@ class SystemCheck extends Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.modalOpenType === 'questions-panel')
+      this.showInterviewQuesSection()
+  }
+
   componentWillUnmount() {
     document.onkeydown = null
   }
@@ -192,7 +197,7 @@ class SystemCheck extends Component {
               </button>
             )}
 
-            <div className="clearfix">
+            <div className="clearfix flex justify-center">
               <button
                 className={classNames('float-left p-5', {
                   'cursor-pointer': this.props.userInfoEP.isInputChecked,
@@ -254,7 +259,6 @@ class SystemCheck extends Component {
                   onClick={() => {
                     if (this.props.userInfoEP.isInputChecked) {
                       this.showInterviewQuesSection()
-                      this.activateTab('interviewQues')
                     }
                   }}
                   tabIndex={
@@ -307,8 +311,6 @@ class SystemCheck extends Component {
                 changeFirstTimeUserStatusAndClosePopup={
                   this.props.changeFirstTimeUserStatusAndClosePopup
                 }
-                customizations={this.props.customizations}
-                showInterviewQuesSection={this.showInterviewQuesSection}
                 onSuccessOfCreateInt={this.props.onSuccessOfCreateInt}
                 gotoBasicDetails={this.gotoBasicDetails}
               />
@@ -414,9 +416,6 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-SystemCheck = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SystemCheck)
+SystemCheck = connect(mapStateToProps, mapDispatchToProps)(SystemCheck)
 
 export default ModalHOC(SystemCheck)

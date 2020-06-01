@@ -101,7 +101,7 @@ export function apiCallAgain(
 ) {
   counters[key] += 1
   if (counters[key] < noOfTimes) {
-    if (isOnline() && (xhr.status >= 400 && xhr.status < 600)) {
+    if (isOnline() && xhr.status >= 400 && xhr.status < 600) {
       callback()
     } else {
       setTimeout(() => {
@@ -838,42 +838,6 @@ export function reCallImgVideo() {
   fetchAppearCompImg()
 }
 
-let fetchUserCustomizationsCount = 0
-export function fetchUserCustomizations() {
-  return dispatch => {
-    api
-      .service('accounts')
-      .get('user/customizations')
-      .done(response => {
-        fetchUserCustomizationsCount = 0
-        dispatch(setUserCustomizations(response))
-      })
-      .fail(xhr => {
-        if (xhr && (xhr.status === 401 || xhr.status === 400)) {
-          logout()
-          return
-        }
-
-        fetchUserCustomizationsCount += 1
-        if (fetchUserCustomizationsCount < 3) {
-          dispatch(fetchUserCustomizations())
-        }
-        log(
-          '%c Api faliure /customizations',
-          'background: red; color: white',
-          xhr
-        )
-      })
-  }
-}
-
-export function setUserCustomizations(data) {
-  return {
-    type: 'FETCH_USER_CUSTOMIZATIONS',
-    payload: data,
-  }
-}
-
 export function intKeyIsValid(
   intKey,
   whenIntKeyFound = null,
@@ -1123,7 +1087,7 @@ export function updateFeedback(data, onSuccess, onFailure) {
     })
 }
 
-export function userCustomizationsEP() {
+export function userCustomizationsEP(callback) {
   let fd = new FormData()
 
   api
@@ -1135,6 +1099,10 @@ export function userCustomizationsEP() {
       store.dispatch(setEPCustomizations(data))
     })
     .fail(xhr => {
+      if (xhr.status === 401 || xhr.status === 403) {
+        callback()
+        return
+      }
       apiCallAgain(
         counters,
         'userCustomizationsEPCount',

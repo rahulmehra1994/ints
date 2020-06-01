@@ -480,7 +480,7 @@ class InsightsAllSection extends Component {
                           'sound_results.sound_results_individual.intensity',
                         yAxisColor: 'sound_results.intensity_result',
                       },
-                      unit: 'Db',
+                      unit: 'dB',
                       plotBands: {
                         from: 65,
                         to: 75,
@@ -761,7 +761,4 @@ function removeCurrentIntKey(state) {
   return newKeys
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(InsightsAllSection)
+export default connect(mapStateToProps, {})(InsightsAllSection)

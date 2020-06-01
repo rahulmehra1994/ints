@@ -28,7 +28,21 @@ class IsThereOrNotBox extends React.Component {
               : bgStyle
             : bgStyle
         }>
-        <div className="subHead">{this.props.head}</div>
+        <div className="subHead">
+          <span>{this.props.head}</span>
+
+          {_.has(this.props, 'description') ? (
+            <span className="hover-wrap ml-2">
+              <span className="ep-icon-info-outline" />
+
+              <div
+                className={`hover-elm bg-white shadow-1 rounded-lg p-4 text-14-med ${this.props.description.position}`}
+                style={{ width: 300 }}>
+                {this.props.description.text}
+              </div>
+            </span>
+          ) : null}
+        </div>
 
         <div className="mainHeadLight capitalize mt-8" style={{ fontSize: 32 }}>
           {this.props.callback(this.props.value)}
@@ -51,7 +65,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IsThereOrNotBox)
+export default connect(mapStateToProps, mapDispatchToProps)(IsThereOrNotBox)

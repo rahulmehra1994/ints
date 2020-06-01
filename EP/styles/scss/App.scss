@@ -165,6 +165,10 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: 400;
   }
 
+  .border-radius-3 {
+    border-radius: 3px;
+  }
+
   .app-text-font {
     font-family: $app-font;
   }
@@ -176,6 +180,20 @@ body:not(.using-mouse) .btn-primary:focus {
 
   .shadow-1 {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .hover-elm {
+    visibility: hidden;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .hover-wrap {
+    position: relative;
+  }
+
+  .hover-wrap:hover .hover-elm {
+    visibility: visible;
   }
 
   .switch {
@@ -1226,23 +1244,6 @@ body:not(.using-mouse) .btn-primary:focus {
 
   .blackColor:before {
     color: #4a4a4a;
-  }
-
-  .notFoundBar {
-    height: 60px;
-    background: #4d4d52;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 150px;
-    padding-right: 150px;
-    margin: 0 auto;
-    img {
-      height: 40px;
-      width: 94px;
-    }
-  }
-  .notFoundInfo {
-    height: calc(100vh - 60px);
   }
 
   .eyeGazeImages svg {
@@ -3307,7 +3308,7 @@ body:not(.using-mouse) .btn-primary:focus {
     z-index: 1000;
     border-radius: 3px;
     right: 8px;
-    top: 33px;
+    top: 24px;
   }
 
   .bg-black-transcluent {

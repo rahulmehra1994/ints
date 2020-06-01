@@ -613,3 +613,13 @@ export function xAxisGraphsTick(val) {
   let str = new Date(val * 1000).toISOString()
   return str.substr(14, 5)
 }
+
+export function ContentStrengthBlock() {
+  return (
+    <span
+      className="px-2 rounded-lg text-white text-12-normal"
+      style={{ fontSize: 9, background: common.sectionColor[0] }}>
+      C.S.
+    </span>
+  )
+}
