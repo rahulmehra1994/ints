@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { withMediaProps } from 'react-media-player'
-const mute = process.env.APP_BASE_URL + '/dist/images/custom-audio-mute.svg'
-const unmute = process.env.APP_BASE_URL + '/dist/images/custom-audio-unmute.svg'
+const mute =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/custom-audio-mute.svg'
+const unmute =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/custom-audio-unmute.svg'
 
 class CustomMuteUnmute extends Component {
   shouldComponentUpdate({ media, tabIndex }) {

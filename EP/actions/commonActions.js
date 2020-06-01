@@ -139,14 +139,14 @@ export const bgPrimaryColor = [
 
 export const insightsGraphValColors = highContrast
   ? [
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/green.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/yellow.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/red.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/green.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/yellow.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/red.svg)`,
     ]
   : [
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/green.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/yellow.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/red.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/green.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/yellow.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/red.svg)`,
     ]
 
 export function oneOrMany2(string, val) {

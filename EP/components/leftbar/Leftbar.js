@@ -17,8 +17,10 @@ const trackingDebounceSmall = _.debounce(
   true
 )
 
-const block = process.env.APP_BASE_URL + '/dist/images/new/icons/block.svg'
-const LOADER_IMG_PATH = process.env.APP_BASE_URL + '/dist/images/loader.gif'
+const block =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/icons/block.svg'
+const LOADER_IMG_PATH =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/loader.gif'
 
 const data = {
   eyeGaze: {

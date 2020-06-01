@@ -7,7 +7,7 @@ import { Form, TextArea } from 'semantic-ui-react'
 import { notify } from '@vmockinc/dashboard/services/helpers'
 
 const feedback =
-  process.env.APP_BASE_URL + '/dist/images/icons/feedback-icon.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/feedback-icon.svg'
 
 const notification = (val, type) => {
   notify(val, type, {
@@ -288,10 +288,7 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Feedback)
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback)
 
 class Question extends React.Component {
   constructor(props) {

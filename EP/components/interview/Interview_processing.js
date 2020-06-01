@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 
-const processingImg = process.env.APP_BASE_URL + '/dist/images/processing.svg'
+const processingImg =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/processing.svg'
 
 class Interview_processing extends Component {
   videoUploadedPercentage() {

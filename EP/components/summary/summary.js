@@ -79,7 +79,7 @@ const Card = props => {
               <div className="flex items-center justify-center">
                 <img
                   className=""
-                  src={`${process.env.APP_BASE_URL}/dist/images/new/icons-big/${props.img}-big.svg`}
+                  src={`${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/icons-big/${props.img}-big.svg`}
                   alt={props.name}
                 />
               </div>
@@ -538,7 +538,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Summary)
+export default connect(mapStateToProps, mapDispatchToProps)(Summary)

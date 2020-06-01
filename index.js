@@ -13,7 +13,7 @@ import 'video-react/dist/video-react.css'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router basename={process.env.APP_BASE_URL}>
+    <Router basename={process.env.APP_PRODUCT_BASE_URL}>
       <App />
     </Router>
   </Provider>,

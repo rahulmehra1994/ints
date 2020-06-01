@@ -13,7 +13,8 @@ import TimelineAudio from './../commons/TimelineAudio'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const disfluenciesBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/disfluencies-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/disfluencies-big.svg'
 const { SeekBar } = controls
 var Loader = require('react-loaders').Loader
 

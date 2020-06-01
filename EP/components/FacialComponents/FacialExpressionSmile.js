@@ -11,7 +11,7 @@ import TimelineVideos from './../commons/TimelineVideos'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const facialExpressionsBig =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/facial-expression-big.svg'
 
 var Loader = require('react-loaders').Loader

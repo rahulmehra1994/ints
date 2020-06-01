@@ -10,7 +10,8 @@ import TimelineVideos from './../commons/TimelineVideos'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const handGestureBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/hand-gestures-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/hand-gestures-big.svg'
 var Loader = require('react-loaders').Loader
 var thresholdGoodState = 0
 class GestureRighthand extends Component {

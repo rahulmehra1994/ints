@@ -119,7 +119,7 @@ class BodyCombined extends Component {
                 tabIndex={tabIndex}
                 label={'Body Posture'}
                 img={
-                  process.env.APP_BASE_URL +
+                  process.env.APP_PRODUCT_BASE_URL +
                   '/dist/images/new/icons-big/body-posture-big.svg'
                 }
                 alt={'body posture info'}

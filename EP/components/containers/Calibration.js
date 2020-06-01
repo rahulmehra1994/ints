@@ -34,20 +34,23 @@ import SystemCheck from './../popups/SystemCheck'
 import InterviewQuestionsStandalone from './../popups/InterviewQuestionsStandalone'
 
 const leftArrowBlack =
-  process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-white.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/left-arrow-white.svg'
 const calibPositionGuide =
-  process.env.APP_BASE_URL + '/dist/images/calib-position-guide.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/calib-position-guide.svg'
 const calibPostureGuide =
-  process.env.APP_BASE_URL + '/dist/images/calib-posture-guide.svg'
-const headphones = process.env.APP_BASE_URL + '/dist/images/new/headphones.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/calib-posture-guide.svg'
+const headphones =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/headphones.svg'
 const maintainDistance =
-  process.env.APP_BASE_URL + '/dist/images/new/maintain-distance.svg'
-const lamp = process.env.APP_BASE_URL + '/dist/images/new/lamp.svg'
-const microphone = process.env.APP_BASE_URL + '/dist/images/new/microphone.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/maintain-distance.svg'
+const lamp = process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/lamp.svg'
+const microphone =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/microphone.svg'
 const backgorundNoise =
-  process.env.APP_BASE_URL + '/dist/images/new/minimize-background-noise.svg'
-const webcam = process.env.APP_BASE_URL + '/dist/images/new/webcam.svg'
-const person = process.env.APP_BASE_URL + '/dist/images/new/person.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/minimize-background-noise.svg'
+const webcam = process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/webcam.svg'
+const person = process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/person.svg'
 
 const browser = Bowser.getParser(window.navigator.userAgent)
 const trackingDebounceSmall = _.debounce(

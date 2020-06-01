@@ -337,7 +337,7 @@ class InfoBarComponent extends React.Component {
                   <div className="">
                     <img
                       src={
-                        process.env.APP_BASE_URL +
+                        process.env.APP_PRODUCT_BASE_URL +
                         '/dist/images/new/icons/arrow.svg'
                       }
                       alt="arrow"

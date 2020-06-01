@@ -11,7 +11,7 @@ const FocusTrap = require('focus-trap-react')
 var Loader = require('react-loaders').Loader
 
 const improvementSection =
-  process.env.APP_BASE_URL + '/dist/images/new/improvement-section.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/improvement-section.svg'
 
 class Improvement extends Component {
   constructor(props) {
