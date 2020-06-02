@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { log, mutuals } from './../../actions/commonActions'
+import {
+  log,
+  mutuals,
+  ContentStrengthBlock,
+} from './../../actions/commonActions'
 import { updateUserInfo, getUserInfo } from './../../actions/apiActions'
 import { createInterview2 } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
@@ -82,6 +86,7 @@ class InterviewQuestions extends Component {
       return obj.map((item, index) => {
         let keys = Object.keys(item)
         item.label = keys[0]
+        item.id = keys[0] + mutuals.randomStr(5)
         item.isOpen = false
         item.isSelected = false
         return item
@@ -173,6 +178,8 @@ class InterviewQuestions extends Component {
   }
 
   handleDomainClick(item, key) {
+    if (item.isOpen) return
+
     let selectedDomainFound = []
     let arr = this.state.data.map((item, index) => {
       let tempKey = Object.keys(item)[0]
@@ -193,14 +200,13 @@ class InterviewQuestions extends Component {
     })
   }
 
-  handleCategoryEvent(key) {
+  handleCategoryEvent(clickedItem) {
     this.scrollCompToTop()
     let selectedCategoryFound = []
     let arr = this.state.selectedDomain.map((item, index) => {
-      let tempKey = Object.keys(item)[0]
-      if (tempKey === key) {
+      if (item.id === clickedItem.id) {
         item.isOpen = !item.isOpen
-        selectedCategoryFound = item[key]
+        selectedCategoryFound = item[clickedItem.label]
       } else {
         item.isOpen = false
       }
@@ -212,7 +218,7 @@ class InterviewQuestions extends Component {
 
     data = this.state.data.map((item, index) => {
       let tempKey = Object.keys(item)[0]
-      if (tempKey === key) {
+      if (tempKey === clickedItem.label) {
         return arr
       } else {
         return item
@@ -329,8 +335,9 @@ class InterviewQuestions extends Component {
               return (
                 <div
                   key={index}
-                  className={classNames('each-domain cursor-pointer', {
+                  className={classNames('each-domain', {
                     domainActive: item.isOpen,
+                    'cursor-pointer': !item.isOpen,
                   })}
                   onClick={() => {
                     this.handleDomainClick(item, item.label)
@@ -363,7 +370,7 @@ class InterviewQuestions extends Component {
                         className="float-right"
                         style={{ fontSize: 25 }}
                         onClick={() => {
-                          this.handleCategoryEvent(item.label)
+                          this.handleCategoryEvent(item)
                         }}
                         tabIndex="20"
                         aria-label={`question selection button`}>
@@ -399,13 +406,8 @@ class InterviewQuestions extends Component {
                               {customizations.question_id_mapping[
                                 item2.question_id
                               ].is_content_strength_enabled ? (
-                                <span
-                                  className="bg-white rounded-lg float-right px-2 py-1 cs-control text-12-demi rounded-full"
-                                  style={{
-                                    border: 'solid 1px #dddddd',
-                                    color: '#666666',
-                                  }}>
-                                  C
+                                <span className="float-right cs-control">
+                                  {ContentStrengthBlock()}
                                   <div className="absolute cs-control-hover">
                                     <div className="text-14-normal text-grey-darkest">
                                       Feedback on content is available for this
@@ -476,7 +478,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InterviewQuestions)
+export default connect(mapStateToProps, mapDispatchToProps)(InterviewQuestions)

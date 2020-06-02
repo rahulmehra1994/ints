@@ -139,14 +139,14 @@ export const bgPrimaryColor = [
 
 export const insightsGraphValColors = highContrast
   ? [
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/green.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/yellow.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/ada/red.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/green.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/yellow.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/ada/red.svg)`,
     ]
   : [
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/green.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/yellow.svg)`,
-      `url(${process.env.APP_BASE_URL}/dist/images/new/graph/graph-dots/normal/red.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/green.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/yellow.svg)`,
+      `url(${process.env.APP_PRODUCT_BASE_URL}/dist/images/new/graph/graph-dots/normal/red.svg)`,
     ]
 
 export function oneOrMany2(string, val) {
@@ -612,4 +612,14 @@ export function checkForSpecialChars(val) {
 export function xAxisGraphsTick(val) {
   let str = new Date(val * 1000).toISOString()
   return str.substr(14, 5)
+}
+
+export function ContentStrengthBlock() {
+  return (
+    <span
+      className="px-2 rounded-lg text-white text-12-normal"
+      style={{ fontSize: 9, background: common.sectionColor[0] }}>
+      C.S.
+    </span>
+  )
 }

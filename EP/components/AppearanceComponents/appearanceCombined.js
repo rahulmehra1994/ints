@@ -113,7 +113,7 @@ class AppearanceCombined extends Component {
                 tabIndex={tabIndex}
                 label={'Appearance'}
                 img={
-                  process.env.APP_BASE_URL +
+                  process.env.APP_PRODUCT_BASE_URL +
                   '/dist/images/new/icons-big/appearance-big.svg'
                 }
                 alt={'appearance info'}
@@ -215,7 +215,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppearanceCombined)
+export default connect(mapStateToProps, mapDispatchToProps)(AppearanceCombined)

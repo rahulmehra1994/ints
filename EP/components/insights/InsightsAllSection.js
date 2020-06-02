@@ -16,7 +16,7 @@ const trackingDebounceSmall = _.debounce(
 var Loader = require('react-loaders').Loader
 
 const insightsSection =
-  process.env.APP_BASE_URL + '/dist/images/new/insight-section.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/insight-section.svg'
 
 class InsightsAllSection extends Component {
   constructor(props) {
@@ -480,7 +480,7 @@ class InsightsAllSection extends Component {
                           'sound_results.sound_results_individual.intensity',
                         yAxisColor: 'sound_results.intensity_result',
                       },
-                      unit: 'Db',
+                      unit: 'dB',
                       plotBands: {
                         from: 65,
                         to: 75,
@@ -705,7 +705,7 @@ class InsightsAllSection extends Component {
             <span className="para pr-12">
               <img
                 src={
-                  process.env.APP_BASE_URL +
+                  process.env.APP_PRODUCT_BASE_URL +
                   '/dist/images/new/icons/insights.svg'
                 }
                 alt={`insights`}
@@ -761,7 +761,4 @@ function removeCurrentIntKey(state) {
   return newKeys
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(InsightsAllSection)
+export default connect(mapStateToProps, {})(InsightsAllSection)

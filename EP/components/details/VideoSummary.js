@@ -538,7 +538,7 @@ class VideoSummary extends Component {
                 className="absolute player-play-copy"
                 onClick={this.thumbClick}
                 tabIndex={this.state.tabIndex}>
-                <div className="play-triangle relative" style={{ top: -10 }} />
+                <div className="play-triangle relative" />
               </button>
             )}
           </div>

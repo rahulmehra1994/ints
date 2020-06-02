@@ -45,8 +45,10 @@ import CenterLoading from './../CenterLoading/index'
 import { notify } from '@vmockinc/dashboard/services/helpers'
 import { OverlayMask } from './../../images/svg-files/CalibOverlayMask'
 
-const clock = process.env.APP_BASE_URL + '/dist/images/ic-timer-black-24-px.svg'
-const interviewerImage = process.env.APP_BASE_URL + '/dist/images/group-3.svg'
+const clock =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/ic-timer-black-24-px.svg'
+const interviewerImage =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/group-3.svg'
 
 var classNames = require('classnames')
 var fullStream = ''
@@ -755,7 +757,7 @@ class Interview extends Component {
           this.saveTranscript()
         })
       }
-    }, 2500)
+    }, 5000)
   }
 
   focusFullScreenCenterText = _.once(() => {

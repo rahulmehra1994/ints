@@ -542,7 +542,7 @@ class TimelineVideos extends React.Component {
                 this.play()
               }}
               tabIndex={this.props.tabIndex}>
-              <div className="play-triangle relative" style={{ top: -10 }} />
+              <div className="play-triangle relative" />
             </button>
           ) : null}
 
@@ -606,7 +606,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineVideos)
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineVideos)

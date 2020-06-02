@@ -13,7 +13,8 @@ import TimelineAudio from './../commons/TimelineAudio'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const disfluenciesBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/disfluencies-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/disfluencies-big.svg'
 const { SeekBar } = controls
 var Loader = require('react-loaders').Loader
 
@@ -221,7 +222,12 @@ class SpeechDisfluencies extends Component {
             label="Ah-Um Counter"
             mainValue={this.counterD()}
             threshold={{
-              data: [{ value: 1 }],
+              data: [
+                {
+                  value: this.props.epCustomizations.parameter_thresholds
+                    .speech_fluency.ah_um_counter_good_job,
+                },
+              ],
               underLabel: 'Max Allowed',
             }}
             bgColor={ahUmRes}
@@ -249,7 +255,12 @@ class SpeechDisfluencies extends Component {
               label="Elongation"
               mainValue={this.counterE()}
               threshold={{
-                data: [{ value: 1 }],
+                data: [
+                  {
+                    value: this.props.epCustomizations.parameter_thresholds
+                      .speech_fluency.elongation_counter_good_job,
+                  },
+                ],
                 underLabel: 'Max Allowed',
               }}
               bgColor={elongationRes}
@@ -315,6 +326,7 @@ const mapStateToProps = state => {
     fillersArray: uniqArray,
     gentleRes: !_.isEmpty(state.gentleResults) ? state.gentleResults : null,
     transcript: state.transcript,
+    epCustomizations: state.epCustomizations,
   }
 }
 
@@ -322,7 +334,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechDisfluencies)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechDisfluencies)

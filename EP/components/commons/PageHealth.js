@@ -31,12 +31,14 @@ let speechNotDetectedData = {
 
 let imgArr = [
   {
-    path: process.env.APP_BASE_URL + '/dist/images/new/flag-outline.svg',
+    path:
+      process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/flag-outline.svg',
     alt: 'flag',
   },
   { path: '', alt: '' },
   {
-    path: process.env.APP_BASE_URL + '/dist/images/new/help-outline.svg',
+    path:
+      process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/help-outline.svg',
     alt: 'help',
   },
 ]

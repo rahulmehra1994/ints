@@ -55,7 +55,7 @@ class TimelineAudioChart extends Component {
         min: 0,
         allowDecimals: false,
         labels: {
-          formatter: function() {
+          formatter: function () {
             return mutuals.xAxisGraphsTick(this.value)
           },
         },
@@ -73,7 +73,7 @@ class TimelineAudioChart extends Component {
           cursor: 'pointer',
           point: {
             events: {
-              click: function(e) {},
+              click: function (e) {},
             },
           },
           marker: {
@@ -270,7 +270,7 @@ class TimelineAudioChart extends Component {
                         <div className="audio-loader-wrap">
                           <img
                             src={
-                              process.env.APP_BASE_URL +
+                              process.env.APP_PRODUCT_BASE_URL +
                               '/dist/images/new/timeline/Loader.svg'
                             }
                             alt={'loader'}
@@ -360,7 +360,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineAudioChart)
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineAudioChart)

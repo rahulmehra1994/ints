@@ -10,9 +10,9 @@ import IsThereOrNotBox from './../commons/IsThereOrNotBox'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const feedback =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/feedback.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/icons-big/feedback.svg'
 const contentStrength =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/content-strength-not-available.svg'
 
 var Loader = require('react-loaders').Loader
@@ -163,7 +163,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoContent)
+export default connect(mapStateToProps, mapDispatchToProps)(NoContent)

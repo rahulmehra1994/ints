@@ -5,10 +5,7 @@ import { withRouter } from 'react-router-dom'
 import _ from 'underscore'
 import * as cookie from 'js-cookie'
 import Main from './components/Main'
-import {
-  // fetchUserCustomizations,
-  userCustomizationsEP,
-} from './actions/apiActions'
+import { userCustomizationsEP } from './actions/apiActions'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 import { fetchUserCustomizations } from '@vmockinc/dashboard/Dashboard/actions/UserCustomizations'
 
@@ -16,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.props.fetchUserCustomizations()
-    userCustomizationsEP()
+    userCustomizationsEP(this.sendToDashboard)
     this.intializeHighContrastCookie()
   }
 
@@ -54,7 +51,7 @@ class App extends Component {
     }
   }
 
-  sendToDashboard() {
+  sendToDashboard = () => {
     window.location.href = '/dashboard'
     return false
   }

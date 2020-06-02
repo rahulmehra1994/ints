@@ -227,7 +227,7 @@ class Main extends React.PureComponent {
 
     if (this.state.notFound === false && this.state.mountRoutesComp) {
       return (
-        <Router basename={process.env.APP_BASE_URL}>
+        <Router basename={process.env.APP_PRODUCT_BASE_URL}>
           <React.Fragment>
             <Route
               path="/"

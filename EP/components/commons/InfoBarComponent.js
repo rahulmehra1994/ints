@@ -234,7 +234,20 @@ class InfoBarComponent extends React.Component {
             : { background: getBgColor[bgColor] }
         }>
         <div className="clearfix">
-          <div className="subHead float-left">{label}</div>
+          <div className="subHead float-left">
+            <span>{label}</span>{' '}
+            {_.has(this.props, 'description') ? (
+              <span className="hover-wrap ml-2">
+                <span className="ep-icon-info-outline" />
+
+                <div
+                  className="hover-elm pin-l bg-white shadow-1 rounded-lg p-4 text-14-med"
+                  style={{ width: 300 }}>
+                  {this.props.description}
+                </div>
+              </span>
+            ) : null}
+          </div>
 
           {barsAndLegends.length > 1 ? (
             <div className="float-right">
@@ -324,7 +337,7 @@ class InfoBarComponent extends React.Component {
                   <div className="">
                     <img
                       src={
-                        process.env.APP_BASE_URL +
+                        process.env.APP_PRODUCT_BASE_URL +
                         '/dist/images/new/icons/arrow.svg'
                       }
                       alt="arrow"

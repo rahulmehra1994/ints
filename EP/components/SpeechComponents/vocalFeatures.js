@@ -10,7 +10,8 @@ import InfoBarComponent from './../commons/InfoBarComponent'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const vocalFeaturesBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/vocal-features-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/vocal-features-big.svg'
 var Loader = require('react-loaders').Loader
 
 class SpeechPitch extends Component {
@@ -176,9 +177,12 @@ class SpeechPitch extends Component {
                     color: sectionColor[intensityRes],
                   },
                 ]}
-                unit={'Db'}
+                unit={'dB'}
                 category={'verbals'}
                 barEnds={{ left: 'Soft voice', right: 'Loud voice' }}
+                description={
+                  'Intensity represents the loud or soft effects of a sound on a listener. The loudness of sound is determined by intensity, in sound waves, measured in decibel (dB).'
+                }
               />
 
               {this.speechRateMount()}
@@ -203,6 +207,9 @@ class SpeechPitch extends Component {
                   unit={'wpm'}
                   category={'verbals'}
                   barEnds={{ left: 'Slow speed', right: 'Fast speed' }}
+                  description={
+                    'Speech rate refers to the speed at which an individual speaks and is normally expressed in words per minute (wpm).'
+                  }
                 />
               ) : null}
 
@@ -228,6 +235,9 @@ class SpeechPitch extends Component {
                   unit={'Hz'}
                   category={'verbals'}
                   barEnds={{ left: 'Deep voice', right: 'Shrill voice' }}
+                  description={
+                    'Pitch is the measure of relative highness or lowness of a tone. The pitch of a sound is measured in Hertz (Hz).'
+                  }
                 />
               ) : null}
 
@@ -273,7 +283,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechPitch)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechPitch)

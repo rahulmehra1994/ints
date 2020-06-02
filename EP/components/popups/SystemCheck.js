@@ -9,10 +9,12 @@ import { mutuals, log, common } from './../../actions/commonActions'
 import InterviewQuestions from './../popups/InterviewQuestions'
 
 const InputCheckImg =
-  process.env.APP_BASE_URL + '/dist/images/icons/input-check-illustration.svg'
-const tickGreen = process.env.APP_BASE_URL + '/dist/images/icons/tick-green.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/icons/input-check-illustration.svg'
+const tickGreen =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/tick-green.svg'
 const leftArrowBlack =
-  process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-black.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/left-arrow-black.svg'
 
 const trackingDebounceSmall = _.debounce(
   mutuals.socketTracking,
@@ -55,6 +57,11 @@ class SystemCheck extends Component {
         this.modalToggler()
       }
     }
+  }
+
+  componentDidMount() {
+    if (this.props.modalOpenType === 'questions-panel')
+      this.showInterviewQuesSection()
   }
 
   componentWillUnmount() {
@@ -192,7 +199,7 @@ class SystemCheck extends Component {
               </button>
             )}
 
-            <div className="clearfix">
+            <div className="clearfix flex justify-center">
               <button
                 className={classNames('float-left p-5', {
                   'cursor-pointer': this.props.userInfoEP.isInputChecked,
@@ -254,7 +261,6 @@ class SystemCheck extends Component {
                   onClick={() => {
                     if (this.props.userInfoEP.isInputChecked) {
                       this.showInterviewQuesSection()
-                      this.activateTab('interviewQues')
                     }
                   }}
                   tabIndex={
@@ -307,8 +313,6 @@ class SystemCheck extends Component {
                 changeFirstTimeUserStatusAndClosePopup={
                   this.props.changeFirstTimeUserStatusAndClosePopup
                 }
-                customizations={this.props.customizations}
-                showInterviewQuesSection={this.showInterviewQuesSection}
                 onSuccessOfCreateInt={this.props.onSuccessOfCreateInt}
                 gotoBasicDetails={this.gotoBasicDetails}
               />
@@ -414,9 +418,6 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-SystemCheck = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SystemCheck)
+SystemCheck = connect(mapStateToProps, mapDispatchToProps)(SystemCheck)
 
 export default ModalHOC(SystemCheck)

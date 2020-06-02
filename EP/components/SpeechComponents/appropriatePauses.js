@@ -19,7 +19,7 @@ import TimelineAudio from './../commons/TimelineAudio'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const appropriateBig =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/appropriate-pauses-big.svg'
 
 const { SeekBar } = controls
@@ -355,7 +355,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechAnalysis)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechAnalysis)

@@ -9,7 +9,7 @@ import IsThereOrNotBox from './../commons/IsThereOrNotBox'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const modualtionBig =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/speech-modulation-big.svg'
 var Loader = require('react-loaders').Loader
 
@@ -161,12 +161,22 @@ class SpeechModulation extends Component {
                   value={pitchRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
+                  description={{
+                    text:
+                      'Pitch modulation refers to the extent of emphasis imparted on words by modulating your tone across words.',
+                    position: 'pin-l',
+                  }}
                 />
                 <IsThereOrNotBox
                   head="Pauses Modulation"
                   value={pauseRes}
                   category={'verbals'}
                   callback={mutuals.findAbsentOrPresent}
+                  description={{
+                    text:
+                      'Pause modulation refers to the emphasis imparted on keywords through variations in tone or by introducing more/fewer pauses than your normal speech style.',
+                    position: 'pin-r',
+                  }}
                 />
               </div>
 
@@ -212,7 +222,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SpeechModulation)
+export default connect(mapStateToProps, mapDispatchToProps)(SpeechModulation)
