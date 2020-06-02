@@ -9,10 +9,12 @@ import { mutuals, log, common } from './../../actions/commonActions'
 import InterviewQuestions from './../popups/InterviewQuestions'
 
 const InputCheckImg =
-  process.env.APP_BASE_URL + '/dist/images/icons/input-check-illustration.svg'
-const tickGreen = process.env.APP_BASE_URL + '/dist/images/icons/tick-green.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/icons/input-check-illustration.svg'
+const tickGreen =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/tick-green.svg'
 const leftArrowBlack =
-  process.env.APP_BASE_URL + '/dist/images/icons/left-arrow-black.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/left-arrow-black.svg'
 
 const trackingDebounceSmall = _.debounce(
   mutuals.socketTracking,

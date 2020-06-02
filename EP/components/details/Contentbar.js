@@ -7,9 +7,10 @@ import { connect } from 'react-redux'
 import VideoModal from './../illustration/VideoModal'
 import { mutuals, log, common } from './../../actions/commonActions'
 
-const play = process.env.APP_BASE_URL + '/dist/images/new/timeline/play.svg'
+const play =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/timeline/play.svg'
 const illustrationSection =
-  process.env.APP_BASE_URL + '/dist/images/new/illustration-section.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/illustration-section.svg'
 
 var Loader = require('react-loaders').Loader
 const trackingDebounceSmall = _.debounce(

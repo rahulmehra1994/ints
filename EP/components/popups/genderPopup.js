@@ -45,7 +45,8 @@ const stateOptions = _.map(langList, (state, index) => ({
   value: state.code,
 }))
 const basicDetailsIllus =
-  process.env.APP_BASE_URL + '/dist/images/icons/basic-details-illustration.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/icons/basic-details-illustration.svg'
 
 class GenderPopup extends Component {
   constructor(...args) {
@@ -357,7 +358,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GenderPopup)
+export default connect(mapStateToProps, mapDispatchToProps)(GenderPopup)

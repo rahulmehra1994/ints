@@ -13,31 +13,37 @@ import LevelInfo from './../../components/popups/LevelInfo'
 import Disclaimer from './../../disclaimer-show-feature/containers/disclaimer/Disclaimer'
 
 const level1 =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/non-ada/level1.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/non-ada/level1.svg'
 const level2 =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/non-ada/level2.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/non-ada/level2.svg'
 const level3 =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/non-ada/level3.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/non-ada/level3.svg'
 const level4 =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/non-ada/level4.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/non-ada/level4.svg'
 const level5 =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/non-ada/level5.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/non-ada/level5.svg'
 
 const level1Ada =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/ada/level1.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/ada/level1.svg'
 const level2Ada =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/ada/level2.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/ada/level2.svg'
 const level3Ada =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/ada/level3.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/ada/level3.svg'
 const level4Ada =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/ada/level4.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/ada/level4.svg'
 const level5Ada =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/ada/level5.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/ada/level5.svg'
 
 const confetti =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/confetti.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/summary/confetti.svg'
 const trophyFinalLevel =
-  process.env.APP_BASE_URL + '/dist/images/new/summary/trophy-final-level.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/summary/trophy-final-level.svg'
 
 const levels = highContrast
   ? [level1Ada, level2Ada, level3Ada, level4Ada, level5Ada]
@@ -150,7 +156,7 @@ class Comparison extends Component {
     return parseInt(arr[1], 10) - 1
   }
 
-  modalVisiblity = (val) => {
+  modalVisiblity = val => {
     this.setState({ modalVisiblity: val })
   }
 

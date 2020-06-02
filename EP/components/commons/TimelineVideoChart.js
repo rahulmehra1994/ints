@@ -58,7 +58,7 @@ class TimelineChart extends Component {
         min: 0,
         allowDecimals: false,
         labels: {
-          formatter: function() {
+          formatter: function () {
             return mutuals.xAxisGraphsTick(this.value)
           },
         },
@@ -78,7 +78,7 @@ class TimelineChart extends Component {
           cursor: 'pointer',
           point: {
             events: {
-              click: function(e) {
+              click: function (e) {
                 that.props.changeVideo(this.index)
               },
             },
@@ -137,16 +137,18 @@ class TimelineChart extends Component {
     this.props.changeVideo(index)
     mutuals.socketTracking({
       event_type: 'click',
-      event_description: `Video timeline non-current button positioned ${index +
-        1} clicked`,
+      event_description: `Video timeline non-current button positioned ${
+        index + 1
+      } clicked`,
     })
   }
 
   currentButtonHandler(index) {
     mutuals.socketTracking({
       event_type: 'click',
-      event_description: `Video timeline current button positioned ${index +
-        1} ${this.state.isPlaying ? 'paused' : 'played'} ?`,
+      event_description: `Video timeline current button positioned ${
+        index + 1
+      } ${this.state.isPlaying ? 'paused' : 'played'} ?`,
     })
 
     this.state.isPlaying ? this.props.pause() : this.props.changeVideo(index)
@@ -189,14 +191,14 @@ class TimelineChart extends Component {
                         <img
                           alt={'audio pause'}
                           src={
-                            process.env.APP_BASE_URL +
+                            process.env.APP_PRODUCT_BASE_URL +
                             '/dist/images/new/timeline/pause.svg'
                           }
                         />
                       ) : (
                         <img
                           src={
-                            process.env.APP_BASE_URL +
+                            process.env.APP_PRODUCT_BASE_URL +
                             '/dist/images/new/timeline/play.svg'
                           }
                           alt="play"
@@ -236,7 +238,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineChart)
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineChart)

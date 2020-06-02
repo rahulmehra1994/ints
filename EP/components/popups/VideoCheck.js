@@ -16,11 +16,14 @@ import CustomPlayPause from '../utilities/CustomPlayPause'
 import CustomMuteUnmute from '../utilities/CustomMuteUnmute'
 import { updateChecksDone } from './../../actions/apiActions'
 
-const refresh = process.env.APP_BASE_URL + '/dist/images/icons/refresh-icon.svg'
-const speechMic = process.env.APP_BASE_URL + '/dist/images/icons/speech-mic.svg'
-const tickGreen = process.env.APP_BASE_URL + '/dist/images/icons/tick-green.svg'
+const refresh =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/refresh-icon.svg'
+const speechMic =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/speech-mic.svg'
+const tickGreen =
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/icons/tick-green.svg'
 const warning =
-  process.env.APP_BASE_URL + '/dist/images/animation/exclamation.svg'
+  process.env.APP_PRODUCT_BASE_URL + '/dist/images/animation/exclamation.svg'
 
 const { SeekBar } = controls
 var paths
@@ -848,7 +851,10 @@ class VideoCheck extends Component {
         <div className="float-right w-2/5 flex items-center justify-center">
           <img
             style={{ height: 210, width: 210 }}
-            src={process.env.APP_BASE_URL + '/dist/images/animation/check.png'}
+            src={
+              process.env.APP_PRODUCT_BASE_URL +
+              '/dist/images/animation/check.png'
+            }
             alt="check"
           />
         </div>

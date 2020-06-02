@@ -10,7 +10,8 @@ import InfoBarComponent from './../commons/InfoBarComponent'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const vocalFeaturesBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/vocal-features-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/vocal-features-big.svg'
 var Loader = require('react-loaders').Loader
 
 class SpeechPitch extends Component {

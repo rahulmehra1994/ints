@@ -10,7 +10,8 @@ import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { DetailInfoHeader } from '../commons/DetailHeader'
 
 const wordUsageBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/word-usage-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/word-usage-big.svg'
 
 var Loader = require('react-loaders').Loader
 
@@ -272,7 +273,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WordUsage)
+export default connect(mapStateToProps, mapDispatchToProps)(WordUsage)

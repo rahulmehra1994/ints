@@ -9,7 +9,7 @@ import IsThereOrNotBox from './../commons/IsThereOrNotBox'
 import { PageHealth, pageHealthData } from './../commons/PageHealth'
 
 const modualtionBig =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/speech-modulation-big.svg'
 var Loader = require('react-loaders').Loader
 

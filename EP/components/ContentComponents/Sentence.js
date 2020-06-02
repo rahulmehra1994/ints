@@ -15,7 +15,7 @@ import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { highContrast } from '../../actions/commonActions'
 import { DetailInfoHeader } from '../commons/DetailHeader'
 const sentenceAnalysisBig =
-  process.env.APP_BASE_URL +
+  process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/sentence-analysis-big.svg'
 
 var classNames = require('classnames')
@@ -24,7 +24,7 @@ var Loader = require('react-loaders').Loader
 const breakLine = text => {
   var br = React.createElement('br')
   var regex = /(<br \/>)/g
-  return text.split(regex).map(function(line, index) {
+  return text.split(regex).map(function (line, index) {
     return line.match(regex) ? (
       <React.Fragment key={index}>
         <br />
@@ -522,7 +522,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sentence)
+export default connect(mapStateToProps, mapDispatchToProps)(Sentence)

@@ -20,7 +20,8 @@ import { PageHealth, pageHealthData } from './../commons/PageHealth'
 import Disclaimer from './../../disclaimer-show-feature/containers/disclaimer/Disclaimer'
 
 const eyeContactBig =
-  process.env.APP_BASE_URL + '/dist/images/new/icons-big/eye-contact-big.svg'
+  process.env.APP_PRODUCT_BASE_URL +
+  '/dist/images/new/icons-big/eye-contact-big.svg'
 var Loader = require('react-loaders').Loader
 class EyeContactCenter extends Component {
   constructor(...args) {
