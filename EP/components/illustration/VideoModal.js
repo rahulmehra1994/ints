@@ -158,7 +158,6 @@ class VideoModal extends Component {
                 }
               }}>
               <Player
-                crossOrigin="anonymous"
                 playsInline
                 aspectratio={'4:3'}
                 ref="illusPlayer"

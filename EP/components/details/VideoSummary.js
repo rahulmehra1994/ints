@@ -256,8 +256,7 @@ class VideoSummary extends Component {
       <Player
         aspectRatio={'4:3'}
         ref="normalPlayer"
-        src={isVideoNormal ? userVideoProcessedPath : userVideoPath}
-        crossOrigin="anonymous">
+        src={isVideoNormal ? userVideoProcessedPath : userVideoPath}>
         {subtitlesEnabled && subtitleActivated && videoSubtitlesSrc !== null ? (
           <track kind="subtitles" default src={videoSubtitlesSrc} />
         ) : null}
