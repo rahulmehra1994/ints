@@ -1173,7 +1173,7 @@ export function fetchVideoSubtitles(url, onSubtitlesFetchSuccess) {
         counters,
         'fetchVideoSubtitlesCount',
         () => {
-          modifyInterview({ id, type, val }, (callback = null))
+          fetchVideoSubtitles(url, onSubtitlesFetchSuccess)
         },
         500,
         10,
