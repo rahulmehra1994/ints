@@ -37,7 +37,7 @@ import {
 } from './interviewActions'
 
 import { log } from './../actions/commonActions'
-import { logout } from '@vmockinc/dashboard/services/auth'
+import $ from 'jquery'
 
 export function isOnline() {
   if (navigator.onLine) {
@@ -89,6 +89,7 @@ export var counters = {
   updateChecksDoneCount: 0,
   getUserInfoCount: 0,
   modifyInterviewCount: 0,
+  fetchVideoSubtitlesCount: 0,
 }
 
 export function apiCallAgain(
@@ -1152,6 +1153,35 @@ export function modifyInterview({ id, type, val }, callback = null) {
 
       log(
         '%c Api faliure /modifyinterivewdetails',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
+export function fetchVideoSubtitles(url, onSubtitlesFetchSuccess) {
+  $.ajax({
+    url: url,
+    method: 'GET',
+  })
+    .done(data => {
+      counters['fetchVideoSubtitlesCount'] = 0
+      onSubtitlesFetchSuccess(data)
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'fetchVideoSubtitlesCount',
+        () => {
+          modifyInterview({ id, type, val }, (callback = null))
+        },
+        500,
+        10,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /fetchVideoSubtitles',
         'background: red; color: white',
         xhr
       )
