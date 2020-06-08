@@ -59,10 +59,12 @@ class VideoSummary extends Component {
     window.addEventListener('blur', this.pauseOnBlur)
     window.addEventListener('focus', this.playOnFocus)
 
-    fetchVideoSubtitles(
-      this.props.videoSubtitlesSrc,
-      this.onSubtitlesFetchSuccess
-    )
+    if (this.props.subtitlesEnabled && this.props.videoSubtitlesSrc !== null) {
+      fetchVideoSubtitles(
+        this.props.videoSubtitlesSrc,
+        this.onSubtitlesFetchSuccess
+      )
+    }
   }
 
   pauseOnBlur() {
