@@ -3,6 +3,7 @@ import ModalHOC from './../hoc/ModalHOC'
 import { Player, BigPlayButton } from 'video-react'
 import CenterLoading from './../CenterLoading'
 import { mutuals, log } from './../../actions/commonActions'
+import { fetchVideoSubtitles } from './../../actions/apiActions'
 import _ from 'underscore'
 
 var classNames = require('classnames')
@@ -15,6 +16,8 @@ class VideoModal extends Component {
       subtitleToolTipText: 'Subtitles:ON',
       illusPlayerState: null,
       hideSkipIntro: false,
+      subtitlesGoodToShow: false,
+      subtitleHref: null,
     }
     this.skipToTime = 20
     this.modalToggler = this.modalToggler.bind(this)
@@ -50,7 +53,21 @@ class VideoModal extends Component {
       this.handleStateChange.bind(this)
     )
 
+    fetchVideoSubtitles(
+      this.props.videoSubtitlesSrc,
+      this.onSubtitlesFetchSuccess
+    )
     window.addEventListener('keydown', this.playPauseOnSpace)
+  }
+
+  onSubtitlesFetchSuccess = data => {
+    this.setState({ subtitlesGoodToShow: true }, () => {
+      let blob_data = new Blob([data], { type: 'text/vtt' })
+      let href = window.URL.createObjectURL(blob_data)
+      this.setState({
+        subtitleHref: href,
+      })
+    })
   }
 
   playPauseOnSpace(e) {
@@ -137,7 +154,7 @@ class VideoModal extends Component {
   }
 
   render() {
-    let { videoSrc, videoSubtitlesSrc, tabIndex } = this.props
+    let { videoSrc, tabIndex } = this.props
     let {
       subtitleActivated,
       subtitleToolTipText,
@@ -158,7 +175,6 @@ class VideoModal extends Component {
                 }
               }}>
               <Player
-                crossOrigin="anonymous"
                 playsInline
                 aspectratio={'4:3'}
                 ref="illusPlayer"
@@ -169,8 +185,13 @@ class VideoModal extends Component {
                   aria-label={'video play button'}
                 />
 
-                {this.state.subtitleActivated ? (
-                  <track kind="subtitles" default src={videoSubtitlesSrc} />
+                {this.state.subtitleActivated &&
+                this.state.subtitlesGoodToShow ? (
+                  <track
+                    kind="subtitles"
+                    default
+                    src={this.state.subtitleHref}
+                  />
                 ) : null}
 
                 <div

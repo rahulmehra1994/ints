@@ -10,6 +10,7 @@ import {
 import { Player, BigPlayButton } from 'video-react'
 import VideoReplay from './../utilities/VideoReplay'
 import Feedback from './../feedback/Feedback'
+import { fetchVideoSubtitles } from './../../actions/apiActions'
 
 var classNames = require('classnames')
 var Loader = require('react-loaders').Loader
@@ -37,6 +38,7 @@ class VideoSummary extends Component {
       subtitleActivated: subtitleActivated,
       subtitleToolTipText: subtitleActivated ? 'Subtitles:ON' : 'Subtitles:OFF',
       hideMiniPlayerButton: false,
+      subtitleHref: null,
     }
 
     this.handleStateChange = this.handleStateChange.bind(this)
@@ -56,6 +58,13 @@ class VideoSummary extends Component {
     })
     window.addEventListener('blur', this.pauseOnBlur)
     window.addEventListener('focus', this.playOnFocus)
+
+    if (this.props.subtitlesEnabled && this.props.videoSubtitlesSrc !== null) {
+      fetchVideoSubtitles(
+        this.props.videoSubtitlesSrc,
+        this.onSubtitlesFetchSuccess
+      )
+    }
   }
 
   pauseOnBlur() {
@@ -231,6 +240,14 @@ class VideoSummary extends Component {
     this.play()
   }
 
+  onSubtitlesFetchSuccess = data => {
+    let blob_data = new Blob([data], { type: 'text/vtt' })
+    let href = window.URL.createObjectURL(blob_data)
+    this.setState({
+      subtitleHref: href,
+    })
+  }
+
   player() {
     let {
       regularVideoState,
@@ -256,10 +273,9 @@ class VideoSummary extends Component {
       <Player
         aspectRatio={'4:3'}
         ref="normalPlayer"
-        src={isVideoNormal ? userVideoProcessedPath : userVideoPath}
-        crossOrigin="anonymous">
+        src={isVideoNormal ? userVideoProcessedPath : userVideoPath}>
         {subtitlesEnabled && subtitleActivated && videoSubtitlesSrc !== null ? (
-          <track kind="subtitles" default src={videoSubtitlesSrc} />
+          <track kind="subtitles" default src={this.state.subtitleHref} />
         ) : null}
 
         <BigPlayButton position="center" />

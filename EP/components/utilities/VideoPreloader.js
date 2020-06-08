@@ -25,18 +25,8 @@ class VideoPreloader extends Component {
       <div
         className="fixed"
         style={{ height: 100, width: 300, zIndex: -100, opacity: 0 }}>
-        <video
-          ref="normalVideo"
-          src={userVideoPath}
-          style={stl}
-          crossOrigin="anonymous"
-        />
-        <video
-          ref="processedVideo"
-          src={userVideoProcessedPath}
-          style={stl}
-          crossOrigin="anonymous"
-        />
+        <video ref="normalVideo" src={userVideoPath} style={stl} />
+        <video ref="processedVideo" src={userVideoProcessedPath} style={stl} />
         <div className="absolute pin" style={{ opacity: 0 }} />
       </div>
     ) : null
@@ -59,7 +49,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoPreloader)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoPreloader)
