@@ -277,7 +277,7 @@ class SubNavbar extends Component {
 
           <div style={{ position: 'absolute', right: 20 }}>
             {this.props.performanceInfo !== null ? (
-              <div className="inline-block">
+              <button className="inline-block">
                 <NetworkFeedback
                   role="in-app"
                   placement="button"
@@ -285,11 +285,11 @@ class SubNavbar extends Component {
                   interviewName={this.props.intDetails.intName}
                   interview_id={this.props.appIntKey}
                   score={Number(this.props.performanceInfo.op_index.toFixed(2))}
-                  className="blueButton px-4 py-1 cursor-pointer rounded mr-2 text-14-normal"
+                  className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal"
                   text="Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
                 />
-              </div>
+              </button>
             ) : null}
 
             <a
@@ -299,7 +299,7 @@ class SubNavbar extends Component {
               onClick={() => {
                 goto('take_another_interview')
               }}>
-              <button className="float-right button blueButton">
+              <button className="float-right blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal">
                 + New Interview
               </button>
             </a>
