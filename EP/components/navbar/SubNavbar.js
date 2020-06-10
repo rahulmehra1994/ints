@@ -288,6 +288,8 @@ class SubNavbar extends Component {
                   className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal"
                   text="Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
+                  fetchResumeHistory={true}
+                  interviewDuration={this.props.intDetails.intDuration}
                 />
               </button>
             ) : null}
