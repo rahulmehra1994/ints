@@ -10,10 +10,11 @@ import {
 import { mutualLogics } from '../../actions/mutualLogics'
 import { sentenceMsgs } from '../messages/messages'
 import RevaluateContent from '../Revaluation/RevaluateContent'
-import SentenceSamples from '../popups/SentenceSamples'
+import SentenceSamples, { src } from '../popups/SentenceSamples'
 import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { highContrast } from '../../actions/commonActions'
 import { DetailInfoHeader } from '../commons/DetailHeader'
+
 const sentenceAnalysisBig =
   process.env.APP_PRODUCT_BASE_URL +
   '/dist/images/new/icons-big/sentence-analysis-big.svg'
@@ -55,16 +56,15 @@ function isEssentialItem(props) {
 }
 
 const DataRow = props => {
-  let samplesAvailable = () => {
-    if (
-      props.type === 'Greeting' ||
-      props.type === 'Gratitude' ||
-      props.type === 'Name'
-    ) {
-      return false
-    } else {
-      return true
+  let checkSamplesAreThere = () => {
+    let flag = false
+    for (let i = 0; i < src.length; i++) {
+      if (props.type === src[i].type) {
+        flag = true
+        break
+      }
     }
+    return flag
   }
 
   return (
@@ -110,7 +110,7 @@ const DataRow = props => {
                   Not detected!
                 </span>
 
-                {samplesAvailable() ? (
+                {checkSamplesAreThere() ? (
                   <div className="float-right">
                     <ViewSampleButton
                       tabIndex={props.tabIndex}
@@ -122,12 +122,25 @@ const DataRow = props => {
                 ) : null}
               </React.Fragment>
             ) : (
-              <span
-                className={classNames({
-                  'grey-color': !highContrast,
-                })}>
-                Can be added
-              </span>
+              <React.Fragment>
+                <span
+                  className={classNames({
+                    'grey-color': !highContrast,
+                  })}>
+                  Can be added
+                </span>
+
+                {checkSamplesAreThere() ? (
+                  <div className="float-right">
+                    <ViewSampleButton
+                      tabIndex={props.tabIndex}
+                      sentenceSamplesToggle={() => {
+                        props.sentenceSamplesToggle(props.type)
+                      }}
+                    />
+                  </div>
+                ) : null}
+              </React.Fragment>
             )}
           </React.Fragment>
         )}
