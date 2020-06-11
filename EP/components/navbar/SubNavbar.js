@@ -290,6 +290,9 @@ class SubNavbar extends Component {
                   imgUrl={this.props.videoProcessedThumb}
                   fetchResumeHistory={true}
                   interviewDuration={this.props.intDetails.intDuration}
+                  interviewCreatedAt={
+                    this.props.intDetails.basicData.created_at
+                  }
                 />
               </button>
             ) : null}

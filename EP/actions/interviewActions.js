@@ -21,6 +21,7 @@ export const INTERVIEW_DURATION = PREFIX + 'INTERVIEW_DURATION'
 export const INTERVIEW_NAME = PREFIX + 'INTERVIEW_NAME'
 export const INTERVIEW_QUESTION_ID = PREFIX + 'INTERVIEW_QUESTION_ID'
 export const INTERVIEW_FAVOURITE_STATUS = PREFIX + 'INTERVIEW_FAVOURITE_STATUS'
+export const INTERVIEW_BASIC_DATA = PREFIX + 'INTERVIEW_BASIC_DATA'
 
 export function setVideoProcessedPercent(percentage) {
   store.dispatch(createAction(VIDEO_PROCESSED_PERCENT)(percentage))
@@ -40,6 +41,10 @@ export function setInterviewQuestion(payload) {
 
 export function setIsInterviewFavourite(payload) {
   store.dispatch(createAction(INTERVIEW_FAVOURITE_STATUS)(payload))
+}
+
+export function setInterviewBasicData(payload) {
+  store.dispatch(createAction(INTERVIEW_BASIC_DATA)(payload))
 }
 
 export function createInterview2(callback, fd) {

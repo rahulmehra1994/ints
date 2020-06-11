@@ -34,6 +34,7 @@ import {
   setInterviewName,
   setInterviewQuestion,
   setIsInterviewFavourite,
+  setInterviewBasicData,
 } from './interviewActions'
 
 import { log } from './../actions/commonActions'
@@ -858,6 +859,7 @@ export function intKeyIsValid(
       setInterviewName(data.name)
       setInterviewQuestion(data.question_id)
       setIsInterviewFavourite(data.is_favourite)
+      setInterviewBasicData(data)
       if (whenIntKeyFound !== null) whenIntKeyFound(data)
     })
     .fail(xhr => {
