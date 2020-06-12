@@ -39,7 +39,6 @@ class SubNavbar extends Component {
 
   componentDidMount() {
     this.deactivateButtonForAdmin()
-    log('inteview details', this.props.intDetails)
   }
 
   deactivateButtonForAdmin() {
@@ -276,7 +275,8 @@ class SubNavbar extends Component {
           </div>
 
           <div style={{ position: 'absolute', right: 20 }}>
-            {this.props.performanceInfo !== null ? (
+            {this.props.performanceInfo !== null &&
+            this.props.intDetails.basicData !== null ? (
               <button className="inline-block">
                 <NetworkFeedback
                   role="in-app"
