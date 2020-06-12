@@ -533,8 +533,28 @@ body:not(.using-mouse) .btn-primary:focus {
     color: white;
   }
 
-  .app-network-feedback-modal-threshold{
+  .app-network-feedback-modal-threshold {
     color: white;
+    &[data-tooltip]:hover {
+      &:before {
+        bottom: -5px;
+        left: unset;
+        right: 50%;
+        top: unset;
+        border-color: transparent;
+        border-bottom-color: #1b1f23;
+        transform: none !important;
+        background: transparent;
+        box-shadow: none;
+        margin-bottom: 0;
+      }
+      &:after {
+        border: none;
+        overflow: visible;
+        right: unset;
+        bottom: unset;
+      }
+    }
   }
 
   .blueButton:hover {
