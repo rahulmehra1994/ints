@@ -534,7 +534,6 @@ body:not(.using-mouse) .btn-primary:focus {
   }
 
   .app-network-feedback-modal-threshold {
-    color: white;
     &[data-tooltip]:hover {
       &:before {
         bottom: -5px;
@@ -555,6 +554,14 @@ body:not(.using-mouse) .btn-primary:focus {
         bottom: unset;
       }
     }
+  }
+
+  #networkFeedbackButton .app-network-feedback-modal-threshold{
+    color: $cerulean;
+  }
+
+  #networkFeedbackButton:hover {
+    background: $background-color;
   }
 
   .blueButton:hover {

@@ -274,10 +274,16 @@ class SubNavbar extends Component {
             ) : null}
           </div>
 
-          <div style={{ position: 'absolute', right: 20 }}>
+          <div
+            className="flex justify-center items-center"
+            style={{ position: 'absolute', right: 20 }}>
             {this.props.performanceInfo !== null &&
             this.props.intDetails.basicData !== null ? (
-              <button className="inline-block">
+              <div
+                className="float-left flex justify-center items-center px-2 py-1 rounded cursor-pointer"
+                id="networkFeedbackButton">
+                <span className="ep-icon-share mr-4 brand-blue-color" />
+
                 <NetworkFeedback
                   role="in-app"
                   placement="button"
@@ -285,8 +291,8 @@ class SubNavbar extends Component {
                   interviewName={this.props.intDetails.intName}
                   interview_id={this.props.appIntKey}
                   score={Number(this.props.performanceInfo.op_index.toFixed(2))}
-                  className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal app-network-feedback-modal-threshold"
-                  text="Network Feedback"
+                  className="float-left"
+                  text="Ask for Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
                   fetchResumeHistory={true}
                   interviewDuration={this.props.intDetails.intDuration}
@@ -294,17 +300,18 @@ class SubNavbar extends Component {
                     this.props.intDetails.basicData.created_at
                   }
                 />
-              </button>
+              </div>
             ) : null}
 
             <a
+              className="float-left ml-6"
               tabIndex={this.props.tabIndex}
               aria-label={`calibration page`}
               href={props.appUrls.calibration}
               onClick={() => {
                 goto('take_another_interview')
               }}>
-              <button className="float-right blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal">
+              <button className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal">
                 + New Interview
               </button>
             </a>
