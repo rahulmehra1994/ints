@@ -8,6 +8,12 @@ import { setVideoChunksState } from './../../actions/actions'
 import VideoReplay from './../utilities/VideoReplay'
 import TimelineChart from './TimelineVideoChart'
 import Tabs from './Tabs'
+import {
+  Transition,
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group'
+import anime from 'animejs/lib/anime'
 
 var classNames = require('classnames')
 class TimelineVideos extends React.Component {
@@ -69,8 +75,49 @@ class TimelineVideos extends React.Component {
     })
   }
 
+  firstAnimate(val) {
+    let animationDuration = 1000
+
+    if (val === -1) {
+      //kam ho rhe hain left side main
+      anime({
+        targets: ['.left-side-cards', '.video-card', '.right-side-cards'],
+        translateX: ['-4%', `0%`],
+        delay: (el, i, l) => {
+          return i * 70
+        },
+        duration: animationDuration,
+        easing: 'easeInOutQuad',
+        complete: () => {
+          this.playVideoParts()
+          this.changeByOneFurther(val)
+        },
+      })
+    }
+
+    if (val === 1) {
+      anime({
+        targets: ['.left-side-cards', '.video-card', '.right-side-cards'],
+        translateX: ['4%', `0%`],
+        delay: (el, i, l) => {
+          return i * 70
+        },
+        duration: animationDuration,
+        easing: 'easeInOutQuad',
+        complete: () => {
+          this.playVideoParts()
+          this.changeByOneFurther(val)
+        },
+      })
+    }
+  }
+
   changeByOne(val) {
+    this.firstAnimate(val)
     this.hideReplay()
+  }
+
+  changeByOneFurther(val) {
     if (
       (this.state.position === 0 && val === -1) ||
       (this.state.position === this.state.videoChunks.length - 1 && val === 1)
@@ -78,8 +125,8 @@ class TimelineVideos extends React.Component {
       return
     }
 
-    this.setState({ position: this.state.position + val }, () => {
-      this.playVideoParts()
+    this.setState({
+      position: this.state.position + val,
     })
   }
 
@@ -513,66 +560,91 @@ class TimelineVideos extends React.Component {
           </span>
         </div>
 
-        <div className="timeline-video cursor-pointer">
-          <Player
-            tabIndex={this.props.tabIndex}
-            aspectRatio={'4:3'}
-            ref="chunksPlayer"
-            src={this.props.userVideoPath}>
-            <BigPlayButton position="center" />
-          </Player>
+        <div className="flex justify-center items-center">
+          <div
+            className="timeline-video cursor-pointer relative"
+            style={{ width: 380, height: 285 }}>
+            {this.state.videoChunks.map((item, index) => {
+              let videoZIndex = 200
+              if (index < this.state.position) {
+                return (
+                  <img
+                    src={this.props.videoThumb}
+                    className={classNames(
+                      'absolute border border-grey-darkest shadow-1 rounded left-side-cards'
+                    )}
+                    style={{
+                      zIndex: videoZIndex - (this.state.position - index),
+                      left: `-${(this.state.position - index) * 4}%`,
+                      top: `${(this.state.position - index) * 4}%`,
+                      height: `${100 - (this.state.position - index) * 8}%`,
+                    }}
+                  />
+                )
+              }
 
-          <VideoReplay
-            ariaLabel={`Replay ${this.state.position + 1} out of ${
-              this.state.videoChunks.length
-            } ${this.state.currentKey} video clip`}
-            tabIndex={this.props.tabIndex}
-            togglingState={this.state.showReplay}
-            onVideoReplay={this.onVideoReplay}
-            showUnprocessed
-          />
+              if (index > this.state.position) {
+                return (
+                  <img
+                    src={this.props.videoThumb}
+                    className={classNames(
+                      'absolute border border-grey-darkest shadow-1 rounded right-side-cards'
+                    )}
+                    style={{
+                      zIndex: videoZIndex - index,
+                      right: `-${(index - this.state.position) * 4}%`,
+                      top: `${(index - this.state.position) * 4}%`,
+                      height: `${100 - (index - this.state.position) * 8}%`,
+                    }}
+                  />
+                )
+              }
+            })}
 
-          {this.props.videoChunksState &&
-          this.props.videoChunksState.paused &&
-          this.props.videoChunksState.waiting === false &&
-          this.props.videoChunksState.seeking === false ? (
-            <button
-              className="absolute player-play-copy"
-              onClick={() => {
-                this.play()
-              }}
-              tabIndex={this.props.tabIndex}>
-              <div className="play-triangle relative" />
-            </button>
-          ) : null}
+            <div
+              style={{ zIndex: 200 }}
+              className="absolute pin border border-black shadow-1 video-card">
+              <Player
+                tabIndex={this.props.tabIndex}
+                aspectRatio={'4:3'}
+                ref="chunksPlayer"
+                src={this.props.userVideoPath}>
+                <BigPlayButton position="center" />
+              </Player>
 
-          {this.props.videoChunksState &&
-          (this.props.videoChunksState.waiting ||
-            this.props.videoChunksState.seeking)
-            ? null
-            : null}
+              <VideoReplay
+                ariaLabel={`Replay ${this.state.position + 1} out of ${
+                  this.state.videoChunks.length
+                } ${this.state.currentKey} video clip`}
+                tabIndex={this.props.tabIndex}
+                togglingState={this.state.showReplay}
+                onVideoReplay={this.onVideoReplay}
+                showUnprocessed
+              />
+            </div>
 
-          {this.state.emoji ? (
-            this.props.emoji && this.props.emoji.type === 'bad' ? (
-              <div
-                className={classNames({
-                  accessiblityRedBg: highContrast,
-                  redBg: !highContrast,
-                })}
-                style={stl}>
-                <span>{this.state.currentKey}</span>
-              </div>
-            ) : (
-              <div
-                className={classNames({
-                  accessiblityGreenBg: highContrast,
-                  greenBg: !highContrast,
-                })}
-                style={stl}>
-                <span>{this.state.currentKey}</span>
-              </div>
-            )
-          ) : null}
+            {this.state.emoji ? (
+              this.props.emoji && this.props.emoji.type === 'bad' ? (
+                <div
+                  className={classNames({
+                    accessiblityRedBg: highContrast,
+                    redBg: !highContrast,
+                  })}
+                  style={stl}>
+                  <span>{this.state.currentKey}</span>
+                </div>
+              ) : (
+                <div
+                  className={classNames({
+                    accessiblityGreenBg: highContrast,
+                    greenBg: !highContrast,
+                  })}
+                  style={stl}>
+                  <span>{this.state.currentKey}</span>
+                </div>
+              )
+            ) : null}
+          </div>
         </div>
       </div>
     )
@@ -595,6 +667,7 @@ function mapStateToProps(state, ownProps) {
       ? state.concatenateResults
       : null,
     currentTabIndex: state.tabIndex.currentTabIndex,
+    videoThumb: state.epPaths.userVideoProcessedThumb,
   }
 }
 

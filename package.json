@@ -64,7 +64,6 @@
     "react-router-dom": "^5.1.2",
     "react-router-redux": "^4.0.8",
     "react-tooltip": "^3.11.1",
-    "react-transition-group": "^2.2.0",
     "recordrtc": "^5.4.6",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",

@@ -1891,6 +1891,11 @@ body:not(.using-mouse) .btn-primary:focus {
     margin-top: 20px;
     max-width: 480px;
   }
+
+  .timeline-video .video-react .video-react-control-bar {
+    display: none;
+  }
+
   .timeline-video
     .video-react
     .video-react-big-play-button.video-react-big-play-button-center {

@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions'
 import State from '@vmockinc/dashboard/services/State'
-
 import {
   epResults,
   convertVideoRes,
