@@ -546,17 +546,21 @@ body:not(.using-mouse) .btn-primary:focus {
         background: transparent;
         box-shadow: none;
         margin-bottom: 0;
+        // temporarily done to hide on ep only
+        display: none;
       }
       &:after {
         border: none;
         overflow: visible;
         right: unset;
         bottom: unset;
+        // temporarily done to hide on ep only
+        display: none;
       }
     }
   }
 
-  #networkFeedbackButton .app-network-feedback-modal-threshold{
+  #networkFeedbackButton .app-network-feedback-modal-threshold {
     color: $cerulean;
   }
 

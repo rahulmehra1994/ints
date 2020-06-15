@@ -280,9 +280,9 @@ class SubNavbar extends Component {
             {this.props.performanceInfo !== null &&
             this.props.intDetails.basicData !== null ? (
               <div
-                className="float-left flex justify-center items-center px-2 py-1 rounded cursor-pointer"
+                className="float-left flex justify-center items-center px-2 py-1 rounded"
                 id="networkFeedbackButton">
-                <span className="ep-icon-share mr-4 brand-blue-color" />
+                <span className="ep-icon-share pr-4 brand-blue-color cursor-pointer" />
 
                 <NetworkFeedback
                   role="in-app"
@@ -291,7 +291,7 @@ class SubNavbar extends Component {
                   interviewName={this.props.intDetails.intName}
                   interview_id={this.props.appIntKey}
                   score={Number(this.props.performanceInfo.op_index.toFixed(2))}
-                  className="float-left"
+                  className="float-left cursor-pointer"
                   text="Ask for Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
                   fetchResumeHistory={true}
