@@ -280,10 +280,8 @@ class SubNavbar extends Component {
             {this.props.performanceInfo !== null &&
             this.props.intDetails.basicData !== null ? (
               <div
-                className="float-left flex justify-center items-center px-2 py-1 rounded"
+                className="float-left flex justify-center items-center px-2 py-1"
                 id="networkFeedbackButton">
-                <span className="ep-icon-share pr-4 brand-blue-color cursor-pointer" />
-
                 <NetworkFeedback
                   role="in-app"
                   placement="button"

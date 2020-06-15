@@ -562,10 +562,7 @@ body:not(.using-mouse) .btn-primary:focus {
 
   #networkFeedbackButton .app-network-feedback-modal-threshold {
     color: $cerulean;
-  }
-
-  #networkFeedbackButton:hover {
-    background: $background-color;
+    @extend .text-14-normal;
   }
 
   .blueButton:hover {
