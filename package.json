@@ -19,7 +19,7 @@
     "dev": "webpack -d --watch"
   },
   "dependencies": {
-    "@vmockinc/dashboard": "git+ssh://git@github.com/dhiraj2602/dashboard-ui.git#nf_dev",
+    "@vmockinc/dashboard": "git+ssh://git@github.com/vmockinc/dashboard-ui.git",
     "animejs": "^3.1.0",
     "bootstrap": "^3.4.1",
     "bootstrap-sass": "^3.3.7",

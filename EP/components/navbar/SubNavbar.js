@@ -130,7 +130,7 @@ class SubNavbar extends Component {
 
   render() {
     let props = this.props
-    let { tabIndex } = this.props
+    let { tabIndex, performanceInfo } = this.props
     let { intName, isFavourite } = this.props.intDetails
     let stl = { height: 40, float: 'left', paddingTop: 12 }
     return (
