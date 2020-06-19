@@ -288,7 +288,10 @@ class SubNavbar extends Component {
                   product="interview"
                   interviewName={this.props.intDetails.intName}
                   interview_id={this.props.appIntKey}
-                  score={Number(this.props.performanceInfo.op_index.toFixed(2))}
+                  score={
+                    performanceInfo.level_info[performanceInfo.current_level]
+                      .score
+                  }
                   className="float-left cursor-pointer"
                   text="Share for Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
