@@ -8,14 +8,10 @@ import { setVideoChunksState } from './../../actions/actions'
 import VideoReplay from './../utilities/VideoReplay'
 import TimelineChart from './TimelineVideoChart'
 import Tabs from './Tabs'
-import {
-  Transition,
-  CSSTransition,
-  TransitionGroup,
-} from 'react-transition-group'
 import anime from 'animejs/lib/anime'
 
 var classNames = require('classnames')
+const offset = 6
 class TimelineVideos extends React.Component {
   constructor(...args) {
     super(...args)
@@ -76,17 +72,26 @@ class TimelineVideos extends React.Component {
   }
 
   firstAnimate(val) {
-    let animationDuration = 1000
+    let animationDuration = 1200
 
-    if (val === -1) {
-      //kam ho rhe hain left side main
+    if (val === 1) {
       anime({
         targets: ['.left-side-cards', '.video-card', '.right-side-cards'],
-        translateX: ['-4%', `0%`],
-        delay: (el, i, l) => {
-          return i * 70
+        translateX: (el, i, l) => {
+          if (i === 2) {
+            return [`${offset * 2}%`, `0%`]
+          }
+          return [`${offset}%`, `0%`]
         },
-        duration: animationDuration,
+        scale: (el, i, l) => {
+          return [0.9, 1]
+        },
+        delay: (el, i, l) => {
+          return i * 200
+        },
+        duration: (el, i, l) => {
+          return 400
+        },
         easing: 'easeInOutQuad',
         complete: () => {
           this.playVideoParts()
@@ -95,14 +100,26 @@ class TimelineVideos extends React.Component {
       })
     }
 
-    if (val === 1) {
+    if (val === -1) {
+      //kam ho rhe hain left side main
+
       anime({
         targets: ['.left-side-cards', '.video-card', '.right-side-cards'],
-        translateX: ['4%', `0%`],
-        delay: (el, i, l) => {
-          return i * 70
+        translateX: (el, i, l) => {
+          if (i === 2) {
+            return [`-${offset * 2}%`, `0%`]
+          }
+          return [`-${offset}%`, `0%`]
         },
-        duration: animationDuration,
+        scale: (el, i, l) => {
+          return [0.9, 1]
+        },
+        delay: (el, i, l) => {
+          return i * 200
+        },
+        duration: (el, i, l) => {
+          return 400
+        },
         easing: 'easeInOutQuad',
         complete: () => {
           this.playVideoParts()
@@ -113,6 +130,7 @@ class TimelineVideos extends React.Component {
   }
 
   changeByOne(val) {
+    this.pause()
     this.firstAnimate(val)
     this.hideReplay()
   }
@@ -131,6 +149,7 @@ class TimelineVideos extends React.Component {
   }
 
   changeByAnyVal(val) {
+    this.pause()
     this.hideReplay()
     this.setState({ position: val }, () => {
       this.playVideoParts()
@@ -566,36 +585,48 @@ class TimelineVideos extends React.Component {
             style={{ width: 380, height: 285 }}>
             {this.state.videoChunks.map((item, index) => {
               let videoZIndex = 200
-              if (index < this.state.position) {
+              let styleVarLeft = {
+                left: `-${(this.state.position - index) * offset}%`,
+                top: `${(this.state.position - index) * offset}%`,
+                height: `${100 - (this.state.position - index) * 2 * offset}%`,
+                opacity: 1 - (this.state.position - index) * 0.33,
+              }
+
+              let styleVarRight = {
+                right: `-${(index - this.state.position) * offset}%`,
+                top: `${(index - this.state.position) * offset}%`,
+                height: `${100 - (index - this.state.position) * 2 * offset}%`,
+                opacity: 1 - (index - this.state.position) * 0.33,
+              }
+
+              if (
+                index < this.state.position &&
+                this.state.position - index <= 2
+              ) {
                 return (
                   <img
                     src={this.props.videoThumb}
                     className={classNames(
                       'absolute border border-grey-darkest shadow-1 rounded left-side-cards'
                     )}
-                    style={{
-                      zIndex: videoZIndex - (this.state.position - index),
-                      left: `-${(this.state.position - index) * 4}%`,
-                      top: `${(this.state.position - index) * 4}%`,
-                      height: `${100 - (this.state.position - index) * 8}%`,
-                    }}
+                    data-style={JSON.stringify(styleVarLeft)}
+                    style={styleVarLeft}
                   />
                 )
               }
 
-              if (index > this.state.position) {
+              if (
+                index > this.state.position &&
+                index - this.state.position <= 2
+              ) {
                 return (
                   <img
                     src={this.props.videoThumb}
                     className={classNames(
                       'absolute border border-grey-darkest shadow-1 rounded right-side-cards'
                     )}
-                    style={{
-                      zIndex: videoZIndex - index,
-                      right: `-${(index - this.state.position) * 4}%`,
-                      top: `${(index - this.state.position) * 4}%`,
-                      height: `${100 - (index - this.state.position) * 8}%`,
-                    }}
+                    data-style={JSON.stringify(styleVarRight)}
+                    style={styleVarRight}
                   />
                 )
               }
@@ -603,7 +634,7 @@ class TimelineVideos extends React.Component {
 
             <div
               style={{ zIndex: 200 }}
-              className="absolute pin border border-black shadow-1 video-card">
+              className="absolute pin border border-grey-darkest shadow-1 video-card bg-black">
               <Player
                 tabIndex={this.props.tabIndex}
                 aspectRatio={'4:3'}
@@ -611,6 +642,20 @@ class TimelineVideos extends React.Component {
                 src={this.props.userVideoPath}>
                 <BigPlayButton position="center" />
               </Player>
+
+              {this.props.videoChunksState &&
+              this.props.videoChunksState.paused &&
+              this.props.videoChunksState.waiting === false &&
+              this.props.videoChunksState.seeking === false ? (
+                <button
+                  className="absolute player-play-copy"
+                  onClick={() => {
+                    this.play()
+                  }}
+                  tabIndex={this.props.tabIndex}>
+                  <div className="play-triangle relative" />
+                </button>
+              ) : null}
 
               <VideoReplay
                 ariaLabel={`Replay ${this.state.position + 1} out of ${
