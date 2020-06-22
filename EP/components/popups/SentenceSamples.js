@@ -6,7 +6,7 @@ import _ from 'underscore'
 const FocusTrap = require('focus-trap-react')
 
 var Loader = require('react-loaders').Loader
-var src = [
+export const src = [
   {
     id: 'education',
     head: 'Education',

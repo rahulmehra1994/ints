@@ -49,7 +49,7 @@ export default class WordComponent extends Component {
     this.props.toggleAll(this.props.category)
 
     try {
-      document.querySelector('. bar').scrollTo(0, 0)
+      document.querySelector('.contentbar').scrollTo(0, 0)
     } catch (e) {
       console.error(e)
     }

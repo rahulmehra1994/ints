@@ -11,6 +11,7 @@ import { modifyInterview, intKeyIsValid } from '../../actions/apiActions'
 import _ from 'underscore'
 import RenameInterivew from './../popups/RenameInterview'
 import { notify } from '@vmockinc/dashboard/services/helpers'
+import NetworkFeedback from '@vmockinc/dashboard/NetworkFeedback'
 
 var goto = function (data) {
   mutuals.socketTracking({
@@ -129,7 +130,7 @@ class SubNavbar extends Component {
 
   render() {
     let props = this.props
-    let { tabIndex } = this.props
+    let { tabIndex, performanceInfo } = this.props
     let { intName, isFavourite } = this.props.intDetails
     let stl = { height: 40, float: 'left', paddingTop: 12 }
     return (
@@ -273,18 +274,49 @@ class SubNavbar extends Component {
             ) : null}
           </div>
 
-          <a
-            style={{ position: 'absolute', right: 20 }}
-            tabIndex={this.props.tabIndex}
-            aria-label={`calibration page`}
-            href={props.appUrls.calibration}
-            onClick={() => {
-              goto('take_another_interview')
-            }}>
-            <button className="float-right button blueButton">
-              + New Interview
-            </button>
-          </a>
+          <div
+            className="flex justify-center items-center"
+            style={{ position: 'absolute', right: 20 }}>
+            {this.props.performanceInfo !== null &&
+            this.props.intDetails.basicData !== null ? (
+              <div
+                className="float-left flex justify-center items-center px-2 py-1"
+                id="networkFeedbackButton">
+                <NetworkFeedback
+                  role="in-app"
+                  placement="button"
+                  product="interview"
+                  interviewName={this.props.intDetails.intName}
+                  interview_id={this.props.appIntKey}
+                  score={
+                    performanceInfo.level_info[performanceInfo.current_level]
+                      .score
+                  }
+                  className="float-left cursor-pointer"
+                  text="Share for Network Feedback"
+                  imgUrl={this.props.videoProcessedThumb}
+                  fetchResumeHistory={true}
+                  interviewDuration={this.props.intDetails.intDuration}
+                  interviewCreatedAt={
+                    this.props.intDetails.basicData.created_at
+                  }
+                />
+              </div>
+            ) : null}
+
+            <a
+              className="float-left ml-6"
+              tabIndex={this.props.tabIndex}
+              aria-label={`calibration page`}
+              href={props.appUrls.calibration}
+              onClick={() => {
+                goto('take_another_interview')
+              }}>
+              <button className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal">
+                + New Interview
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     )
@@ -303,6 +335,8 @@ const mapStateToProps = state => {
       : null,
     intDetails: state.interviewEP,
     epCustomizations: state.epCustomizations,
+    videoProcessedThumb: state.epPaths.userVideoProcessedThumb,
+    performanceInfo: state.results.performanceInfo,
   }
 }
 

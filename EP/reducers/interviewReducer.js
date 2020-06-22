@@ -6,6 +6,7 @@ import {
   INTERVIEW_NAME,
   INTERVIEW_QUESTION_ID,
   INTERVIEW_FAVOURITE_STATUS,
+  INTERVIEW_BASIC_DATA,
 } from './../actions/interviewActions'
 
 export const interviewEP = handleActions(
@@ -35,6 +36,11 @@ export const interviewEP = handleActions(
       newState.isFavourite = action.payload
       return newState
     },
+    [INTERVIEW_BASIC_DATA]: (state, action) => {
+      let newState = $.extend(true, {}, state)
+      newState.basicData = action.payload
+      return newState
+    },
   },
   {
     videoProcessedPercent: 0,
@@ -42,5 +48,6 @@ export const interviewEP = handleActions(
     intName: null,
     intQuestionId: null,
     isFavourite: null,
+    basicData: null,
   }
 )

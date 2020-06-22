@@ -533,6 +533,38 @@ body:not(.using-mouse) .btn-primary:focus {
     color: white;
   }
 
+  .app-network-feedback-modal-threshold {
+    &[data-tooltip]:hover {
+      &:before {
+        bottom: -5px;
+        left: unset;
+        right: 50%;
+        top: unset;
+        border-color: transparent;
+        border-bottom-color: #1b1f23;
+        transform: none !important;
+        background: transparent;
+        box-shadow: none;
+        margin-bottom: 0;
+        // temporarily done to hide on ep only
+        display: none;
+      }
+      &:after {
+        border: none;
+        overflow: visible;
+        right: unset;
+        bottom: unset;
+        // temporarily done to hide on ep only
+        display: none;
+      }
+    }
+  }
+
+  #networkFeedbackButton .app-network-feedback-modal-threshold {
+    color: $cerulean;
+    @extend .text-14-normal;
+  }
+
   .blueButton:hover {
     background-color: $dark-blue;
     color: $white;
