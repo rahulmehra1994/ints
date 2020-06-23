@@ -204,7 +204,8 @@ class Calibration extends Component {
       this.props.setAppIntKey(data.interview_key)
       setAppUrls('/' + data.interview_key)
       this.setState({ interviewKey: data.interview_key }, () => {
-        this.initRun()
+        if(this.state.shouldMount !== true)
+          this.initRun()
       })
     }
   }
