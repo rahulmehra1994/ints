@@ -62,6 +62,13 @@ class Improvement extends Component {
   }
 
   modifyData(cat) {
+    if (this.props.improveArticles.length === 0) {
+      setTimeout(() => {
+        this.modifyData(cat)
+      }, 1000)
+
+      return
+    }
     let temp = this.props.improveArticles.filter((item, index) => {
       if (cat === item.category) return true
       else return false
@@ -190,7 +197,7 @@ class Improvement extends Component {
     let { tabIndexesMain, category, tabIndexes, articles } = this.state
     let compLoader = this.props.common.compLoader
 
-    if (articles.length <= 0) {
+    if (articles.length < 1) {
       return (
         <div className="cardStyle clearfix bg-white p-6">
           <div className="clearfix loaderWrap">
@@ -241,9 +248,9 @@ class Improvement extends Component {
                   <div className="mt-1 relative">
                     <ContentLoader
                       speed={2}
-                      width={96}
+                      width={99}
                       height={54}
-                      viewBox="0 0 96 54"
+                      viewBox="0 0 99 54"
                       backgroundColor="#dedede"
                       foregroundColor="#b7b7b7">
                       <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />

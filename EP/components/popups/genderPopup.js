@@ -218,10 +218,20 @@ class GenderPopup extends Component {
           <div className="text-left clearfix mt-8">
             <div className="basicInfoOption">
               <label
-                className="para hintColor block"
+                className="block para"
                 tabIndex="20"
                 aria-label={`accent selection below, it is a mandatory field.`}>
-                Accent
+                <span>Accent</span>
+                <span className="hover-wrap ml-2">
+                  <span className="ep-icon-info-outline" />
+
+                  <div
+                    className="hover-elm pin-l bg-white shadow-1 rounded-lg p-4 text-14-med"
+                    style={{ width: 250 }}>
+                    This information will be used by speech recognition
+                    algorithms for most accurate results.
+                  </div>
+                </span>
               </label>
 
               <Dropdown
@@ -245,10 +255,20 @@ class GenderPopup extends Component {
             <div className="text-left clearfix mt-12">
               <div className="basicInfoOption">
                 <label
-                  className="para hintColor"
+                  className="para"
                   tabIndex="20"
                   aria-label={`Appearance selection field below. this is mandatory`}>
-                  Appearance
+                  <span>Appearance</span>
+                  <span className="hover-wrap ml-2">
+                    <span className="ep-icon-info-outline" />
+
+                    <div
+                      className="hover-elm pin-l bg-white shadow-1 rounded-lg p-4 text-14-med"
+                      style={{ width: 250 }}>
+                      This information will be used in providing feedback on
+                      your interview appearance.
+                    </div>
+                  </span>
                 </label>
 
                 <div className="gender clearfix">

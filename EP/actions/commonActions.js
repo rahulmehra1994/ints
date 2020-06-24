@@ -561,28 +561,6 @@ export function noDetection(props) {
   }
 }
 
-export function modifyIntNameForDisplay(name) {
-  let pattern = /[a-zA-Z_]/g // gives true if string contains any occurence of alphabet
-  let cond = pattern.test(name)
-
-  if (cond) {
-    return name
-  } else {
-    return removeAllStartingZero(name)
-  }
-}
-
-function removeAllStartingZero(name) {
-  let index = null
-  for (let i = 0; i < name.length; i++) {
-    if (name[i] !== '0') {
-      index = i
-      break
-    }
-  }
-  return 'Interview #' + name.slice(index)
-}
-
 export function deepCopy(val) {
   return JSON.parse(JSON.stringify(val))
 }

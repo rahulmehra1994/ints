@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {
-  mutuals,
-  modifyIntNameForDisplay,
-  common,
-  log,
-} from '../../actions/commonActions'
+import { mutuals, common, log } from '../../actions/commonActions'
 import { modifyInterview, intKeyIsValid } from '../../actions/apiActions'
 import _ from 'underscore'
 import RenameInterivew from './../popups/RenameInterview'
@@ -144,8 +139,8 @@ class SubNavbar extends Component {
           <div
             className="elipsis"
             style={{ ...stl, maxWidth: 230 }}
-            title={modifyIntNameForDisplay(intName)}>
-            {modifyIntNameForDisplay(intName)}
+            title={intName}>
+            {intName}
           </div>
 
           <button

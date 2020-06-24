@@ -4,7 +4,6 @@ import { modifyInterview, intKeyIsValid } from './../../actions/apiActions'
 import {
   mutuals,
   setInterviews,
-  modifyIntNameForDisplay,
   checkForSpecialChars,
 } from './../../actions/commonActions'
 import { notify } from '@vmockinc/dashboard/services/helpers'
@@ -32,7 +31,7 @@ class RenameModal extends Component {
   }
 
   componentDidMount() {
-    let initialName = modifyIntNameForDisplay(this.props.intDetails.intName)
+    let initialName = this.props.intDetails.intName
     this.setState({ initialName: initialName })
     this.attachEscEvent()
   }
@@ -125,7 +124,7 @@ class RenameModal extends Component {
               <div className="mt-10">
                 <input
                   ref="renameInput"
-                  defaultValue={modifyIntNameForDisplay(intName)}
+                  defaultValue={intName}
                   className="px-4 border border border-grey-light rounded w-full text-14-normal"
                   style={{ height: 35 }}
                   onInput={event => {
