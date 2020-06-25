@@ -201,46 +201,40 @@ class SubNavbar extends Component {
           </button>
 
           <Link
+            className="ml-6"
             tabIndex={this.props.tabIndex}
             aria-label={`summary page`}
             to={props.appUrls.summary}
             onClick={() => {
               goto('summary_page_link')
             }}>
-            {this.summaryActive() ? (
-              <div
-                className="navbarActiveTxt"
-                style={{ ...stl, marginLeft: 30 }}>
-                Summary{' '}
-              </div>
-            ) : (
-              <div className="blackTextApp" style={{ ...stl, marginLeft: 30 }}>
-                Summary{' '}
-              </div>
-            )}
+            <div
+              className={
+                this.summaryActive() ? 'navbarActiveTxt' : 'blackTextApp'
+              }
+              style={stl}>
+              Summary{' '}
+            </div>
           </Link>
 
           <Link
+            className="ml-6"
             tabIndex={tabIndex}
             aria-label={`detailed page`}
             to={props.appUrls.eyeGaze}
             onClick={() => {
               goto('video_summary')
             }}>
-            {this.detailedActive() ? (
-              <div
-                className="navbarActiveTxt"
-                style={{ ...stl, marginLeft: 30 }}>
-                Detailed
-              </div>
-            ) : (
-              <div className="blackTextApp" style={{ ...stl, marginLeft: 30 }}>
-                Detailed
-              </div>
-            )}
+            <div
+              className={
+                this.detailedActive() ? 'navbarActiveTxt' : 'blackTextApp'
+              }
+              style={stl}>
+              Detailed
+            </div>
           </Link>
 
-          <div className="relative">
+          <div className="ml-6 relative">
             <Link
               tabIndex={this.props.tabIndex}
               aria-label={`Video Feedback page`}
@@ -250,15 +244,11 @@ class SubNavbar extends Component {
               }}>
               {this.props.location.pathname ===
               this.props.appUrls.videosummary ? (
-                <div
-                  className="navbarActiveTxt"
-                  style={{ ...stl, marginLeft: 30 }}>
+                <div className="navbarActiveTxt" style={stl}>
                   Video Feedback
                 </div>
               ) : (
-                <div
-                  className="blackTextApp"
-                  style={{ ...stl, marginLeft: 30 }}>
+                <div className="blackTextApp" style={stl}>
                   Video Feedback
                 </div>
               )}
@@ -307,7 +297,7 @@ class SubNavbar extends Component {
               onClick={() => {
                 goto('take_another_interview')
               }}>
-              <button className="blueButton px-4 py-2 cursor-pointer rounded mr-2 text-14-normal">
+              <button className="blueButton px-4 py-2 cursor-pointer rounded text-14-normal">
                 + New Interview
               </button>
             </a>
