@@ -277,7 +277,7 @@ class SubNavbar extends Component {
                     performanceInfo.level_info[performanceInfo.current_level]
                       .score
                   }
-                  className="float-left cursor-pointer"
+                  className="float-left"
                   text="Share for Network Feedback"
                   imgUrl={this.props.videoProcessedThumb}
                   fetchResumeHistory={true}
