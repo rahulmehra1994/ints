@@ -50,7 +50,7 @@ class RevaluateContent extends Component {
     document.onkeyup = evt => {
       evt = evt || window.event
       if (evt.keyCode === 27) {
-        this.modalToggler()
+        this.modalClose()
       }
     }
   }
@@ -141,6 +141,32 @@ class RevaluateContent extends Component {
     if (this.showLoader() || this.state.loaderStatus) return
     this.setState({
       showButton: !this.state.showButton,
+      disableSubmitButton: true,
+    })
+  }
+
+  modalOpener() {
+    this.addEscEvent()
+    trackingDebounceSmall({
+      event_type: 'click',
+      event_description: 'EP revaluation modal opened',
+    })
+    if (this.showLoader() || this.state.loaderStatus) return
+    this.setState({
+      showButton: false,
+      disableSubmitButton: true,
+    })
+  }
+
+  modalClose() {
+    this.removeEscEvent()
+    trackingDebounceSmall({
+      event_type: 'click',
+      event_description: 'EP revaluation modal closed',
+    })
+    if (this.showLoader() || this.state.loaderStatus) return
+    this.setState({
+      showButton: true,
       disableSubmitButton: true,
     })
   }
@@ -248,172 +274,166 @@ class RevaluateContent extends Component {
     let { compLoader } = this.props.common
     let { showButton, disableSubmitButton, loaderStatus } = this.state
 
-    if (showButton && reValuationStatus !== 'processing') {
-      this.removeEscEvent()
-      return (
-        <div>
-          <p className="hintColor">
-            Speech Transcript not accurate? Edit it and modify the feedback
-          </p>
+    return (
+      <div>
+        <p className="hintColor">
+          Speech Transcript not accurate? Edit it and modify the feedback
+        </p>
 
-          <div className="mt-6">
-            <button
-              className="bluePrimaryTxt font-semibold"
-              onClick={() => {
-                this.modalToggler()
-              }}
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  this.modalToggler()
-                }
-              }}
-              tabIndex={tabIndex}
-              aria-label={`Do you find speech transcript not accurate. To modify it, click here to re-evaluate feedback`}>
-              Edit Transcript
-            </button>
-          </div>
+        <div className="mt-6">
+          <button
+            className="bluePrimaryTxt font-semibold"
+            onClick={() => {
+              this.modalOpener()
+            }}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                this.modalOpener()
+              }
+            }}
+            tabIndex={tabIndex}
+            aria-label={`Do you find speech transcript not accurate. To modify it, click here to re-evaluate feedback`}>
+            Edit Transcript
+          </button>
         </div>
-      )
-    }
 
-    if (showButton === false) {
-      this.addEscEvent()
-      return (
-        <FocusTrap>
-          <div className="epModalCover">
-            <div
-              className="revaluateModal epModal relative"
-              style={{ width: 646 }}>
-              <button
-                className="epModalClose"
-                onClick={() => {
-                  this.modalToggler()
-                }}
-                tabIndex="1"
-                aria-label={'close edit transcript popup'}>
-                <span className="ep-icon-close"></span>
-              </button>
+        {showButton === false ? (
+          <FocusTrap>
+            <div className="epModalCover">
+              <div
+                className="revaluateModal epModal relative"
+                style={{ width: 646 }}>
+                <button
+                  className="epModalClose"
+                  onClick={() => {
+                    this.modalClose()
+                  }}
+                  tabIndex="1"
+                  aria-label={'close edit transcript popup'}>
+                  <span className="ep-icon-close"></span>
+                </button>
 
-              <div className="epModalContent text-left">
-                <div
-                  className="text-24-bold"
-                  aria-label={`Please provide accurate transcript of your speech if it is not
+                <div className="epModalContent text-left">
+                  <div
+                    className="text-24-bold"
+                    aria-label={`Please provide accurate transcript of your speech if it is not
                   recorded accurately at some places. We will provide your
                   feedback on content strength. next selection will read your transcript.`}>
-                  Edit Transcript
-                </div>
-
-                <div className="text-18-demi mt-4"> Transcript</div>
-
-                <div className="mt-2">
-                  <textarea
-                    ref="scriptTextArea"
-                    defaultValue={
-                      transcriptCleaned.toLowerCase().trim() !== 'null'
-                        ? transcriptCleaned
-                        : null
-                    }
-                    placeholder={
-                      transcriptCleaned.toLowerCase().trim() === 'null'
-                        ? 'No transcript detected'
-                        : null
-                    }
-                    onChange={e => {
-                      this.enableDisableButton(e)
-                    }}
-                    tabIndex={1}
-                    maxLength="8000"
-                  />
-                  <div className="hintColor text-12-normal">
-                    Accuracy improves in noise free surroundings. Use microphone
-                    for better quality.
+                    Edit Transcript
                   </div>
-                </div>
 
-                <div className="clearfix mt-4">
-                  <div className="text-18-demi">Audio</div>
-                  <div className="basic-audio mt-2 revaluateAudio relative">
-                    <audio
-                      tabIndex="1"
-                      className="w-full"
-                      controls
-                      controlsList="nodownload"
-                      onPlay={() => {
-                        trackingDebounceSmall({
-                          event_type: 'click',
-                          event_description:
-                            'revaluation interview audio played',
-                        })
+                  <div className="text-18-demi mt-4"> Transcript</div>
+
+                  <div className="mt-2">
+                    <textarea
+                      ref="scriptTextArea"
+                      defaultValue={
+                        transcriptCleaned.toLowerCase().trim() !== 'null'
+                          ? transcriptCleaned
+                          : null
+                      }
+                      placeholder={
+                        transcriptCleaned.toLowerCase().trim() === 'null'
+                          ? 'No transcript detected'
+                          : null
+                      }
+                      onChange={e => {
+                        this.enableDisableButton(e)
                       }}
-                      onPause={() => {
-                        trackingDebounceSmall({
-                          event_type: 'click',
-                          event_description:
-                            'revaluation interview audio paused',
-                        })
-                      }}
-                      onCanPlayThrough={() => {
-                        this.setState({
-                          audioLoader: false,
-                        })
-                      }}
-                      onPlaying={() => {
-                        this.setState({ audioLoader: false })
-                      }}
-                      onWaiting={() => {
-                        this.setState({ audioLoader: true })
-                      }}>
-                      <source src={audioUrl} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                    {this.state.audioLoader ? (
-                      <div className="absolute audio-loader-wrap">
-                        <Loader type={'ball-clip-rotate'} />
+                      tabIndex={1}
+                      maxLength="8000"
+                    />
+                    <div className="hintColor text-12-normal">
+                      Accuracy improves in noise free surroundings. Use
+                      microphone for better quality.
+                    </div>
+                  </div>
+
+                  <div className="clearfix mt-4">
+                    <div className="text-18-demi">Audio</div>
+                    <div className="basic-audio mt-2 revaluateAudio relative">
+                      <audio
+                        tabIndex="1"
+                        className="w-full"
+                        controls
+                        controlsList="nodownload"
+                        onPlay={() => {
+                          trackingDebounceSmall({
+                            event_type: 'click',
+                            event_description:
+                              'revaluation interview audio played',
+                          })
+                        }}
+                        onPause={() => {
+                          trackingDebounceSmall({
+                            event_type: 'click',
+                            event_description:
+                              'revaluation interview audio paused',
+                          })
+                        }}
+                        onCanPlayThrough={() => {
+                          this.setState({
+                            audioLoader: false,
+                          })
+                        }}
+                        onPlaying={() => {
+                          this.setState({ audioLoader: false })
+                        }}
+                        onWaiting={() => {
+                          this.setState({ audioLoader: true })
+                        }}>
+                        <source src={audioUrl} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                      </audio>
+                      {this.state.audioLoader ? (
+                        <div className="absolute audio-loader-wrap">
+                          <Loader type={'ball-clip-rotate'} />
+                        </div>
+                      ) : null}
+                    </div>
+
+                    {isReevaluationEnabled ? (
+                      <div className="clearfix mt-10">
+                        <span className="float-right">
+                          <span
+                            className="bluePrimaryTxt mr-16 cursor-pointer"
+                            onClick={this.modalClose}
+                            onKeyDown={e => {
+                              e.key === 'Enter' && this.modalClose()
+                            }}
+                            tabIndex="1"
+                            aria-label={'close edit transcript popup'}>
+                            Cancel
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              this.submit()
+                            }}
+                            className={classNames('button blueButton', {
+                              'opacity-50': disableSubmitButton,
+                            })}
+                            style={{ textTransform: 'initial' }}
+                            disabled={disableSubmitButton}
+                            tabIndex="1"
+                            aria-label={`Click to re-evaluate content strength feedback`}>
+                            {this.state.buttonTxt}
+                          </button>
+                        </span>
                       </div>
                     ) : null}
                   </div>
-
-                  {isReevaluationEnabled ? (
-                    <div className="clearfix mt-10">
-                      <span className="float-right">
-                        <span
-                          className="bluePrimaryTxt mr-16 cursor-pointer"
-                          onClick={this.modalClose}
-                          onKeyDown={e => {
-                            e.key === 'Enter' && this.modalClose()
-                          }}
-                          tabIndex="1"
-                          aria-label={'close edit transcript popup'}>
-                          Cancel
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            this.submit()
-                          }}
-                          className={classNames('button blueButton', {
-                            'opacity-50': disableSubmitButton,
-                          })}
-                          style={{ textTransform: 'initial' }}
-                          disabled={disableSubmitButton}
-                          tabIndex="1"
-                          aria-label={`Click to re-evaluate content strength feedback`}>
-                          {this.state.buttonTxt}
-                        </button>
-                      </span>
-                    </div>
-                  ) : null}
                 </div>
-              </div>
 
-              {reValuationStatus === 'processing' || loaderStatus ? (
-                <div className="clearfix revaluateLoader" />
-              ) : null}
+                {reValuationStatus === 'processing' || loaderStatus ? (
+                  <div className="clearfix revaluateLoader" />
+                ) : null}
+              </div>
             </div>
-          </div>
-        </FocusTrap>
-      )
-    }
+          </FocusTrap>
+        ) : null}
+      </div>
+    )
   }
 }
 
@@ -435,7 +455,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RevaluateContent)
+export default connect(mapStateToProps, mapDispatchToProps)(RevaluateContent)
