@@ -5,10 +5,10 @@ import _ from 'underscore'
 
 var getColor = val => {
   if (val === 'absent') {
-    return common.lightBgColor[2]
+    return common.lighterColor[2]
   }
   if (val === 'present') {
-    return common.lightBgColor[0]
+    return common.lighterColor[0]
   }
   return 'white'
 }
