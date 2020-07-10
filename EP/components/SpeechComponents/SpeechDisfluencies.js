@@ -240,7 +240,7 @@ class SpeechDisfluencies extends Component {
             ]}
             unit={'time'}
             category={'verbals'}
-            description={`Ah-um counter refers to the number of instances you have used sounds like 'ah', 'ums' in your speech.`}
+            description={`Ah-Um Counter refers to the number of instances where you have used sounds like 'ah', 'ums' in your speech.`}
           />
 
           <TimelineAudio
