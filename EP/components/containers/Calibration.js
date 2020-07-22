@@ -204,8 +204,7 @@ class Calibration extends Component {
       this.props.setAppIntKey(data.interview_key)
       setAppUrls('/' + data.interview_key)
       this.setState({ interviewKey: data.interview_key }, () => {
-        if(this.state.shouldMount !== true)
-          this.initRun()
+        if (this.state.shouldMount !== true) this.initRun()
       })
     }
   }
@@ -813,8 +812,8 @@ class Calibration extends Component {
         <div className="fullScreenAlert">
           <div className="text-center">
             <h1>
-              Elevator pitch application is currently supported only on Google
-              Chrome web browser
+              {mutuals.productName()} application is currently supported only on
+              Google Chrome web browser
             </h1>
           </div>
         </div>

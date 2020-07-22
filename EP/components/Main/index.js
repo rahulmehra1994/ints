@@ -232,7 +232,11 @@ class Main extends React.PureComponent {
             <Route
               path="/"
               render={props => (
-                <Navbar id="nav" navUrl="/dashboard/elevator-pitch" />
+                <Navbar
+                  id="nav"
+                  navUrl="/dashboard/elevator-pitch"
+                  productName={mutuals.productName()}
+                />
               )}
             />
             <div className="ep-exclusive" style={{ marginTop: 40 }}>
