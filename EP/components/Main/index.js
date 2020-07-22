@@ -19,6 +19,7 @@ import CenterLoading from './../CenterLoading/index'
 import Loadable from 'react-loadable'
 import _ from 'underscore'
 import Error404 from '@vmockinc/dashboard/Pages/components/Error404'
+import Helmet from 'react-helmet'
 
 const Calib = Loadable({
   loader: () => import('./../containers/Calibration'),
@@ -229,6 +230,9 @@ class Main extends React.PureComponent {
       return (
         <Router basename={process.env.APP_PRODUCT_BASE_URL}>
           <React.Fragment>
+            <Helmet>
+              <title>{mutuals.productName()}</title>
+            </Helmet>
             <Route
               path="/"
               render={props => (

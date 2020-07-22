@@ -19,7 +19,7 @@
     "dev": "webpack -d --watch"
   },
   "dependencies": {
-    "@vmockinc/dashboard": "git+ssh://git@github.com:vmockinc/dashboard-ui.git",
+    "@vmockinc/dashboard": "git+ssh://git@github.com:dhiraj2602/dashboard-ui#navbar",
     "animejs": "^3.1.0",
     "bootstrap": "^3.4.1",
     "bootstrap-sass": "^3.3.7",
@@ -49,6 +49,7 @@
     "react-content-loader": "^3.1.2",
     "react-dom": "^16.10.2",
     "react-draggable": "^3.0.5",
+    "react-helmet": "^6.1.0",
     "react-highcharts": "^16.0.2",
     "react-html-parser": "^2.0.2",
     "react-html5video": "^2.1.0",
