@@ -218,7 +218,7 @@ class Feedback extends Component {
                 ref="label"
                 className="font-bold pt-5 pl-3"
                 style={{ fontSize: 30 }}>
-                VMock Elevator Pitch Feedback
+                VMock {mutuals.productName()} Feedback
               </h1>
               <label className="para mt-4 pl-3">
                 Have a suggestion, faced an issue or liked something? Tell us
@@ -281,6 +281,7 @@ class Feedback extends Component {
 const mapStateToProps = state => {
   return {
     common: state.commonStuff,
+    userInfo: state.user.data,
   }
 }
 

@@ -387,6 +387,7 @@ export var mutuals = {
   deepCopy,
   randomStr,
   xAxisGraphsTick,
+  productName,
 }
 
 export var timeoutInMiliseconds = { time: defaultInactivityTime }
@@ -600,4 +601,16 @@ export function ContentStrengthBlock() {
       C.S.
     </span>
   )
+}
+
+export function productName() {
+  if (_.isEmpty(store.getState().user.data)) {
+    return ''
+  } else {
+    if (store.getState().user.data.community === 'imperial') {
+      return 'Interviews'
+    } else {
+      return 'Elevator Pitch'
+    }
+  }
 }
