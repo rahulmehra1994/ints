@@ -4,10 +4,12 @@ import {
   log,
   common,
   ContentStrengthBlock,
+  COMMUNITY,
 } from './../../actions/commonActions'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import InterviewQuestions from './InterviewQuestions'
+import Requirements from './../popups/Requirements'
 
 const FocusTrap = require('focus-trap-react')
 var classNames = require('classnames')
@@ -71,7 +73,6 @@ class InterviewQuestionsStandalone extends Component {
             </div>
           ) : null}
         </div>
-
         <div
           className={classNames('mt-2 relative', {
             'hover-wrap': this.truncateQuestionContent(),
@@ -88,7 +89,6 @@ class InterviewQuestionsStandalone extends Component {
             <div className="text-white">{latestQuestion.question_content}</div>
           </div>
         </div>
-
         <div className="p-4 flex justify-center">
           <button
             className="brand-blue-color flex justify-center items-center"
@@ -99,6 +99,9 @@ class InterviewQuestionsStandalone extends Component {
             <span className="ml-4 text-14-demi">Change Question</span>
           </button>
         </div>
+        {this.props.user.community === COMMUNITY ? (
+          <Requirements {...this.props} />
+        ) : null}
       </div>
     )
   }
@@ -108,6 +111,7 @@ function mapStateToProps(state, ownProps) {
   return {
     latestQuestion: state.userInfoEP['questionData'],
     customizations: state.epCustomizations,
+    user: state.user.data,
   }
 }
 

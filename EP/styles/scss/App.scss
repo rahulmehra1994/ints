@@ -1453,7 +1453,7 @@ body:not(.using-mouse) .btn-primary:focus {
     bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 501;
+    z-index: 500;
     padding: 12px 45px;
     font-size: 16px;
     font-weight: 600;
@@ -3362,5 +3362,26 @@ body:not(.using-mouse) .btn-primary:focus {
   }
   .articles-scroll::-webkit-scrollbar-thumb {
     background-color: lightgrey;
+  }
+
+  .attempt-this-ques {
+    display: none;
+  }
+
+  .requirementQues:hover .attempted-el {
+    display: none;
+  }
+
+  .requirementQues:hover .attempt-this-ques {
+    display: initial;
+  }
+
+  .requirementQues:hover {
+    background: #f8f8f8;
+  }
+
+  .requirements-scroll::-webkit-scrollbar {
+    width: 4px;
+    opacity: 0.7;
   }
 }

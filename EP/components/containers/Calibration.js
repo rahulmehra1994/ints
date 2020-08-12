@@ -11,8 +11,9 @@ import {
   apiCallAgain,
   getInterviewStatus2,
   checkUserRegistration,
+  fetchRequirements,
 } from './../../actions/apiActions'
-import { mutuals, log, common } from './../../actions/commonActions'
+import { mutuals, log, common, COMMUNITY } from './../../actions/commonActions'
 import { calibrationAPIStage1 } from './../../actions/calibrationActions'
 import { createInterview2 } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
@@ -167,6 +168,9 @@ class Calibration extends Component {
         }, 2000)
       }
     })
+    this.props.userInfo.community === COMMUNITY
+      ? this.props.fetchRequirements()
+      : null
   }
 
   onSuccessCheckUser() {
@@ -665,6 +669,15 @@ class Calibration extends Component {
       right: -sidebarWidth,
       easing: 'cubicBezier(0.44, 0.01, 0.32, 1)',
       duration: 1000,
+      begin: () => {
+        if (this.props.userInfo.community === COMMUNITY) {
+          try {
+            document.getElementById('requirementsEl').style.display = 'none'
+          } catch (e) {
+            console.error(e)
+          }
+        }
+      },
     })
   }
 
@@ -676,6 +689,7 @@ class Calibration extends Component {
         translateY: [100, 0],
         easing: 'easeOutQuad',
         duration: 800,
+
         complete: () => {
           setTimeout(() => {
             document.getElementById('instructionOne').style.display = 'none'
@@ -885,6 +899,7 @@ class Calibration extends Component {
                   multipleQuestionEnabled={mutuals.multipleQuesEnabled(
                     this.props
                   )}
+                  onSuccessOfCreateInt={this.onSuccessOfCreateInt}
                 />
 
                 <div className="calibration-video-container">
@@ -1225,6 +1240,9 @@ const mapDispatchToProps = dispatch => {
     },
     setFinalCalibrationId: id => {
       dispatch(setFinalCalibId(id))
+    },
+    fetchRequirements: () => {
+      dispatch(fetchRequirements())
     },
   }
 }

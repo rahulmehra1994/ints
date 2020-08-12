@@ -50,11 +50,11 @@ class InterviewQuestions extends Component {
   submit() {
     let { selectedQues } = this.state
 
-    // mutuals.socketTracking({
-    //   event_type: 'click',
-    //   event_description: `confirm_button_results_gender_${genderSelected}_accent_${langCode}`,
-    //   interview_id: -1,
-    // })
+    mutuals.socketTracking({
+      event_type: 'click',
+      event_description: `confirm_button_interview_question_select`,
+      interview_id: -1,
+    })
 
     if (selectedQues === null) {
       alert('Please select the question')
@@ -439,7 +439,7 @@ class InterviewQuestions extends Component {
               className="ep-icon-expand-left"
               style={{
                 '-webkit-text-stroke': '1px',
-                'vertical-align': -2,
+                verticalAlign: -2,
               }}
             />
 
