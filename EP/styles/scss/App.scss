@@ -2398,6 +2398,11 @@ body:not(.using-mouse) .btn-primary:focus {
     top: 0;
   }
 
+  .calibTransparent > image{
+    width: 100%;
+    transform: translateY(-9px);
+  }
+
   #interview-body {
     position: relative;
     width: 100%;

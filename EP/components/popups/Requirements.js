@@ -24,30 +24,6 @@ class Requirements extends Component {
     this.handleAttemptThisQues = this.handleAttemptThisQues.bind(this)
   }
 
-  truncateQuestionContent() {
-    return this.props.latestQuestion.question_content.length > this.contentLimit
-  }
-
-  questionElipses() {
-    if (this.truncateQuestionContent()) {
-      return (
-        this.props.latestQuestion.question_content.substring(
-          0,
-          this.contentLimit
-        ) + '...'
-      )
-    } else {
-      return this.props.latestQuestion.question_content
-    }
-  }
-
-  mouseEnter = () => {
-    this.setState({ isMouseInside: true })
-  }
-  mouseLeave = () => {
-    this.setState({ isMouseInside: false })
-  }
-
   handleAttemptThisQues(question_id) {
     this.setState({ disabler: true })
     let fd = new FormData()
@@ -66,6 +42,7 @@ class Requirements extends Component {
 
   render() {
     let questions = this.props.requirementsData.required_questions
+    let valArray = Object.values(questions)
 
     return (
       <>
@@ -76,50 +53,32 @@ class Requirements extends Component {
         ) : null}
         <div
           id="requirementsEl"
-          className="px-4 text-left bg-white absolute pin-l shadow-1"
-          style={{ width: 300, bottom: -505 }}>
+          className="mt-3 p-4 text-left bg-white shadow-1">
           <div className="mt-4">
-            <span className="text-16-demi">Question</span>
+            <span className="text-16-demi">Your requirement </span>
           </div>
-
-          {/* <div
-          className={classNames('mt-2 relative', {
-            'hover-wrap': this.truncateQuestionContent(),
-          })}>
-          {this.questionElipses()}
-
-          <div
-            className="hover-elm bg-black rounded p-4 shadow-1 pin-l"
-            style={{ top: 24 }}>
-            <span
-              className="ep-icon-marker absolute"
-              style={{ top: -8, left: '50%', transform: 'translateX(-50%)' }}
-            />
-            <div className="text-white">{latestQuestion.question_content}</div>
-          </div>
-        </div> */}
 
           <section
             className="overflow-auto requirements-scroll"
             style={{ maxHeight: 458 }}>
-            {_.map(questions, (val, key) => {
+            {_.map(valArray, (val, index) => {
               return (
                 <div
-                  key={key}
-                  className="requirementQues"
+                  key={index}
+                  className="requirementQues relative"
                   style={{
-                    paddingTop: 15,
-                    paddingBottom: 15,
+                    paddingTop: 25,
+                    paddingBottom: 25,
                     borderBottom: '1px solid lightgray',
                   }}>
                   <div
                     className="grid"
                     style={{ gridTemplateColumns: '35px 1fr' }}>
-                    <div>{`Q${key}`}.</div>
+                    <div>{`Q${index + 1}`}.</div>
                     <div>{val.question_content}</div>
                   </div>
-                  <div className="mt-4 text-right">
-                    {true || val.is_attempted ? (
+                  <div className="absolute pin-r" style={{ bottom: 5 }}>
+                    {val.is_attempted ? (
                       <span
                         className="px-3 py-1 attempted-el"
                         style={{
@@ -134,7 +93,7 @@ class Requirements extends Component {
                     <button
                       className="attempt-this-ques brand-blue-color text-12-med"
                       onClick={() => {
-                        this.handleAttemptThisQues(key)
+                        this.handleAttemptThisQues(val.question_id)
                       }}>
                       Attempt this question
                     </button>

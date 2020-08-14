@@ -210,6 +210,17 @@ class Calibration extends Component {
       this.setState({ interviewKey: data.interview_key }, () => {
         if (this.state.shouldMount !== true) this.initRun()
       })
+      this.unHideRequirementsSection()
+    }
+  }
+
+  unHideRequirementsSection() {
+    if (this.props.userInfo.community === COMMUNITY) {
+      try {
+        document.getElementById('requirementsEl').style.visibility = 'visible'
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 
@@ -355,6 +366,7 @@ class Calibration extends Component {
       basicDetailsVisible: false,
       isSystemCheckOpen: false,
     })
+    this.unHideRequirementsSection()
   }
 
   openPopup(type) {
@@ -672,7 +684,7 @@ class Calibration extends Component {
       begin: () => {
         if (this.props.userInfo.community === COMMUNITY) {
           try {
-            document.getElementById('requirementsEl').style.display = 'none'
+            document.getElementById('requirementsEl').style.visibility = 'hidden'
           } catch (e) {
             console.error(e)
           }
