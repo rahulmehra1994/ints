@@ -55,7 +55,7 @@ class Requirements extends Component {
           id="requirementsEl"
           className="mt-3 p-4 text-left bg-white shadow-1">
           <div className="mt-4">
-            <span className="text-16-demi">Your requirement </span>
+            <span className="text-16-demi">Your requirements </span>
           </div>
 
           <section
