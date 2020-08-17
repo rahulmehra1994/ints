@@ -219,7 +219,7 @@ class Calibration extends Component {
       try {
         document.getElementById('requirementsEl').style.visibility = 'visible'
       } catch (e) {
-        console.error(e)
+        console.error(e, ' => handled issue')
       }
     }
   }
@@ -664,8 +664,15 @@ class Calibration extends Component {
   keepInPosition() {
     if (!this.refs.calibSidebar) return
     let sidebarWidth = this.refs.calibSidebar.offsetWidth * 0.81 + 65
-    document.getElementById('leftGuide').style.left = -sidebarWidth + 'px'
-    document.getElementById('rightGuide').style.right = -sidebarWidth + 'px'
+
+    try {
+      document.getElementById('leftGuide').style.left = -sidebarWidth + 'px'
+      document.getElementById('rightGuide').style.right = -sidebarWidth + 'px'
+    } catch (error) {
+      console.error(
+        'leftGuide or rightGuide element not found in keepInPosition method => it is handled issue'
+      )
+    }
   }
 
   animation() {
@@ -684,7 +691,8 @@ class Calibration extends Component {
       begin: () => {
         if (this.props.userInfo.community === COMMUNITY) {
           try {
-            document.getElementById('requirementsEl').style.visibility = 'hidden'
+            document.getElementById('requirementsEl').style.visibility =
+              'hidden'
           } catch (e) {
             console.error(e)
           }
@@ -704,7 +712,13 @@ class Calibration extends Component {
 
         complete: () => {
           setTimeout(() => {
-            document.getElementById('instructionOne').style.display = 'none'
+            try {
+              document.getElementById('instructionOne').style.display = 'none'
+            } catch (error) {
+              console.error(
+                'instructionOne element not found => it is handled issue'
+              )
+            }
             run2()
           }, 1000) // one seconds halt time
         },
@@ -718,7 +732,15 @@ class Calibration extends Component {
           easing: 'easeOutQuad',
           duration: 1500,
           begin: () => {
-            document.getElementById('start-of-content').style.display = 'block'
+            try {
+              document.getElementById('start-of-content').style.display =
+                'block'
+            } catch (error) {
+              console.error(
+                'start-of-content element not found => it is handled issue'
+              )
+            }
+
             this.setState({ instructionAnimDone: true })
           },
         })
@@ -727,8 +749,14 @@ class Calibration extends Component {
   })
 
   resetAnimation() {
-    document.getElementById('leftGuide').style.left = '0px'
-    document.getElementById('rightGuide').style.right = '0px'
+    try {
+      document.getElementById('leftGuide').style.left = '0px'
+      document.getElementById('rightGuide').style.right = '0px'
+    } catch (error) {
+      console.error(
+        'leftGuide or rightGuide element not found => it is handled issue'
+      )
+    }
   }
 
   backToTipsBlock() {

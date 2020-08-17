@@ -41,6 +41,10 @@ class Requirements extends Component {
   }
 
   render() {
+    if (_.isEmpty(this.props.requirementsData)) {
+      return null
+    }
+
     let questions = this.props.requirementsData.required_questions
     let valArray = Object.values(questions)
 
