@@ -603,11 +603,13 @@ export function ContentStrengthBlock() {
   )
 }
 
+export const COMMUNITY = 'imperial'
+
 export function productName() {
   if (_.isEmpty(store.getState().user.data)) {
     return ''
   } else {
-    if (store.getState().user.data.community === 'imperial') {
+    if (store.getState().user.data.community === COMMUNITY) {
       return 'Interviews'
     } else {
       return 'Elevator Pitch'

@@ -11,8 +11,9 @@ import {
   apiCallAgain,
   getInterviewStatus2,
   checkUserRegistration,
+  fetchRequirements,
 } from './../../actions/apiActions'
-import { mutuals, log, common } from './../../actions/commonActions'
+import { mutuals, log, common, COMMUNITY } from './../../actions/commonActions'
 import { calibrationAPIStage1 } from './../../actions/calibrationActions'
 import { createInterview2 } from './../../actions/interviewActions'
 import CenterLoading from './../CenterLoading/index'
@@ -167,6 +168,9 @@ class Calibration extends Component {
         }, 2000)
       }
     })
+    this.props.userInfo.community === COMMUNITY
+      ? this.props.fetchRequirements()
+      : null
   }
 
   onSuccessCheckUser() {
@@ -206,6 +210,17 @@ class Calibration extends Component {
       this.setState({ interviewKey: data.interview_key }, () => {
         if (this.state.shouldMount !== true) this.initRun()
       })
+      this.unHideRequirementsSection()
+    }
+  }
+
+  unHideRequirementsSection() {
+    if (this.props.userInfo.community === COMMUNITY) {
+      try {
+        document.getElementById('requirementsEl').style.visibility = 'visible'
+      } catch (e) {
+        console.error(e, ' => handled issue')
+      }
     }
   }
 
@@ -351,6 +366,7 @@ class Calibration extends Component {
       basicDetailsVisible: false,
       isSystemCheckOpen: false,
     })
+    this.unHideRequirementsSection()
   }
 
   openPopup(type) {
@@ -648,8 +664,15 @@ class Calibration extends Component {
   keepInPosition() {
     if (!this.refs.calibSidebar) return
     let sidebarWidth = this.refs.calibSidebar.offsetWidth * 0.81 + 65
-    document.getElementById('leftGuide').style.left = -sidebarWidth + 'px'
-    document.getElementById('rightGuide').style.right = -sidebarWidth + 'px'
+
+    try {
+      document.getElementById('leftGuide').style.left = -sidebarWidth + 'px'
+      document.getElementById('rightGuide').style.right = -sidebarWidth + 'px'
+    } catch (error) {
+      console.error(
+        'leftGuide or rightGuide element not found in keepInPosition method => it is handled issue'
+      )
+    }
   }
 
   animation() {
@@ -665,6 +688,16 @@ class Calibration extends Component {
       right: -sidebarWidth,
       easing: 'cubicBezier(0.44, 0.01, 0.32, 1)',
       duration: 1000,
+      begin: () => {
+        if (this.props.userInfo.community === COMMUNITY) {
+          try {
+            document.getElementById('requirementsEl').style.visibility =
+              'hidden'
+          } catch (e) {
+            console.error(e)
+          }
+        }
+      },
     })
   }
 
@@ -676,9 +709,16 @@ class Calibration extends Component {
         translateY: [100, 0],
         easing: 'easeOutQuad',
         duration: 800,
+
         complete: () => {
           setTimeout(() => {
-            document.getElementById('instructionOne').style.display = 'none'
+            try {
+              document.getElementById('instructionOne').style.display = 'none'
+            } catch (error) {
+              console.error(
+                'instructionOne element not found => it is handled issue'
+              )
+            }
             run2()
           }, 1000) // one seconds halt time
         },
@@ -692,7 +732,15 @@ class Calibration extends Component {
           easing: 'easeOutQuad',
           duration: 1500,
           begin: () => {
-            document.getElementById('start-of-content').style.display = 'block'
+            try {
+              document.getElementById('start-of-content').style.display =
+                'block'
+            } catch (error) {
+              console.error(
+                'start-of-content element not found => it is handled issue'
+              )
+            }
+
             this.setState({ instructionAnimDone: true })
           },
         })
@@ -701,8 +749,14 @@ class Calibration extends Component {
   })
 
   resetAnimation() {
-    document.getElementById('leftGuide').style.left = '0px'
-    document.getElementById('rightGuide').style.right = '0px'
+    try {
+      document.getElementById('leftGuide').style.left = '0px'
+      document.getElementById('rightGuide').style.right = '0px'
+    } catch (error) {
+      console.error(
+        'leftGuide or rightGuide element not found => it is handled issue'
+      )
+    }
   }
 
   backToTipsBlock() {
@@ -885,6 +939,7 @@ class Calibration extends Component {
                   multipleQuestionEnabled={mutuals.multipleQuesEnabled(
                     this.props
                   )}
+                  onSuccessOfCreateInt={this.onSuccessOfCreateInt}
                 />
 
                 <div className="calibration-video-container">
@@ -1225,6 +1280,9 @@ const mapDispatchToProps = dispatch => {
     },
     setFinalCalibrationId: id => {
       dispatch(setFinalCalibId(id))
+    },
+    fetchRequirements: () => {
+      dispatch(fetchRequirements())
     },
   }
 }

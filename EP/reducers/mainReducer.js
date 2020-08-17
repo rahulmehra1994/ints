@@ -21,6 +21,7 @@ import {
   TAB_INDEX,
   EP_CUSTOMIZATIONS,
   INFOBARS_ANIMATION_STATE,
+  REQUIREMENTS,
 } from './../actions/actions'
 import $ from 'jquery'
 import { common, highContrast } from './../actions/commonActions'
@@ -268,6 +269,17 @@ export const animations = handleActions(
   { infobar: {} }
 )
 
+export const epRequirements = handleActions(
+  {
+    [REQUIREMENTS]: (state, action) => {
+      let newState = $.extend(true, {}, state)
+      newState = action.payload
+      return newState
+    },
+  },
+  {}
+)
+
 const combined = {
   animations,
   appUrls,
@@ -293,6 +305,7 @@ const combined = {
   illustrationData,
   tabIndex,
   epCustomizations,
+  epRequirements,
 }
 
 export default combined

@@ -20,6 +20,7 @@ import {
   setSentenceResults,
   setIllustrationData,
   setEPCustomizations,
+  storeRequriments,
 } from './actions'
 
 import {
@@ -91,6 +92,7 @@ export var counters = {
   getUserInfoCount: 0,
   modifyInterviewCount: 0,
   fetchVideoSubtitlesCount: 0,
+  fetchRequirementsCount: 0,
 }
 
 export function apiCallAgain(
@@ -1188,4 +1190,39 @@ export function fetchVideoSubtitles(url, onSubtitlesFetchSuccess) {
         xhr
       )
     })
+}
+
+export function fetchRequirements() {
+  return dispatch => {
+    let fd = new FormData()
+    api
+      .service('ep')
+      .post(`/get-requirements-status`, fd, {
+        processData: false,
+        contentType: false,
+      })
+      .done(data => {
+        //success
+        dispatch(storeRequriments(data))
+        counters['fetchRequirementsCount'] = 0
+      })
+      .fail(xhr => {
+        apiCallAgain(
+          counters,
+          'fetchRequirementsCount',
+          () => {
+            dispatch(fetchRequirements())
+          },
+          1000,
+          5,
+          xhr
+        )
+
+        log(
+          '%c Api faliure /fetchRequirements',
+          'background: red; color: white',
+          xhr
+        )
+      })
+  }
 }

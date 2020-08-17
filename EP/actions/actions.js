@@ -37,6 +37,7 @@ export const INFOBARS_ANIMATION_STATE = PREFIX + 'INFOBARS_ANIMATION_STATE'
 export const FETCH_ILLUSTRATION_DATA = PREFIX + 'FETCH_ILLUSTRATION_DATA'
 export const TAB_INDEX = PREFIX + 'TAB_INDEX'
 export const EP_CUSTOMIZATIONS = PREFIX + 'EP_CUSTOMIZATIONS'
+export const REQUIREMENTS = PREFIX + 'REQUIREMENTS'
 
 const setEyeResults = createAction(EYE_RESULTS)
 const setFaceResults = createAction(FACE_RESULTS)
@@ -72,6 +73,7 @@ export const setEPCustomizations = createAction(EP_CUSTOMIZATIONS)
 export const setInfoBarsAnimationState = val => {
   store.dispatch(createAction(INFOBARS_ANIMATION_STATE)(val))
 }
+export const storeRequriments = createAction(REQUIREMENTS)
 
 export function dispatchSetTabIndex(data) {
   store.dispatch(setTabIndex(data))

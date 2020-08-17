@@ -285,6 +285,9 @@ class SubNavbar extends Component {
                   interviewCreatedAt={
                     this.props.intDetails.basicData.created_at
                   }
+                  questionText={
+                    this.props.intDetails.basicData.question_content
+                  }
                 />
               </div>
             ) : null}
