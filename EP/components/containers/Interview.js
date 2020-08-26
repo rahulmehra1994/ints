@@ -95,7 +95,10 @@ class Interview extends Component {
       shouldMount: false,
       interviewKey: this.props.match.params.interviewKey,
       shouldReallyMount: false,
-      jazzCount: highContrast ? 20 : 5,
+      jazzCount: highContrast
+        ? 20
+        : this.props.epCustomizations.parameter_thresholds.prep_duration
+            .prep_time,
       finalRecognitionStop: false,
       tabIndex: common.tabIndexes.interview,
       instructions: temp(),
@@ -974,8 +977,8 @@ class Interview extends Component {
                   <h1
                     className="header"
                     style={{ marginTop: 200 }}
-                    aria-label={'Please be ready with your pitch'}>
-                    Please be ready with your pitch
+                    aria-label={'Please be ready with your answer'}>
+                    Please be ready with your answer
                   </h1>
 
                   <h1 className="counter" aria-live={jazzCount}>

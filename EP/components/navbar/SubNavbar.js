@@ -262,10 +262,23 @@ class SubNavbar extends Component {
           <div
             className="flex justify-center items-center"
             style={{ position: 'absolute', right: 20 }}>
+            <a
+              className="float-left"
+              tabIndex={this.props.tabIndex}
+              aria-label={`calibration page`}
+              href={props.appUrls.calibration}
+              onClick={() => {
+                goto('take_another_interview')
+              }}>
+              <button className="blueButton px-4 py-2 cursor-pointer rounded text-14-med">
+                Start New Interview
+              </button>
+            </a>
+
             {this.props.performanceInfo !== null &&
             this.props.intDetails.basicData !== null ? (
               <div
-                className="float-left flex justify-center items-center px-2 py-1"
+                className="ml-3 float-left flex justify-center items-center px-2 py-1"
                 id="networkFeedbackButton">
                 <NetworkFeedback
                   role="in-app"
@@ -291,19 +304,6 @@ class SubNavbar extends Component {
                 />
               </div>
             ) : null}
-
-            <a
-              className="float-left ml-6"
-              tabIndex={this.props.tabIndex}
-              aria-label={`calibration page`}
-              href={props.appUrls.calibration}
-              onClick={() => {
-                goto('take_another_interview')
-              }}>
-              <button className="blueButton px-4 py-2 cursor-pointer rounded text-14-normal">
-                + New Interview
-              </button>
-            </a>
           </div>
         </div>
       </div>
