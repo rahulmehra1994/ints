@@ -7,10 +7,11 @@ import {
   toggleVideoFloating,
   setRegularVideoState,
 } from './../../actions/actions'
-import { Player, BigPlayButton } from 'video-react'
+import { Player, BigPlayButton, Shortcut } from 'video-react'
 import VideoReplay from './../utilities/VideoReplay'
 import Feedback from './../feedback/Feedback'
 import { fetchVideoSubtitles } from './../../actions/apiActions'
+import ShareVideoPopup from './../popups/ShareVideoPopup'
 
 var classNames = require('classnames')
 var Loader = require('react-loaders').Loader
@@ -278,6 +279,8 @@ class VideoSummary extends Component {
           <track kind="subtitles" default src={this.state.subtitleHref} />
         ) : null}
 
+        <Shortcut clickable={false} shortcuts={[]} />
+
         <BigPlayButton position="center" />
 
         <div className="extra-video-controls" style={extraVideoControlsStyle}>
@@ -517,7 +520,13 @@ class VideoSummary extends Component {
             </label>
           </div>
 
-          <div className="clearfix float-right"></div>
+          <div className="clearfix float-right">
+            <ShareVideoPopup
+              intBasicData={this.props.intBasicData}
+              iconClasses="text-20-normal p-2 ep-icon-share"
+              containerClasses="float-left mr-3 bg-black-transcluent rounded-lg"
+            />
+          </div>
         </div>
 
         <div
@@ -601,6 +610,8 @@ function mapStateToProps(state, ownProps) {
     subtitlesEnabled: _.has(state.epCustomizations, 'user_subtitles_enabled')
       ? state.epCustomizations.user_subtitles_enabled
       : null,
+    intQuestionId: state.interviewEP.intQuestionId,
+    intBasicData: state.interviewEP.basicData,
   }
 }
 

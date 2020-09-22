@@ -93,6 +93,8 @@ export var counters = {
   modifyInterviewCount: 0,
   fetchVideoSubtitlesCount: 0,
   fetchRequirementsCount: 0,
+  checkShareTokenAPICount: 0,
+  getVideoSharingTokenCount: 0,
 }
 
 export function apiCallAgain(
@@ -1225,4 +1227,78 @@ export function fetchRequirements() {
         )
       })
   }
+}
+
+export function checkShareTokenAPI(token, setResCallback) {
+  let fd = new FormData()
+  fd.append('token', token)
+
+  api
+    .service('ep')
+    .post(`/get-video-details`, fd, {
+      processData: false,
+      contentType: false,
+    })
+    .done(data => {
+      //success
+      setResCallback(data)
+      counters['checkShareTokenAPICount'] = 0
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'checkShareTokenAPICount',
+        () => {
+          checkShareTokenAPI(token, setResCallback)
+        },
+        1000,
+        5,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /get-video-details',
+        'background: red; color: white',
+        xhr
+      )
+    })
+}
+
+export function getVideoSharingToken(question, message, token, callback) {
+  let fd = new FormData()
+  fd.append('interview_key', store.getState().appIntKey.key)
+  fd.append('question', question)
+  fd.append('user_message', message)
+
+  if (message !== 'XuBZJ7yq4B') fd.append('token', token)
+
+  api
+    .service('ep')
+    .post(`/get-video-token`, fd, {
+      processData: false,
+      contentType: false,
+    })
+    .done(data => {
+      //success
+      callback(data)
+      counters['getVideoSharingTokenCount'] = 0
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'getVideoSharingTokenCount',
+        () => {
+          getVideoSharingToken(question, message, token, callback)
+        },
+        1000,
+        1,
+        xhr
+      )
+
+      log(
+        '%c Api faliure /get-video-token ',
+        'background: red; color: white',
+        xhr
+      )
+    })
 }

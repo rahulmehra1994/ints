@@ -8,13 +8,16 @@ import Main from './components/Main'
 import { userCustomizationsEP } from './actions/apiActions'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 import { fetchUserCustomizations } from '@vmockinc/dashboard/Dashboard/actions/UserCustomizations'
-
+import Share from './components/containers/Share'
+import ShareVideoPopup from './components/popups/ShareVideoPopup'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.props.fetchUserCustomizations()
-    userCustomizationsEP(this.sendToDashboard)
-    this.intializeHighContrastCookie()
+    if (!this.checkForShareRoute()) {
+      this.props.fetchUserCustomizations()
+      userCustomizationsEP(this.sendToDashboard)
+      this.intializeHighContrastCookie()
+    }
   }
 
   intializeHighContrastCookie() {
@@ -56,7 +59,20 @@ class App extends Component {
     return false
   }
 
+  checkForShareRoute() {
+    let arr = this.props.location.pathname.split('/')
+    return arr[1] === 'share'
+  }
+
   render() {
+    if (this.checkForShareRoute()) {
+      return (
+        <div className="ep-app">
+          {/* <Share {...this.props} /> */}
+          <ShareVideoPopup />
+        </div>
+      )
+    }
     if (this.customizeHasResult() && !_.isEmpty(this.props.customizationsEP)) {
       return (
         <React.Fragment>
