@@ -78,7 +78,7 @@ class Interview extends Component {
     this.state = {
       recordAudio: null,
       src: null,
-      time: this.props.epCustomizations.interview_duration,
+      time: this.props.questionData.duration,
       interviewEnded: null,
       voiceStart: false,
       voiceStop: false,
@@ -110,7 +110,7 @@ class Interview extends Component {
     }
 
     this.intTimePeriod = 0
-    this.totalTime = this.props.epCustomizations.interview_duration
+    this.totalTime = this.props.questionData.duration
     this.audioRecorder = null
     this.mediaRecorder = null
     this.recordedBlobs = []
