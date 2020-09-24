@@ -71,7 +71,7 @@ class RevaluateContent extends Component {
   }
 
   onFetchTranscriptSuccess(data) {
-    if (data.status === 'processing' && this.recalltranscriptCounter < 10) {
+    if (data.status === 'processing' && this.recalltranscriptCounter < 20) {
       this.recalltranscriptCounter++
       this.recallTranscript()
       return
@@ -327,6 +327,7 @@ class RevaluateContent extends Component {
                   <div className="mt-2">
                     <textarea
                       ref="scriptTextArea"
+                      maxLength="600"
                       defaultValue={
                         transcriptCleaned.toLowerCase().trim() !== 'null'
                           ? transcriptCleaned
@@ -341,7 +342,6 @@ class RevaluateContent extends Component {
                         this.enableDisableButton(e)
                       }}
                       tabIndex={1}
-                      maxLength="8000"
                     />
                     <div className="hintColor text-12-normal">
                       Accuracy improves in noise free surroundings. Use
