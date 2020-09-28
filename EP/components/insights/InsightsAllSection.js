@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import _ from 'underscore'
 import InsightsWrap from './InsightsWrap'
 import ContentLoader from 'react-content-loader'
-import { mutuals, common } from '../../actions/commonActions'
+import { mutuals, common, IDEAL_WPM } from '../../actions/commonActions'
 import { mutualLogics } from '../../actions/mutualLogics'
 
 const trackingDebounceSmall = _.debounce(
@@ -499,7 +499,11 @@ class InsightsAllSection extends Component {
                         yAxisColor: 'sound_results.wpm_result',
                       },
                       pointLabelLogic: val => {
-                        return mutuals.shouldModifyWPM(val) ? '+' : ''
+                        if (val === IDEAL_WPM) return `${val}+`
+                        else return val
+                      },
+                      yPointsModifier: val => {
+                        return mutuals.modifyWPMVal(val)
                       },
                       unit: 'wpm',
                       plotBands: {

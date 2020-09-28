@@ -619,7 +619,7 @@ export function productName() {
   }
 }
 
-const IDEAL_WPM = 250
+export const IDEAL_WPM = 250
 export function shouldModifyWPM(val) {
   return val > IDEAL_WPM ? true : false
 }
