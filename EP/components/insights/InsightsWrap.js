@@ -170,7 +170,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  {}
-)(InsightsWrap)
+export default connect(mapStateToProps, {})(InsightsWrap)

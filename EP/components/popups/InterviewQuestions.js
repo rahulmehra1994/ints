@@ -15,6 +15,7 @@ const trackingDebounceSmall = _.debounce(
   mutuals.debounceTime.small,
   true
 )
+import { pad } from './../utilities/AppUtils'
 
 var classNames = require('classnames')
 
@@ -402,7 +403,27 @@ class InterviewQuestions extends Component {
                                   {' '}
                                 </span>
                               ) : null}
-                              {index2 + 1}. {item2.question_content}
+                              <span
+                                className="mr-2"
+                                style={{ lineHeight: 1.5 }}>
+                                {index2 + 1}. {item2.question_content}
+                              </span>
+                              {item2.is_duration_visible ? (
+                                <div
+                                  style={{
+                                    display: 'inline-block',
+                                    backgroundColor: '#e4ebf2',
+                                    border: 'solid 1px #b3c0cc',
+                                    borderRadius: 3,
+                                    padding: '2px 6px',
+                                  }}>
+                                  {`${pad(
+                                    Math.floor(item2.duration / 60),
+                                    2
+                                  )}:${pad(item2.duration % 60, 2)}`}{' '}
+                                  {item2.duration !== 60 ? 'mins' : 'min'}
+                                </div>
+                              ) : null}
                               {customizations.question_id_mapping[
                                 item2.question_id
                               ].is_content_strength_enabled ? (
