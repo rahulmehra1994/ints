@@ -191,7 +191,10 @@ class SpeechPitch extends Component {
                 <InfoBarComponent
                   id="speechRate"
                   label="Speech Rate"
-                  mainValue={vocalVals.wpm}
+                  mainValue={mutuals.modifyWPMVal(vocalVals.wpm)}
+                  mainValueSuffix={
+                    mutuals.shouldModifyWPM(vocalVals.wpm) ? '+' : ''
+                  }
                   threshold={{
                     data: [{ value: 110 }, { value: 140 }],
                     underLabel: 'Good range',
@@ -200,7 +203,7 @@ class SpeechPitch extends Component {
                   barsAndLegends={[
                     {
                       label: 'Speech Rate',
-                      value: vocalVals.wpm,
+                      value: mutuals.modifyWPMVal(vocalVals.wpm),
                       color: sectionColor[wpmRes],
                     },
                   ]}

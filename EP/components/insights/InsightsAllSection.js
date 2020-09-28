@@ -498,6 +498,9 @@ class InsightsAllSection extends Component {
                         yAxisKey: 'sound_results.sound_results_individual.wpm',
                         yAxisColor: 'sound_results.wpm_result',
                       },
+                      pointLabelLogic: val => {
+                        return mutuals.shouldModifyWPM(val) ? '+' : ''
+                      },
                       unit: 'wpm',
                       plotBands: {
                         from: 110,
@@ -507,7 +510,7 @@ class InsightsAllSection extends Component {
                         textColor: 'grey',
                         color: 'rgba(68, 170, 213, 0.1)',
                       },
-                      maxYPoint: 200,
+                      maxYPoint: 300,
                     },
                     {
                       label: 'Pitch',

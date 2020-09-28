@@ -388,6 +388,8 @@ export var mutuals = {
   randomStr,
   xAxisGraphsTick,
   productName,
+  shouldModifyWPM,
+  modifyWPMVal,
 }
 
 export var timeoutInMiliseconds = { time: defaultInactivityTime }
@@ -615,4 +617,13 @@ export function productName() {
       return 'Elevator Pitch'
     }
   }
+}
+
+const IDEAL_WPM = 250
+export function shouldModifyWPM(val) {
+  return val > IDEAL_WPM ? true : false
+}
+
+export function modifyWPMVal(val) {
+  return shouldModifyWPM(val) ? IDEAL_WPM : val
 }

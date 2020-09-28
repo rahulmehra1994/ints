@@ -288,6 +288,9 @@ class InfoBarComponent extends React.Component {
                 className="mainValueIdentify"
                 style={{ fontSize: 54, fontWeight: 500 }}>
                 {this.state.animatingMainValue}
+                {_.has(this.props, 'mainValueSuffix')
+                  ? this.props.mainValueSuffix
+                  : null}
               </span>{' '}
               <span className="" style={{ fontSize: 30, fontWeight: 400 }}>
                 {unit === 'time' ? (mainValue !== 1 ? 'Times' : 'Time') : unit}

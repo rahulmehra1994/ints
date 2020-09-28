@@ -102,11 +102,13 @@ class HandChart extends Component {
             // x: 0,
             // y: 0,
             // rotation: 0,
-            formatter: function() {
+            formatter: function () {
               if (_.has(props, 'modifyDataLabels')) {
-                return `${props.modifyDataLabels(this.y)} ${
-                  _.has(props.graphData, 'unit') ? props.graphData.unit : ''
-                }`
+                return `${props.modifyDataLabels(this.y)}${
+                  _.has(props.graphData, 'pointLabelLogic')
+                    ? props.graphData.pointLabelLogic(this.y)
+                    : ''
+                } ${_.has(props.graphData, 'unit') ? props.graphData.unit : ''}`
               } else
                 return `${this.y} ${
                   _.has(props.graphData, 'unit') ? props.graphData.unit : ''

@@ -21,7 +21,7 @@ const FocusTrap = require('focus-trap-react')
 var unidecode = require('unidecode')
 var Loader = require('react-loaders').Loader
 var classNames = require('classnames')
-
+const WORDS_TEXTAREA = 100
 class RevaluateContent extends Component {
   constructor(...args) {
     super(...args)
@@ -33,6 +33,7 @@ class RevaluateContent extends Component {
       transcriptDataArrived: false,
       interviewKeysArrived: false,
       audioLoader: false,
+      speech: '',
     }
     this.recalltranscriptCounter = 0
     this.modalToggler = this.modalToggler.bind(this)
@@ -44,6 +45,15 @@ class RevaluateContent extends Component {
     this.onFetchInterviewsSuccess = this.onFetchInterviewsSuccess.bind(this)
     this.fetchApiCounter = 0
     this.canRecallFetch = true
+  }
+
+  componentDidMount() {
+    let { transcriptCleaned } = this.props
+    let val =
+      transcriptCleaned.toLowerCase().trim() !== 'null'
+        ? transcriptCleaned
+        : null
+    this.setState({ speech: val })
   }
 
   addEscEvent() {
@@ -262,6 +272,18 @@ class RevaluateContent extends Component {
     }
   }
 
+  textAreaWordsLimiter() {
+    var words = e.target.value.match(/\S+/g)
+    if (words && words.length > WORDS_TEXTAREA) {
+      // Split the string on words and rejoin on spaces
+      var trimmed = e.target.value.split(/\s+/, WORDS_TEXTAREA).join(' ')
+      // Add a space at the end to make sure more typing creates new words
+      this.setState({ speech: trimmed + ' ' })
+    } else {
+      this.setState({ speech: e.target.value })
+    }
+  }
+
   render() {
     let {
       isRevaluated,
@@ -327,7 +349,7 @@ class RevaluateContent extends Component {
                   <div className="mt-2">
                     <textarea
                       ref="scriptTextArea"
-                      maxLength="600"
+                      maxLength="4000"
                       defaultValue={
                         transcriptCleaned.toLowerCase().trim() !== 'null'
                           ? transcriptCleaned
