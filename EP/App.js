@@ -8,7 +8,7 @@ import Main from './components/Main'
 import { userCustomizationsEP } from './actions/apiActions'
 import CustomerSupport from '@vmockinc/dashboard/CustomerSupport'
 import { fetchUserCustomizations } from '@vmockinc/dashboard/Dashboard/actions/UserCustomizations'
-
+import ReminderMailer from './components/containers/ReminderMailer'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -56,7 +56,23 @@ class App extends Component {
     return false
   }
 
+  checkForMailerLink() {
+    let locArr = this.props.location.pathname.split('/')
+    if (locArr[1] == 'reminder-mailer') {
+      return true
+    } else {
+      false
+    }
+  }
+
   render() {
+    if (this.checkForMailerLink()) {
+      return (
+        <div className="ep-app">
+          <ReminderMailer />
+        </div>
+      )
+    }
     if (this.customizeHasResult() && !_.isEmpty(this.props.customizationsEP)) {
       return (
         <React.Fragment>
