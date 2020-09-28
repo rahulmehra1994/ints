@@ -7,25 +7,24 @@ export default function ReminderMailer() {
       <div
         className="shadow-1 bg-white flex justify-center items-center"
         style={{ height: 64 }}>
-        <img
-          style={{ height: 53 }}
-          src={
-            'https://vmockvideofiles.s3.amazonaws.com/assets/images/new_summary_benchmarking_dashtest_logo1.png'
-          }
-          alt={'vmock logo'}
-        />
+        <a href="/">
+          <img
+            style={{ height: 53 }}
+            src="https://vmockvideofiles.s3.amazonaws.com/assets/images/new_summary_benchmarking_dashtest_logo1.png"
+            alt={'vmock logo'}
+          />
+        </a>
       </div>
 
       <div
         className="flex justify-center items-center"
-        style={{ marginTop: 100 }}>
+        style={{ marginTop: 150 }}>
         <div>
           <div className="text-center">
-            <span
-              className="ep-icon-right-outtline"
-              style={{ fontSize: 235, color: common.sectionColor[0] }}>
-              {' '}
-            </span>
+            <img
+              src="https://s3.amazonaws.com/vmockvideofiles/assets/images/ep-images/mailer/reminder-email-tick.png"
+              style={{ width: 235 }}
+            />{' '}
           </div>
 
           <div className="" style={{ marginTop: 50 }}>
