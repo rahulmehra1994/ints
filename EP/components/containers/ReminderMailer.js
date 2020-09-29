@@ -5,9 +5,9 @@ export default function ReminderMailer() {
   return (
     <div className="bg-white" style={{ height: '100vh' }}>
       <div
-        className="shadow-1 bg-white flex justify-center items-center"
-        style={{ height: 64 }}>
-        <a href="/">
+        className="bg-white flex justify-center items-center"
+        style={{ height: 64, boxShadow: '0 3px 12px 0 rgba(0, 0, 0, 0.16)' }}>
+        <a href={process.env.APP_NAVBAR_URL}>
           <img
             style={{ height: 53 }}
             src="https://vmockvideofiles.s3.amazonaws.com/assets/images/new_summary_benchmarking_dashtest_logo1.png"
