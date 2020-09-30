@@ -56,17 +56,13 @@ class App extends Component {
     return false
   }
 
-  checkForMailerLink() {
+  checkForReminderMailerLink() {
     let locArr = this.props.location.pathname.split('/')
-    if (locArr[1] == 'reminder-mailer') {
-      return true
-    } else {
-      false
-    }
+    return locArr[1] === 'reminder-mailer'
   }
 
   render() {
-    if (this.checkForMailerLink()) {
+    if (this.checkForReminderMailerLink()) {
       return (
         <div className="ep-app">
           <ReminderMailer />
