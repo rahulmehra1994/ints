@@ -93,6 +93,7 @@ export var counters = {
   modifyInterviewCount: 0,
   fetchVideoSubtitlesCount: 0,
   fetchRequirementsCount: 0,
+  sendEmailerReminderTokenCount: 0,
 }
 
 export function apiCallAgain(
@@ -101,7 +102,8 @@ export function apiCallAgain(
   callback,
   networkFailDelay,
   noOfTimes,
-  xhr
+  xhr,
+  afterAllFailure = null
 ) {
   counters[key] += 1
   if (counters[key] < noOfTimes) {
@@ -112,6 +114,8 @@ export function apiCallAgain(
         if (callback) callback()
       }, networkFailDelay)
     }
+  } else {
+    if (afterAllFailure !== null) afterAllFailure()
   }
 }
 
@@ -1225,4 +1229,32 @@ export function fetchRequirements() {
         )
       })
   }
+}
+
+export function sendEmailerReminderToken(
+  token,
+  callbackSuccess,
+  callbackFailure
+) {
+  api
+    .service('ep')
+    .get(`/send-reminder?token=${token}`)
+    .done(data => {
+      counters['sendEmailerReminderTokenCount'] = 0
+      callbackSuccess(data)
+    })
+    .fail(xhr => {
+      apiCallAgain(
+        counters,
+        'sendEmailerReminderTokenCount',
+        () => {
+          sendEmailerReminderToken(token, callbackSuccess, callbackFailure)
+        },
+        1000,
+        3,
+        xhr,
+        callbackFailure
+      )
+      log('%c Api faliure /send-reminder', 'background: red; color: white', xhr)
+    })
 }
