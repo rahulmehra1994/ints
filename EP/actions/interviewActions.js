@@ -13,7 +13,7 @@ import {
   fetchTotalResult,
   fetchUserSpeechSubtitles,
 } from './../actions/apiActions'
-import { log } from './../actions/commonActions'
+import { log, mutuals } from './../actions/commonActions'
 import { PREFIX, setConvertVideo, setStatuses } from './../actions/actions'
 
 export const VIDEO_PROCESSED_PERCENT = PREFIX + 'VIDEO_PROCESSED_PERCENT'
@@ -207,7 +207,6 @@ export function saveAudioAPI(data, onSaveAudioAPISuccess) {
 }
 
 export function processresults(props, time) {
-  log('processresults', '', '')
   let fd = new FormData()
   fd.append('interview_key', store.getState().appIntKey.key)
   fd.append('duration_interview', time)
@@ -220,6 +219,10 @@ export function processresults(props, time) {
     })
     .done(data => {
       if (data.status === 'success') {
+        mutuals.socketTracking({
+          event_type: 'app flow',
+          event_description: `processresults api success when response was success`,
+        })
         changeInterviewToSuccess()
         checkIntResultsFirst(props)
       } else {
@@ -390,6 +393,10 @@ export function changeInterviewToSuccess() {
     })
     .done(data => {
       //success
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `on updateinterviewstatus api success`,
+      })
     })
     .fail(xhr => {
       apiCallAgain(
@@ -408,6 +415,11 @@ export function changeInterviewToSuccess() {
         'background: red; color: white',
         xhr
       )
+
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `on updateinterviewstatus failure`,
+      })
     })
 }
 
@@ -424,6 +436,10 @@ export function sendNoOfVideoClips(totalClips, intDuration) {
     })
     .done(data => {
       //success of sendNoOfVideoClips
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `on updateclipcount success`,
+      })
     })
     .fail(xhr => {
       apiCallAgain(
@@ -442,6 +458,10 @@ export function sendNoOfVideoClips(totalClips, intDuration) {
         'background: red; color: white',
         xhr
       )
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `on updateclipcount failure`,
+      })
     })
 }
 

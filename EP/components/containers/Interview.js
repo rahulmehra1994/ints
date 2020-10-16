@@ -89,7 +89,6 @@ class Interview extends Component {
       transcriptSaved: false, //true when transcript is saved
       curr_id: 0,
       showProcessing: false,
-      savetranscript: false,
       cancelsaveinterview: false,
       oneTabAlert: false,
       shouldMount: false,
@@ -121,7 +120,6 @@ class Interview extends Component {
     this.beginRecording = this.beginRecording.bind(this)
     this.chunkRecord = this.chunkRecord.bind(this)
     this.stopRecord = this.stopRecord.bind(this)
-    this.onVoiceEnd = this.onVoiceEnd.bind(this)
     this.onVoiceResult = this.onVoiceResult.bind(this)
     this.stopVoice = this.stopVoice.bind(this)
     this.onEnd = this.onEnd.bind(this)
@@ -143,6 +141,10 @@ class Interview extends Component {
   }
 
   releaseCameraAndAudioStream() {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: 'releaseCameraAndAudioStream called',
+    })
     fullStream.getTracks().forEach(track => track.stop())
     audioStream.getTracks().forEach(track => track.stop())
   }
@@ -290,10 +292,6 @@ class Interview extends Component {
     }
   }
 
-  onVoiceEnd() {
-    this.setState({ voiceStart: false, voiceStop: false })
-  }
-
   onVoiceResult(args) {
     const finalTranscript = args.finalTranscript
     if (finalTranscript !== ' ') {
@@ -324,6 +322,7 @@ class Interview extends Component {
 
   onEnd() {
     log('%c ON VOICE RECOGINTION END: ', 'background: cyan; color: black', '')
+
     if (this.state.finalRecognitionStop === false) {
       this.setState({ voiceStart: false }, () => {
         this.setState({ voiceStart: true })
@@ -405,6 +404,11 @@ class Interview extends Component {
       xhr
     )
 
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: `Api faliure /processclip of video id ${id}`,
+    })
+
     log('%c Api faliure /processclip', 'background: red; color: white', xhr)
   }
 
@@ -441,6 +445,10 @@ class Interview extends Component {
   updateClipCounts() {
     sendNoOfVideoClips(this.state.totalsent, this.intTimePeriod)
     log('all video clips =>', allClipsQueue)
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: `total sent clips: ${this.state.totalsent} and interview time: ${this.intTimePeriod}`,
+    })
   }
 
   checkParallelUpload(id) {
@@ -472,6 +480,10 @@ class Interview extends Component {
       this.state.interviewEnded
     ) {
       processresults(this.props, this.intTimePeriod)
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `processresults api called int time was: ${this.intTimePeriod}`,
+      })
     }
   }
 
@@ -479,21 +491,44 @@ class Interview extends Component {
     let transcript =
       this.state.transcript === null ? null : this.state.transcript.trim()
     submitTranscriptApi(transcript, this.onSuccessTranscript)
+
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: `transcript upload api called transcript: ${JSON.stringify(
+        this.state.transcript
+      )}`,
+    })
   }
 
   onSuccessTranscript() {
     this.setState({ transcriptSaved: true }, () => {
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: 'on success of transcript upload api',
+      })
       this.checkAllIntDataSentSuccessfully()
     })
   }
 
   getAudio = () => {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: 'getAudio method called',
+    })
     this.stopToRecordAudio(blob => {
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: 'Audio blob formed',
+      })
       this.saveAudio(blob)
     })
   }
 
   saveAudio(audioBlob) {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: 'save audio API called',
+    })
     saveAudioAPI(
       { audio: audioBlob, intKey: this.state.interviewKey },
       this.onSaveAudioAPISuccess
@@ -506,6 +541,10 @@ class Interview extends Component {
         audioSaved: true,
       },
       () => {
+        mutuals.socketTracking({
+          event_type: 'app flow',
+          event_description: 'on save audio API upload success',
+        })
         this.checkAllIntDataSentSuccessfully()
       }
     )
@@ -513,6 +552,10 @@ class Interview extends Component {
   }
 
   startInterview() {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: 'interview started',
+    })
     this.beginRecording()
     var timer = setInterval(() => {
       if (this.state.interviewEnded) {
@@ -624,14 +667,32 @@ class Interview extends Component {
   handleDataAvailableAudio(event) {
     if (event.data && event.data.size > 0) {
       this.recordedBlobsAudio.push(event.data)
+
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `inside handleDataAvailableAudio method with blob size: ${JSON.stringify(
+          event.data.size
+        )}`,
+      })
     }
+
+    console.count('handleDataAvailableAudio')
   }
 
   handleStopAudio(event) {
-    log('Audio Recorder stopped: ', '', event)
+    log('Audio Recorder stopped: ', event)
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: `inside audio recorder handleStopAudio method`,
+    })
   }
 
   stopToRecordAudio(callback) {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: 'stopToRecordAudio method called',
+    })
+
     this.audioRecorder.stop()
     // When the stop() method is invoked, the UA queues a task that runs the following steps:
     // If MediaRecorder.state is "inactive", raise a DOM InvalidState error and terminate these steps. If the MediaRecorder.state is not "inactive", continue on to the next step.
@@ -643,9 +704,16 @@ class Interview extends Component {
         type: 'audio/webm',
       })
 
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `recorded audio blobs length: ${JSON.stringify(
+          this.recordedBlobsAudio.length
+        )}`,
+      })
+
       this.recordedBlobsAudio.length = 0
       callback(superBlob)
-    }, 100)
+    }, 300)
   }
 
   beginRecording() {
@@ -672,6 +740,12 @@ class Interview extends Component {
         console.error('blob of size zero and id is' + id, '', '')
 
       log('blob in handleBlob of id => ' + id, blob, '')
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `video ${id} blob size: ${JSON.stringify(
+          blob.size
+        )}`,
+      })
       this.storeClip(id, blob)
     })
   }
@@ -692,6 +766,10 @@ class Interview extends Component {
               'background: green; color: white',
               ''
             )
+            mutuals.socketTracking({
+              event_type: 'app flow',
+              event_description: `Video playback started without issue in Interview`,
+            })
           })
           .catch(error => {
             log(
@@ -699,10 +777,18 @@ class Interview extends Component {
               'background: red; color: white',
               error
             )
+            mutuals.socketTracking({
+              event_type: 'app flow',
+              event_description: `Video playback failed in interview`,
+            })
           })
       }
     } catch (e) {
       log('Error', '', e)
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        event_description: `Video playback try catch block`,
+      })
     }
   }
 
@@ -716,11 +802,6 @@ class Interview extends Component {
 
   endInterview = () => {
     getIntResults()
-
-    mutuals.socketTracking({
-      event_type: 'click',
-      event_description: 'stop interview button',
-    })
 
     mutuals.socketTracking({
       curr_page: '/start-processing',
@@ -751,8 +832,6 @@ class Interview extends Component {
 
     this.stopRecord()
     this.stopVoice()
-
-    this.setState({ savetranscript: true })
 
     setTimeout(() => {
       if (this.state.cancelsaveinterview === false) {
@@ -874,7 +953,13 @@ class Interview extends Component {
                       <button
                         type="button"
                         className="b1"
-                        onClick={this.endInterview}
+                        onClick={() => {
+                          mutuals.socketTracking({
+                            event_type: 'click',
+                            event_description: 'stop interview button',
+                          })
+                          this.endInterview()
+                        }}
                         id="start-of-content"
                         tabIndex={tabIndex}
                         aria-label={`Click here to stop the interview`}>
