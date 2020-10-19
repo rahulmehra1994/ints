@@ -143,6 +143,7 @@ class Interview extends Component {
   releaseCameraAndAudioStream() {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'releaseCameraAndAudioStream called',
     })
     fullStream.getTracks().forEach(track => track.stop())
@@ -406,6 +407,7 @@ class Interview extends Component {
 
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `Api faliure /processclip of video id ${id}`,
     })
 
@@ -447,6 +449,7 @@ class Interview extends Component {
     log('all video clips =>', allClipsQueue)
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `total sent clips: ${this.state.totalsent} and interview time: ${this.intTimePeriod}`,
     })
   }
@@ -482,6 +485,7 @@ class Interview extends Component {
       processresults(this.props, this.intTimePeriod)
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `processresults api called int time was: ${this.intTimePeriod}`,
       })
     }
@@ -494,6 +498,7 @@ class Interview extends Component {
 
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `transcript upload api called transcript: ${JSON.stringify(
         this.state.transcript
       )}`,
@@ -504,6 +509,7 @@ class Interview extends Component {
     this.setState({ transcriptSaved: true }, () => {
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: 'on success of transcript upload api',
       })
       this.checkAllIntDataSentSuccessfully()
@@ -513,11 +519,13 @@ class Interview extends Component {
   getAudio = () => {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'getAudio method called',
     })
     this.stopToRecordAudio(blob => {
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: 'Audio blob formed',
       })
       this.saveAudio(blob)
@@ -527,6 +535,7 @@ class Interview extends Component {
   saveAudio(audioBlob) {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'save audio API called',
     })
     saveAudioAPI(
@@ -543,6 +552,7 @@ class Interview extends Component {
       () => {
         mutuals.socketTracking({
           event_type: 'app flow',
+          local_date_time: new Date().getTime(),
           event_description: 'on save audio API upload success',
         })
         this.checkAllIntDataSentSuccessfully()
@@ -554,6 +564,7 @@ class Interview extends Component {
   startInterview() {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'interview started',
     })
     this.beginRecording()
@@ -670,6 +681,7 @@ class Interview extends Component {
 
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `inside handleDataAvailableAudio method with blob size: ${JSON.stringify(
           event.data.size
         )}`,
@@ -683,6 +695,7 @@ class Interview extends Component {
     log('Audio Recorder stopped: ', event)
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `inside audio recorder handleStopAudio method`,
     })
   }
@@ -690,6 +703,7 @@ class Interview extends Component {
   stopToRecordAudio(callback) {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'stopToRecordAudio method called',
     })
 
@@ -706,6 +720,7 @@ class Interview extends Component {
 
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `recorded audio blobs length: ${JSON.stringify(
           this.recordedBlobsAudio.length
         )}`,
@@ -742,6 +757,7 @@ class Interview extends Component {
       log('blob in handleBlob of id => ' + id, blob, '')
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `video ${id} blob size: ${JSON.stringify(
           blob.size
         )}`,
@@ -768,6 +784,7 @@ class Interview extends Component {
             )
             mutuals.socketTracking({
               event_type: 'app flow',
+              local_date_time: new Date().getTime(),
               event_description: `Video playback started without issue in Interview`,
             })
           })
@@ -779,6 +796,7 @@ class Interview extends Component {
             )
             mutuals.socketTracking({
               event_type: 'app flow',
+              local_date_time: new Date().getTime(),
               event_description: `Video playback failed in interview`,
             })
           })
@@ -787,6 +805,7 @@ class Interview extends Component {
       log('Error', '', e)
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `Video playback try catch block`,
       })
     }
