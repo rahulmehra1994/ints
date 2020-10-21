@@ -62,7 +62,6 @@ class VideoCheck extends Component {
     this.compHasUnMounted = null
     this.checkForTranscriptTimer = null
     this.listenTimeout = null
-    this.videoStream = null
     this.requestAnimationFrame = null
     this.startSpeechRecognition = this.startSpeechRecognition.bind(this)
     this.onEnd = this.onEnd.bind(this)
@@ -84,8 +83,8 @@ class VideoCheck extends Component {
             this.setState({ cameraTracksError: true })
           else
             captureUserMedia(stream => {
-              this.videoStream = stream
-              this.refs.videoPlayBack.srcObject = this.videoStream
+              window.streamSysCheck = stream
+              this.refs.videoPlayBack.srcObject = window.streamSysCheck
               this.refs.videoPlayBack.play()
             })
         })
@@ -110,6 +109,15 @@ class VideoCheck extends Component {
     this.setState({ loopEnabled: false })
     cancelAnimationFrame(this.requestAnimationFrame)
     this.compHasUnMounted = true
+    this.releaseCameraAndAudioStream()
+  }
+
+  releaseCameraAndAudioStream() {
+    window.streamSysCheck.getTracks().forEach(track => track.stop())
+    log(
+      `system check releaseCameraAndAudioStream method called window.streamSysCheck`,
+      window.streamSysCheck.getTracks()
+    )
   }
 
   startAudioRecording() {

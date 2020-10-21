@@ -136,8 +136,14 @@ class Calibration extends Component {
   }
 
   releaseCameraAndAudioStream() {
-    window.stream.getTracks().forEach(track => track.stop())
-    window.stream2.getTracks().forEach(track => track.stop())
+    window.streamCalib.getTracks().forEach(track => track.stop())
+    window.streamCalib2.getTracks().forEach(track => track.stop())
+    log(
+      `calibration releaseCameraAndAudioStream method called window.streamCalib`,
+      window.streamCalib.getTracks(),
+      `window.streamCalib2`,
+      window.streamCalib2.getTracks()
+    )
   }
 
   componentDidMount() {
@@ -228,7 +234,7 @@ class Calibration extends Component {
     var options = { mimeType: 'video/webm;codecs=vp9' }
 
     try {
-      this.mediaRecorder = new MediaRecorder(window.stream, options)
+      this.mediaRecorder = new MediaRecorder(window.streamCalib, options)
     } catch (e) {
       console.error(`Exception while creating MediaRecorder: ${e}`)
       alert(
@@ -602,12 +608,12 @@ class Calibration extends Component {
   }
 
   handleSuccess(stream) {
-    window.stream = stream
+    window.streamCalib = stream
   }
 
   startRecord() {
     captureUserMediaWithAudio(stream => {
-      window.stream2 = stream
+      window.streamCalib2 = stream
       this.handleBlob(0)
     })
   }
