@@ -51,8 +51,6 @@ const interviewerImage =
   process.env.APP_PRODUCT_BASE_URL + '/dist/images/group-3.svg'
 
 var classNames = require('classnames')
-var fullStream = ''
-var audioStream = ''
 
 const hasGetUserMedia = !!(
   navigator.getUserMedia ||
@@ -141,12 +139,22 @@ class Interview extends Component {
   }
 
   releaseCameraAndAudioStream() {
+    window.fullStream.getTracks().forEach(track => track.stop())
+    window.audioStream.getTracks().forEach(track => track.stop())
+    this.state.src.getTracks().forEach(track => track.stop())
+
     mutuals.socketTracking({
       event_type: 'app flow',
-      event_description: 'releaseCameraAndAudioStream called',
+      local_date_time: new Date().getTime(),
+      event_description: `interview releaseCameraAndAudioStream called`,
     })
-    fullStream.getTracks().forEach(track => track.stop())
-    audioStream.getTracks().forEach(track => track.stop())
+
+    log(
+      `interview releaseCameraAndAudioStream method called window.fullstream`,
+      window.fullStream.getTracks(),
+      `window.audioStream`,
+      window.fullStream.getTracks()
+    )
   }
 
   componentDidMount() {
@@ -168,11 +176,11 @@ class Interview extends Component {
 
   getAllStreams() {
     captureUserMediaAudio(stream => {
-      audioStream = stream
+      window.audioStream = stream
     })
 
     captureUserMediaWithAudio(stream => {
-      fullStream = stream
+      window.fullStream = stream
       this.setState({ src: stream })
       this.videoTrailer()
       this.initializeMediaRecorder()
@@ -194,7 +202,7 @@ class Interview extends Component {
   })
 
   videoTrailer = _.once(() => {
-    this.refs.videoTrailer.srcObject = fullStream
+    this.refs.videoTrailer.srcObject = window.fullStream
     this.refs.videoTrailer.play()
   })
 
@@ -296,42 +304,93 @@ class Interview extends Component {
     const finalTranscript = args.finalTranscript
     if (finalTranscript !== ' ') {
       log(
-        '%c Transcript ' + finalTranscript,
-        'background: orange; color: white',
-        ''
+        '%c Transcript from onVoiceResult => ' + finalTranscript,
+        'background: yellow; color: black'
       )
 
       if (this.state.transcript) {
-        this.setState({ transcript: this.state.transcript + finalTranscript })
+        this.setState(
+          { transcript: this.state.transcript + finalTranscript },
+          () => {
+            this.logCompleteTranscript()
+          }
+        )
       } else {
-        this.setState({ transcript: finalTranscript })
+        this.setState({ transcript: finalTranscript }, () => {
+          this.logCompleteTranscript()
+        })
       }
 
-      log(
-        '%c Transcript from onVoiceResult: ' + this.state.transcript,
-        'background: yellow; color: black',
-        ''
-      )
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `voice recognition individual transcript => ${args.finalTranscript}`,
+      })
+
+      this.trackIfTranscriptCameAfterSaveTranscript(finalTranscript)
     }
+  }
+
+  logCompleteTranscript() {
+    log(
+      '%c Complete Transcript => ' + this.state.transcript,
+      'background: orange; color: white'
+    )
+
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition complete transcript => ${this.state.transcript}`,
+    })
+  }
+
+  trackIfTranscriptCameAfterSaveTranscript(finalTranscript) {
+    if (this.state.cancelsaveinterview)
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `voice recognition transcript came after savetranscript => ${finalTranscript}`,
+      })
   }
 
   onError(error) {
     log('%c VOICE RECOGINTION ERROR: ', 'background: cyan; color: black', error)
     //below code to restart voice recogintion
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `VOICE RECOGINTION ERROR => ${JSON.stringify(error)}`,
+    })
   }
 
   onEnd() {
-    log('%c ON VOICE RECOGINTION END: ', 'background: cyan; color: black', '')
+    log('%c ON VOICE RECOGINTION END: ', 'background: cyan; color: black')
 
     if (this.state.finalRecognitionStop === false) {
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `voice recognition ended in between`,
+      })
       this.setState({ voiceStart: false }, () => {
         this.setState({ voiceStart: true })
+      })
+    } else {
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `voice recognition ended finally`,
       })
     }
   }
 
   stopVoice() {
     this.setState({ voiceStop: true, finalRecognitionStop: true })
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition stopped because of interview end`,
+    })
   }
 
   setAppIntKey() {
@@ -406,6 +465,7 @@ class Interview extends Component {
 
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `Api faliure /processclip of video id ${id}`,
     })
 
@@ -447,6 +507,7 @@ class Interview extends Component {
     log('all video clips =>', allClipsQueue)
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `total sent clips: ${this.state.totalsent} and interview time: ${this.intTimePeriod}`,
     })
   }
@@ -482,6 +543,7 @@ class Interview extends Component {
       processresults(this.props, this.intTimePeriod)
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `processresults api called int time was: ${this.intTimePeriod}`,
       })
     }
@@ -494,7 +556,8 @@ class Interview extends Component {
 
     mutuals.socketTracking({
       event_type: 'app flow',
-      event_description: `transcript upload api called transcript: ${JSON.stringify(
+      local_date_time: new Date().getTime(),
+      event_description: `transcript upload api called transcript => ${JSON.stringify(
         this.state.transcript
       )}`,
     })
@@ -504,6 +567,7 @@ class Interview extends Component {
     this.setState({ transcriptSaved: true }, () => {
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: 'on success of transcript upload api',
       })
       this.checkAllIntDataSentSuccessfully()
@@ -513,11 +577,13 @@ class Interview extends Component {
   getAudio = () => {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'getAudio method called',
     })
     this.stopToRecordAudio(blob => {
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: 'Audio blob formed',
       })
       this.saveAudio(blob)
@@ -527,6 +593,7 @@ class Interview extends Component {
   saveAudio(audioBlob) {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'save audio API called',
     })
     saveAudioAPI(
@@ -543,6 +610,7 @@ class Interview extends Component {
       () => {
         mutuals.socketTracking({
           event_type: 'app flow',
+          local_date_time: new Date().getTime(),
           event_description: 'on save audio API upload success',
         })
         this.checkAllIntDataSentSuccessfully()
@@ -554,6 +622,7 @@ class Interview extends Component {
   startInterview() {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'interview started',
     })
     this.beginRecording()
@@ -589,7 +658,7 @@ class Interview extends Component {
     }
 
     try {
-      this.mediaRecorder = new MediaRecorder(fullStream, options)
+      this.mediaRecorder = new MediaRecorder(window.fullStream, options)
     } catch (e) {
       console.error(`Exception while creating MediaRecorder: ${e}`)
       alert(
@@ -646,7 +715,7 @@ class Interview extends Component {
     }
 
     try {
-      this.audioRecorder = new MediaRecorder(audioStream, options)
+      this.audioRecorder = new MediaRecorder(window.audioStream, options)
     } catch (e) {
       console.error(`Exception while creating audioRecorder: ${e}`)
       alert(
@@ -670,6 +739,7 @@ class Interview extends Component {
 
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `inside handleDataAvailableAudio method with blob size: ${JSON.stringify(
           event.data.size
         )}`,
@@ -683,6 +753,7 @@ class Interview extends Component {
     log('Audio Recorder stopped: ', event)
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: `inside audio recorder handleStopAudio method`,
     })
   }
@@ -690,6 +761,7 @@ class Interview extends Component {
   stopToRecordAudio(callback) {
     mutuals.socketTracking({
       event_type: 'app flow',
+      local_date_time: new Date().getTime(),
       event_description: 'stopToRecordAudio method called',
     })
 
@@ -706,6 +778,7 @@ class Interview extends Component {
 
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `recorded audio blobs length: ${JSON.stringify(
           this.recordedBlobsAudio.length
         )}`,
@@ -717,7 +790,13 @@ class Interview extends Component {
   }
 
   beginRecording() {
-    this.setState({ interviewEnded: false, voiceStart: true })
+    this.setState({ interviewEnded: false, voiceStart: true }, () => {
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `voice recognition started first time`,
+      })
+    })
     this.mediaRecorder.start() //started recording video with audio
     this.startToRecordAudio() //started recording audio only
     this.videoPlaybackOnScreen()
@@ -742,6 +821,7 @@ class Interview extends Component {
       log('blob in handleBlob of id => ' + id, blob, '')
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `video ${id} blob size: ${JSON.stringify(
           blob.size
         )}`,
@@ -768,6 +848,7 @@ class Interview extends Component {
             )
             mutuals.socketTracking({
               event_type: 'app flow',
+              local_date_time: new Date().getTime(),
               event_description: `Video playback started without issue in Interview`,
             })
           })
@@ -779,6 +860,7 @@ class Interview extends Component {
             )
             mutuals.socketTracking({
               event_type: 'app flow',
+              local_date_time: new Date().getTime(),
               event_description: `Video playback failed in interview`,
             })
           })
@@ -787,6 +869,7 @@ class Interview extends Component {
       log('Error', '', e)
       mutuals.socketTracking({
         event_type: 'app flow',
+        local_date_time: new Date().getTime(),
         event_description: `Video playback try catch block`,
       })
     }
@@ -1000,7 +1083,6 @@ class Interview extends Component {
 
             {this.state.voiceStart && (
               <VoiceRecognition
-                onStart={this.start}
                 onEnd={this.onEnd}
                 onResult={this.onVoiceResult}
                 stop={this.state.voiceStop}

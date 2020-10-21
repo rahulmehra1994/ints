@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { log } from './../../actions/commonActions'
+import { log, mutuals } from './../../actions/commonActions'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 
@@ -8,7 +8,6 @@ class VoiceRecognition extends Component {
     super(props)
 
     this.bindResult = this.bindResult.bind(this)
-    this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
     this.abort = this.abort.bind(this)
     this.createRecognition = this.createRecognition.bind(this)
@@ -44,6 +43,12 @@ class VoiceRecognition extends Component {
 
     let langCodeArr = langCode.split('*')
     log('langCodeArr', langCodeArr[0])
+
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition object created with langcode => ${langCodeArr[0]}`,
+    })
 
     const defaults = {
       // continuous: false,
@@ -85,16 +90,30 @@ class VoiceRecognition extends Component {
     this.props.onResult({ interimTranscript, finalTranscript })
   }
 
-  start() {
-    this.recognition.start()
+  startRecog() {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition started`,
+    })
   }
 
   stop() {
     this.recognition.stop()
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition stopped`,
+    })
   }
 
   abort() {
     this.recognition.abort()
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition aborted`,
+    })
   }
 
   UNSAFE_componentWillReceiveProps({ stop }) {
@@ -105,14 +124,29 @@ class VoiceRecognition extends Component {
 
   componentDidMount() {
     this.initialise()
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition component mounted`,
+    })
   }
 
   nomatch() {
     log('%c nomatch', 'background: orange; color: white', '')
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition no match function called`,
+    })
   }
 
   audioend() {
     log('%c audioend', 'background: orange; color: white', '')
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition audio end function called`,
+    })
   }
 
   soundend() {
@@ -121,20 +155,42 @@ class VoiceRecognition extends Component {
 
   speechend() {
     log('%c speechend', 'background: orange; color: white', '')
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition speechend function called`,
+    })
   }
 
   speechstart() {
     log('%c speechstart', 'background: orange; color: white', '')
-  }
-  soundstart() {
-    log('%c soundstart', 'background: orange; color: white', '')
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition speech start function called`,
+    })
   }
 
-  audiostartr() {}
+  soundstart() {
+    log('%c soundstart', 'background: orange; color: white', '')
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition sound start function called`,
+    })
+  }
+
+  audioStart() {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition audio start function called`,
+    })
+  }
 
   initialise() {
     const events = [
-      { name: 'start', action: this.props.onStart },
+      { name: 'start', action: this.startRecog },
       { name: 'end', action: this.props.onEnd },
       { name: 'error', action: this.props.onError },
       { name: 'nomatch', action: this.nomatch },
@@ -143,7 +199,7 @@ class VoiceRecognition extends Component {
       { name: 'speechend', action: this.speechend },
       { name: 'speechstart', action: this.speechstart },
       { name: 'soundstart', action: this.soundstart },
-      { name: 'audiostart', action: this.audiostartr },
+      { name: 'audiostart', action: this.audioStart },
     ]
 
     events.forEach(event => {
@@ -152,11 +208,16 @@ class VoiceRecognition extends Component {
 
     this.recognition.addEventListener('result', this.bindResult)
 
-    this.start()
+    this.recognition.start()
   }
 
   componentWillUnmount() {
     this.abort()
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      local_date_time: new Date().getTime(),
+      event_description: `voice recognition component unmounted`,
+    })
   }
 
   render() {
@@ -175,7 +236,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VoiceRecognition)
+export default connect(mapStateToProps, mapDispatchToProps)(VoiceRecognition)
