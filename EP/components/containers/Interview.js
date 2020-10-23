@@ -359,7 +359,13 @@ class Interview extends Component {
     mutuals.socketTracking({
       event_type: 'app flow',
       local_date_time: new Date().getTime(),
-      event_description: `VOICE RECOGINTION ERROR => ${JSON.stringify(error)}`,
+      event_description: `VOICE RECOGINTION ERROR => ${JSON.stringify(error, [
+        'error',
+        'isTrusted',
+        'message',
+        'type',
+        'target',
+      ])}`,
     })
   }
 
