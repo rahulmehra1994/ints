@@ -607,11 +607,13 @@ export function ContentStrengthBlock() {
 
 export const COMMUNITY = 'imperial'
 
+export const COMMUNITY_LIST = ['imperial', 'msubroad']
+
 export function productName() {
   if (_.isEmpty(store.getState().user.data)) {
     return ''
   } else {
-    if (store.getState().user.data.community === COMMUNITY) {
+    if (COMMUNITY_LIST.indexOf(store.getState().user.data.community) !== -1) {
       return 'Interviews'
     } else {
       return 'Elevator Pitch'
