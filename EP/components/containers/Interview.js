@@ -132,6 +132,7 @@ class Interview extends Component {
     )
     this.onUploadVideoFailure = this.onUploadVideoFailure.bind(this)
     this.setAppIntKey()
+    this.onError = this.onError.bind(this)
   }
 
   componentWillUnmount() {
@@ -177,7 +178,9 @@ class Interview extends Component {
 
   checkBackButtonPressed = () => {
     changeInterviewToSuccess()
-    alert('This interview has been cancelled and the feedback for this interview will not be visible.')
+    alert(
+      'This interview has been cancelled and the feedback for this interview will not be available.'
+    )
     location.reload()
   }
 
@@ -371,13 +374,7 @@ class Interview extends Component {
     mutuals.socketTracking({
       event_type: 'app flow',
       local_date_time: new Date().getTime(),
-      event_description: `VOICE RECOGINTION ERROR => ${JSON.stringify(error, [
-        'error',
-        'isTrusted',
-        'message',
-        'type',
-        'target',
-      ])}`,
+      event_description: `VOICE RECOGINTION ERROR => ${error.error} `,
     })
   }
 
@@ -1104,7 +1101,7 @@ class Interview extends Component {
                 onEnd={this.onEnd}
                 onResult={this.onVoiceResult}
                 stop={this.state.voiceStop}
-                onError={this.onError.bind(this)}
+                onError={this.onError}
               />
             )}
           </div>
