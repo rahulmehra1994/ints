@@ -34,6 +34,7 @@ import {
   sendNoOfVideoClips,
   uploadVideoAPI,
   submitTranscriptApi,
+  changeInterviewToSuccess,
 } from './../../actions/interviewActions'
 import {
   highContrast,
@@ -131,6 +132,7 @@ class Interview extends Component {
     )
     this.onUploadVideoFailure = this.onUploadVideoFailure.bind(this)
     this.setAppIntKey()
+    this.onError = this.onError.bind(this)
   }
 
   componentWillUnmount() {
@@ -167,6 +169,19 @@ class Interview extends Component {
       event_type: 'mount',
     })
     this.checkCameFromCalibration()
+    this.setWasOnInterview()
+  }
+
+  setWasOnInterview() {
+    window.addEventListener('popstate', this.checkBackButtonPressed, false) // page is refreshing so no need to remove this event listener
+  }
+
+  checkBackButtonPressed = () => {
+    changeInterviewToSuccess()
+    alert(
+      'This interview has been cancelled and the feedback for this interview will not be available.'
+    )
+    location.reload()
   }
 
   adminsFunctionalityActivation() {
@@ -359,7 +374,7 @@ class Interview extends Component {
     mutuals.socketTracking({
       event_type: 'app flow',
       local_date_time: new Date().getTime(),
-      event_description: `VOICE RECOGINTION ERROR => ${JSON.stringify(error)}`,
+      event_description: `VOICE RECOGINTION ERROR => ${error.error} `,
     })
   }
 
@@ -1086,7 +1101,7 @@ class Interview extends Component {
                 onEnd={this.onEnd}
                 onResult={this.onVoiceResult}
                 stop={this.state.voiceStop}
-                onError={this.onError.bind(this)}
+                onError={this.onError}
               />
             )}
           </div>
