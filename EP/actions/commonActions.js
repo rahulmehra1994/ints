@@ -20,6 +20,7 @@ export const urlEnds = {
   appearance: `/appearance`,
   word: `/word-usage`,
   sentence: `/sentence-analysis`,
+  competency: `/competency`,
   vocal: `/vocal-features`,
   pauses: `/appropriate-pauses`,
   disfluencies: `/disfluencies`,

@@ -81,6 +81,15 @@ const data = {
     route: 'sentence',
     icon: 'ep-icon-sentence-analysis',
   },
+  competency: {
+    label: 'Competency',
+    resultKey: 'sentenceCombinedVal',
+    index: 8,
+    type: 'sentence_analysis',
+    route: 'competency',
+    icon: 'ep-icon-sentence-analysis',
+    tag: 'New',
+  },
   vocal: {
     label: 'Vocal Features',
     resultKey: 'vocalCombinedVal',
@@ -329,6 +338,13 @@ class Leftbar extends Component {
                 leftBarTxtHighlight: path === appUrls[customProps.route],
               })}>
               {customProps.label}
+              {_.has(customProps.item, 'tag') ? (
+                <span
+                  className="ml-1 text-12-normal text-white px-1 rounded-sm"
+                  style={{ background: common.sectionColor[2] }}>
+                  New
+                </span>
+              ) : null}
             </div>
           </div>
         </Link>
@@ -364,6 +380,7 @@ class Leftbar extends Component {
                   route={item.route}
                   icon={item.icon}
                   label={item.label}
+                  item={item}
                 />
               </React.Fragment>
             )
