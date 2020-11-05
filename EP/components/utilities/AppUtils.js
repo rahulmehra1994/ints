@@ -2,6 +2,27 @@ import { log } from './../../actions/commonActions'
 import { mutuals } from './../../actions/commonActions'
 
 // handle user media capture
+// export function captureUserMedia(callback) {
+//   var params = {
+//     audio: false,
+//     video: {
+//       width: { min: 620, ideal: 640, max: 660 },
+//       height: { min: 460, ideal: 480, max: 500 },
+//     },
+//   }
+
+//   navigator.getUserMedia(params, callback, error => {
+//     log('getUserMedia error ', '', error)
+
+//     mutuals.socketTracking({
+//       event_type: 'app flow',
+//       event_description: 'camera permission problem',
+//     })
+//   })
+
+//   return true
+// }
+
 export function captureUserMedia(callback) {
   var params = {
     audio: false,
@@ -11,17 +32,46 @@ export function captureUserMedia(callback) {
     },
   }
 
-  navigator.getUserMedia(params, callback, error => {
-    log('getUserMedia error ', '', error)
-
-    mutuals.socketTracking({
-      event_type: 'app flow',
-      event_description: 'camera permission problem',
+  navigator.mediaDevices
+    .getUserMedia(params)
+    .then(stream => {
+      callback(stream)
     })
-  })
+    .catch(error => {
+      log('captureUserMedia error => ', error)
+
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `captureUserMedia error => ${JSON.stringify(error)}`,
+      })
+    })
 
   return true
 }
+
+// export function captureUserMediaAudio(callback) {
+//   var params = {
+//     audio: true,
+//     video: false,
+//   }
+
+//   navigator.getUserMedia =
+//     navigator.getUserMedia ||
+//     navigator.webkitGetUserMedia ||
+//     navigator.mozGetUserMedia ||
+//     navigator.msGetUserMedia
+
+//   navigator.getUserMedia(params, callback, error => {
+//     log('getUserMedia error ', '', error)
+
+//     mutuals.socketTracking({
+//       event_type: 'app flow',
+//       event_description: 'microphone permission problem',
+//       local_date_time: new Date().getTime(),
+//     })
+//   })
+// }
 
 export function captureUserMediaAudio(callback) {
   var params = {
@@ -29,24 +79,45 @@ export function captureUserMediaAudio(callback) {
     video: false,
   }
 
-  navigator.getUserMedia =
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia
-
-  navigator.getUserMedia(params, callback, error => {
-    log('getUserMedia error ', '', error)
-
-    mutuals.socketTracking({
-      event_type: 'app flow',
-      event_description: 'microphone permission problem',
+  navigator.mediaDevices
+    .getUserMedia(params)
+    .then(stream => {
+      callback(stream)
     })
-  })
+    .catch(error => {
+      log('captureUserMediaAudio error => ', error)
+
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `captureUserMediaAudio error => ${JSON.stringify(
+          error
+        )}}`,
+      })
+    })
 }
 
+// export function captureUserMediaWithAudio(callback) {
+//   var params = {
+//     audio: true,
+//     video: {
+//       frameRate: {
+//         ideal: 16,
+//         min: 15,
+//       }, //Keep in mind the frame rate of a stream coming from a webcam depends a lot on the light in the room.
+//       width: { min: 620, ideal: 640, max: 660 },
+//       height: { min: 460, ideal: 480, max: 500 },
+//     },
+//   }
+
+//   navigator.getUserMedia(params, callback, error => {
+//     log('getUserMedia error ', '', error)
+//   })
+//   return true
+// }
+
 export function captureUserMediaWithAudio(callback) {
-  var params = {
+  var constraints = {
     audio: true,
     video: {
       frameRate: {
@@ -58,9 +129,23 @@ export function captureUserMediaWithAudio(callback) {
     },
   }
 
-  navigator.getUserMedia(params, callback, error => {
-    log('getUserMedia error ', '', error)
-  })
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(stream => {
+      callback(stream)
+    })
+    .catch(error => {
+      log('captureUserMediaWithAudio error =>', error)
+
+      mutuals.socketTracking({
+        event_type: 'app flow',
+        local_date_time: new Date().getTime(),
+        event_description: `captureUserMediaWithAudio error => ${JSON.stringify(
+          error
+        )}`,
+      })
+    })
+
   return true
 }
 
@@ -100,8 +185,6 @@ export function permissionStatus() {
     })
   })
 }
-
-export function evaluatePermission() {}
 
 export function checkForAudioTracks(callback) {
   return new Promise((resolve, reject) => {
