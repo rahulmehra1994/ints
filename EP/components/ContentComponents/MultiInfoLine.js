@@ -12,7 +12,7 @@ const contentStrength =
 
 var Loader = require('react-loaders').Loader
 
-class NoContent extends Component {
+class MultiInfoLine extends Component {
   constructor(props) {
     super(props)
     this.state = { tags: [1, 2, 3, 4, 5], showFull: false, showLess: true }
@@ -96,8 +96,8 @@ class NoContent extends Component {
             )
           ) : null}
 
-          {false ? (
-            <div>
+          {true ? (
+            <div onClick={this.props.sentenceSamplesToggle}>
               <span className="hintColor"> - not detected - </span>
 
               <span className="bluePrimaryTxt float-right text-18-normal">
@@ -120,4 +120,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoContent)
+export default connect(mapStateToProps, mapDispatchToProps)(MultiInfoLine)

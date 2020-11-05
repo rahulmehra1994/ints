@@ -9,6 +9,7 @@ import RevaluateContent from '../Revaluation/RevaluateContent'
 import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { DetailInfoHeader } from '../commons/DetailHeader'
 import MultiInfoLine from './MultiInfoLine'
+import CompetencySamples from '../popups/CompetencySamples'
 
 const infoHeaderBigImg =
   process.env.APP_PRODUCT_BASE_URL +
@@ -16,7 +17,7 @@ const infoHeaderBigImg =
 
 var Loader = require('react-loaders').Loader
 
-class WordUsage extends Component {
+class Competency extends Component {
   constructor() {
     super()
     this.state = {
@@ -26,12 +27,16 @@ class WordUsage extends Component {
         action: false,
         repetitive: false,
         negative: false,
+        SentenceSamples: false,
+        tabIndex: -1,
+        type: 'Education',
       },
       firstItemShowCount: 0,
       tabIndex: -1,
     }
     this.toggleAll = this.toggleAll.bind(this)
     this.openFirstFilled = this.openFirstFilled.bind(this)
+    this.sentenceSamplesToggle = this.sentenceSamplesToggle.bind(this)
   }
 
   trackFromRender = _.once(res => {
@@ -70,6 +75,13 @@ class WordUsage extends Component {
     categories[category] = true
     this.setState({ categories: categories })
   })
+
+  sentenceSamplesToggle(type) {
+    this.setState({
+      sentenceSamplesToggle: !this.state.sentenceSamplesToggle,
+      type: type,
+    })
+  }
 
   render() {
     let { tabIndex } = this.state
@@ -217,7 +229,7 @@ class WordUsage extends Component {
               value: 0,
               tagsDetected: ['Conflict Management', 'Interpersonal Skills'],
             }}
-            insights={'data'}
+            sentenceSamplesToggle={this.sentenceSamplesToggle}
           />
 
           <MultiInfoLine
@@ -231,8 +243,17 @@ class WordUsage extends Component {
                 'Mentoring',
               ],
             }}
-            insights={'data'}
+            sentenceSamplesToggle={this.sentenceSamplesToggle}
           />
+
+          {this.state.sentenceSamplesToggle ? (
+            <CompetencySamples
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              epCustomizations={this.props.metaData}
+              type={this.state.type}
+              tabIndex={tabIndex}
+            />
+          ) : null}
 
           <div className="mt-10 clearfix text-center">
             <RevaluateContent tabIndex={tabIndex} />
@@ -271,6 +292,13 @@ const mapStateToProps = state => {
     punctData: !_.isEmpty(state.punctuatorResults)
       ? state.punctuatorResults
       : null,
+
+    epCustomizations: _.has(state.epCustomizations, 'sentence_analysis')
+      ? state.epCustomizations.sentence_analysis
+      : null,
+    metaData: _.has(state.epCustomizations, 'sentence_analysis_details')
+      ? state.epCustomizations.sentence_analysis_details
+      : null,
   }
 }
 
@@ -278,4 +306,4 @@ const mapDispatchToProps = dispatch => {
   return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WordUsage)
+export default connect(mapStateToProps, mapDispatchToProps)(Competency)
