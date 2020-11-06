@@ -2033,7 +2033,6 @@ body:not(.using-mouse) .btn-primary:focus {
 
   .summ-grid-2 {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
     grid-column-gap: 6.5px;
   }
 
@@ -2403,7 +2402,7 @@ body:not(.using-mouse) .btn-primary:focus {
     top: 0;
   }
 
-  .calibTransparent > image{
+  .calibTransparent > image {
     width: 100%;
     transform: translateY(-9px);
   }
@@ -3295,10 +3294,9 @@ body:not(.using-mouse) .btn-primary:focus {
     border-radius: 8px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-top: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 12px;
     cursor: pointer;
+    @extend .ep-scroll;
   }
 
   .smallSummaryCard:hover {
@@ -3313,19 +3311,14 @@ body:not(.using-mouse) .btn-primary:focus {
     margin-top: 20px;
   }
 
-  .smallSummaryCardIcon {
-    position: relative;
-    left: 10px;
-  }
-
   .smallSummaryCardIcon img {
-    height: 64px;
-    width: 64px;
+    height: 54px;
+    width: 54px;
   }
 
   .smallSummaryCardInfo {
-    width: calc(100% - 64px);
-    padding-left: 30px;
+    width: calc(100% - 54px);
+    padding-left: 12px;
   }
 
   .smallSummaryCardInfo .cardFeature {

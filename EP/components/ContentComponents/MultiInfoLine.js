@@ -15,7 +15,12 @@ var Loader = require('react-loaders').Loader
 class MultiInfoLine extends Component {
   constructor(props) {
     super(props)
-    this.state = { tags: [1, 2, 3, 4, 5], showFull: false, showLess: true }
+    this.state = {
+      tags: [1, 2, 3, 4, 5],
+      tagsDemo: [1],
+      showFull: false,
+      showLess: true,
+    }
   }
 
   componentDidMount() {
@@ -76,6 +81,10 @@ class MultiInfoLine extends Component {
               </div>
             )
           })}
+
+          {this.state.tagsDemo.length === 0 ? (
+            <span className="hintColor"> - not detected - </span>
+          ) : null}
         </div>
 
         <div className="text-right">
@@ -96,10 +105,8 @@ class MultiInfoLine extends Component {
             )
           ) : null}
 
-          {true ? (
+          {true || this.state.tagsDemo.length === 0 ? (
             <div onClick={this.props.sentenceSamplesToggle}>
-              <span className="hintColor"> - not detected - </span>
-
               <span className="bluePrimaryTxt float-right text-18-normal">
                 <span className="ep-icon-info-filled" />
                 <span className="ml-2">Insights</span>

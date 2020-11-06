@@ -121,6 +121,7 @@ class Summary extends Component {
       deliveryConfig: null,
       contentConfig: null,
       nonVerbals: null,
+      competencyEnabled: true,
     }
     this.gotoDetailed = this.gotoDetailed.bind(this)
   }
@@ -158,7 +159,7 @@ class Summary extends Component {
 
         contentConfig: {
           ...commonConfig,
-          type: 'vertical',
+          type: this.state.competencyEnabled ? 'horizontal' : 'vertical',
           tabIndex: this.state.contentTabIndex,
         },
 
@@ -198,6 +199,14 @@ class Summary extends Component {
       this.setState({ isLoaded: true })
     }, 1000)
   })
+
+  gridSizeCalc() {
+    if (this.state.contentDisable) return '1fr'
+
+    if (this.state.competencyEnabled) return '1fr 1fr'
+
+    return '1fr 1.5fr'
+  }
 
   render() {
     let { appUrls } = this.props
@@ -303,7 +312,7 @@ class Summary extends Component {
             <div
               className="mt-2 summ-grid-2"
               style={{
-                gridTemplateColumns: contentDisable ? '1fr' : null,
+                gridTemplateColumns: this.gridSizeCalc(),
               }}>
               {contentDisable ? null : (
                 <div
@@ -344,6 +353,19 @@ class Summary extends Component {
                       status={this.props.sentenceCombinedMsg}
                     />
                   </div>
+
+                  {this.state.competencyEnabled ? (
+                    <div className="summ-card-grid grid-cols-2">
+                      <Card
+                        {...contentConfig}
+                        keys={['word', 'word_usage']}
+                        img={'competency'}
+                        name={'Competency'}
+                        val={this.props.wordCombinedVal}
+                        status={this.props.wordCombinedMsg}
+                      />
+                    </div>
+                  ) : null}
                 </div>
               )}
 

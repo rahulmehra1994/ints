@@ -29,7 +29,7 @@ class Competency extends Component {
         negative: false,
         SentenceSamples: false,
         tabIndex: -1,
-        type: 'Education',
+        type: 'Analytical Skills',
       },
       firstItemShowCount: 0,
       tabIndex: -1,
