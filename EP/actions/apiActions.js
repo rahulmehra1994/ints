@@ -36,6 +36,7 @@ import {
   setInterviewQuestion,
   setIsInterviewFavourite,
   setInterviewBasicData,
+  getUserName,
 } from './interviewActions'
 
 import { log } from './../actions/commonActions'
@@ -944,12 +945,7 @@ export function submitTranscript(transcript, onSuccess, onFailure) {
   fd1.append('interview_key', store.getState().appIntKey.key)
   fd1.append('transcript', transcript)
   fd1.append('is_original', 0)
-  fd1.append(
-    'name',
-    store.getState().user.data.firstName +
-      ' ' +
-      store.getState().user.data.lastName
-  )
+  fd1.append('name', getUserName())
 
   api
     .service('ep')

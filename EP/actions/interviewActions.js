@@ -47,6 +47,37 @@ export function setInterviewBasicData(payload) {
   store.dispatch(createAction(INTERVIEW_BASIC_DATA)(payload))
 }
 
+export function getUserName() {
+  try {
+    let firstNameVal = ''
+    let firstName = store.getState().user.data.firstName
+    if (_.isNull(firstName) || _.isUndefined(firstName) || firstName === '') {
+      firstNameVal = ''
+    } else {
+      firstNameVal = firstName
+    }
+
+    let lastNameVal = ''
+    let lastName = store.getState().user.data.lastName
+    if (_.isNull(lastName) || _.isUndefined(lastName) || lastName === '') {
+      lastNameVal = ''
+    } else {
+      lastNameVal = lastName
+    }
+
+    if (firstNameVal === '' && lastNameVal === '') return 'default value'
+    else return `${firstNameVal} ${lastNameVal}`
+  } catch (e) {
+    mutuals.socketTracking({
+      event_type: 'app flow',
+      event_description: `error in getUserName`,
+      local_date_time: new Date().getTime(),
+    })
+    console.error(e)
+    return 'default value'
+  }
+}
+
 export function createInterview2(callback, fd) {
   api
     .service('ep')
@@ -142,12 +173,7 @@ export function submitTranscriptApi(transcript, onSuccessTranscript) {
   fd1.append('transcript', transcript)
   fd1.append('is_original', 1)
   fd1.append('interview_key', store.getState().appIntKey.key)
-  fd1.append(
-    'name',
-    store.getState().user.data.firstName +
-      ' ' +
-      store.getState().user.data.lastName
-  )
+  fd1.append('name', getUserName())
 
   api
     .service('ep')
@@ -179,12 +205,7 @@ export function saveAudioAPI(data, onSaveAudioAPISuccess) {
   let fd = new FormData()
   fd.append('audio', data.audio)
   fd.append('interview_key', data.intKey)
-  fd.append(
-    'name',
-    store.getState().user.data.firstName +
-      ' ' +
-      store.getState().user.data.lastName
-  )
+  fd.append('name', getUserName())
   api
     .service('ep')
     .post(`/saveaudio`, fd, { processData: false, contentType: false })
