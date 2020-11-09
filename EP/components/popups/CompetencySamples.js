@@ -293,17 +293,6 @@ var src = [
         ],
       },
       {
-        tabLabel: 'Idea Generation',
-        head: 'any head',
-        parameters: [
-          { name: 'Brainstorming' },
-          { name: ' Concept Design' },
-          { name: ' Pitching' },
-          { name: ' Product Prototyping' },
-          { name: ' Start-Up Venture' },
-        ],
-      },
-      {
         tabLabel: 'Mentoring',
         head: 'any head',
         parameters: [
