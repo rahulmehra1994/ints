@@ -61,7 +61,7 @@ export default class Tabs extends React.Component {
       <div>
         <div
           className="mt-8 clearfix horizontal-scroll capitalize"
-          style={{ borderBottom: '1px solid #dadada', zIndex: 1000 }}>
+          style={{ zIndex: 1000 }}>
           {this.props.tabsData.map((item, index) => {
             return (
               <span

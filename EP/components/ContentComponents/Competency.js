@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import _ from 'underscore'
 import { mutuals, common } from '../../actions/commonActions'
 import { mutualLogics } from '../../actions/mutualLogics'
-import { wordMsgs } from '../messages/messages'
+import { competencyMsgs } from '../messages/messages'
 import RevaluateContent from '../Revaluation/RevaluateContent'
 import NoDetectionAlert from '../popups/NoDetectionAlert'
 import { DetailInfoHeader } from '../commons/DetailHeader'
@@ -16,7 +16,17 @@ const infoHeaderBigImg =
   '/dist/images/new/icons-big/competency-big.svg'
 
 var Loader = require('react-loaders').Loader
-
+var ViewSampleButton = props => {
+  return (
+    <button
+      className="bluePrimaryTxt font-semibold"
+      onClick={props.sentenceSamplesToggle}
+      tabIndex={props.tabIndex}
+      aria-label={`view samples`}>
+      View Samples
+    </button>
+  )
+}
 class Competency extends Component {
   constructor() {
     super()
@@ -87,60 +97,15 @@ class Competency extends Component {
     let { tabIndex } = this.state
     let { compLoader, sectionColor, sectionStatus } = this.props.common
     let { combinedRes, punctData } = this.props
+    let safeToRender = false,
+      competencies = {},
+      resultCombined = 0
 
-    let repetitive_words = [],
-      discourse_markers = [],
-      specific_words = [],
-      negative_words = [],
-      action_words = []
-
-    let color_repetitive_words
-    let color_discourse_markers
-    let color_specific_words
-    let color_negative_words
-    let color_action_words
-    let safeToRender = false
-
-    if (!_.isEmpty(punctData)) {
-      if (!_.isEmpty(punctData.content)) {
-        repetitive_words = mutualLogics.wordUsageCal(
-          punctData.content.content_results_individual
-        ).repetitive_words
-        discourse_markers = mutualLogics.wordUsageCal(
-          punctData.content.content_results_individual
-        ).discourse_markers
-        specific_words = mutualLogics.wordUsageCal(
-          punctData.content.content_results_individual
-        ).specific_words
-        action_words = mutualLogics.wordUsageCal(
-          punctData.content.content_results_individual
-        ).action_words
-        negative_words = mutualLogics.wordUsageCal(
-          punctData.content.content_results_individual
-        ).negative_words
-
-        color_repetitive_words = mutuals.validKey(
-          punctData.content,
-          'repetitive_words_result'
-        )
-        color_discourse_markers = mutuals.validKey(
-          punctData.content,
-          'discourse_markers_result'
-        )
-        color_specific_words = mutuals.validKey(
-          punctData.content,
-          'specific_words_result'
-        )
-        color_negative_words = mutuals.validKey(
-          punctData.content,
-          'negative_words_result'
-        )
-        color_action_words = mutuals.validKey(
-          punctData.content,
-          'action_words_result'
-        )
-        safeToRender = true
-      }
+    if (!_.isEmpty(punctData) && !_.isEmpty(punctData.competency)) {
+      competencies = punctData.competency.competency_results_individual
+      resultCombined =
+        punctData.competency.competency_results_overall.competency_combined_val
+      safeToRender = true
     }
     // return (
     //   <div
@@ -186,15 +151,15 @@ class Competency extends Component {
         <div
           id="start-of-content"
           role="main"
-          ref="wordContentWrap"
+          ref="competencyContentWrap"
           className="clearfix information-content"
           aria-label={`Information section. This section provides details to your performance. ${
             tabIndex === -1 ? 'Select to continue further' : ''
           }`}
-          tabIndex={common.tabIndexes.word}
+          tabIndex={common.tabIndexes.competency}
           onKeyPress={e => {
             if (e.key === 'Enter' && tabIndex === -1) {
-              this.setState({ tabIndex: common.tabIndexes.word }, () => {
+              this.setState({ tabIndex: common.tabIndexes.competency }, () => {
                 try {
                   document
                     .querySelector('.information-content .onEnterFocusAda')
@@ -207,44 +172,78 @@ class Competency extends Component {
           }}>
           <DetailInfoHeader
             tabIndex={tabIndex}
-            label={'Competency'}
+            label={'Soft Skills'}
             img={infoHeaderBigImg}
             alt={'Competency info'}
-            color={sectionColor[combinedRes.wordCombinedVal]}
-            ariaLabel={`${
-              sectionStatus[combinedRes.wordCombinedVal]
-            } in competency.`}
-            status={sectionStatus[combinedRes.wordCombinedVal]}
-            underMsg={wordMsgs[combinedRes.wordCombinedVal]}
+            color={sectionColor[resultCombined]}
+            ariaLabel={`${sectionStatus[resultCombined]} in competency.`}
+            status={sectionStatus[resultCombined]}
+            underMsg={competencyMsgs[resultCombined]}
           />
 
-          <div className="text-22-demi mt-10">Essential</div>
-          <div className="text-14-normal hintColor border-b">
-            These competency is mandatory
+          <div className="mt-6 text-18-demi">Essential Skils</div>
+          <div className="text-14-normal hintColor pb-3 border-b">
+            These soft skills are mandatory
           </div>
 
-          <MultiInfoLine
-            fakeData={{
-              name: 'Teamwork',
-              value: 0,
-              tagsDetected: ['Conflict Management', 'Interpersonal Skills'],
-            }}
-            sentenceSamplesToggle={this.sentenceSamplesToggle}
-          />
+          {_.has(competencies, 'Analytical') ? (
+            <MultiInfoLine
+              data={{
+                label: 'Analytical',
+                categories: competencies['Analytical']['categories'],
+              }}
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+            />
+          ) : null}
 
-          <MultiInfoLine
-            fakeData={{
-              name: 'Teamwork 2',
-              value: 0,
-              tagsDetected: [
-                'Conflict Management',
-                'Interpersonal Skills',
-                'Entrepreneurial skills',
-                'Mentoring',
-              ],
-            }}
-            sentenceSamplesToggle={this.sentenceSamplesToggle}
-          />
+          {_.has(competencies, 'Communication') ? (
+            <MultiInfoLine
+              data={{
+                label: 'Communication',
+                categories: competencies['Communication']['categories'],
+              }}
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+            />
+          ) : null}
+
+          <div className="text-18-demi mt-10">Additional Skills</div>
+
+          <div className="text-14-normal hintColor pb-3 border-b">
+            Minimum 1 soft skill is mandatory
+          </div>
+
+          {_.has(competencies, 'Initiative') ? (
+            <MultiInfoLine
+              data={{
+                label: 'Initiative',
+                categories: competencies['Initiative']['categories'],
+              }}
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              additional
+            />
+          ) : null}
+
+          {_.has(competencies, 'Leadership') ? (
+            <MultiInfoLine
+              data={{
+                label: 'Leadership',
+                categories: competencies['Leadership']['categories'],
+              }}
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              additional
+            />
+          ) : null}
+
+          {_.has(competencies, 'Teamwork') ? (
+            <MultiInfoLine
+              data={{
+                label: 'Teamwork',
+                categories: competencies['Teamwork']['categories'],
+              }}
+              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              additional
+            />
+          ) : null}
 
           {this.state.sentenceSamplesToggle ? (
             <CompetencySamples
@@ -255,13 +254,20 @@ class Competency extends Component {
             />
           ) : null}
 
-          <div className="mt-10 clearfix text-center">
-            <RevaluateContent tabIndex={tabIndex} />
-          </div>
+          <div className="mt-12" style={{ padding: '0px 150px' }}>
+            <div className="border-gray p-8 text-center">
+              <p className="hintColor">
+                View samples and subtypes within each skill category to improve
+                your performance
+              </p>
 
-          <div className="mt-6 para clearfix">
-            Read more about which words to use and which ones to avoid in your
-            pitch from the Improvement Section.
+              <div className="mt-6">
+                <ViewSampleButton
+                  tabIndex={tabIndex}
+                  sentenceSamplesToggle={this.sentenceSamplesToggle}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -299,6 +305,7 @@ const mapStateToProps = state => {
     metaData: _.has(state.epCustomizations, 'sentence_analysis_details')
       ? state.epCustomizations.sentence_analysis_details
       : null,
+    isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
   }
 }
 

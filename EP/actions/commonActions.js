@@ -77,19 +77,20 @@ export var common = {
     appearance: 61,
     word: 71,
     sentence: 81,
-    vocal: 91,
-    pauses: 101,
-    disfluencies: 111,
-    modulation: 121,
-    videosummary: 131,
+    competency: 91,
+    vocal: 101,
+    pauses: 111,
+    disfluencies: 121,
+    modulation: 131,
+    videosummary: 141,
     insights: 22,
     improvement: 23,
     illustration: 24,
-    noContent: 141,
+    noContent: 151,
   },
 }
 
-const wrong = (
+export const wrong = (
   <span
     className="ep-icon-wrong"
     style={{
@@ -102,7 +103,7 @@ const wrong = (
   </span>
 )
 
-const right = (
+export const right = (
   <span
     className="ep-icon-right"
     style={{
@@ -629,4 +630,22 @@ export function shouldModifyWPM(val) {
 
 export function modifyWPMVal(val) {
   return shouldModifyWPM(val) ? IDEAL_WPM : val
+}
+
+export function competenciesDetected(arr) {
+  if (arr.length === 0) return false
+  else return true
+}
+
+export function getCompetencyCombinedVal(state) {
+  if (
+    !_.isEmpty(state.punctuatorResults) &&
+    !_.isEmpty(state.punctuatorResults.competency) &&
+    !_.isEmpty(state.punctuatorResults.competency.competency_results_overall)
+  ) {
+    return state.punctuatorResults.competency.competency_results_overall
+      .competency_combined_val
+  } else {
+    return 3 //leftbar main it is getting 3 in the else logic
+  }
 }

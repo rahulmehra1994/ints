@@ -107,6 +107,8 @@ class SummaryDetailedParent extends Component {
   }
 
   render() {
+    if (_.isNull(this.props.intData)) return null
+
     return (
       <div>
         {this.props.appUrls ? (
@@ -143,6 +145,7 @@ const mapStateToProps = state => {
   return {
     statuses: state.statuses,
     appUrls: state.appUrls,
+    intData: state.interviewEP.basicData,
   }
 }
 

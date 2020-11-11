@@ -75,6 +75,9 @@ class InsightsAllSection extends Component {
     let { appUrls, additionalSection, essentialSection } = this.props
 
     let stringChart = { hideYAxisPoints: true }
+
+    if (this.props.location.pathname === appUrls.competency) return null
+
     return this.props.interviewRows !== -1 ? (
       this.props.interviewRows.length > 2 ? (
         <div

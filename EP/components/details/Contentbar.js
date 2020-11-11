@@ -176,6 +176,15 @@ class Contentbar extends Component {
 
             <PropsRoute
               exact
+              path={appUrls.competency}
+              component={Competency}
+              videoModalOpen={this.videoModalOpen}
+              videoModalClose={this.videoModalClose}
+              data={illustrationData['competency']}
+            />
+
+            <PropsRoute
+              exact
               path={appUrls.vocal}
               component={vocal}
               videoModalOpen={this.videoModalOpen}
@@ -312,6 +321,19 @@ class word extends Component {
 }
 
 class sentence extends Component {
+  render() {
+    return (
+      <Common
+        arr={this.props.data}
+        videoModalOpen={this.props.videoModalOpen}
+        videoModalClose={this.props.videoModalClose}
+        mainTabIndex={common.tabIndexes.illustration + 60}
+      />
+    )
+  }
+}
+
+class Competency extends Component {
   render() {
     return (
       <Common

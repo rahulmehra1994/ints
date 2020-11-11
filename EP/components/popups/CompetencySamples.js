@@ -43,7 +43,7 @@ var src = [
         ],
       },
       {
-        tabLabel: 'Problem solving',
+        tabLabel: 'Number crunching',
         head: 'any head',
         parameters: [
           { name: 'Trend Analysis' },
@@ -54,7 +54,7 @@ var src = [
         ],
       },
       {
-        tabLabel: 'Problem solving',
+        tabLabel: 'Analytical soft skill',
         head: 'any head',
         parameters: [
           { name: 'Resource Allocation' },
@@ -200,10 +200,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Display Advertising' },
-          { name: ' Graphic Design' },
-          { name: ' Digital Marketing' },
-          { name: ' Media Production' },
-          { name: ' Animation' },
+          { name: 'Graphic Design' },
+          { name: 'Digital Marketing' },
+          { name: 'Media Production' },
+          { name: 'Animation' },
         ],
       },
       {
@@ -211,10 +211,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Strategic Alliance' },
-          { name: ' Stakeholder Management' },
-          { name: ' Team Building' },
-          { name: ' Client Advisory' },
-          { name: ' Account Management' },
+          { name: 'Stakeholder Management' },
+          { name: 'Team Building' },
+          { name: 'Client Advisory' },
+          { name: 'Account Management' },
         ],
       },
 
@@ -223,10 +223,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Industrial Relations' },
-          { name: ' Negotiation' },
-          { name: ' Dispute Management' },
-          { name: ' Mediation' },
-          { name: ' Settlement' },
+          { name: 'Negotiation' },
+          { name: 'Dispute Management' },
+          { name: 'Mediation' },
+          { name: 'Settlement' },
         ],
       },
 
@@ -235,10 +235,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Media Production' },
-          { name: ' Designing' },
-          { name: ' Music' },
-          { name: ' Creative Writing' },
-          { name: ' Theatre & Drama' },
+          { name: 'Designing' },
+          { name: 'Music' },
+          { name: 'Creative Writing' },
+          { name: 'Theatre & Drama' },
         ],
       },
 
@@ -247,10 +247,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Relationship Management' },
-          { name: ' Business Correspondence' },
-          { name: ' Documentations' },
-          { name: ' Consulting' },
-          { name: ' Pitching' },
+          { name: 'Business Correspondence' },
+          { name: 'Documentations' },
+          { name: 'Consulting' },
+          { name: 'Pitching' },
         ],
       },
       {
@@ -258,10 +258,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Customer Service' },
-          { name: ' Peer Support' },
-          { name: ' Client Liaison' },
-          { name: ' Partnerships' },
-          { name: ' Team Building' },
+          { name: 'Peer Support' },
+          { name: 'Client Liaison' },
+          { name: 'Partnerships' },
+          { name: 'Team Building' },
         ],
       },
     ],
@@ -286,10 +286,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Technology Transformation' },
-          { name: ' New Product Development' },
-          { name: ' Process Optimisation' },
-          { name: ' R & D' },
-          { name: ' New Methods' },
+          { name: 'New Product Development' },
+          { name: 'Process Optimisation' },
+          { name: 'R & D' },
+          { name: 'New Methods' },
         ],
       },
       {
@@ -297,10 +297,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Team Mentoring' },
-          { name: ' Coaching' },
-          { name: ' Training Delivery' },
-          { name: ' Peer Counseling' },
-          { name: ' People Development' },
+          { name: 'Coaching' },
+          { name: 'Training Delivery' },
+          { name: 'Peer Counseling' },
+          { name: 'People Development' },
         ],
       },
       {
@@ -308,10 +308,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Start-Up Venture' },
-          { name: ' Restructuring' },
-          { name: ' New Product Development' },
-          { name: ' Business Modeling' },
-          { name: ' Crisis Mitigation' },
+          { name: 'Restructuring' },
+          { name: 'New Product Development' },
+          { name: 'Business Modeling' },
+          { name: 'Crisis Mitigation' },
         ],
       },
       {
@@ -319,10 +319,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Pro-Bono' },
-          { name: ' Youth Development' },
-          { name: ' Tutoring' },
-          { name: ' Community Service' },
-          { name: ' Volunteering' },
+          { name: 'Youth Development' },
+          { name: 'Tutoring' },
+          { name: 'Community Service' },
+          { name: 'Volunteering' },
         ],
       },
     ],
@@ -347,10 +347,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Project Management' },
-          { name: ' Task Delegation' },
-          { name: ' Conflict Management' },
-          { name: ' Team Building' },
-          { name: ' Team Mentoring' },
+          { name: 'Task Delegation' },
+          { name: 'Conflict Management' },
+          { name: 'Team Building' },
+          { name: 'Team Mentoring' },
         ],
       },
       {
@@ -358,10 +358,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Staff Motivation' },
-          { name: ' Team Training' },
-          { name: ' Cross-Functional Leadership' },
-          { name: ' Performance Management' },
-          { name: ' Task Administration' },
+          { name: 'Team Training' },
+          { name: 'Cross-Functional Leadership' },
+          { name: 'Performance Management' },
+          { name: 'Task Administration' },
         ],
       },
       {
@@ -369,10 +369,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Resource Planning' },
-          { name: ' Workflow Management' },
-          { name: ' Work Delegation' },
-          { name: ' Operations Coordination' },
-          { name: ' Project Implementation' },
+          { name: 'Workflow Management' },
+          { name: 'Work Delegation' },
+          { name: 'Operations Coordination' },
+          { name: 'Project Implementation' },
         ],
       },
       {
@@ -380,10 +380,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Event Management' },
-          { name: ' Team Leadership' },
-          { name: ' Performance Management' },
-          { name: ' Project Coordination' },
-          { name: ' Staff Administration' },
+          { name: 'Team Leadership' },
+          { name: 'Performance Management' },
+          { name: 'Project Coordination' },
+          { name: 'Staff Administration' },
         ],
       },
     ],
@@ -408,10 +408,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Personal Development' },
-          { name: ' Intercultural Communication' },
-          { name: ' Dispute Settlement' },
-          { name: ' Team Motivation' },
-          { name: ' Task Delegation' },
+          { name: 'Intercultural Communication' },
+          { name: 'Dispute Settlement' },
+          { name: 'Team Motivation' },
+          { name: 'Task Delegation' },
         ],
       },
       {
@@ -419,10 +419,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Research Groups' },
-          { name: ' Cross-Functional Collaboration' },
-          { name: ' Peer Couseling' },
-          { name: ' Brainstorming' },
-          { name: ' Partnerships' },
+          { name: 'Cross-Functional Collaboration' },
+          { name: 'Peer Couseling' },
+          { name: 'Brainstorming' },
+          { name: 'Partnerships' },
         ],
       },
       {
@@ -430,10 +430,10 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Project Monitoring' },
-          { name: ' Campaign Management' },
-          { name: ' Event Coordination' },
-          { name: ' Task Administration' },
-          { name: ' Supervision' },
+          { name: 'Campaign Management' },
+          { name: 'Event Coordination' },
+          { name: 'Task Administration' },
+          { name: 'Supervision' },
         ],
       },
       {
@@ -441,27 +441,12 @@ var src = [
         head: 'any head',
         parameters: [
           { name: 'Administrative Assistance' },
-          { name: ' Peer Support' },
-          { name: ' Conflict Management' },
-          { name: ' Project Collaboration' },
-          { name: ' Event Coordination' },
+          { name: 'Peer Support' },
+          { name: 'Conflict Management' },
+          { name: 'Project Collaboration' },
+          { name: 'Event Coordination' },
         ],
       },
-    ],
-  },
-
-  ///below is old data template
-
-  {
-    id: 'por',
-    head: 'Positions of Responsibility (POR)',
-    type: 'POR',
-    headTxt:
-      'POR category is activated when you mention about your experiences of taking on a leadership role. Use this category to highlight the skills you have gained in that role and to inform the employer about your overall competence and job fit.',
-    listItems: [
-      `As Cultural Secretary of the college, I am in charge of managing the finances and budget for the annual fest of the college.`,
-      'I have been nominated as the President of the Finance Club, and have organized numerous talk sessions and mock stock competitions in that capacity.',
-      'I am the President of the Leadership & Human Capital Club at XYZ college and am responsible for organizing various Speaker Series, Educational Trips and networking events that are, in turn, directed at providing a platform to students to network with industry professionals and gain a deeper understanding of the field.',
     ],
   },
 ]
@@ -595,6 +580,14 @@ export default class ContentSamples extends Component {
             {this.state.arr[arrIndex]['headTxt']}
           </div>
 
+          <div className="paraHead mt-8">
+            <span>Importance For Recruiters</span>
+          </div>
+
+          <div className="mt-2 text-14-normal">
+            {this.state.arr[arrIndex]['importanceForRecruiters']}
+          </div>
+
           {this.state.arr[arrIndex]['listItems'].length > 0 ? (
             <div className="paraHead mt-8">
               <span>Samples</span>
@@ -621,14 +614,14 @@ export default class ContentSamples extends Component {
             />
           ) : null}
 
-          <div className="mt-4 flex justify-center items-center ">
+          <div className="mt-4 flex justify-center items-center">
             {!_.isNull(currentTabData)
               ? currentTabData.arr.map((item, index) => {
                   return (
                     <div
                       key={index}
                       className="rounded-full border border-grey float-left ml-4 flex justify-center items-center text-center"
-                      style={{ width: 100, height: 100 }}>
+                      style={{ width: 120, height: 120 }}>
                       <span>{item.name}</span>
                     </div>
                   )

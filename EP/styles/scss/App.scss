@@ -1942,6 +1942,7 @@ body:not(.using-mouse) .btn-primary:focus {
     font-weight: 600;
     text-transform: capitalize;
     position: relative;
+    border-bottom: 1px solid #dadada;
   }
 
   .tab-style:not(:first-child) {

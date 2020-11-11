@@ -8,6 +8,7 @@ import {
   common,
   mutuals,
   log,
+  getCompetencyCombinedVal,
 } from './../../actions/commonActions'
 
 var classNames = require('classnames')
@@ -82,12 +83,12 @@ const data = {
     icon: 'ep-icon-sentence-analysis',
   },
   competency: {
-    label: 'Competency',
-    resultKey: 'sentenceCombinedVal',
-    index: 8,
-    type: 'sentence_analysis',
+    label: 'Soft Skills',
+    resultKey: 'competencyCombinedVal',
+    index: 9,
+    type: 'competency',
     route: 'competency',
-    icon: 'ep-icon-sentence-analysis',
+    icon: 'ep-icon-competency-detailed-left-menu',
     tag: 'New',
   },
   vocal: {
@@ -147,6 +148,7 @@ class Leftbar extends Component {
   UNSAFE_componentWillMount() {
     this.modifyDataIfAppearanceDisabled()
     this.modifyDataIfContentDisabled()
+    this.modifyIfCompetencyProcessed()
   }
 
   modifyDataIfAppearanceDisabled() {
@@ -159,6 +161,13 @@ class Leftbar extends Component {
     if (mutuals.isContentEnabled(this.props) === false) {
       delete data['word']
       delete data['sentence']
+      delete data['competency']
+    }
+  }
+
+  modifyIfCompetencyProcessed() {
+    if (this.props.isCompetencyProcessed === false) {
+      delete data['competency']
     }
   }
 
@@ -507,6 +516,9 @@ const mapStateToProps = state => {
       ? null
       : state.epCustomizations,
     intQuestionId: state.interviewEP.intQuestionId,
+
+    isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
+    competencyCombinedVal: getCompetencyCombinedVal(state),
   }
 }
 

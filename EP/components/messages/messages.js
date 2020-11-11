@@ -53,6 +53,13 @@ export const wordMsgs = [
   '',
 ]
 
+export const competencyMsgs = [
+  'You are doing a good job in demonstrating soft skills in your interview speech.',
+  'You are on track. You can include a few more soft skills in your speech.',
+  'You need to talk about a few basic soft skills in your interview.',
+  '',
+]
+
 export const pausesMsgsMain = [
   'You are doing great and meeting the guidelines on appropriate pauses.',
   'Your speech still needs some improvements. ',
