@@ -349,10 +349,19 @@ class Calibration extends Component {
       langCode !== -1 &&
       langCode !== ''
     )
-      this.setState({
-        isSystemCheckOpen: false,
-        firstTimeUser: false,
-      })
+      if (
+        mutuals.multipleQuesEnabled(this.props) &&
+        this.props.lastQuestion.question_id === -1
+      )
+        this.setState({
+          isSystemCheckOpen: true,
+          firstTimeUser: true,
+        })
+      else
+        this.setState({
+          isSystemCheckOpen: false,
+          firstTimeUser: false,
+        })
   })
 
   changeFirstTimeUserStatusAndClosePopup() {
@@ -1276,6 +1285,7 @@ const mapStateToProps = state => {
     anotherIntReady: state.anotherIntReady,
     userInfo: state.user.data,
     customizations: state.epCustomizations,
+    lastQuestion: state.userInfoEP.questionData,
   }
 }
 
