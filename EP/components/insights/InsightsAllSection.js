@@ -76,8 +76,6 @@ class InsightsAllSection extends Component {
 
     let stringChart = { hideYAxisPoints: true }
 
-    if (this.props.location.pathname === appUrls.competency) return null
-
     return this.props.interviewRows !== -1 ? (
       this.props.interviewRows.length > 2 ? (
         <div
@@ -454,6 +452,118 @@ class InsightsAllSection extends Component {
                             return 'Absent'
                           } else if (val === 1) {
                             return 'Present'
+                          }
+                        }}
+                        config={{ ...stringChart, legends: false }}
+                        checkContentDisabled="true"
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              )
+            }}
+          />
+
+          <Route
+            exact
+            path={appUrls.competency}
+            render={() => {
+              let commonArr = [
+                {
+                  id: 'Analytical',
+                  heading: 'Analytical Skills',
+
+                  group: 'essential',
+                },
+                {
+                  id: 'Communication',
+                  heading: 'Communication',
+
+                  group: 'essential',
+                },
+                {
+                  id: 'Initiative',
+                  heading: 'Initiative Skills',
+
+                  group: 'additional',
+                },
+                {
+                  id: 'Leadership',
+                  heading: 'Leadership Skills',
+
+                  group: 'additional',
+                },
+                {
+                  id: 'Teamwork',
+                  heading: 'Teamwork Skills',
+
+                  group: 'additional',
+                },
+              ]
+
+              let common = (item, index) => {
+                return {
+                  label: item.heading,
+                  keys: {
+                    shouldShowNull: 'punctuator_status',
+                    yAxisKey: `competency.competency_results_individual.${item.id}.results`,
+                    yAxisColor: `competency.competency_results_individual.${item.id}.results`,
+                  },
+                  yPointsModifier: (val, obj) => {
+                    if (val === 0) return 1
+                    else return 0 //what about 1 and 2 value
+                  },
+                  colorValFind: (val, obj) => {
+                    if (item.group === 'additional') return null
+                    else return val
+                  },
+                }
+              }
+
+              let modEssentialArr = [],
+                modAdditionalArr = []
+
+              commonArr.forEach((item, index) => {
+                if (item.group === 'essential') {
+                  modEssentialArr.push(common(item, index))
+                }
+                if (item.group === 'additional') {
+                  modAdditionalArr.push(common(item, index))
+                }
+              })
+
+              return (
+                <div>
+                  <InsightsWrap
+                    rows={this.props.interviewRows}
+                    tabIndex={this.state.tabIndex}
+                    customData={modEssentialArr}
+                    modifyDataLabels={val => {
+                      if (val === null) {
+                        return null
+                      } else if (val === 0) {
+                        return 'Not Detected'
+                      } else if (val === 1) {
+                        return 'Detected'
+                      }
+                    }}
+                    config={stringChart}
+                    checkContentDisabled="true"
+                  />
+
+                  {modAdditionalArr.length > 0 ? (
+                    <div className="mt-6">
+                      <InsightsWrap
+                        rows={this.props.interviewRows}
+                        tabIndex={this.state.tabIndex}
+                        customData={modAdditionalArr}
+                        modifyDataLabels={val => {
+                          if (val === null) {
+                            return null
+                          } else if (val === 0) {
+                            return 'Not Detected'
+                          } else if (val === 1) {
+                            return 'Detected'
                           }
                         }}
                         config={{ ...stringChart, legends: false }}

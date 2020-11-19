@@ -7,9 +7,9 @@ import TraversableModal from './../popups/TraversableModal'
 var Loader = require('react-loaders').Loader
 var src = [
   {
-    id: 'education',
+    id: 'Analytical',
     head: 'Analytical Skills',
-    type: 'Analytical Skills',
+    type: 'Analytical',
     headTxt:
       'Analytical skills include the process of analyzing a problem, getting to the root-cause, structuring problems and identifying solutions.',
     importanceForRecruiters:
@@ -125,9 +125,9 @@ var src = [
   },
 
   {
-    id: 'education',
+    id: 'Communication',
     head: 'Communication Skills',
-    type: 'Communication Skills',
+    type: 'Communication',
     headTxt:
       'Communication skills refer to the ability to articulate your messages effectively for getting to a desired outcome.',
     importanceForRecruiters:
@@ -268,9 +268,9 @@ var src = [
   },
 
   {
-    id: 'education',
+    id: 'Initiative',
     head: 'Initiative Skills',
-    type: 'Initiative Skills',
+    type: 'Initiative',
     headTxt:
       'Initiative skills can be shown through creative problem-solving, new innovation, or simply going beyond the call of duty.',
     importanceForRecruiters:
@@ -329,9 +329,9 @@ var src = [
   },
 
   {
-    id: 'education',
+    id: 'Leadership',
     head: 'Leadership Skills',
-    type: 'Leadership Skills',
+    type: 'Leadership',
     headTxt:
       'Leadership skills refer to the ability to take on a role of leading teams, projects or any scope of work to excellence.',
     importanceForRecruiters:
@@ -390,9 +390,9 @@ var src = [
   },
 
   {
-    id: 'education',
+    id: 'Teamwork',
     head: 'Teamwork Skills',
-    type: 'Teamwork Skills',
+    type: 'Teamwork',
     headTxt:
       'Teamwork refers to the ability of a professional to work with others in a cohesive manner towards a common goal.',
     importanceForRecruiters:
@@ -467,18 +467,7 @@ export default class ContentSamples extends Component {
     let myArr = []
 
     src.forEach(item => {
-      if (
-        _.has(this.props.epCustomizations.essential_section, item.id) &&
-        this.props.epCustomizations.essential_section[item.id].is_enabled
-      ) {
-        myArr.push(item)
-      }
-      if (
-        _.has(this.props.epCustomizations.additional_section, item.id) &&
-        this.props.epCustomizations.additional_section[item.id].is_enabled
-      ) {
-        myArr.push(item)
-      }
+      myArr.push(item)
     })
 
     this.setState({ arr: myArr }, () => {
@@ -530,7 +519,7 @@ export default class ContentSamples extends Component {
   }
 
   modalToggler() {
-    this.props.sentenceSamplesToggle('Education')
+    this.props.sentenceSamplesToggle(this.state.arr[0].type)
   }
 
   traverse(arg) {

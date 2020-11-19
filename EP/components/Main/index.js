@@ -178,12 +178,10 @@ class Main extends React.PureComponent {
     for (let i = 3; i < this.pathArr.length; i++) arr += '/' + this.pathArr[i]
 
     let urlsArr = this.allowedUrls({
-      urlsObj: defaultUrls(''),
+      urlsObj: defaultUrls('', this.props.customizationsEP),
       customizationsEP: this.props.customizationsEP,
       intQuestionId: data.question_id,
     })
-
-    log('to check urls', urlsArr, Object.values(defaultUrls('')))
 
     if (urlsArr.indexOf(arr) === -1) {
       this.setState({ notFound: true })
@@ -279,7 +277,6 @@ class Main extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     userInfo: state.user ? state.user.data : null,
-    punctResults: state.punctuatorResults,
     gentleResults: state.gentleResults,
     throughInt: state.throughInt,
     statuses: state.statuses,

@@ -5,6 +5,7 @@ import store from './../../store/configureStore'
 import * as cookie from 'js-cookie'
 import io from 'socket.io-client'
 import { notify } from '@vmockinc/dashboard/services/helpers'
+import { setInterviewBasicData } from './interviewActions'
 
 export const urlEnds = {
   calibration: '/calibration',
@@ -648,4 +649,39 @@ export function getCompetencyCombinedVal(state) {
   } else {
     return 3 //leftbar main it is getting 3 in the else logic
   }
+}
+
+export function shouldCompetencyDisplay() {
+  if (
+    store.getState().epCustomizations.competency &&
+    store.getState().interviewEP.basicData.is_competency_processed
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function showCompetencyRevaluationModal() {
+  if (store.getState().epCustomizations.competency) return false
+
+  if (store.getState().interviewEP.basicData.is_competency_processed)
+    return false
+  else return true
+}
+
+export function showFirstTimeRevaluationPopup() {
+  if (store.getState().epCustomizations.competency) return false
+
+  if (
+    store.getState().interviewEP.basicData.initial_competency_processed_status
+  )
+    return false
+  else return true
+}
+
+export function storeOnlyInterviewBasicData() {
+  let intData = deepCopy(store.getState().interviewEP.basicData)
+  intData.is_competency_processed = true
+  setInterviewBasicData(intData)
 }

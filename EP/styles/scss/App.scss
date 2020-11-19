@@ -3388,4 +3388,8 @@ body:not(.using-mouse) .btn-primary:focus {
     width: 4px;
     opacity: 0.7;
   }
+
+  .soft-skill-----highlight {
+    @extend .greenBg;
+  }
 }

@@ -8,6 +8,7 @@ import {
   log,
   mutuals,
   getCompetencyCombinedVal,
+  shouldCompetencyDisplay,
 } from './../../actions/commonActions'
 import { toggleVideoFloating } from './../../actions/actions'
 import CenterLoading from './../CenterLoading/index'
@@ -175,7 +176,7 @@ class Summary extends Component {
 
         contentConfig: {
           ...commonConfig,
-          type: this.props.isCompetencyProcessed ? 'horizontal' : 'vertical',
+          type: shouldCompetencyDisplay() ? 'horizontal' : 'vertical',
           tabIndex: this.state.contentTabIndex,
         },
 
@@ -219,7 +220,7 @@ class Summary extends Component {
   gridSizeCalc() {
     if (this.state.contentDisable) return '1fr'
 
-    if (this.props.isCompetencyProcessed) return '1fr 1fr'
+    if (shouldCompetencyDisplay()) return '1fr 1fr'
 
     return '1fr 1.5fr'
   }
@@ -252,6 +253,7 @@ class Summary extends Component {
             <CenterLoading />
           </div>
         )}
+
         {this.disableOpacity()}
         <div className="summ-main-wrap" style={{ opacity: isLoaded ? 1 : 0 }}>
           <Comparison customClasses="leftBar" tabIndex={this.props.tabIndex} />
@@ -363,7 +365,7 @@ class Summary extends Component {
                     />
                   </div>
 
-                  {this.props.isCompetencyProcessed ? (
+                  {shouldCompetencyDisplay() ? (
                     <div className="mt-3 summ-card-grid grid-cols-2">
                       <Card
                         {...contentConfig}

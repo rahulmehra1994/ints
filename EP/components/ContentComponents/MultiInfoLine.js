@@ -9,7 +9,9 @@ import {
   right,
   wrong,
 } from './../../actions/commonActions'
+import ReactHtmlParser from 'react-html-parser'
 
+var classNames = require('classnames')
 const feedback =
   process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/icons-big/feedback.svg'
 const contentStrength =
@@ -22,8 +24,6 @@ class MultiInfoLine extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      categories: mutuals.deepCopy(props.data.categories),
-      categoriesCopy: mutuals.deepCopy(props.data.categories),
       showFull: false,
       showLess: true,
     }
@@ -34,91 +34,145 @@ class MultiInfoLine extends Component {
       curr_page: mutuals.urlEnds['competency'],
       event_type: 'mount',
     })
-
-    log('competency props => ', this.props, this.state)
   }
 
   showLess = () => {
-    this.setState({ showLess: true, chipsLength: 3 })
+    this.setState({ showLess: true })
   }
 
   showMore = () => {
-    this.setState({ showLess: false, chipsLength: 3 })
+    this.setState({ showLess: false })
   }
 
   labelIcon() {
-    if (_.has(this.props, 'additional') && this.state.categories.length === 0)
+    let { categories } = this.props.data
+    if (_.has(this.props, 'additional') && categories.length === 0)
       return <span className="pl-1 pr-2">&#8212;</span>
-    if (_.has(this.props, 'additional') && this.state.categories.length != 0)
-      return right
-    let { categories } = this.state
+
+    if (_.has(this.props, 'additional') && categories.length != 0) return right
+
     if (competenciesDetected(categories)) return right
     else return wrong
   }
 
   render() {
-    let { categories, categoriesCopy } = this.state
+    let { showLess } = this.state
+    let { categories } = this.props.data
 
     return (
-      <div
-        className="py-4 grid border-b"
-        style={{ gridTemplateColumns: '200px 1fr' }}>
-        <div className="flex items-center">
-          {this.labelIcon()}
+      <section
+        className="py-4 border-b"
+        style={{ background: showLess ? 'initial' : '#f7f7f7' }}>
+        <div className="grid" style={{ gridTemplateColumns: '200px 1fr' }}>
+          <div className="flex items-center pl-2">
+            {this.labelIcon()}
 
-          <span className="ml-4 text-14-med">{this.props.data.label}</span>
-        </div>
-        <div className="relative" style={{ paddingRight: 100 }}>
-          {categories.map((item, index) => {
-            if (this.state.showLess && index > 2) return null
-            return (
-              <div
-                key={index}
-                className="m-1 py-1 px-2 inline-block"
-                style={{ background: common.lightBgColor[0] }}>
-                <span
-                  className="ep-icon-right-rounded text-18-normal align-text-bottom"
-                  style={{ color: common.sectionColor[0] }}
-                />
-                <span className="ml-2 text-14-normal">{item}</span>
-              </div>
-            )
-          })}
+            <span className="ml-4 text-14-med">{this.props.data.label}</span>
+          </div>
+          <div className="relative" style={{ paddingRight: 100 }}>
+            {this.state.showLess &&
+              categories.map((item, index) => {
+                if (index > 2) return null
+                return (
+                  <div
+                    key={index}
+                    className="m-1 py-1 px-2 inline-block"
+                    style={{ background: common.lightBgColor[0] }}>
+                    <span
+                      className="ep-icon-right-rounded text-18-normal align-text-bottom"
+                      style={{ color: common.sectionColor[0] }}
+                    />
+                    <span className="ml-2 text-14-normal">{item}</span>
+                  </div>
+                )
+              })}
 
-          {categoriesCopy.length === 0 ? (
-            <span className="grey-color"> Not detected! </span>
-          ) : null}
-
-          <span className="absolute pin-r pin-t">
-            {categoriesCopy.length === 0 ? (
-              <button
-                className="float-right"
-                onClick={this.props.sentenceSamplesToggle}>
-                <span className="bluePrimaryTxt text-14-demi">
-                  View Samples
-                </span>
-              </button>
+            {categories.length === 0 ? (
+              <span className="grey-color"> Not detected! </span>
             ) : null}
 
-            {categories.length > 3 ? (
-              this.state.showLess ? (
-                <div>
-                  <span className="bluePrimaryTxt">3+</span>
+            <span className="absolute pin-t" style={{ right: 15 }}>
+              {categories.length === 0 ? (
+                <button
+                  className="float-right"
+                  onClick={() => {
+                    this.props.sentenceSamplesToggle(this.props.data.type)
+                  }}>
+                  <span className="bluePrimaryTxt text-14-demi">
+                    View Samples
+                  </span>
+                </button>
+              ) : null}
+
+              {categories.length > 0 ? (
+                this.state.showLess ? (
+                  <div>
+                    {categories.length > 2 ? (
+                      <span className="bluePrimaryTxt">2+</span>
+                    ) : null}
+                    <span
+                      className="ml-2 ep-icon-expand-down text-18-normal rounded-full bg-grey-light"
+                      onClick={this.showMore}
+                    />
+                  </div>
+                ) : (
                   <span
-                    className="ml-2 ep-icon-expand-down text-18-normal rounded-full bg-grey-light"
-                    onClick={this.showMore}
+                    className="ep-icon-expand-up text-18-normal rounded-full bg-grey-light"
+                    onClick={this.showLess}
                   />
-                </div>
-              ) : (
-                <span
-                  className="ep-icon-expand-up text-18-normal rounded-full bg-grey-light"
-                  onClick={this.showLess}
-                />
-              )
-            ) : null}
-          </span>
+                )
+              ) : null}
+            </span>
+          </div>
         </div>
-      </div>
+
+        {this.state.showLess ? null : (
+          <div
+            className={classNames('mt-6', {
+              'bg-white mx-4 p-5 shadow-1': !this.state.showLess,
+            })}>
+            <div className="text-14-demi">Detected Categories</div>
+
+            <div className="mt-2">
+              {categories.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="mr-1 mb-1 py-1 px-2 inline-block"
+                    style={{ background: common.lightBgColor[0] }}>
+                    <span
+                      className="ep-icon-right-rounded text-18-normal align-text-bottom"
+                      style={{ color: common.sectionColor[0] }}
+                    />
+                    <span className="ml-2 text-14-normal">{item}</span>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div
+              className="grid mt-3 py-2 border-t border-b"
+              style={{ gridTemplateColumns: '200px 1fr' }}>
+              <div className="text-14-demi">Keyword</div>
+              <div className="text-14-demi">Sentence</div>
+            </div>
+
+            {this.props.data.content.map((item, i) => {
+              return (
+                <div
+                  key={i}
+                  className="grid mt-2"
+                  style={{ gridTemplateColumns: '200px 1fr' }}>
+                  <div className="text-14-med">{item.keyword}</div>
+                  <div className="text-14-normal">
+                    {ReactHtmlParser(item.content)}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </section>
     )
   }
 }
