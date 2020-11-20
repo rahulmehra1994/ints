@@ -21,7 +21,7 @@ export const urlEnds = {
   appearance: `/appearance`,
   word: `/word-usage`,
   sentence: `/sentence-analysis`,
-  competency: `/competency`,
+  competency: `/soft-skills`,
   vocal: `/vocal-features`,
   pauses: `/appropriate-pauses`,
   disfluencies: `/disfluencies`,

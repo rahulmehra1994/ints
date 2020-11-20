@@ -472,31 +472,26 @@ class InsightsAllSection extends Component {
                 {
                   id: 'Analytical',
                   heading: 'Analytical Skills',
-
                   group: 'essential',
                 },
                 {
                   id: 'Communication',
                   heading: 'Communication',
-
                   group: 'essential',
                 },
                 {
                   id: 'Initiative',
                   heading: 'Initiative Skills',
-
                   group: 'additional',
                 },
                 {
                   id: 'Leadership',
                   heading: 'Leadership Skills',
-
                   group: 'additional',
                 },
                 {
                   id: 'Teamwork',
                   heading: 'Teamwork Skills',
-
                   group: 'additional',
                 },
               ]
@@ -510,12 +505,11 @@ class InsightsAllSection extends Component {
                     yAxisColor: `competency.competency_results_individual.${item.id}.results`,
                   },
                   yPointsModifier: (val, obj) => {
-                    if (val === 0) return 1
-                    else return 0 //what about 1 and 2 value
+                    if (val === 2) return 0
+                    else return 1
                   },
                   colorValFind: (val, obj) => {
-                    if (item.group === 'additional') return null
-                    else return val
+                    return val
                   },
                 }
               }
@@ -539,13 +533,9 @@ class InsightsAllSection extends Component {
                     tabIndex={this.state.tabIndex}
                     customData={modEssentialArr}
                     modifyDataLabels={val => {
-                      if (val === null) {
-                        return null
-                      } else if (val === 0) {
-                        return 'Not Detected'
-                      } else if (val === 1) {
-                        return 'Detected'
-                      }
+                      if (val === null) return null
+                      else if (val === 2) return 'Not Detected'
+                      else return 'Detected'
                     }}
                     config={stringChart}
                     checkContentDisabled="true"
@@ -558,13 +548,9 @@ class InsightsAllSection extends Component {
                         tabIndex={this.state.tabIndex}
                         customData={modAdditionalArr}
                         modifyDataLabels={val => {
-                          if (val === null) {
-                            return null
-                          } else if (val === 0) {
-                            return 'Not Detected'
-                          } else if (val === 1) {
-                            return 'Detected'
-                          }
+                          if (val === null) return null
+                          else if (val === 2) return 'Not Detected'
+                          else return 'Detected'
                         }}
                         config={{ ...stringChart, legends: false }}
                         checkContentDisabled="true"
