@@ -166,9 +166,8 @@ class Leftbar extends Component {
   }
 
   modifyIfCompetencyProcessed() {
-    if (this.props.isCompetencyProcessed === false) {
+    if (this.props.customizations.competency === false)
       delete data['competency']
-    }
   }
 
   componentDidMount() {
@@ -519,6 +518,7 @@ const mapStateToProps = state => {
 
     isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
     competencyCombinedVal: getCompetencyCombinedVal(state),
+    interviewEP: state.interviewEP,
   }
 }
 

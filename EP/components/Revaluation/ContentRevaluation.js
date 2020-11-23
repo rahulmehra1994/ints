@@ -9,11 +9,11 @@ import {
   fetchGentleAfterRevaluation,
   fetchTotalResult,
 } from './../../actions/apiActions'
-
+import { mutuals } from './../../actions/commonActions'
 import {
-  mutuals,
-  storeOnlyInterviewBasicData,
-} from './../../actions/commonActions'
+  setInterviewBasicData,
+  changeInterviewToSuccess,
+} from './../../actions/interviewActions'
 
 const trackingDebounceSmall = _.debounce(
   mutuals.socketTracking,
@@ -68,7 +68,7 @@ class RevaluateContent extends Component {
       return
     }
 
-    storeOnlyInterviewBasicData()
+    this.revaluationDoneSaveRemotely()
     punctDataToStore(data)
     this.setState({ transcriptDataArrived: true }, () => {
       this.proceedFurther()
@@ -78,6 +78,23 @@ class RevaluateContent extends Component {
       fetchGentleAfterRevaluation()
       fetchTotalResult()
     }
+  }
+
+  revaluationDoneSaveRemotely = () => {
+    let fd = new FormData()
+    fd.append('interview_key', this.props.intKey)
+    fd.append('initial_competency_processed_status', true)
+    changeInterviewToSuccess(fd, () => {
+      this.revaluationDoneSaveRemotelySuccess()
+    })
+  }
+
+  revaluationDoneSaveRemotelySuccess = () => {
+    let intData = mutuals.deepCopy(this.props.interviewEP.basicData)
+    intData['is_competency_processed'] = true
+    intData['initial_competency_processed_status'] = true
+
+    setInterviewBasicData(intData)
   }
 
   onFetchInterviewsSuccess() {
@@ -274,6 +291,8 @@ const mapStateToProps = state => {
     audioUrl: state.transcript.audio_url_full_interview,
     isReevaluationEnabled: state.transcript.is_reevaluation_enabled,
     statuses: state.statuses,
+    interviewEP: state.interviewEP,
+    intKey: state.appIntKey.key,
   }
 }
 

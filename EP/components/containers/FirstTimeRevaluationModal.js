@@ -6,9 +6,11 @@ import {
   log,
   mutuals,
   showFirstTimeRevaluationPopup,
-  storeOnlyInterviewBasicData,
 } from './../../actions/commonActions'
-import { changeInterviewToSuccess } from './../../actions/interviewActions'
+import {
+  changeInterviewToSuccess,
+  setInterviewBasicData,
+} from './../../actions/interviewActions'
 import ContentRevaluation from '../Revaluation/ContentRevaluation'
 
 var classNames = require('classnames')
@@ -16,59 +18,68 @@ var classNames = require('classnames')
 class FirstTimeRevaluationModal extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {}
+    this.state = { viewOlderFeedbackProcessing: false }
   }
 
-  viewOlderFeedback = () => {
-    this.stage2()
+  viewOlderFeedback() {
+    this.firstTimeRevaluationSaveRemotely(this.props)
   }
 
-  stage2() {
+  firstTimeRevaluationSaveLocally = props => {
+    let intData = mutuals.deepCopy(props.interviewEP.basicData)
+    intData['initial_competency_processed_status'] = true
+
+    setInterviewBasicData(intData)
+    this.setState({ viewOlderFeedbackProcessing: false })
+  }
+
+  firstTimeRevaluationSaveRemotely(props) {
+    this.setState({ viewOlderFeedbackProcessing: true })
     let fd = new FormData()
-    fd.append('interview_key', this.props.intQuestionId)
-    fd.append('initial_competency_processed_status', 'true')
-    changeInterviewToSuccess(fd, this.afterChangeInterviewToSuccess)
-  }
-
-  afterChangeInterviewToSuccess = () => {
-    storeOnlyInterviewBasicData()
+    fd.append('interview_key', props.intKey)
+    fd.append('initial_competency_processed_status', true)
+    changeInterviewToSuccess(fd, () => {
+      this.firstTimeRevaluationSaveLocally(props)
+    })
   }
 
   render() {
-    return (
-      <React.Fragment>
-        {showFirstTimeRevaluationPopup() ? (
-          <div className="fullScreenCover">
-            <div
-              className="mt-20 mx-auto bg-white rounded-sm p-10"
-              style={{ width: 640 }}>
-              <div className="text-24-bold text-center">
-                In order to view feedback for competency section
-              </div>
-              <div className="mt-10 text-center">
-                <button
-                  type="button"
-                  onClick={this.viewOlderFeedback}
-                  className="button whiteButton mr-8"
-                  tabIndex="1"
-                  aria-label={`View old results`}>
-                  View old results
-                </button>
-
-                <ContentRevaluation />
-              </div>
-            </div>
+    return showFirstTimeRevaluationPopup(this.props) ? (
+      <div className="fullScreenCover">
+        <div
+          className="mt-20 mx-auto bg-white rounded-sm p-10"
+          style={{ width: 640 }}>
+          <div className="text-24-bold text-center">
+            In order to view feedback for soft skills section
           </div>
-        ) : null}
-      </React.Fragment>
-    )
+          <div className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                this.viewOlderFeedback()
+              }}
+              className="button whiteButton mr-8"
+              tabIndex="1"
+              aria-label="View old results"
+              disabled={this.state.viewOlderFeedbackProcessing}>
+              {this.state.viewOlderFeedbackProcessing
+                ? 'Processing'
+                : 'View old results'}
+            </button>
+
+            <ContentRevaluation />
+          </div>
+        </div>
+      </div>
+    ) : null
   }
 }
 
 const mapStateToProps = state => {
   return {
-    intQuestionId: state.interviewEP.intQuestionId,
+    intKey: state.appIntKey.key,
+    interviewEP: state.interviewEP,
+    epCustomizations: state.epCustomizations,
   }
 }
 

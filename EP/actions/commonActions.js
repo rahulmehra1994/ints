@@ -5,8 +5,10 @@ import store from './../../store/configureStore'
 import * as cookie from 'js-cookie'
 import io from 'socket.io-client'
 import { notify } from '@vmockinc/dashboard/services/helpers'
-import { setInterviewBasicData } from './interviewActions'
-
+import {
+  changeInterviewToSuccess,
+  setInterviewBasicData,
+} from './interviewActions'
 export const urlEnds = {
   calibration: '/calibration',
   interview: `/interview`,
@@ -339,6 +341,7 @@ export function multipleQuesEnabled(props) {
 }
 
 function isContentEnabled(props) {
+  console.log('isContentEnabled', props)
   let { customizations, intQuestionId } = props
   if (customizations === null || intQuestionId === null) return null
 
@@ -651,37 +654,34 @@ export function getCompetencyCombinedVal(state) {
   }
 }
 
-export function shouldCompetencyDisplay() {
+export function shouldCompetencyDisplay(props) {
   if (
-    store.getState().epCustomizations.competency &&
-    store.getState().interviewEP.basicData.is_competency_processed
-  ) {
+    props.epCustomizations.competency &&
+    props.interviewEP.basicData.is_competency_processed
+  )
     return true
-  } else {
-    return false
-  }
+  else return false
 }
 
-export function showCompetencyRevaluationModal() {
-  if (store.getState().epCustomizations.competency) return false
+export function showCompetencyRevaluationModal(props) {
+  if (props.epCustomizations.competency === false) return false
 
-  if (store.getState().interviewEP.basicData.is_competency_processed)
-    return false
+  if (props.interviewEP.basicData.is_competency_processed) return false
   else return true
 }
 
-export function showFirstTimeRevaluationPopup() {
-  if (store.getState().epCustomizations.competency) return false
+export function showFirstTimeRevaluationPopup(props) {
+  if (props.epCustomizations.competency === false) return false
 
   if (
-    store.getState().interviewEP.basicData.initial_competency_processed_status
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
   )
     return false
-  else return true
-}
 
-export function storeOnlyInterviewBasicData() {
-  let intData = deepCopy(store.getState().interviewEP.basicData)
-  intData.is_competency_processed = true
-  setInterviewBasicData(intData)
+  if (props.interviewEP.basicData.initial_competency_processed_status)
+    return false
+  else return true
 }

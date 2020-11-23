@@ -116,7 +116,7 @@ class Competency extends Component {
           className="mt-20 mx-auto bg-white rounded-sm p-10"
           style={{ width: 473 }}>
           <div className="text-24-bold text-center">
-            In order to view feedback for soft skill section
+            In order to view feedback for soft skills section
           </div>
           <div className="mt-10 text-center">
             <ContentRevaluation />
@@ -143,7 +143,9 @@ class Competency extends Component {
 
     return safeToRender ? (
       <div>
-        {showCompetencyRevaluationModal() ? this.RevaluationBlock() : null}
+        {showCompetencyRevaluationModal(this.props)
+          ? this.RevaluationBlock()
+          : null}
 
         <NoDetectionAlert
           info={'No speech was detected in the interview.'}
@@ -315,6 +317,8 @@ const mapStateToProps = state => {
       : null,
     isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
     customizationsEP: state.epCustomizations,
+    epCustomizations: state.epCustomizations,
+    interviewEP: state.interviewEP,
   }
 }
 

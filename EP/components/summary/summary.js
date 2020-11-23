@@ -176,7 +176,7 @@ class Summary extends Component {
 
         contentConfig: {
           ...commonConfig,
-          type: shouldCompetencyDisplay() ? 'horizontal' : 'vertical',
+          type: shouldCompetencyDisplay(this.props) ? 'horizontal' : 'vertical',
           tabIndex: this.state.contentTabIndex,
         },
 
@@ -220,7 +220,7 @@ class Summary extends Component {
   gridSizeCalc() {
     if (this.state.contentDisable) return '1fr'
 
-    if (shouldCompetencyDisplay()) return '1fr 1fr'
+    if (shouldCompetencyDisplay(this.props)) return '1fr 1fr'
 
     return '1fr 1.5fr'
   }
@@ -365,7 +365,7 @@ class Summary extends Component {
                     />
                   </div>
 
-                  {shouldCompetencyDisplay() ? (
+                  {shouldCompetencyDisplay(this.props) ? (
                     <div className="mt-3 summ-card-grid grid-cols-2">
                       <Card
                         {...contentConfig}
@@ -515,6 +515,8 @@ const mapStateToProps = state => {
     intQuestionId: state.interviewEP.intQuestionId,
     isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
     competencyCombinedVal: getCompetencyCombinedVal(state),
+    epCustomizations: state.epCustomizations,
+    interviewEP: state.interviewEP,
   }
 }
 

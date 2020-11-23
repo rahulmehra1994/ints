@@ -14,7 +14,9 @@ import {
   fetchUserSpeechSubtitles,
 } from './../actions/apiActions'
 import { log, mutuals } from './../actions/commonActions'
-import { PREFIX, setConvertVideo, setStatuses } from './../actions/actions'
+import { setConvertVideo, setStatuses } from './../actions/actions'
+
+const PREFIX = 'EP.' //NOTE: fetching value from actions/actions.js file making this undefined
 
 export const VIDEO_PROCESSED_PERCENT = PREFIX + 'VIDEO_PROCESSED_PERCENT'
 export const INTERVIEW_DURATION = PREFIX + 'INTERVIEW_DURATION'
