@@ -12,12 +12,6 @@ import {
 import ReactHtmlParser from 'react-html-parser'
 
 var classNames = require('classnames')
-const feedback =
-  process.env.APP_PRODUCT_BASE_URL + '/dist/images/new/icons-big/feedback.svg'
-const contentStrength =
-  process.env.APP_PRODUCT_BASE_URL +
-  '/dist/images/new/icons-big/content-strength-not-available.svg'
-
 var Loader = require('react-loaders').Loader
 
 class MultiInfoLine extends Component {
@@ -88,7 +82,7 @@ class MultiInfoLine extends Component {
               })}
 
             {categories.length === 0 ? (
-              <span className="grey-color"> Not detected! </span>
+              <span className="m-1 grey-color"> Not detected! </span>
             ) : null}
 
             <span className="absolute pin-t" style={{ right: 15 }}>
@@ -152,9 +146,9 @@ class MultiInfoLine extends Component {
 
             <div
               className="grid mt-3 py-2 border-t border-b"
-              style={{ gridTemplateColumns: '200px 1fr' }}>
-              <div className="text-14-demi">Keyword</div>
-              <div className="text-14-demi">Sentence</div>
+              style={{ gridTemplateColumns: '1fr' }}>
+              {/* <div className="text-14-demi">Keyword</div> */}
+              <div className="text-14-demi pl-3">Information</div>
             </div>
 
             {this.props.data.content.map((item, i) => {
@@ -162,10 +156,12 @@ class MultiInfoLine extends Component {
                 <div
                   key={i}
                   className="grid mt-2"
-                  style={{ gridTemplateColumns: '200px 1fr' }}>
-                  <div className="text-14-med">{item.keyword}</div>
-                  <div className="text-14-normal">
-                    {ReactHtmlParser(item.content)}
+                  style={{ gridTemplateColumns: '1fr' }}>
+                  {/* <div className="text-14-med">{item.keyword}</div> */}
+                  <div className="text-14-normal pl-4">
+                    {/* {ReactHtmlParser(item.content)} */}
+                    <span className="">-</span>
+                    <span className="ml-1">{item.content}</span>
                   </div>
                 </div>
               )

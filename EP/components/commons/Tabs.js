@@ -23,7 +23,9 @@ export default class Tabs extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
-    if (this.props.tabsData.length !== newProps.tabsData.length) {
+    if (
+      JSON.stringify(this.props.tabsData) !== JSON.stringify(newProps.tabsData)
+    ) {
       this.checkForNonEmptyArray(newProps)
     }
   }
@@ -60,7 +62,7 @@ export default class Tabs extends React.Component {
     return (
       <div>
         <div
-          className="mt-8 clearfix horizontal-scroll capitalize"
+          className="competency-samples-tab-scroll mt-8 clearfix horizontal-scroll capitalize"
           style={{ zIndex: 1000 }}>
           {this.props.tabsData.map((item, index) => {
             return (

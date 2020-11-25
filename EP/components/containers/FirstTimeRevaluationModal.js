@@ -47,8 +47,8 @@ class FirstTimeRevaluationModal extends Component {
     return showFirstTimeRevaluationPopup(this.props) ? (
       <div className="fullScreenCover">
         <div
-          className="mt-20 mx-auto bg-white rounded-sm p-10"
-          style={{ width: 640 }}>
+          className="mx-auto bg-white rounded-sm p-10"
+          style={{ marginTop: 50, width: 640 }}>
           <div className="text-24-bold text-center">
             In order to view feedback for soft skills section
           </div>
@@ -60,11 +60,11 @@ class FirstTimeRevaluationModal extends Component {
               }}
               className="button whiteButton mr-8"
               tabIndex="1"
-              aria-label="View old results"
+              aria-label="View Old Results"
               disabled={this.state.viewOlderFeedbackProcessing}>
               {this.state.viewOlderFeedbackProcessing
                 ? 'Processing'
-                : 'View old results'}
+                : 'View Old Results'}
             </button>
 
             <ContentRevaluation />

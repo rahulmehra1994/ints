@@ -7,7 +7,6 @@ import {
   common,
   log,
   mutuals,
-  getCompetencyCombinedVal,
   shouldCompetencyDisplay,
 } from './../../actions/commonActions'
 import { toggleVideoFloating } from './../../actions/actions'
@@ -514,9 +513,15 @@ const mapStateToProps = state => {
       : state.epCustomizations,
     intQuestionId: state.interviewEP.intQuestionId,
     isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
-    competencyCombinedVal: getCompetencyCombinedVal(state),
     epCustomizations: state.epCustomizations,
     interviewEP: state.interviewEP,
+    competencyCombinedVal:
+      !_.isEmpty(state.punctuatorResults) &&
+      !_.isEmpty(state.punctuatorResults.competency) &&
+      !_.isEmpty(state.punctuatorResults.competency.competency_results_overall)
+        ? state.punctuatorResults.competency.competency_results_overall
+            .competency_combined_val
+        : null,
   }
 }
 

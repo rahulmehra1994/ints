@@ -639,7 +639,22 @@ body:not(.using-mouse) .btn-primary:focus {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .full-screen-cover-transparent {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -894,7 +909,7 @@ body:not(.using-mouse) .btn-primary:focus {
     right: 0;
     left: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 10000;
     overflow: auto;
   }
@@ -2789,11 +2804,11 @@ body:not(.using-mouse) .btn-primary:focus {
   }
 
   .category-column {
-    width: 40%;
+    width: 200px;
   }
 
   .information-column {
-    width: 60%;
+    width: calc(100% - 200px);
     padding-left: 10px;
   }
 
@@ -3391,5 +3406,13 @@ body:not(.using-mouse) .btn-primary:focus {
 
   .soft-skill-----highlight {
     @extend .greenBg;
+  }
+
+  .competency-samples-tab-scroll {
+    padding-bottom: 10px;
+  }
+
+  .competency-samples-tab-scroll::-webkit-scrollbar {
+    height: 5px;
   }
 }

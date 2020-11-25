@@ -113,8 +113,8 @@ class Competency extends Component {
           backdropFilter: 'blur(4px)',
         }}>
         <div
-          className="mt-20 mx-auto bg-white rounded-sm p-10"
-          style={{ width: 473 }}>
+          className="mx-auto bg-white rounded-sm p-10"
+          style={{ marginTop: 240, width: 473 }}>
           <div className="text-24-bold text-center">
             In order to view feedback for soft skills section
           </div>
@@ -186,7 +186,7 @@ class Competency extends Component {
             underMsg={competencyMsgs[resultCombined]}
           />
 
-          <div className="mt-6 text-18-demi">Essential Skils</div>
+          <div className="mt-6 text-18-demi">Essential Skills</div>
           <div className="text-14-normal hintColor pb-3 border-b">
             These soft skills are mandatory
           </div>

@@ -48,8 +48,8 @@ export const highContrast =
 export var common = {
   sectionStatus: ['Good Job', 'On Track', 'Needs Work', ''],
   sectionColor: highContrast
-    ? ['#33844e', '#a66908', '#cc4400']
-    : ['#44af67', '#f5a623', '#ff5500', '#ffffff'],
+    ? ['#33844e', '#a66908', '#cc4400', 'transparent', 'transparent']
+    : ['#44af67', '#f5a623', '#ff5500', 'transparent', 'transparent'],
   compLoader: { type: 'line-scale', scale: 'scale(1.2)' },
   lightBgColor: highContrast
     ? ['#e4f2eb', '#ffecd6', ' #ffddd9']
@@ -656,23 +656,22 @@ export function getCompetencyCombinedVal(state) {
 
 export function shouldCompetencyDisplay(props) {
   if (
-    props.epCustomizations.competency &&
-    props.interviewEP.basicData.is_competency_processed
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
   )
-    return true
+    return false
+
+  if (props.epCustomizations.competency === false) return false //hide
+
+  if (props.interviewEP.basicData.is_new) return true
+
+  if (props.interviewEP.basicData.is_competency_processed) return true
   else return false
 }
 
-export function showCompetencyRevaluationModal(props) {
-  if (props.epCustomizations.competency === false) return false
-
-  if (props.interviewEP.basicData.is_competency_processed) return false
-  else return true
-}
-
 export function showFirstTimeRevaluationPopup(props) {
-  if (props.epCustomizations.competency === false) return false
-
   if (
     isContentEnabled({
       customizations: props.epCustomizations,
@@ -681,7 +680,39 @@ export function showFirstTimeRevaluationPopup(props) {
   )
     return false
 
-  if (props.interviewEP.basicData.initial_competency_processed_status)
+  if (props.epCustomizations.competency === false) return false
+
+  if (props.interviewEP.basicData.is_new) return false //hide
+
+  if (props.interviewEP.basicData.is_competency_processed) return false //hide
+
+  if (
+    props.interviewEP.basicData.initial_competency_processed_status === false
+  ) {
+    return true //primary initial popup show
+  } else {
+    return false //hide
+  }
+}
+
+export function showCompetencyRevaluationModal(props) {
+  if (
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
+  )
     return false
-  else return true
+
+  if (props.epCustomizations.competency === false) return false
+
+  if (props.interviewEP.basicData.is_new) return false //hide
+
+  if (props.interviewEP.basicData.is_competency_processed) return false //hide
+
+  if (props.interviewEP.basicData.initial_competency_processed_status) {
+    return true //secondary popup show
+  } else {
+    return false //hide
+  }
 }

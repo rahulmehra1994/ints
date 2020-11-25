@@ -545,6 +545,7 @@ export default class ContentSamples extends Component {
         )
       }
     }
+    document.querySelector('.competency-samples-tab-scroll').scroll(0, 0)
   }
 
   content = () => {
@@ -561,11 +562,12 @@ export default class ContentSamples extends Component {
           <span className="ep-icon-close"></span>
         </button>
 
-        <div className="scroll-el">
-          <div>
-            <span className="mainHead">{this.state.arr[arrIndex]['head']}</span>
-          </div>
-          <div className="mt-2 text-14-normal">
+        <div>
+          <span className="mainHead">{this.state.arr[arrIndex]['head']}</span>
+        </div>
+
+        <div className="scroll-el" style={{ height: 500 }}>
+          <div className="mt-6 text-14-normal">
             {this.state.arr[arrIndex]['headTxt']}
           </div>
 
@@ -590,32 +592,36 @@ export default class ContentSamples extends Component {
               </div>
             )
           })}
-        </div>
 
-        <div className="clearfix">
-          {!_.isNull(currentTabData) ? (
-            <Tabs
-              tabIndex={0}
-              tabsData={this.state.tabsData}
-              showOptions={false}
-              parentMethod={this.switchTab}
-              unit={this.props.unit}
-            />
-          ) : null}
+          <div className="clearfix">
+            {!_.isNull(currentTabData) ? (
+              <Tabs
+                tabIndex={0}
+                tabsData={this.state.tabsData}
+                showOptions={false}
+                parentMethod={this.switchTab}
+                unit={this.props.unit}
+              />
+            ) : null}
 
-          <div className="mt-4 flex justify-center items-center">
-            {!_.isNull(currentTabData)
-              ? currentTabData.arr.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="rounded-full border border-grey float-left ml-4 flex justify-center items-center text-center"
-                      style={{ width: 120, height: 120 }}>
-                      <span>{item.name}</span>
-                    </div>
-                  )
-                })
-              : null}
+            <div className="my-5 text-14-med text-center">
+              Talk about the following experience to showcase this skill
+            </div>
+
+            <div className="mt-4 flex justify-center items-center">
+              {!_.isNull(currentTabData)
+                ? currentTabData.arr.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="rounded-full border border-grey float-left ml-4 flex justify-center items-center text-center"
+                        style={{ width: 120, height: 120 }}>
+                        <span>{item.name}</span>
+                      </div>
+                    )
+                  })
+                : null}
+            </div>
           </div>
         </div>
       </div>

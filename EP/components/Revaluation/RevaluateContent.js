@@ -71,7 +71,7 @@ class RevaluateContent extends Component {
   }
 
   onFetchTranscriptSuccess(data) {
-    if (data.status === 'processing' && this.recalltranscriptCounter < 20) {
+    if (data.status === 'processing' && this.recalltranscriptCounter < 40) {
       this.recalltranscriptCounter++
       this.recallTranscript()
       return

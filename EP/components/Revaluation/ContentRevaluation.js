@@ -33,13 +33,12 @@ class RevaluateContent extends Component {
       showButton: true,
       loaderStatus: false,
       disableSubmitButton: false,
-      buttonTxt: 'Re-evaluate Interview',
+      buttonTxt: 'View Updated Results',
       transcriptDataArrived: false,
       interviewKeysArrived: false,
       audioLoader: false,
     }
     this.recalltranscriptCounter = 0
-    this.modalToggler = this.modalToggler.bind(this)
     this.onTranscriptSaveSuccess = this.onTranscriptSaveSuccess.bind(this)
     this.onTranscriptSaveFail = this.onTranscriptSaveFail.bind(this)
     this.onFetchTranscriptSuccess = this.onFetchTranscriptSuccess.bind(this)
@@ -62,7 +61,7 @@ class RevaluateContent extends Component {
   }
 
   onFetchTranscriptSuccess(data) {
-    if (data.status === 'processing' && this.recalltranscriptCounter < 20) {
+    if (data.status === 'processing' && this.recalltranscriptCounter < 40) {
       this.recalltranscriptCounter++
       this.recallTranscript()
       return
@@ -110,7 +109,7 @@ class RevaluateContent extends Component {
       this.setState(
         {
           loaderStatus: false,
-          buttonTxt: 'Re-evaluate Interview',
+          buttonTxt: 'View Updated Results',
           transcriptDataArrived: false,
           interviewKeysArrived: false,
         },
@@ -135,21 +134,6 @@ class RevaluateContent extends Component {
     if (this.showLoader() || this.state.loaderStatus) return
     this.setState({
       showButton: true,
-      disableSubmitButton: true,
-    })
-  }
-
-  modalToggler() {
-    trackingDebounceSmall({
-      event_type: 'click',
-      event_description: this.state.showButton
-        ? 'EP revaluation modal opened'
-        : 'EP revaluation modal closed',
-    })
-
-    if (this.showLoader() || this.state.loaderStatus) return
-    this.setState({
-      showButton: !this.state.showButton,
       disableSubmitButton: true,
     })
   }
@@ -273,7 +257,7 @@ class RevaluateContent extends Component {
         </button>
 
         {reValuationStatus === 'processing' || loaderStatus ? (
-          <div className="fullScreenCover" />
+          <div className="full-screen-cover-transparent" />
         ) : null}
       </>
     )
