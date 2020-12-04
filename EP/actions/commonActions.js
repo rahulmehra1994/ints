@@ -341,7 +341,6 @@ export function multipleQuesEnabled(props) {
 }
 
 function isContentEnabled(props) {
-  console.log('isContentEnabled', props)
   let { customizations, intQuestionId } = props
   if (customizations === null || intQuestionId === null) return null
 

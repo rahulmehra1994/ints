@@ -30,11 +30,12 @@ class InsightsAllSection extends Component {
         [this.props.appUrls.appearance]: common.tabIndexes.insights + 40,
         [this.props.appUrls.word]: common.tabIndexes.insights + 50,
         [this.props.appUrls.sentence]: common.tabIndexes.insights + 60,
-        [this.props.appUrls.vocal]: common.tabIndexes.insights + 70,
-        [this.props.appUrls.pauses]: common.tabIndexes.insights + 80,
-        [this.props.appUrls.disfluencies]: common.tabIndexes.insights + 90,
-        [this.props.appUrls.modulation]: common.tabIndexes.insights + 100,
-        [this.props.appUrls.videosummary]: common.tabIndexes.insights + 110,
+        [this.props.appUrls.competency]: common.tabIndexes.insights + 70,
+        [this.props.appUrls.vocal]: common.tabIndexes.insights + 80,
+        [this.props.appUrls.pauses]: common.tabIndexes.insights + 90,
+        [this.props.appUrls.disfluencies]: common.tabIndexes.insights + 100,
+        [this.props.appUrls.modulation]: common.tabIndexes.insights + 110,
+        [this.props.appUrls.videosummary]: common.tabIndexes.insights + 120,
       },
     }
   }
@@ -471,7 +472,7 @@ class InsightsAllSection extends Component {
               let commonArr = [
                 {
                   id: 'Analytical',
-                  heading: 'Analytical Skills',
+                  heading: 'Analytical',
                   group: 'essential',
                 },
                 {
@@ -480,18 +481,18 @@ class InsightsAllSection extends Component {
                   group: 'essential',
                 },
                 {
-                  id: 'Initiative',
-                  heading: 'Initiative Skills',
+                  id: 'Organisation & Planning',
+                  heading: 'Organisation & Planning',
                   group: 'additional',
                 },
                 {
                   id: 'Leadership',
-                  heading: 'Leadership Skills',
+                  heading: 'Leadership',
                   group: 'additional',
                 },
                 {
                   id: 'Teamwork',
-                  heading: 'Teamwork Skills',
+                  heading: 'Teamwork',
                   group: 'additional',
                 },
               ]
@@ -501,30 +502,26 @@ class InsightsAllSection extends Component {
                   label: item.heading,
                   keys: {
                     shouldShowNull: 'punctuator_status',
-                    yAxisKey: `competency.competency_results_individual.${item.id}.results`,
+                    yAxisKey: `competency.competency_results_individual`,
                     yAxisColor: `competency.competency_results_individual.${item.id}.results`,
                   },
-                  yPointsModifier: (val, obj) => {
-                    if (val === 2) return 0
-                    else return 1
-                  },
-                  colorValFind: (val, obj) => {
-                    return val
+                  yPointsModifier: (...args) => {
+                    return args[0][item.id]['categories'].length
                   },
                 }
               }
 
-              let modEssentialArr = [],
-                modAdditionalArr = []
+              let modEssentialArr = []
 
               commonArr.forEach((item, index) => {
-                if (item.group === 'essential') {
-                  modEssentialArr.push(common(item, index))
-                }
-                if (item.group === 'additional') {
-                  modAdditionalArr.push(common(item, index))
-                }
+                modEssentialArr.push(common(item, index))
               })
+
+              const dataLabelCal = val => {
+                if (val === null) return null
+                else if (val === 1) return `${val} entry`
+                else return `${val} entries`
+              }
 
               return (
                 <div>
@@ -533,30 +530,11 @@ class InsightsAllSection extends Component {
                     tabIndex={this.state.tabIndex}
                     customData={modEssentialArr}
                     modifyDataLabels={val => {
-                      if (val === null) return null
-                      else if (val === 2) return 'Not Detected'
-                      else return 'Detected'
+                      return dataLabelCal(val)
                     }}
-                    config={stringChart}
+                    config={{}}
                     checkContentDisabled="true"
                   />
-
-                  {modAdditionalArr.length > 0 ? (
-                    <div className="mt-6">
-                      <InsightsWrap
-                        rows={this.props.interviewRows}
-                        tabIndex={this.state.tabIndex}
-                        customData={modAdditionalArr}
-                        modifyDataLabels={val => {
-                          if (val === null) return null
-                          else if (val === 2) return 'Not Detected'
-                          else return 'Detected'
-                        }}
-                        config={{ ...stringChart, legends: false }}
-                        checkContentDisabled="true"
-                      />
-                    </div>
-                  ) : null}
                 </div>
               )
             }}

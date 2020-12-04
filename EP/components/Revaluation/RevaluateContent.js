@@ -123,6 +123,7 @@ class RevaluateContent extends Component {
       event_description: 'EP revaluation modal closed',
     })
 
+    document.querySelector('.contentbar').scroll(0, 0)
     if (this.showLoader() || this.state.loaderStatus) return
     this.setState({
       showButton: true,

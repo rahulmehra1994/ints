@@ -374,7 +374,7 @@ class Leftbar extends Component {
         <div id="primary-bar">
           {dataValues.map((item, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 {_.has(item, 'sectionHeading') ? (
                   <div className="paraHead mt-8 mb-2">
                     <span className="ml-6">{item.sectionHeading}</span>

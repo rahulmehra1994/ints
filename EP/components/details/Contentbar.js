@@ -340,7 +340,7 @@ class Competency extends Component {
         arr={this.props.data}
         videoModalOpen={this.props.videoModalOpen}
         videoModalClose={this.props.videoModalClose}
-        mainTabIndex={common.tabIndexes.illustration + 60}
+        mainTabIndex={common.tabIndexes.illustration + 70}
       />
     )
   }
@@ -359,7 +359,7 @@ class vocal extends Component {
         arr={this.props.data}
         videoModalOpen={this.props.videoModalOpen}
         videoModalClose={this.props.videoModalClose}
-        mainTabIndex={common.tabIndexes.illustration + 70}
+        mainTabIndex={common.tabIndexes.illustration + 80}
       />
     )
   }
@@ -372,7 +372,7 @@ class pauses extends Component {
         arr={this.props.data}
         videoModalOpen={this.props.videoModalOpen}
         videoModalClose={this.props.videoModalClose}
-        mainTabIndex={common.tabIndexes.illustration + 80}
+        mainTabIndex={common.tabIndexes.illustration + 90}
       />
     )
   }
@@ -385,7 +385,7 @@ class disfluencies extends Component {
         arr={this.props.data}
         videoModalOpen={this.props.videoModalOpen}
         videoModalClose={this.props.videoModalClose}
-        mainTabIndex={common.tabIndexes.illustration + 90}
+        mainTabIndex={common.tabIndexes.illustration + 100}
       />
     )
   }
@@ -398,7 +398,7 @@ class modulation extends Component {
         arr={this.props.data}
         videoModalOpen={this.props.videoModalOpen}
         videoModalClose={this.props.videoModalClose}
-        mainTabIndex={common.tabIndexes.illustration + 100}
+        mainTabIndex={common.tabIndexes.illustration + 110}
       />
     )
   }

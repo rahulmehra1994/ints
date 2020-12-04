@@ -26,9 +26,9 @@ var ViewSampleButton = props => {
   return (
     <button
       className="bluePrimaryTxt font-semibold"
-      onClick={props.sentenceSamplesToggle}
+      onClick={props.competencySamplesToggle}
       tabIndex={props.tabIndex}
-      aria-label={`view samples`}>
+      aria-label={`open competency samples popup`}>
       View Samples
     </button>
   )
@@ -50,18 +50,9 @@ class Competency extends Component {
       firstItemShowCount: 0,
       tabIndex: -1,
     }
-    this.toggleAll = this.toggleAll.bind(this)
-    this.openFirstFilled = this.openFirstFilled.bind(this)
-    this.sentenceSamplesToggle = this.sentenceSamplesToggle.bind(this)
-  }
 
-  trackFromRender = _.once(res => {
-    mutuals.socketTracking({
-      curr_page: mutuals.urlEnds['competency'],
-      event_type: 'render',
-      event_description: 'competency_combined',
-    })
-  })
+    this.competencySamplesToggle = this.competencySamplesToggle.bind(this)
+  }
 
   componentDidMount() {
     mutuals.socketTracking({
@@ -70,33 +61,23 @@ class Competency extends Component {
     })
   }
 
-  toggleAll(category) {
-    let { categories } = this.state
-    categories = mutuals.deepCopy(categories)
-    for (let item in categories) {
-      if (item === category) {
-        continue
+  competencySamplesToggle(type) {
+    this.setState(
+      {
+        competencySamplesToggle: !this.state.competencySamplesToggle,
+        type: type,
+      },
+      () => {
+        mutuals.socketTracking({
+          curr_page: mutuals.urlEnds['competency'],
+          event_type: 'click',
+          event_description:
+            'competency samples popup ' + this.state.competencySamplesToggle
+              ? 'opened'
+              : 'closed',
+        })
       }
-      categories[item] = false
-    }
-
-    categories[category] = !categories[category]
-    this.setState({ categories: categories })
-  }
-
-  openFirstFilled = _.once(category => {
-    let { categories } = this.state
-    categories = mutuals.deepCopy(categories)
-    for (let item in categories) categories[item] = false
-    categories[category] = true
-    this.setState({ categories: categories })
-  })
-
-  sentenceSamplesToggle(type) {
-    this.setState({
-      sentenceSamplesToggle: !this.state.sentenceSamplesToggle,
-      type: type,
-    })
+    )
   }
 
   RevaluationBlock() {
@@ -199,7 +180,8 @@ class Competency extends Component {
                 categories: competencies['Analytical']['categories'],
                 content: competencies['Analytical']['content'],
               }}
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
             />
           ) : null}
 
@@ -211,7 +193,8 @@ class Competency extends Component {
                 categories: competencies['Communication']['categories'],
                 content: competencies['Communication']['content'],
               }}
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
             />
           ) : null}
 
@@ -221,7 +204,7 @@ class Competency extends Component {
             Minimum 1 soft skill is mandatory
           </div>
 
-          {_.has(competencies, 'Initiative') ? (
+          {/* {_.has(competencies, 'Initiative') ? (
             <MultiInfoLine
               data={{
                 type: 'Initiative',
@@ -229,7 +212,23 @@ class Competency extends Component {
                 categories: competencies['Initiative']['categories'],
                 content: competencies['Initiative']['content'],
               }}
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
+              additional
+            />
+          ) : null} */}
+
+          {_.has(competencies, 'Organisation & Planning') ? (
+            <MultiInfoLine
+              data={{
+                type: 'OrganisationPlanning',
+                label: 'Organisation & Planning',
+                categories:
+                  competencies['Organisation & Planning']['categories'],
+                content: competencies['Organisation & Planning']['content'],
+              }}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
               additional
             />
           ) : null}
@@ -242,7 +241,8 @@ class Competency extends Component {
                 categories: competencies['Leadership']['categories'],
                 content: competencies['Leadership']['content'],
               }}
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
               additional
             />
           ) : null}
@@ -255,14 +255,15 @@ class Competency extends Component {
                 categories: competencies['Teamwork']['categories'],
                 content: competencies['Teamwork']['content'],
               }}
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              tabIndex={tabIndex}
+              competencySamplesToggle={this.competencySamplesToggle}
               additional
             />
           ) : null}
 
-          {this.state.sentenceSamplesToggle ? (
+          {this.state.competencySamplesToggle ? (
             <CompetencySamples
-              sentenceSamplesToggle={this.sentenceSamplesToggle}
+              competencySamplesToggle={this.competencySamplesToggle}
               epCustomizations={this.props.metaData}
               type={this.state.type}
               tabIndex={tabIndex}
@@ -283,7 +284,7 @@ class Competency extends Component {
               <div className="mt-6">
                 <ViewSampleButton
                   tabIndex={tabIndex}
-                  sentenceSamplesToggle={this.sentenceSamplesToggle}
+                  competencySamplesToggle={this.competencySamplesToggle}
                 />
               </div>
             </div>

@@ -267,66 +267,66 @@ var src = [
     ],
   },
 
-  {
-    id: 'Initiative',
-    head: 'Initiative Skills',
-    type: 'Initiative',
-    headTxt:
-      'Initiative skills can be shown through creative problem-solving, new innovation, or simply going beyond the call of duty.',
-    importanceForRecruiters:
-      'Recruiters consistently rate initiative to be a much needed skill. Most skills surveys highlight Initiative as the skill that differentiates the average performers from the high performers. The message is simply that, those who step out of their comfort zones to achieve an outcome, usually do.',
-    listItems: [
-      'Identified key variables of stock market; proposed simulation model matching historical values with 70% accuracy on project on Modeling Stock Market behavior through Fuzzy Neural Networks (FNN)',
-      'Developed comparative ranking system to assist $10B client in determining performance of 12 products and services in US market over 2-year period; recommended portfolio optimization to increase sales by 25%',
-      'Identified and developed key government and institutional clients for education business; initiated sales process and managed business development activities with 5 key accounts leading to $30MM+ revenue',
-    ],
-    rawTabData: [
-      {
-        tabLabel: 'Innovation and Creativity',
-        head: 'any head',
-        parameters: [
-          { name: 'Technology Transformation' },
-          { name: 'New Product Development' },
-          { name: 'Process Optimisation' },
-          { name: 'R & D' },
-          { name: 'New Methods' },
-        ],
-      },
-      {
-        tabLabel: 'Mentoring',
-        head: 'any head',
-        parameters: [
-          { name: 'Team Mentoring' },
-          { name: 'Coaching' },
-          { name: 'Training Delivery' },
-          { name: 'Peer Counseling' },
-          { name: 'People Development' },
-        ],
-      },
-      {
-        tabLabel: 'Entrepreneurial skills',
-        head: 'any head',
-        parameters: [
-          { name: 'Start-Up Venture' },
-          { name: 'Restructuring' },
-          { name: 'New Product Development' },
-          { name: 'Business Modeling' },
-          { name: 'Crisis Mitigation' },
-        ],
-      },
-      {
-        tabLabel: 'Initiative',
-        head: 'any head',
-        parameters: [
-          { name: 'Pro-Bono' },
-          { name: 'Youth Development' },
-          { name: 'Tutoring' },
-          { name: 'Community Service' },
-          { name: 'Volunteering' },
-        ],
-      },
-    ],
-  },
+  // {
+  //   id: 'Initiative',
+  //   head: 'Initiative Skills',
+  //   type: 'Initiative',
+  //   headTxt:
+  //     'Initiative skills can be shown through creative problem-solving, new innovation, or simply going beyond the call of duty.',
+  //   importanceForRecruiters:
+  //     'Recruiters consistently rate initiative to be a much needed skill. Most skills surveys highlight Initiative as the skill that differentiates the average performers from the high performers. The message is simply that, those who step out of their comfort zones to achieve an outcome, usually do.',
+  //   listItems: [
+  //     'Identified key variables of stock market; proposed simulation model matching historical values with 70% accuracy on project on Modeling Stock Market behavior through Fuzzy Neural Networks (FNN)',
+  //     'Developed comparative ranking system to assist $10B client in determining performance of 12 products and services in US market over 2-year period; recommended portfolio optimization to increase sales by 25%',
+  //     'Identified and developed key government and institutional clients for education business; initiated sales process and managed business development activities with 5 key accounts leading to $30MM+ revenue',
+  //   ],
+  //   rawTabData: [
+  //     {
+  //       tabLabel: 'Innovation and Creativity',
+  //       head: 'any head',
+  //       parameters: [
+  //         { name: 'Technology Transformation' },
+  //         { name: 'New Product Development' },
+  //         { name: 'Process Optimisation' },
+  //         { name: 'R & D' },
+  //         { name: 'New Methods' },
+  //       ],
+  //     },
+  //     {
+  //       tabLabel: 'Mentoring',
+  //       head: 'any head',
+  //       parameters: [
+  //         { name: 'Team Mentoring' },
+  //         { name: 'Coaching' },
+  //         { name: 'Training Delivery' },
+  //         { name: 'Peer Counseling' },
+  //         { name: 'People Development' },
+  //       ],
+  //     },
+  //     {
+  //       tabLabel: 'Entrepreneurial skills',
+  //       head: 'any head',
+  //       parameters: [
+  //         { name: 'Start-Up Venture' },
+  //         { name: 'Restructuring' },
+  //         { name: 'New Product Development' },
+  //         { name: 'Business Modeling' },
+  //         { name: 'Crisis Mitigation' },
+  //       ],
+  //     },
+  //     {
+  //       tabLabel: 'Initiative',
+  //       head: 'any head',
+  //       parameters: [
+  //         { name: 'Pro-Bono' },
+  //         { name: 'Youth Development' },
+  //         { name: 'Tutoring' },
+  //         { name: 'Community Service' },
+  //         { name: 'Volunteering' },
+  //       ],
+  //     },
+  //   ],
+  // },
 
   {
     id: 'Leadership',
@@ -449,6 +449,44 @@ var src = [
       },
     ],
   },
+  {
+    id: 'Organising and Planning Skills',
+    head: 'Organising and Planning Skills',
+    type: 'OrganisationPlanning',
+    headTxt:
+      'Organising and Planning refers to the proven ability of initiating, planning, executing a specific task/project towards completion.',
+    importanceForRecruiters:
+      'Recruiters view organising and planning skills as essential ingredients for simplified, connected and structured goal-setting as well as project completion. They expect job seekers to express these skills by recounting experiences where they pre-empted bottlenecks, championed resource allocation, prioritised critical tasks while managing multiple processes and communicating with various stakeholders.',
+    listItems: [
+      'Spearheaded resource planning for 2 IT projects, drafting project roadmap using Agile Methodology; coordinated with 4 developers on Beta version, achieving successful project delivery with £64K in revenue',
+      'Evaluated scope for project expansion beyond established standards, undertaking risk analysis of technical workflow; delivered Failure Mode Effect Analysis post quality function deployment, 2 weeks prior to deadline',
+      'Implemented Quality Management system for 2 processes, facilitating inspection of 4 operational processes; devised guidelines on corrective measures, automating 5 new workflow mechanisms',
+    ],
+    rawTabData: [
+      {
+        tabLabel: 'Organisational Skills',
+        head: 'any head',
+        parameters: [
+          { name: 'Workflow Management' },
+          { name: 'Operations Coordination' },
+          { name: 'Crisis Management' },
+          { name: 'Risk Mitigation' },
+          { name: 'Work Delegation' },
+        ],
+      },
+      {
+        tabLabel: 'Controlling and Planning',
+        head: 'any head',
+        parameters: [
+          { name: 'Project Scoping' },
+          { name: 'Deployment Planning' },
+          { name: 'Operations Optimisation' },
+          { name: 'Project Performance' },
+          { name: 'Risk Planning' },
+        ],
+      },
+    ],
+  },
 ]
 export default class ContentSamples extends Component {
   constructor(...args) {
@@ -519,7 +557,7 @@ export default class ContentSamples extends Component {
   }
 
   modalToggler() {
-    this.props.sentenceSamplesToggle(this.state.arr[0].type)
+    this.props.competencySamplesToggle(this.state.arr[0].type)
   }
 
   traverse(arg) {
@@ -545,20 +583,25 @@ export default class ContentSamples extends Component {
         )
       }
     }
-    document.querySelector('.competency-samples-tab-scroll').scroll(0, 0)
+    try {
+      document.querySelector('.competency-samples-tab-scroll').scroll(0, 0)
+      document.querySelector('.soft-skill .scroll-el').scroll(0, 0)
+    } catch (e) {
+      console.error('handled error => ', e)
+    }
   }
 
   content = () => {
     let { arrIndex, currentTabData } = this.state
     return (
-      <div>
+      <div className="soft-skill">
         <button
           className="epModalClose"
           onClick={() => {
             this.modalToggler()
           }}
           tabIndex={0}
-          aria-label={'samples popup close button'}>
+          aria-label={'competency popup close button'}>
           <span className="ep-icon-close"></span>
         </button>
 
@@ -566,7 +609,7 @@ export default class ContentSamples extends Component {
           <span className="mainHead">{this.state.arr[arrIndex]['head']}</span>
         </div>
 
-        <div className="scroll-el" style={{ height: 500 }}>
+        <div ref="scrollEl" className="scroll-el" style={{ height: 500 }}>
           <div className="mt-6 text-14-normal">
             {this.state.arr[arrIndex]['headTxt']}
           </div>

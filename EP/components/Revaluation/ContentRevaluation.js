@@ -21,6 +21,7 @@ const trackingDebounceSmall = _.debounce(
   true
 )
 
+const BUTTON_DEFAULT_TEXT = 'Re-evaluate Interview'
 const FocusTrap = require('focus-trap-react')
 var unidecode = require('unidecode')
 var Loader = require('react-loaders').Loader
@@ -33,7 +34,7 @@ class RevaluateContent extends Component {
       showButton: true,
       loaderStatus: false,
       disableSubmitButton: false,
-      buttonTxt: 'View Updated Results',
+      buttonTxt: BUTTON_DEFAULT_TEXT,
       transcriptDataArrived: false,
       interviewKeysArrived: false,
       audioLoader: false,
@@ -109,7 +110,7 @@ class RevaluateContent extends Component {
       this.setState(
         {
           loaderStatus: false,
-          buttonTxt: 'View Updated Results',
+          buttonTxt: BUTTON_DEFAULT_TEXT,
           transcriptDataArrived: false,
           interviewKeysArrived: false,
         },
@@ -184,7 +185,13 @@ class RevaluateContent extends Component {
       event_description: 'first time revaluation data submitted',
     })
 
-    let txtCopy = this.props.transcriptCleaned.trim()
+    let txtCopy = null
+    //send null when empty string comes
+    if (this.props.transcriptCleaned.trim() === '') {
+      txtCopy = null
+    } else {
+      txtCopy = this.props.transcriptCleaned.trim()
+    }
 
     this.setState({ loaderStatus: true, buttonTxt: 'Processing...' })
     submitTranscript(
@@ -201,7 +208,7 @@ class RevaluateContent extends Component {
       this.setState(
         {
           loaderStatus: false,
-          buttonTxt: 'Re-evaluate Feedback',
+          buttonTxt: BUTTON_DEFAULT_TEXT,
           transcriptDataArrived: false,
           interviewKeysArrived: false,
         },

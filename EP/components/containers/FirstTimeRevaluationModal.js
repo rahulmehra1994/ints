@@ -50,7 +50,7 @@ class FirstTimeRevaluationModal extends Component {
           className="mx-auto bg-white rounded-sm p-10"
           style={{ marginTop: 50, width: 640 }}>
           <div className="text-24-bold text-center">
-            In order to view feedback for soft skills section
+            Feedback has been updated for this interview
           </div>
           <div className="mt-10 text-center">
             <button

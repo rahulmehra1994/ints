@@ -14,12 +14,11 @@ class InsightsWrap extends Component {
   constructor(props) {
     super(props)
     this.state = { tabsData: [], graphData: null }
-    this.swtichTab = this.swtichTab.bind(this)
+    this.switchTab = this.switchTab.bind(this)
     this.tabsDataMaker = this.tabsDataMaker.bind(this)
   }
 
   componentDidMount() {
-    log(this.props, '', '')
     this.tabsDataMaker()
   }
 
@@ -48,12 +47,6 @@ class InsightsWrap extends Component {
   }
 
   graphDataCreator(obj) {
-    log(
-      'VALUES',
-      mutuals.getValueFromKeys(this.props.rows[0], obj.keys.yAxisKey),
-      ''
-    )
-
     let dateArr = this.props.rows.map((item, index) => {
       return mutuals.dateSmall(item.dates)
     })
@@ -70,13 +63,14 @@ class InsightsWrap extends Component {
             ? isGraphValNull(item, obj.keys.shouldShowNull)
               ? null
               : this.valueModify(obj, yValue)
-            : null,
+            : 0, //when content is disabled zero value
           marker: {
             symbol: this.isContentEnabled(item)
               ? this.findSymbol(obj, yColorType)
-              : null,
+              : null, //when content is disabled no color
           },
           isContentEnabled: this.isContentEnabled(item),
+          checkContentDisabled: true,
         }
       }
 
@@ -114,15 +108,7 @@ class InsightsWrap extends Component {
     else return insightsGraphValColors[yColorType]
   }
 
-  swtichTab(item) {
-    let arr = arguments[0]
-    let label = arguments[1]
-    let unit = arguments[2]
-
-    // this.setState({
-    //   graphData: { label: label, data: arr, unit: unit !== null ? unit : null },
-    // })
-
+  switchTab(item) {
     this.setState({
       graphData: item,
     })
@@ -138,7 +124,7 @@ class InsightsWrap extends Component {
             tabIndex={tabIndex}
             tabsData={tabsData}
             showOptions={false}
-            parentMethod={this.swtichTab}
+            parentMethod={this.switchTab}
           />
         </div>
         {graphData && graphData.arr.length > 0 ? (

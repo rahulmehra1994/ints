@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { mutuals } from './../../actions/commonActions'
 import {
   log,
   common,
   competenciesDetected,
   right,
   wrong,
+  mutuals,
 } from './../../actions/commonActions'
 import ReactHtmlParser from 'react-html-parser'
 
@@ -20,22 +20,27 @@ class MultiInfoLine extends Component {
     this.state = {
       showFull: false,
       showLess: true,
+      chipsToShow: 2,
+      defaultChipsNo: 2,
     }
-  }
-
-  componentDidMount() {
-    mutuals.socketTracking({
-      curr_page: mutuals.urlEnds['competency'],
-      event_type: 'mount',
-    })
   }
 
   showLess = () => {
     this.setState({ showLess: true })
+    mutuals.socketTracking({
+      curr_page: mutuals.urlEnds['competency'],
+      event_type: 'click',
+      event_description: `competency parameter ${this.props.data.label} contracted`,
+    })
   }
 
   showMore = () => {
     this.setState({ showLess: false })
+    mutuals.socketTracking({
+      curr_page: mutuals.urlEnds['competency'],
+      event_type: 'click',
+      event_description: `competency parameter ${this.props.data.label} expanded`,
+    })
   }
 
   labelIcon() {
@@ -49,9 +54,19 @@ class MultiInfoLine extends Component {
     else return wrong
   }
 
-  render() {
-    let { showLess } = this.state
+  showAllChips() {
     let { categories } = this.props.data
+    this.setState({ chipsToShow: categories.length })
+  }
+
+  showDefaultChips() {
+    this.setState({ chipsToShow: this.state.defaultChipsNo })
+  }
+
+  render() {
+    let { showLess, chipsToShow, defaultChipsNo } = this.state
+    let { categories } = this.props.data
+    let { tabIndex } = this.props
 
     return (
       <section
@@ -66,7 +81,7 @@ class MultiInfoLine extends Component {
           <div className="relative" style={{ paddingRight: 100 }}>
             {this.state.showLess &&
               categories.map((item, index) => {
-                if (index > 2) return null
+                // if (index >= chipsToShow) return null
                 return (
                   <div
                     key={index}
@@ -88,9 +103,11 @@ class MultiInfoLine extends Component {
             <span className="absolute pin-t" style={{ right: 15 }}>
               {categories.length === 0 ? (
                 <button
-                  className="float-right"
+                  className="float-right onEnterFocusAda"
+                  tabIndex={tabIndex}
+                  aria-label={`open sample of ${this.props.data.label}`}
                   onClick={() => {
-                    this.props.sentenceSamplesToggle(this.props.data.type)
+                    this.props.competencySamplesToggle(this.props.data.type)
                   }}>
                   <span className="bluePrimaryTxt text-14-demi">
                     View Samples
@@ -99,22 +116,22 @@ class MultiInfoLine extends Component {
               ) : null}
 
               {categories.length > 0 ? (
-                this.state.showLess ? (
-                  <div>
-                    {categories.length > 2 ? (
-                      <span className="bluePrimaryTxt">2+</span>
-                    ) : null}
-                    <span
-                      className="ml-2 ep-icon-expand-down text-18-normal rounded-full bg-grey-light"
-                      onClick={this.showMore}
-                    />
-                  </div>
-                ) : (
-                  <span
-                    className="ep-icon-expand-up text-18-normal rounded-full bg-grey-light"
-                    onClick={this.showLess}
-                  />
-                )
+                <button
+                  className={classNames(
+                    'ml-2 text-18-normal rounded-full bg-grey-light onEnterFocusAda',
+                    {
+                      'ep-icon-expand-down': this.state.showLess,
+                      'ep-icon-expand-up': !this.state.showLess,
+                    }
+                  )}
+                  onClick={() => {
+                    this.state.showLess ? this.showMore() : this.showLess()
+                  }}
+                  tabIndex={tabIndex}
+                  aria-label={`click to show ${
+                    this.state.showLess ? 'more' : 'less'
+                  } of competency information`}
+                />
               ) : null}
             </span>
           </div>
