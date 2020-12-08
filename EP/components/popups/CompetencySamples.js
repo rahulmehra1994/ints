@@ -327,7 +327,44 @@ var src = [
   //     },
   //   ],
   // },
-
+  {
+    id: 'Organising and Planning Skills',
+    head: 'Organising and Planning Skills',
+    type: 'OrganisationPlanning',
+    headTxt:
+      'Organising and Planning refers to the proven ability of initiating, planning, executing a specific task/project towards completion.',
+    importanceForRecruiters:
+      'Recruiters view organising and planning skills as essential ingredients for simplified, connected and structured goal-setting as well as project completion. They expect job seekers to express these skills by recounting experiences where they pre-empted bottlenecks, championed resource allocation, prioritised critical tasks while managing multiple processes and communicating with various stakeholders.',
+    listItems: [
+      'Spearheaded resource planning for 2 IT projects, drafting project roadmap using Agile Methodology; coordinated with 4 developers on Beta version, achieving successful project delivery with £64K in revenue',
+      'Evaluated scope for project expansion beyond established standards, undertaking risk analysis of technical workflow; delivered Failure Mode Effect Analysis post quality function deployment, 2 weeks prior to deadline',
+      'Implemented Quality Management system for 2 processes, facilitating inspection of 4 operational processes; devised guidelines on corrective measures, automating 5 new workflow mechanisms',
+    ],
+    rawTabData: [
+      {
+        tabLabel: 'Organisational Skills',
+        head: 'any head',
+        parameters: [
+          { name: 'Workflow Management' },
+          { name: 'Operations Coordination' },
+          { name: 'Crisis Management' },
+          { name: 'Risk Mitigation' },
+          { name: 'Work Delegation' },
+        ],
+      },
+      {
+        tabLabel: 'Controlling and Planning',
+        head: 'any head',
+        parameters: [
+          { name: 'Project Scoping' },
+          { name: 'Deployment Planning' },
+          { name: 'Operations Optimisation' },
+          { name: 'Project Performance' },
+          { name: 'Risk Planning' },
+        ],
+      },
+    ],
+  },
   {
     id: 'Leadership',
     head: 'Leadership Skills',
@@ -445,44 +482,6 @@ var src = [
           { name: 'Conflict Management' },
           { name: 'Project Collaboration' },
           { name: 'Event Coordination' },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'Organising and Planning Skills',
-    head: 'Organising and Planning Skills',
-    type: 'OrganisationPlanning',
-    headTxt:
-      'Organising and Planning refers to the proven ability of initiating, planning, executing a specific task/project towards completion.',
-    importanceForRecruiters:
-      'Recruiters view organising and planning skills as essential ingredients for simplified, connected and structured goal-setting as well as project completion. They expect job seekers to express these skills by recounting experiences where they pre-empted bottlenecks, championed resource allocation, prioritised critical tasks while managing multiple processes and communicating with various stakeholders.',
-    listItems: [
-      'Spearheaded resource planning for 2 IT projects, drafting project roadmap using Agile Methodology; coordinated with 4 developers on Beta version, achieving successful project delivery with £64K in revenue',
-      'Evaluated scope for project expansion beyond established standards, undertaking risk analysis of technical workflow; delivered Failure Mode Effect Analysis post quality function deployment, 2 weeks prior to deadline',
-      'Implemented Quality Management system for 2 processes, facilitating inspection of 4 operational processes; devised guidelines on corrective measures, automating 5 new workflow mechanisms',
-    ],
-    rawTabData: [
-      {
-        tabLabel: 'Organisational Skills',
-        head: 'any head',
-        parameters: [
-          { name: 'Workflow Management' },
-          { name: 'Operations Coordination' },
-          { name: 'Crisis Management' },
-          { name: 'Risk Mitigation' },
-          { name: 'Work Delegation' },
-        ],
-      },
-      {
-        tabLabel: 'Controlling and Planning',
-        head: 'any head',
-        parameters: [
-          { name: 'Project Scoping' },
-          { name: 'Deployment Planning' },
-          { name: 'Operations Optimisation' },
-          { name: 'Project Performance' },
-          { name: 'Risk Planning' },
         ],
       },
     ],
