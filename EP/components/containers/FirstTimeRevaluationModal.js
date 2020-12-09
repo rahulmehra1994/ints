@@ -12,6 +12,7 @@ import {
   setInterviewBasicData,
 } from './../../actions/interviewActions'
 import ContentRevaluation from '../Revaluation/ContentRevaluation'
+import { notify } from '@vmockinc/dashboard/services/helpers'
 
 var classNames = require('classnames')
 
@@ -22,6 +23,11 @@ class FirstTimeRevaluationModal extends Component {
   }
 
   viewOlderFeedback() {
+    if (this.props.epCustomizations.user_type === 'admin') {
+      mutuals.adminNoti()
+      return
+    }
+
     this.firstTimeRevaluationSaveRemotely(this.props)
   }
 

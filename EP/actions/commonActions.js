@@ -395,6 +395,7 @@ export var mutuals = {
   productName,
   shouldModifyWPM,
   modifyWPMVal,
+  adminNoti,
 }
 
 export var timeoutInMiliseconds = { time: defaultInactivityTime }
@@ -714,4 +715,10 @@ export function showCompetencyRevaluationModal(props) {
   } else {
     return false //hide
   }
+}
+
+export function adminNoti() {
+  notify('Not allowed! you have logged in by admin account', 'error', {
+    layout: 'topCenter',
+  })
 }

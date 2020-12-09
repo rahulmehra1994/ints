@@ -180,6 +180,10 @@ class RevaluateContent extends Component {
   }
 
   submit() {
+    if (this.props.epCustomizations.user_type === 'admin') {
+      mutuals.adminNoti()
+      return
+    }
     trackingDebounceSmall({
       event_type: 'click',
       event_description: 'first time revaluation data submitted',
@@ -284,6 +288,7 @@ const mapStateToProps = state => {
     statuses: state.statuses,
     interviewEP: state.interviewEP,
     intKey: state.appIntKey.key,
+    epCustomizations: state.epCustomizations,
   }
 }
 
