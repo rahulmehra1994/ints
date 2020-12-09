@@ -73,7 +73,7 @@ class MultiInfoLine extends Component {
         className="py-4 border-b"
         style={{ background: showLess ? 'initial' : '#f7f7f7' }}>
         <div className="grid" style={{ gridTemplateColumns: '200px 1fr' }}>
-          <div className="flex items-center pl-2">
+          <div className="flex items-center pl-2 pr-2">
             {this.labelIcon()}
 
             <span className="ml-4 text-14-med">{this.props.data.label}</span>

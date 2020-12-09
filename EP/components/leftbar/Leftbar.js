@@ -346,7 +346,8 @@ class Leftbar extends Component {
                 leftBarTxtHighlight: path === appUrls[customProps.route],
               })}>
               {customProps.label}
-              {_.has(customProps.item, 'tag') ? (
+              {customProps.customizations.competency_new &&
+              _.has(customProps.item, 'tag') ? (
                 <span
                   className="ml-1 text-12-normal text-white px-1 rounded-sm"
                   style={{ background: common.sectionColor[2] }}>
@@ -389,6 +390,7 @@ class Leftbar extends Component {
                   icon={item.icon}
                   label={item.label}
                   item={item}
+                  customizations={this.props.customizations}
                 />
               </React.Fragment>
             )
