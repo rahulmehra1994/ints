@@ -76,7 +76,7 @@ const Card = props => {
               props.gotoDetailed(props.appUrls[props.keys[0]], props.keys[1])
             }
           }}>
-          {_.has(props, 'new') && props.new ? (
+          {_.has(props, 'new') && props.customizations.competency_new ? (
             <span
               className="absolute text-12-normal text-white px-1 rounded-sm"
               style={{
@@ -372,7 +372,8 @@ class Summary extends Component {
                         img={'competency'}
                         name={'Soft Skills'}
                         val={this.props.competencyCombinedVal}
-                        new={true}
+                        new
+                        customizations={this.props.customizations}
                       />
                     </div>
                   ) : null}
