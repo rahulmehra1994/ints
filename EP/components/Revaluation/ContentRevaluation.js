@@ -21,7 +21,7 @@ const trackingDebounceSmall = _.debounce(
   true
 )
 
-const BUTTON_DEFAULT_TEXT = 'Re-evaluate Interview'
+const BUTTON_DEFAULT_TEXT = 'View Updated Results'
 const FocusTrap = require('focus-trap-react')
 var unidecode = require('unidecode')
 var Loader = require('react-loaders').Loader
