@@ -100,7 +100,7 @@ class Competency extends Component {
             In order to view feedback for soft skills section
           </div>
           <div className="mt-10 text-center">
-            <ContentRevaluation />
+            <ContentRevaluation buttonTxt={'Re-evaluate Interview'} />
           </div>
         </div>
       </div>

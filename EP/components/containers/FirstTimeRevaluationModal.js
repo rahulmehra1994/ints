@@ -23,7 +23,7 @@ class FirstTimeRevaluationModal extends Component {
   }
 
   viewOlderFeedback() {
-    if (this.props.epCustomizations.user_type === 'admin') {
+    if (!this.props.intData.is_own_interview) {
       mutuals.adminNoti()
       return
     }
@@ -73,7 +73,7 @@ class FirstTimeRevaluationModal extends Component {
                 : 'View Old Results'}
             </button>
 
-            <ContentRevaluation />
+            <ContentRevaluation buttonTxt={'View Updated Results'} />
           </div>
         </div>
       </div>
@@ -86,6 +86,7 @@ const mapStateToProps = state => {
     intKey: state.appIntKey.key,
     interviewEP: state.interviewEP,
     epCustomizations: state.epCustomizations,
+    intData: state.interviewEP.basicData,
   }
 }
 

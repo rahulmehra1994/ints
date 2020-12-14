@@ -21,7 +21,7 @@ const trackingDebounceSmall = _.debounce(
   true
 )
 
-const BUTTON_DEFAULT_TEXT = 'View Updated Results'
+const BUTTON_DEFAULT_TEXT = ''
 const FocusTrap = require('focus-trap-react')
 var unidecode = require('unidecode')
 var Loader = require('react-loaders').Loader
@@ -48,6 +48,10 @@ class RevaluateContent extends Component {
     this.onFetchInterviewsSuccess = this.onFetchInterviewsSuccess.bind(this)
     this.fetchApiCounter = 0
     this.canRecallFetch = true
+  }
+
+  componentDidMount() {
+    this.setState({ buttonTxt: this.props.buttonTxt })
   }
 
   onTranscriptSaveSuccess() {
@@ -180,7 +184,7 @@ class RevaluateContent extends Component {
   }
 
   submit() {
-    if (this.props.epCustomizations.user_type === 'admin') {
+    if (!this.props.intData.is_own_interview) {
       mutuals.adminNoti()
       return
     }
@@ -289,6 +293,7 @@ const mapStateToProps = state => {
     interviewEP: state.interviewEP,
     intKey: state.appIntKey.key,
     epCustomizations: state.epCustomizations,
+    intData: state.interviewEP.basicData,
   }
 }
 

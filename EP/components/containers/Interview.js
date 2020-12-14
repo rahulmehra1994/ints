@@ -138,6 +138,7 @@ class Interview extends Component {
   componentWillUnmount() {
     this.releaseCameraAndAudioStream()
     mutuals.removeTimers()
+    window.removeEventListener('popstate', this.checkBackButtonPressed)
   }
 
   releaseCameraAndAudioStream() {
@@ -173,7 +174,7 @@ class Interview extends Component {
   }
 
   setWasOnInterview() {
-    window.addEventListener('popstate', this.checkBackButtonPressed, false) // page is refreshing so no need to remove this event listener
+    window.addEventListener('popstate', this.checkBackButtonPressed)
   }
 
   checkBackButtonPressed = () => {
