@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import _ from 'underscore'
-import { mutuals, common } from '../../../actions/commonActions'
+import { mutuals, common, log } from '../../../actions/commonActions'
 import Highcharts from 'highcharts'
 
 var Loader = require('react-loaders').Loader
 const ReactHighcharts = require('react-highcharts')
 
-class HandChart extends Component {
+export default class InsightsChart extends Component {
   constructor(...args) {
     super(...args)
     this.state = {
@@ -49,6 +49,10 @@ class HandChart extends Component {
         gridLineWidth: 1,
       },
       yAxis: {
+        labels: {
+          enabled: _.has(props.config, 'hideYAxisPoints') ? false : true,
+        },
+        allowDecimals: false,
         title: {
           text: 'Status',
         },
@@ -57,7 +61,6 @@ class HandChart extends Component {
           ? props.graphData.maxYPoint
           : null,
         min: 0,
-        //visible: _.has(props.config, 'hideYAxisPoints') ? false : true,
         plotBands: _.has(props.graphData, 'plotBands')
           ? [
               {
@@ -96,13 +99,15 @@ class HandChart extends Component {
           dataLabels: {
             enabled: true,
             color: '#000000',
-            // backgroundColor: '#FFFFFF',
-            // borderWidth: '1',
-            // align: 'center',
-            // x: 0,
-            // y: 0,
-            // rotation: 0,
             formatter: function () {
+              log('insights graph point info', this.point)
+
+              if (
+                _.has(this.point, 'checkContentDisabled') &&
+                this.point.isContentEnabled === false
+              )
+                return 'NA'
+
               if (_.has(props.graphData, 'pointLabelLogic')) {
                 return `${props.graphData.pointLabelLogic(this.y)} ${
                   _.has(props.graphData, 'unit') ? props.graphData.unit : ''
@@ -200,5 +205,3 @@ class HandChart extends Component {
     )
   }
 }
-
-export default HandChart

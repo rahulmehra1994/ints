@@ -5,7 +5,10 @@ import store from './../../store/configureStore'
 import * as cookie from 'js-cookie'
 import io from 'socket.io-client'
 import { notify } from '@vmockinc/dashboard/services/helpers'
-
+import {
+  changeInterviewToSuccess,
+  setInterviewBasicData,
+} from './interviewActions'
 export const urlEnds = {
   calibration: '/calibration',
   interview: `/interview`,
@@ -20,6 +23,7 @@ export const urlEnds = {
   appearance: `/appearance`,
   word: `/word-usage`,
   sentence: `/sentence-analysis`,
+  competency: `/soft-skills`,
   vocal: `/vocal-features`,
   pauses: `/appropriate-pauses`,
   disfluencies: `/disfluencies`,
@@ -44,8 +48,8 @@ export const highContrast =
 export var common = {
   sectionStatus: ['Good Job', 'On Track', 'Needs Work', ''],
   sectionColor: highContrast
-    ? ['#33844e', '#a66908', '#cc4400']
-    : ['#44af67', '#f5a623', '#ff5500', '#ffffff'],
+    ? ['#33844e', '#a66908', '#cc4400', 'transparent', 'transparent']
+    : ['#44af67', '#f5a623', '#ff5500', 'transparent', 'transparent'],
   compLoader: { type: 'line-scale', scale: 'scale(1.2)' },
   lightBgColor: highContrast
     ? ['#e4f2eb', '#ffecd6', ' #ffddd9']
@@ -76,19 +80,20 @@ export var common = {
     appearance: 61,
     word: 71,
     sentence: 81,
-    vocal: 91,
-    pauses: 101,
-    disfluencies: 111,
-    modulation: 121,
-    videosummary: 131,
+    competency: 91,
+    vocal: 101,
+    pauses: 111,
+    disfluencies: 121,
+    modulation: 131,
+    videosummary: 141,
     insights: 22,
     improvement: 23,
     illustration: 24,
-    noContent: 141,
+    noContent: 151,
   },
 }
 
-const wrong = (
+export const wrong = (
   <span
     className="ep-icon-wrong"
     style={{
@@ -101,7 +106,7 @@ const wrong = (
   </span>
 )
 
-const right = (
+export const right = (
   <span
     className="ep-icon-right"
     style={{
@@ -390,6 +395,7 @@ export var mutuals = {
   productName,
   shouldModifyWPM,
   modifyWPMVal,
+  adminNoti,
 }
 
 export var timeoutInMiliseconds = { time: defaultInactivityTime }
@@ -628,4 +634,91 @@ export function shouldModifyWPM(val) {
 
 export function modifyWPMVal(val) {
   return shouldModifyWPM(val) ? IDEAL_WPM : val
+}
+
+export function competenciesDetected(arr) {
+  if (arr.length === 0) return false
+  else return true
+}
+
+export function getCompetencyCombinedVal(state) {
+  if (
+    !_.isEmpty(state.punctuatorResults) &&
+    !_.isEmpty(state.punctuatorResults.competency) &&
+    !_.isEmpty(state.punctuatorResults.competency.competency_results_overall)
+  ) {
+    return state.punctuatorResults.competency.competency_results_overall
+      .competency_combined_val
+  } else {
+    return 3 //leftbar main it is getting 3 in the else logic
+  }
+}
+
+export function shouldCompetencyDisplay(props) {
+  if (
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
+  )
+    return false
+
+  if (props.epCustomizations.competency === false) return false //hide
+
+  if (props.interviewEP.basicData.is_new) return true
+
+  if (props.interviewEP.basicData.is_competency_processed) return true
+  else return false
+}
+
+export function showFirstTimeRevaluationPopup(props) {
+  if (
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
+  )
+    return false
+
+  if (props.epCustomizations.competency === false) return false
+
+  if (props.interviewEP.basicData.is_new) return false //hide
+
+  if (props.interviewEP.basicData.is_competency_processed) return false //hide
+
+  if (
+    props.interviewEP.basicData.initial_competency_processed_status === false
+  ) {
+    return true //primary initial popup show
+  } else {
+    return false //hide
+  }
+}
+
+export function showCompetencyRevaluationModal(props) {
+  if (
+    isContentEnabled({
+      customizations: props.epCustomizations,
+      intQuestionId: props.interviewEP.intQuestionId,
+    }) === false
+  )
+    return false
+
+  if (props.epCustomizations.competency === false) return false
+
+  if (props.interviewEP.basicData.is_new) return false //hide
+
+  if (props.interviewEP.basicData.is_competency_processed) return false //hide
+
+  if (props.interviewEP.basicData.initial_competency_processed_status) {
+    return true //secondary popup show
+  } else {
+    return false //hide
+  }
+}
+
+export function adminNoti() {
+  notify('Not allowed! you have logged in by admin account', 'error', {
+    layout: 'topCenter',
+  })
 }

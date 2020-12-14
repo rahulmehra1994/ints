@@ -232,11 +232,6 @@ class WordUsage extends Component {
           <div className="mt-10 clearfix text-center">
             <RevaluateContent tabIndex={tabIndex} />
           </div>
-
-          <div className="mt-6 para clearfix">
-            Read more about which words to use and which ones to avoid in your
-            pitch from the Improvement Section.
-          </div>
         </div>
       </div>
     ) : (

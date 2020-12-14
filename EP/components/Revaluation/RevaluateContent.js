@@ -71,7 +71,7 @@ class RevaluateContent extends Component {
   }
 
   onFetchTranscriptSuccess(data) {
-    if (data.status === 'processing' && this.recalltranscriptCounter < 20) {
+    if (data.status === 'processing' && this.recalltranscriptCounter < 40) {
       this.recalltranscriptCounter++
       this.recallTranscript()
       return
@@ -123,6 +123,7 @@ class RevaluateContent extends Component {
       event_description: 'EP revaluation modal closed',
     })
 
+    document.querySelector('.contentbar').scroll(0, 0)
     if (this.showLoader() || this.state.loaderStatus) return
     this.setState({
       showButton: true,

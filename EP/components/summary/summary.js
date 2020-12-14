@@ -3,7 +3,12 @@ import { connect } from 'react-redux'
 import Comparison from './../summary/Comparison'
 import _ from 'underscore'
 import ContentLoader from 'react-content-loader'
-import { common, log, mutuals } from './../../actions/commonActions'
+import {
+  common,
+  log,
+  mutuals,
+  shouldCompetencyDisplay,
+} from './../../actions/commonActions'
 import { toggleVideoFloating } from './../../actions/actions'
 import CenterLoading from './../CenterLoading/index'
 import { basicMsgs } from './../../components/messages/messages'
@@ -62,7 +67,7 @@ const Card = props => {
         <MyLoader height="243" width="250" size="0.49" offset="0.49" />
       ) : (
         <div
-          className=""
+          className="relative"
           onClick={() => {
             props.gotoDetailed(props.appUrls[props.keys[0]], props.keys[1])
           }}
@@ -71,6 +76,18 @@ const Card = props => {
               props.gotoDetailed(props.appUrls[props.keys[0]], props.keys[1])
             }
           }}>
+          {_.has(props, 'new') && props.customizations.competency_new ? (
+            <span
+              className="absolute text-12-normal text-white px-1 rounded-sm"
+              style={{
+                right: -12,
+                top: -12,
+                background: common.sectionColor[2],
+              }}>
+              New
+            </span>
+          ) : null}
+
           <div
             className={
               props.type === 'vertical' ? '' : 'float-left smallSummaryCardIcon'
@@ -158,7 +175,7 @@ class Summary extends Component {
 
         contentConfig: {
           ...commonConfig,
-          type: 'vertical',
+          type: shouldCompetencyDisplay(this.props) ? 'horizontal' : 'vertical',
           tabIndex: this.state.contentTabIndex,
         },
 
@@ -199,6 +216,14 @@ class Summary extends Component {
     }, 1000)
   })
 
+  gridSizeCalc() {
+    if (this.state.contentDisable) return '1fr'
+
+    if (shouldCompetencyDisplay(this.props)) return '1fr 1fr'
+
+    return '1fr 1.5fr'
+  }
+
   render() {
     let { appUrls } = this.props
     let {
@@ -227,6 +252,7 @@ class Summary extends Component {
             <CenterLoading />
           </div>
         )}
+
         {this.disableOpacity()}
         <div className="summ-main-wrap" style={{ opacity: isLoaded ? 1 : 0 }}>
           <Comparison customClasses="leftBar" tabIndex={this.props.tabIndex} />
@@ -257,7 +283,6 @@ class Summary extends Component {
                   img="eye-contact"
                   name={'Eye Contact'}
                   val={this.props.eyeCombinedVal}
-                  status={this.props.eyeCombinedMsg}
                 />
 
                 <Card
@@ -266,7 +291,6 @@ class Summary extends Component {
                   img={'facial-expression'}
                   name={'Facial Expressions'}
                   val={this.props.faceCombinedVal}
-                  status={this.props.faceCombinedMsg}
                 />
 
                 <Card
@@ -275,7 +299,6 @@ class Summary extends Component {
                   img={'hand-gestures'}
                   name={'Hand Gestures'}
                   val={this.props.gestCombinedVal}
-                  status={this.props.gestCombinedMsg}
                 />
 
                 <Card
@@ -284,7 +307,6 @@ class Summary extends Component {
                   img={'body-posture'}
                   name={'Body Posture'}
                   val={this.props.bodyCombinedVal}
-                  status={this.props.bodyCombinedMsg}
                 />
 
                 {this.props.customizations.appearance_enabled ? (
@@ -294,7 +316,6 @@ class Summary extends Component {
                     img={'appearance'}
                     name={'Appearance'}
                     val={this.props.appearCombinedVal}
-                    status={this.props.appearCombinedMsg}
                   />
                 ) : null}
               </div>
@@ -303,7 +324,7 @@ class Summary extends Component {
             <div
               className="mt-2 summ-grid-2"
               style={{
-                gridTemplateColumns: contentDisable ? '1fr' : null,
+                gridTemplateColumns: this.gridSizeCalc(),
               }}>
               {contentDisable ? null : (
                 <div
@@ -332,7 +353,6 @@ class Summary extends Component {
                       img={'word-usage'}
                       name={'Word Usage'}
                       val={this.props.wordCombinedVal}
-                      status={this.props.wordCombinedMsg}
                     />
 
                     <Card
@@ -341,9 +361,22 @@ class Summary extends Component {
                       img={'sentence-analysis'}
                       name={'Sentence Analysis'}
                       val={this.props.sentenceCombinedVal}
-                      status={this.props.sentenceCombinedMsg}
                     />
                   </div>
+
+                  {shouldCompetencyDisplay(this.props) ? (
+                    <div className="mt-3 summ-card-grid grid-cols-2">
+                      <Card
+                        {...contentConfig}
+                        keys={['competency', 'competency_result']}
+                        img={'competency'}
+                        name={'Soft Skills'}
+                        val={this.props.competencyCombinedVal}
+                        new
+                        customizations={this.props.customizations}
+                      />
+                    </div>
+                  ) : null}
                 </div>
               )}
 
@@ -380,7 +413,6 @@ class Summary extends Component {
                       img={'vocal-features'}
                       name={'Vocal Features'}
                       val={this.props.vocalCombinedVal}
-                      status={this.props.vocalCombinedMsg}
                     />
                     <Card
                       {...deliveryConfig}
@@ -388,7 +420,6 @@ class Summary extends Component {
                       img={'appropriate-pauses'}
                       name={'Appropriate Pauses'}
                       val={this.props.pauseCombinedVal}
-                      status={this.props.pauseCombinedMsg}
                     />
 
                     {contentDisable ? (
@@ -399,7 +430,6 @@ class Summary extends Component {
                           img={'disfluencies'}
                           name={'Speech Fluency'}
                           val={this.props.disfluencyCombinedVal}
-                          status={this.props.modulationCombinedMsg}
                         />
                         <Card
                           {...deliveryConfig}
@@ -407,7 +437,6 @@ class Summary extends Component {
                           img={'speech-modulation'}
                           name={'Speech Modulation'}
                           val={this.props.modulationCombinedVal}
-                          status={this.props.disfluencyCombinedMsg}
                         />
                       </React.Fragment>
                     ) : null}
@@ -422,7 +451,6 @@ class Summary extends Component {
                       img={'disfluencies'}
                       name={'Speech Fluency'}
                       val={this.props.disfluencyCombinedVal}
-                      status={this.props.modulationCombinedMsg}
                     />
                     <Card
                       {...deliveryConfig}
@@ -430,7 +458,6 @@ class Summary extends Component {
                       img={'speech-modulation'}
                       name={'Speech Modulation'}
                       val={this.props.modulationCombinedVal}
-                      status={this.props.disfluencyCombinedMsg}
                     />
                   </div>
                 )}
@@ -448,78 +475,37 @@ const mapStateToProps = state => {
     eyeCombinedVal: state.results.eyeResults
       ? state.results.eyeResults.eyeCombinedVal
       : null,
-    eyeCombinedMsg: state.results.eyeResults
-      ? state.results.eyeResults.eyeCombinedMsg
-      : null,
-
     faceCombinedVal: state.results.faceResults
       ? state.results.faceResults.faceCombinedVal
       : null,
-    faceCombinedMsg: state.results.faceResults
-      ? state.results.faceResults.faceCombinedMsg
-      : null,
-
     gestCombinedVal: state.results.handResults
       ? state.results.handResults.gestCombinedVal
       : null,
-    gestCombinedMsg: state.results.handResults
-      ? state.results.handResults.gestCombinedMsg
-      : null,
-
     bodyCombinedVal: state.results.bodyResults
       ? state.results.bodyResults.bodyCombinedVal
       : null,
-    bodyCombinedMsg: state.results.bodyResults
-      ? state.results.bodyResults.bodyCombinedMsg
-      : null,
-
     appearCombinedVal: state.results.appearanceResults
       ? state.results.appearanceResults.appearCombinedVal
       : null,
-    appearCombinedMsg: state.results.appearanceResults
-      ? state.results.appearanceResults.appearCombinedMsg
-      : null,
-
     wordCombinedVal: state.results.wordResults
       ? state.results.wordResults.wordCombinedVal
       : null,
-    wordCombinedMsg: state.results.wordResults
-      ? state.results.wordResults.wordCombinedMsg
-      : null,
-
     sentenceCombinedVal: state.results.sentenceResults
       ? state.results.sentenceResults.sentenceCombinedVal
       : null,
-    sentenceCombinedMsg: state.results.sentenceResults
-      ? state.results.sentenceResults.sentenceCombinedMsg
-      : null,
-
     vocalCombinedVal: state.results.vocalResults
       ? state.results.vocalResults.vocalCombinedVal
       : null,
-    vocalCombinedMsg: state.results.vocalResults
-      ? state.results.vocalResults.vocalCombinedMsg
-      : null,
-
     pauseCombinedVal: state.results.pauseResults
       ? state.results.pauseResults.pauseCombinedVal
-      : null,
-    pauseCombinedMsg: state.results.pauseResults
-      ? state.results.pauseResults.pauseCombinedMsg
       : null,
     disfluencyCombinedVal: state.results.disfluencyResults
       ? state.results.disfluencyResults.disfluencyCombinedVal
       : null,
-    disfluencyCombinedMsg: state.results.disfluencyResults
-      ? state.results.disfluencyResults.disfluencyCombinedMsg
-      : null,
-
     modulationCombinedVal: state.results.modulationResults
       ? state.results.modulationResults.modulationCombinedVal
       : null,
-    modulationCombinedMsg: state.results.modulationResults
-      ? state.results.modulationResults.modulationCombinedMsg
-      : null,
+
     throughInt: state.throughInt,
     appUrls: state.appUrls,
     statuses: state.statuses,
@@ -527,6 +513,16 @@ const mapStateToProps = state => {
       ? null
       : state.epCustomizations,
     intQuestionId: state.interviewEP.intQuestionId,
+    isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
+    epCustomizations: state.epCustomizations,
+    interviewEP: state.interviewEP,
+    competencyCombinedVal:
+      !_.isEmpty(state.punctuatorResults) &&
+      !_.isEmpty(state.punctuatorResults.competency) &&
+      !_.isEmpty(state.punctuatorResults.competency.competency_results_overall)
+        ? state.punctuatorResults.competency.competency_results_overall
+            .competency_combined_val
+        : null,
   }
 }
 

@@ -486,11 +486,6 @@ class Sentence extends Component {
                   tabIndex={tabIndex}
                 />
               ) : null}
-
-              <div className="mt-6 para">
-                Read more about which sentence to use and which ones to avoid
-                from the Improvement Section.
-              </div>
             </div>
           </div>
         ) : (

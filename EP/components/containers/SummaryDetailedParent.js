@@ -19,6 +19,7 @@ import {
 } from './../../actions/apiActions'
 import { mutuals } from './../../actions/commonActions'
 import SubNavbar from './../../components/navbar/SubNavbar'
+import FirstTimeRevaluationModal from './FirstTimeRevaluationModal'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest)
@@ -107,8 +108,12 @@ class SummaryDetailedParent extends Component {
   }
 
   render() {
+    if (_.isNull(this.props.intData)) return null
+
     return (
       <div>
+        <FirstTimeRevaluationModal />
+
         {this.props.appUrls ? (
           <Route
             path={this.props.appUrls.results}
@@ -143,6 +148,7 @@ const mapStateToProps = state => {
   return {
     statuses: state.statuses,
     appUrls: state.appUrls,
+    intData: state.interviewEP.basicData,
   }
 }
 

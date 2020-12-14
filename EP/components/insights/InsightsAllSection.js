@@ -30,11 +30,12 @@ class InsightsAllSection extends Component {
         [this.props.appUrls.appearance]: common.tabIndexes.insights + 40,
         [this.props.appUrls.word]: common.tabIndexes.insights + 50,
         [this.props.appUrls.sentence]: common.tabIndexes.insights + 60,
-        [this.props.appUrls.vocal]: common.tabIndexes.insights + 70,
-        [this.props.appUrls.pauses]: common.tabIndexes.insights + 80,
-        [this.props.appUrls.disfluencies]: common.tabIndexes.insights + 90,
-        [this.props.appUrls.modulation]: common.tabIndexes.insights + 100,
-        [this.props.appUrls.videosummary]: common.tabIndexes.insights + 110,
+        [this.props.appUrls.competency]: common.tabIndexes.insights + 70,
+        [this.props.appUrls.vocal]: common.tabIndexes.insights + 80,
+        [this.props.appUrls.pauses]: common.tabIndexes.insights + 90,
+        [this.props.appUrls.disfluencies]: common.tabIndexes.insights + 100,
+        [this.props.appUrls.modulation]: common.tabIndexes.insights + 110,
+        [this.props.appUrls.videosummary]: common.tabIndexes.insights + 120,
       },
     }
   }
@@ -75,6 +76,7 @@ class InsightsAllSection extends Component {
     let { appUrls, additionalSection, essentialSection } = this.props
 
     let stringChart = { hideYAxisPoints: true }
+
     return this.props.interviewRows !== -1 ? (
       this.props.interviewRows.length > 2 ? (
         <div
@@ -458,6 +460,81 @@ class InsightsAllSection extends Component {
                       />
                     </div>
                   ) : null}
+                </div>
+              )
+            }}
+          />
+
+          <Route
+            exact
+            path={appUrls.competency}
+            render={() => {
+              let commonArr = [
+                {
+                  id: 'Analytical',
+                  heading: 'Analytical',
+                  group: 'essential',
+                },
+                {
+                  id: 'Communication',
+                  heading: 'Communication',
+                  group: 'essential',
+                },
+                {
+                  id: 'Organisation & Planning',
+                  heading: 'Organisation & Planning',
+                  group: 'additional',
+                },
+                {
+                  id: 'Leadership',
+                  heading: 'Leadership',
+                  group: 'additional',
+                },
+                {
+                  id: 'Teamwork',
+                  heading: 'Teamwork',
+                  group: 'additional',
+                },
+              ]
+
+              let common = (item, index) => {
+                return {
+                  label: item.heading,
+                  keys: {
+                    shouldShowNull: 'punctuator_status',
+                    yAxisKey: `competency.competency_results_individual`,
+                    yAxisColor: `competency.competency_results_individual.${item.id}.results`,
+                  },
+                  yPointsModifier: (...args) => {
+                    return args[0][item.id]['categories'].length
+                  },
+                }
+              }
+
+              let modEssentialArr = []
+
+              commonArr.forEach((item, index) => {
+                modEssentialArr.push(common(item, index))
+              })
+
+              const dataLabelCal = val => {
+                if (val === null) return null
+                else if (val === 1) return `${val} entry`
+                else return `${val} entries`
+              }
+
+              return (
+                <div>
+                  <InsightsWrap
+                    rows={this.props.interviewRows}
+                    tabIndex={this.state.tabIndex}
+                    customData={modEssentialArr}
+                    modifyDataLabels={val => {
+                      return dataLabelCal(val)
+                    }}
+                    config={{}}
+                    checkContentDisabled="true"
+                  />
                 </div>
               )
             }}

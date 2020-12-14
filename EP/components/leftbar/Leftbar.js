@@ -8,6 +8,7 @@ import {
   common,
   mutuals,
   log,
+  getCompetencyCombinedVal,
 } from './../../actions/commonActions'
 
 var classNames = require('classnames')
@@ -81,6 +82,15 @@ const data = {
     route: 'sentence',
     icon: 'ep-icon-sentence-analysis',
   },
+  competency: {
+    label: 'Soft Skills',
+    resultKey: 'competencyCombinedVal',
+    index: 9,
+    type: 'competency',
+    route: 'competency',
+    icon: 'ep-icon-competency-detailed-left-menu',
+    tag: 'New',
+  },
   vocal: {
     label: 'Vocal Features',
     resultKey: 'vocalCombinedVal',
@@ -138,6 +148,7 @@ class Leftbar extends Component {
   UNSAFE_componentWillMount() {
     this.modifyDataIfAppearanceDisabled()
     this.modifyDataIfContentDisabled()
+    this.modifyIfCompetencyProcessed()
   }
 
   modifyDataIfAppearanceDisabled() {
@@ -150,7 +161,13 @@ class Leftbar extends Component {
     if (mutuals.isContentEnabled(this.props) === false) {
       delete data['word']
       delete data['sentence']
+      delete data['competency']
     }
+  }
+
+  modifyIfCompetencyProcessed() {
+    if (this.props.customizations.competency === false)
+      delete data['competency']
   }
 
   componentDidMount() {
@@ -329,6 +346,14 @@ class Leftbar extends Component {
                 leftBarTxtHighlight: path === appUrls[customProps.route],
               })}>
               {customProps.label}
+              {customProps.customizations.competency_new &&
+              _.has(customProps.item, 'tag') ? (
+                <span
+                  className="ml-1 text-12-normal text-white px-1 rounded-sm"
+                  style={{ background: common.sectionColor[2] }}>
+                  New
+                </span>
+              ) : null}
             </div>
           </div>
         </Link>
@@ -350,7 +375,7 @@ class Leftbar extends Component {
         <div id="primary-bar">
           {dataValues.map((item, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 {_.has(item, 'sectionHeading') ? (
                   <div className="paraHead mt-8 mb-2">
                     <span className="ml-6">{item.sectionHeading}</span>
@@ -364,6 +389,8 @@ class Leftbar extends Component {
                   route={item.route}
                   icon={item.icon}
                   label={item.label}
+                  item={item}
+                  customizations={this.props.customizations}
                 />
               </React.Fragment>
             )
@@ -490,6 +517,10 @@ const mapStateToProps = state => {
       ? null
       : state.epCustomizations,
     intQuestionId: state.interviewEP.intQuestionId,
+
+    isCompetencyProcessed: state.interviewEP.basicData.is_competency_processed,
+    competencyCombinedVal: getCompetencyCombinedVal(state),
+    interviewEP: state.interviewEP,
   }
 }
 

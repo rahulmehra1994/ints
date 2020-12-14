@@ -15,6 +15,7 @@ export function defaultUrls(intkey) {
     appearance: `${intkey}/results/detailed${urlEnds.appearance}`,
     word: `${intkey}/results/detailed${urlEnds.word}`,
     sentence: `${intkey}/results/detailed${urlEnds.sentence}`,
+    competency: `${intkey}/results/detailed${urlEnds.competency}`,
     vocal: `${intkey}/results/detailed${urlEnds.vocal}`,
     pauses: `${intkey}/results/detailed${urlEnds.pauses}`,
     disfluencies: `${intkey}/results/detailed${urlEnds.disfluencies}`,

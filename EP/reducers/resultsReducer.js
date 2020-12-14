@@ -196,5 +196,6 @@ export const illustrationData = handleActions(
     videosummary: [],
     'vocal-features': [],
     'word-usage': [],
+    competency: [],
   }
 )

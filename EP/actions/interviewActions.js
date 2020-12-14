@@ -14,7 +14,9 @@ import {
   fetchUserSpeechSubtitles,
 } from './../actions/apiActions'
 import { log, mutuals } from './../actions/commonActions'
-import { PREFIX, setConvertVideo, setStatuses } from './../actions/actions'
+import { setConvertVideo, setStatuses } from './../actions/actions'
+
+const PREFIX = 'EP.' //NOTE: fetching value from actions/actions.js file making this undefined
 
 export const VIDEO_PROCESSED_PERCENT = PREFIX + 'VIDEO_PROCESSED_PERCENT'
 export const INTERVIEW_DURATION = PREFIX + 'INTERVIEW_DURATION'
@@ -404,8 +406,14 @@ export function getIntResults() {
     })
 }
 
-export function changeInterviewToSuccess() {
-  let fd = new FormData()
+export function changeInterviewToSuccess(
+  data = null,
+  afterChangeInterviewToSuccess = null
+) {
+  let fd
+  if (data) fd = data
+  else fd = new FormData()
+
   api
     .service('ep')
     .post(`/updateinterviewstatus`, fd, {
@@ -413,7 +421,8 @@ export function changeInterviewToSuccess() {
       contentType: false,
     })
     .done(data => {
-      //success
+      if (afterChangeInterviewToSuccess) afterChangeInterviewToSuccess()
+      counters['changeInterviewToSuccessCount'] = 0
       mutuals.socketTracking({
         event_type: 'app flow',
         event_description: `on updateinterviewstatus api success`,
@@ -424,9 +433,9 @@ export function changeInterviewToSuccess() {
         counters,
         'changeInterviewToSuccessCount',
         () => {
-          changeInterviewToSuccess()
+          changeInterviewToSuccess(data, afterChangeInterviewToSuccess)
         },
-        2000,
+        1000,
         5,
         xhr
       )

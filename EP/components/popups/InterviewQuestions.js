@@ -82,7 +82,6 @@ class InterviewQuestions extends Component {
 
   modifyData() {
     let { customizations, userInfoEP } = this.props
-    let { questionData } = userInfoEP
     let get = obj => {
       return obj.map((item, index) => {
         let keys = Object.keys(item)
@@ -194,9 +193,14 @@ class InterviewQuestions extends Component {
       return item
     })
 
+    let temp = selectedDomainFound.map(item => {
+      item.isOpen = false
+      return item
+    })
+
     this.setState({
       data: arr,
-      selectedDomain: selectedDomainFound,
+      selectedDomain: temp,
       selectedQuesArr: [],
     })
   }
