@@ -331,7 +331,7 @@ class Calibration extends Component {
     }
   }
 
-  isFirstTimeUser2 = _.once(() => {
+  fisrtTimeUserCheck = () => {
     let { gender, langCode } = this.props
 
     if (gender === null && langCode === -1)
@@ -348,21 +348,27 @@ class Calibration extends Component {
       (gender === 'male' || gender === 'female' || gender === 'undisclosed') &&
       langCode !== -1 &&
       langCode !== ''
-    )
+    ) {
       if (
         mutuals.multipleQuesEnabled(this.props) &&
         this.props.lastQuestion.question_id === -1
-      )
+      ) {
         this.setState({
-          isSystemCheckOpen: true,
           firstTimeUser: true,
         })
-      else
+        this.openPopup() //with all sections
+      }
+
+      if (mutuals.multipleQuesEnabled(this.props)) {
         this.setState({
-          isSystemCheckOpen: false,
           firstTimeUser: false,
         })
-  })
+        this.openPopup('questions-panel') //with only question panel open
+      }
+    }
+  }
+
+  isFirstTimeUser = _.once(this.fisrtTimeUserCheck)
 
   changeFirstTimeUserStatusAndClosePopup() {
     this.setState(
@@ -831,6 +837,8 @@ class Calibration extends Component {
   }
 
   showCalibModule = () => {
+    this.fisrtTimeUserCheck()
+
     this.setState({ showIntSetup: false }, () => {
       setTimeout(() => {
         this.initRun()
@@ -923,7 +931,7 @@ class Calibration extends Component {
               </div>
             ) : null}
 
-            {this.isFirstTimeUser2()}
+            {this.isFirstTimeUser()}
 
             <div id="calibration-body">
               {this.state.isSystemCheckOpen ? (
