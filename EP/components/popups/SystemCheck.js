@@ -263,8 +263,9 @@ class SystemCheck extends Component {
                 <button
                   className={classNames('float-left w-1/3 p-5', {
                     'cursor-pointer': this.props.userInfoEP.isInputChecked,
-                    'brand-blue-color border-b-brand-blue': this.state
-                      .interviewQues,
+                    'brand-blue-color border-b-brand-blue':
+                      this.state.interviewQues &&
+                      this.props.modalOpenType !== 'questions-panel',
                   })}
                   disabled={this.props.userInfoEP.isInputChecked ? false : true}
                   onClick={() => {
