@@ -103,6 +103,12 @@ class InterviewQuestions extends Component {
       return item
     })
 
+    changedData.sort((a, b) => {
+      return a.order_id - b.order_id // sort by increasing order_id
+    })
+
+    log('interview domains sorted data => ', changedData)
+
     this.lastTimeFullSelection(changedData)
   }
 

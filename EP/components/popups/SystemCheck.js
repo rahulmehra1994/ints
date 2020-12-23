@@ -199,63 +199,73 @@ class SystemCheck extends Component {
               </button>
             )}
 
-            <div className="clearfix flex justify-center">
-              <button
-                className={classNames('float-left p-5', {
-                  'cursor-pointer': this.props.userInfoEP.isInputChecked,
-                  'w-1/3': mutuals.multipleQuesEnabled(this.props),
-                  'w-1/2': !mutuals.multipleQuesEnabled(this.props),
-                  'brand-blue-color border-b-brand-blue': this.state
-                    .systemCheck,
-                })}
-                disabled={this.props.userInfoEP.isInputChecked ? false : true}
-                onClick={() => {
-                  if (this.props.userInfoEP.isInputChecked) {
-                    this.activateTab('systemCheck')
-                    this.makeSystemCheckInfoVisible()
-                  }
-                }}
-                tabIndex={
-                  this.props.userInfoEP.isInputChecked
-                    ? this.props.tabIndex
-                    : null
-                }
-                aria-label={`System check tab click to goto system check process`}>
-                <span className="ep-icon-edit text-18-normal align-text-bottom" />
-                <span className="ml-6 subHead align-middle">System Check</span>
-              </button>
-
-              <button
-                className={classNames('float-left p-5', {
-                  'cursor-pointer': this.props.userInfoEP.isInputChecked,
-                  'w-1/3': mutuals.multipleQuesEnabled(this.props),
-                  'w-1/2': !mutuals.multipleQuesEnabled(this.props),
-                  'brand-blue-color border-b-brand-blue': this.state
-                    .editBasicInfo,
-                })}
-                disabled={this.props.userInfoEP.isInputChecked ? false : true}
-                onClick={() => {
-                  if (this.props.userInfoEP.isInputChecked) {
-                    this.activateTab('editBasicInfo')
-                    this.makeBasicDetailsFormVisible()
-                  }
-                }}
-                tabIndex={
-                  this.props.userInfoEP.isInputChecked
-                    ? this.props.tabIndex
-                    : null
-                }
-                aria-label={`Basic details tab click to goto basic details form`}>
-                <span className="ep-icon-setting text-18-normal align-text-bottom" />
-                <span className="ml-6 subHead">Basic Details</span>
-              </button>
+            <div className="clearfix">
+              {this.props.modalOpenType !== 'questions-panel' ? (
+                <>
+                  <button
+                    className={classNames('float-left p-5', {
+                      'cursor-pointer': this.props.userInfoEP.isInputChecked,
+                      'w-1/3': mutuals.multipleQuesEnabled(this.props),
+                      'w-1/2': !mutuals.multipleQuesEnabled(this.props),
+                      'brand-blue-color border-b-brand-blue': this.state
+                        .systemCheck,
+                    })}
+                    disabled={
+                      this.props.userInfoEP.isInputChecked ? false : true
+                    }
+                    onClick={() => {
+                      if (this.props.userInfoEP.isInputChecked) {
+                        this.activateTab('systemCheck')
+                        this.makeSystemCheckInfoVisible()
+                      }
+                    }}
+                    tabIndex={
+                      this.props.userInfoEP.isInputChecked
+                        ? this.props.tabIndex
+                        : null
+                    }
+                    aria-label={`System check tab click to goto system check process`}>
+                    <span className="ep-icon-edit text-18-normal align-text-bottom" />
+                    <span className="ml-6 subHead align-middle">
+                      System Check
+                    </span>
+                  </button>
+                  <button
+                    className={classNames('float-left p-5', {
+                      'cursor-pointer': this.props.userInfoEP.isInputChecked,
+                      'w-1/3': mutuals.multipleQuesEnabled(this.props),
+                      'w-1/2': !mutuals.multipleQuesEnabled(this.props),
+                      'brand-blue-color border-b-brand-blue': this.state
+                        .editBasicInfo,
+                    })}
+                    disabled={
+                      this.props.userInfoEP.isInputChecked ? false : true
+                    }
+                    onClick={() => {
+                      if (this.props.userInfoEP.isInputChecked) {
+                        this.activateTab('editBasicInfo')
+                        this.makeBasicDetailsFormVisible()
+                      }
+                    }}
+                    tabIndex={
+                      this.props.userInfoEP.isInputChecked
+                        ? this.props.tabIndex
+                        : null
+                    }
+                    aria-label={`Basic details tab click to goto basic details form`}>
+                    <span className="ep-icon-setting text-18-normal align-text-bottom" />
+                    <span className="ml-6 subHead">Basic Details</span>
+                  </button>
+                </>
+              ) : null}
 
               {mutuals.multipleQuesEnabled(this.props) ? (
                 <button
                   className={classNames('float-left w-1/3 p-5', {
                     'cursor-pointer': this.props.userInfoEP.isInputChecked,
-                    'brand-blue-color border-b-brand-blue': this.state
-                      .interviewQues,
+                    'brand-blue-color border-b-brand-blue':
+                      this.state.interviewQues &&
+                      this.props.modalOpenType !== 'questions-panel',
                   })}
                   disabled={this.props.userInfoEP.isInputChecked ? false : true}
                   onClick={() => {
