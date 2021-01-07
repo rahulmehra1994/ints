@@ -345,7 +345,10 @@ class Calibration extends Component {
       })
     }
     if (
-      (gender === 'male' || gender === 'female' || gender === 'undisclosed') &&
+      (gender === 'male' ||
+        gender === 'female' ||
+        gender === 'undisclosed' ||
+        gender === '') &&
       langCode !== -1 &&
       langCode !== ''
     ) {
