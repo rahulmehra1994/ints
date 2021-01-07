@@ -325,6 +325,7 @@ class SystemCheck extends Component {
                 }
                 onSuccessOfCreateInt={this.props.onSuccessOfCreateInt}
                 gotoBasicDetails={this.gotoBasicDetails}
+                modalOpenType={this.props.modalOpenType}
               />
             ) : null}
           </div>
