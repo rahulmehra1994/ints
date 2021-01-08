@@ -93,7 +93,12 @@ class InterviewQuestions extends Component {
       })
     }
 
-    let changedData = customizations.questions.map((item, index) => {
+    let customizationsClone = mutuals.deepCopy(customizations.questions)
+    customizationsClone.sort((a, b) => {
+      return a.order_id - b.order_id // sort by increasing order_id
+    })
+
+    let changedData = customizationsClone.map((item, index) => {
       let keys = Object.keys(item)
       item[keys[0]] = get(item[keys[0]])
       item.label = keys[0]
@@ -102,6 +107,8 @@ class InterviewQuestions extends Component {
       else item.isOpen = false
       return item
     })
+
+    log('interview domains sorted data => ', changedData)
 
     this.lastTimeFullSelection(changedData)
   }
@@ -453,23 +460,25 @@ class InterviewQuestions extends Component {
           </div>
         </div>
         <div className="questions-footer">
-          <button
-            className="bluePrimaryTxt mr-12 subHead"
-            onClick={() => {
-              this.props.gotoBasicDetails()
-            }}
-            tabIndex="20"
-            aria-label={`confirm your options`}>
-            <span
-              className="ep-icon-expand-left"
-              style={{
-                '-webkit-text-stroke': '1px',
-                verticalAlign: -2,
+          {this.props.modalOpenType !== 'questions-panel' ? (
+            <button
+              className="bluePrimaryTxt mr-12 subHead"
+              onClick={() => {
+                this.props.gotoBasicDetails()
               }}
-            />
+              tabIndex="20"
+              aria-label={`confirm your options`}>
+              <span
+                className="ep-icon-expand-left"
+                style={{
+                  '-webkit-text-stroke': '1px',
+                  verticalAlign: -2,
+                }}
+              />
 
-            <span className="ml-2">Back</span>
-          </button>
+              <span className="ml-2">Back</span>
+            </button>
+          ) : null}
 
           <button
             type="button"
