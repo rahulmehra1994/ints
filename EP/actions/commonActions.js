@@ -613,7 +613,7 @@ export function ContentStrengthBlock() {
 
 export const COMMUNITY = 'imperial'
 
-export const COMMUNITY_LIST = ['imperial', 'msubroad']
+export const COMMUNITY_LIST = ['imperial', 'msubroad', 'nus']
 
 export function productName() {
   if (_.isEmpty(store.getState().user.data)) {
